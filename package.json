@@ -1,0 +1,20 @@
+{
+  "name": "fisio-clinico",
+  "version": "0.3.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node --test",
+    "lint": "node scripts/lint.mjs",
+    "typecheck": "node scripts/validate.mjs",
+    "build": "node scripts/build.mjs",
+    "check": "npm run lint && npm run typecheck && npm test && npm run build"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@mediapipe/tasks-vision": "0.10.35"
+  }
+}

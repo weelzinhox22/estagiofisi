@@ -1,0 +1,6 @@
+{
+  "appId": "br.app.fisioclinico",
+  "appName": "Fisio Clínico",
+  "webDir": ".",
+  "server": { "androidScheme": "https" }
+}

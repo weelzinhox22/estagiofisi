@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#123d38">
+  <meta name="description" content="Apoio à documentação e ao estudo em fisioterapia supervisionada.">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/icons/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/src/styles.css">
+  <title>Fisio Clínico</title>
+</head>
+<body>
+  <a class="skip" href="#main">Ir para o conteúdo</a>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Navegação principal">
+      <a class="brand" href="#inicio"><span class="brand-mark" aria-hidden="true">✳</span><span>Fisio<span class="brand-light">Clínico</span><small>PRÁTICA SUPERVISIONADA</small></span></a>
+      <nav id="desktop-nav"></nav>
+      <div class="sidebar-bottom"><div class="side-note"><span class="note-icon">◎</span><strong>Dados neste dispositivo</strong><p>Use códigos ou apelidos. Faça backup regularmente.</p></div><span class="version">VERSÃO 0.1 · OFFLINE</span></div>
+    </aside>
+    <div class="workspace">
+      <header class="topbar"><div class="topbar-title"><span class="mobile-logo">✳</span><span id="breadcrumb">Visão geral</span></div><label class="global-search"><span>⌕</span><input id="global-search" type="search" placeholder="Buscar exercício, músculo, teste, AVE..." aria-label="Busca rápida global"></label><div class="topbar-right"><span class="offline-indicator"><span class="status-dot"></span><span id="network-status">Disponível offline</span></span><a class="icon-button top-data" href="#dados" title="Dados e privacidade" aria-label="Dados e privacidade">▤</a><button class="icon-button" id="install-button" type="button" hidden title="Instalar aplicativo">↓</button></div></header>
+      <main id="main" tabindex="-1"></main>
+      <footer class="footer">Fisio Clínico · Apoio educacional à prática supervisionada. Não substitui avaliação, diagnóstico ou julgamento profissional.</footer>
+    </div>
+  </div>
+  <nav class="bottom-nav" id="mobile-nav" aria-label="Navegação principal"></nav>
+  <div id="dialog-root"></div>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="/src/app.js"></script>
+</body>
+</html>

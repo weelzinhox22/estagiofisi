@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.chrome-*/
+*.log
+.DS_Store
+
+Prompt Codex — transformar Fisio Clínico em ferramenta prática.md

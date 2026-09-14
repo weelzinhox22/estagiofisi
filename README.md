@@ -1,0 +1,53 @@
+# Fisio Clínico 0.3
+
+Aplicação web responsiva e PWA instalável para apoiar consulta, documentação e estudo durante a prática de fisioterapia supervisionada.
+
+## Funcionalidades
+
+- pacientes identificados por código ou apelido;
+- avaliações, planos, objetivos e histórico de sessões;
+- 112 exercícios e atividades com ficha clínica educacional completa;
+- consulta por 22 músculos/grupos, 25 testes clínicos, 24 movimentos de goniometria, 8 reflexos e 6 escalas simples;
+- 15 problemas funcionais ligados a possibilidades de consulta;
+- filtros Neuro por objetivo, posição e assistência;
+- favoritos e grupos editáveis em “Meu repertório”;
+- gerador de sessão com parâmetros e status por exercício;
+- rascunhos de evolução curta e detalhada, sem completar dados ausentes;
+- gráfico de dor autorrelatada antes/depois;
+- busca global fixa e modo Consulta rápida sem paciente;
+- goniometria assistida por câmera com MediaPipe, esqueleto sobreposto, mínimo/máximo, amplitude observada, captura e contador configurável de ciclos;
+- funcionamento offline após a primeira visita;
+- exportação e importação de backup JSON;
+- layout para Android e desktop, pronto para futura adoção pelo Capacitor.
+
+## Executar
+
+Requer Node.js 20 ou superior e não exige instalar dependências.
+
+```powershell
+cd E:\fisioprojeto\fisio-clinico
+npm start
+```
+
+Acesse `http://localhost:4173`. Para validar:
+
+```powershell
+npm run check
+```
+
+O comando executa lint, validação estrutural do catálogo, testes automatizados e build. O build estático é criado em `dist/`.
+
+## Privacidade e uso clínico
+
+Esta versão armazena dados apenas no navegador, sem autenticação, criptografia ou servidor. Use códigos/apelidos e informações desidentificadas. Antes de usar dados reais, observe as regras da instituição, a legislação aplicável e a orientação do supervisor.
+
+O Fisio Clínico é uma ferramenta educacional e de apoio à documentação. Não substitui avaliação fisioterapêutica, diagnóstico, supervisão ou julgamento profissional.
+
+A câmera processa o vídeo localmente e não grava imagens. Em navegador, o acesso exige HTTPS ou localhost. O modelo fica disponível offline depois do primeiro carregamento bem-sucedido.
+
+Consulte [docs/SOURCE_AUDIT.md](docs/SOURCE_AUDIT.md) para decisões de licença e proveniência, [docs/CLINICAL_CONTENT.md](docs/CLINICAL_CONTENT.md) para os critérios editoriais e [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) para atribuições.
+
+
+## Hospedagem no Vercel
+
+Importe o repositório no Vercel. O arquivo vercel.json define npm ci, npm run build e saída dist. A implantação HTTPS permite solicitar a câmera no Android. O PWA pode ser instalado pelo menu do navegador após carregar a página. Os registros permanecem apenas no armazenamento local de cada dispositivo e não sincronizam entre celular e desktop; use exportação/importação de backup para transferi-los.

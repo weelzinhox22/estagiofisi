@@ -1,0 +1,27 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { exercises } from '../src/clinical-data.js';
+import { muscles, clinicalTests, goniometry, reflexes, scales, functionalProblems } from '../src/reference-data.js';
+
+test('metas de conteúdo clínico são atendidas', () => {
+  assert.ok(exercises.length >= 100);
+  assert.ok(muscles.length >= 20);
+  assert.ok(clinicalTests.length >= 20);
+  assert.ok(functionalProblems.length >= 10);
+  assert.ok(exercises.filter(x => x.kind === 'neuro').length >= 10);
+  assert.ok(goniometry.length >= 20 && reflexes.length >= 5 && scales.length >= 5);
+});
+test('todo exercício tem ficha, dose educacional e proveniência', () => {
+  const required=['name','category','region','joint','startPosition','objective','functionalApplication','exampleDose','doseNotes','care','stopWhen','source'];
+  for(const exercise of exercises){
+    for(const field of required) assert.ok(exercise[field],`${exercise.id} sem ${field}`);
+    assert.match(exercise.exampleDose,/^Exemplo educacional:/);
+    assert.ok(exercise.steps.length>=3 && exercise.why.length>=3);
+  }
+});
+test('testes não incluem acurácia diagnóstica inventada', () => {
+  for(const item of clinicalTests){
+    assert.ok(item.objective && item.position && item.execution && item.interpretation && item.positive && item.structure && item.notes);
+    assert.doesNotMatch(JSON.stringify(item),/sensibilidade|especificidade|%/i);
+  }
+});

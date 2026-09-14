@@ -1,0 +1,46 @@
+const endpoint = process.argv[2];
+if (!endpoint) throw new Error('Informe o endpoint WebSocket do Chrome DevTools.');
+const socket = new WebSocket(endpoint);
+await new Promise((resolve,reject)=>{socket.addEventListener('open',resolve,{once:true});socket.addEventListener('error',reject,{once:true});});
+let nextId=0;
+const pending=new Map();
+socket.addEventListener('message',event=>{const message=JSON.parse(event.data);if(message.id&&pending.has(message.id)){const {resolve,reject}=pending.get(message.id);pending.delete(message.id);message.error?reject(new Error(message.error.message)):resolve(message.result);}});
+const call=(method,params={})=>new Promise((resolve,reject)=>{const id=++nextId;pending.set(id,{resolve,reject});socket.send(JSON.stringify({id,method,params}));});
+const evaluate=async expression=>{const result=await call('Runtime.evaluate',{expression,awaitPromise:true,returnByValue:true});if(result.exceptionDetails)throw new Error(JSON.stringify(result.exceptionDetails));return result.result.value;};
+const wait=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+await call('Page.enable');
+await call('Runtime.enable');
+await call('Page.navigate',{url:'http://localhost:4173/#inicio'});await wait(900);
+await evaluate(`localStorage.setItem('fisio-clinico:v2', JSON.stringify({version:2,patients:[{id:'qa-patient',code:'P-QA',focus:'Equilíbrio',createdAt:new Date().toISOString()}],assessments:[],plans:[],sessions:[],exercises:[],favorites:[],repertoires:[],goniometryRecords:[]}))`);
+await call('Page.reload');await wait(800);
+await call('Page.navigate',{url:'http://localhost:4173/#sessao/qa-patient'});await wait(400);
+await evaluate(`document.querySelector('[data-action="session-add-exercise"]').click()`);await wait(300);
+await evaluate(`document.querySelector('[name="objective"]').value='Treino funcional supervisionado';document.querySelector('[name^="status-"]').value='realizado';document.querySelector('[name^="sets-"]').value='2';document.querySelector('[name="generalState"]').value='Sem alteração relatada';document.querySelector('#session-builder-form').requestSubmit()`);await wait(500);
+const session=await evaluate(`JSON.parse(localStorage.getItem('fisio-clinico:v2')).sessions[0]`);
+if(!session||session.items?.length!==1||!session.evolutionDetailed.includes('Estado geral')||session.evolutionDetailed.includes('PA inicial'))throw new Error('Fluxo de sessão/evolução falhou.');
+await call('Page.navigate',{url:'http://localhost:4173/#exercicio/ex-001'});await wait(400);
+await evaluate(`document.querySelector('[data-action="toggle-favorite"]').click()`);await wait(250);
+const favorite=await evaluate(`JSON.parse(localStorage.getItem('fisio-clinico:v2')).favorites[0]`);
+if(favorite!=='exercise:ex-001')throw new Error('Fluxo de favoritos falhou.');
+await call('Page.navigate',{url:'http://localhost:4173/#consulta'});await wait(350);
+await evaluate(`const q=document.querySelector('#quick-search');q.value='quadriceps';q.dispatchEvent(new Event('input',{bubbles:true}))`);await wait(350);
+const resultCount=await evaluate(`document.querySelectorAll('.result-group a').length`);
+if(resultCount<1)throw new Error('Busca sem acento falhou.');
+await call('Page.navigate',{url:'http://localhost:4173/#camera'});await wait(500);
+await evaluate("document.querySelector('#camera-start').click()");await wait(8000);
+const cameraState=await evaluate("({status:document.querySelector('#camera-status').textContent,active:Boolean(document.querySelector('#camera-video').srcObject),startDisabled:document.querySelector('#camera-start').disabled})");
+if(!cameraState.active||!cameraState.status.includes('Câmera ativa'))throw new Error('Inicialização da câmera/MediaPipe falhou: '+JSON.stringify(cameraState));
+await evaluate("document.querySelector('#camera-stop').click()");
+await call('Emulation.setDeviceMetricsOverride',{width:390,height:844,deviceScaleFactor:1,mobile:true});
+const mobileRoutes=['inicio','consulta','biblioteca/exercicios','biblioteca/testes','biblioteca/goniometria','camera','exercicio/ex-001','repertorio','pacientes/qa-patient'];
+const mobileChecks=[];
+for(const route of mobileRoutes){
+  await call('Page.navigate',{url:'http://localhost:4173/#'+route});await wait(300);
+  const metrics=await evaluate("({route:location.hash,width:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth,bottom:getComputedStyle(document.querySelector('.bottom-nav')).display})");
+  if(metrics.scroll>metrics.width+1||metrics.bottom==='none')throw new Error('Layout móvel com overflow ou navegação ausente: '+JSON.stringify(metrics));
+  mobileChecks.push(metrics.route);
+}
+console.log(JSON.stringify({session:true,evolution:true,favorite:true,accentInsensitiveSearch:true,camera:true,resultCount,mobileRoutes:mobileChecks.length},null,2));
+socket.close();
+
+
