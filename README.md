@@ -6,6 +6,7 @@ Aplicação web responsiva e PWA instalável para apoiar consulta, documentaçã
 
 - pacientes identificados por código ou apelido;
 - avaliações, planos, objetivos e histórico de sessões;
+- avaliação guiada da marcha em três passadas, com registro estruturado, resumo observacional e apoio para escolher medidas funcionais;
 - 166 exercícios e atividades com ficha clínica educacional completa;
 - consulta por 22 músculos/grupos, 25 testes clínicos, 24 movimentos de goniometria, 8 reflexos e 6 escalas simples;
 - 21 problemas funcionais ligados a possibilidades de consulta;

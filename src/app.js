@@ -1,8 +1,12 @@
-import { loadState, saveState, addRecord, patientRecords, painSeries, catalog, today, toggleFavorite, addToRepertoire } from './store.js';
+import { loadState, saveState, addRecord, updateRecord, removeRecord, patientRecords, painSeries, catalog, today, toggleFavorite, addToRepertoire } from './store.js';
 import { muscles, clinicalTests, goniometry, reflexes, scales, functionalProblems } from './reference-data.js';
 import { cameraPage, mountCamera, cleanupCamera } from './camera.js';
 import { generalLibraryPage, meetingPage, complaintPage, casesPage, generalSearch } from './general-physio-ui.js';
 import { reasoningLibraryPage, reasoningDetailPage, reasoningSearch } from './clinical-reasoning-ui.js';
+import { gaitSelects, gaitTestGuide, gaitChecklist, buildGaitSummary, gaitHasObservation } from './gait-assessment.js';
+import { buildEvolution, clinicalAssessmentFromForm, assessmentHasContent, buildAssessmentSummary, patientInitials, patientLabel, SESSION_BLOCKS } from './clinical-workflow.js';
+import { assessmentRow, clinicalAssessmentBody, patientFormBody, patientWorkflowPage, planFormBody, printPatientPage } from './patient-workflow-ui.js';
+import { sessionBuilderPage, sessionPayloadFromForm } from './session-workflow-ui.js';
 
 let state = loadState();
 let filter = '';
@@ -28,7 +32,8 @@ const pageHeader = (eyebrow,title,desc,action='') => `<div class="page-head"><di
 const advisory = `<div class="advisory"><span class="advisory-icon">ⓘ</span><div><strong>Uso educacional e apoio clínico supervisionado</strong><p>Registros e exercícios exigem avaliação e decisão individual do profissional responsável. Não substitui diagnóstico ou julgamento clínico.</p></div></div>`;
 
 const navItems = [['inicio','Visão geral','◫'],['consulta','Consulta rápida','⌕'],['pacientes','Pacientes','♧'],['biblioteca','Biblioteca','◇'],['repertorio','Meu repertório','★']];
-function route() { return decodeURIComponent(location.hash.slice(1) || 'inicio').split('/'); }
+function route() { return decodeURIComponent((location.hash.slice(1) || 'inicio').split('?')[0]).split('/'); }
+function routeQuery() { return new URLSearchParams((location.hash.split('?')[1]||'')); }
 function renderNav(section) {
   const activeSection = ['camera','encontro','queixa','casos','conduta'].includes(section) ? 'biblioteca' : section;
   const html = navItems.map(([id,label,icon]) => `<a href="#${id}" class="nav-item ${activeSection===id?'active':''}" ${activeSection===id?'aria-current="page"':''}><span aria-hidden="true">${icon}</span><span>${label}</span></a>`).join('');
@@ -38,10 +43,11 @@ function renderNav(section) {
 }
 function render() {
   cleanupCamera();
-  const [section,id] = route();
+  const [section,id,tab] = route();
   renderNav(section);
   const main = $('#main');
-  if (section === 'camera') { main.innerHTML = cameraPage(); queueMicrotask(() => mountCamera({onCapture:detail => { addRecord(state,'goniometryRecords',detail); saveState(state); toast('Medida estimada registrada.'); }})); }
+  if (section === 'camera') { main.innerHTML = cameraPage(state.patients,routeQuery().get('patient')); queueMicrotask(() => mountCamera({onCapture:detail => { addRecord(state,'goniometryRecords',detail); saveState(state); toast('Medida estimada registrada.'); }})); }
+  else if (section === 'imprimir' && id) main.innerHTML = printPatientPage(state,id,tab,allExercises());
   else if (section === 'conduta' && id) main.innerHTML = reasoningDetailPage(id);
   else if (section === 'encontro' && id) main.innerHTML = meetingPage(id);
   else if (section === 'queixa' && id) main.innerHTML = complaintPage(id,allExercises());
@@ -49,11 +55,17 @@ function render() {
   else if (section === 'exercicio' && id) main.innerHTML = exerciseDetail(id);
   else if (section === 'musculo' && id) main.innerHTML = muscleDetail(id);
   else if (section === 'teste' && id) main.innerHTML = testDetail(id);
-  else if (section === 'sessao' && id) main.innerHTML = sessionBuilder(id);
+  else if (section === 'sessao' && id) {
+    const patient=state.patients.find(item=>item.id===id);
+    const draft=sessionDrafts.get(id)||{selected:[],query:''};
+    sessionDrafts.set(id,draft);
+    main.innerHTML=patient?sessionBuilderPage({patient,draft,exercises:allExercises(),today:today()}):empty('Paciente não encontrado','Selecione um paciente para montar a sessão.');
+    updateSessionTotal();
+  }
   else if (section === 'consulta') main.innerHTML = quickPage();
   else if (section === 'biblioteca' || section === 'exercicios') main.innerHTML = libraryPage(id || 'exercicios');
   else if (section === 'repertorio') main.innerHTML = repertoirePage();
-  else if (section === 'pacientes' && id) main.innerHTML = patientPage(id);
+  else if (section === 'pacientes' && id) main.innerHTML = patientWorkflowPage(state,id,tab,allExercises());
   else if (section === 'pacientes') main.innerHTML = patientsPage();
   else if (section === 'dados') main.innerHTML = dataPage();
   else main.innerHTML = homePage();
@@ -66,14 +78,14 @@ function homePage() {
   return `<section class="hero"><div class="hero-copy"><span class="hero-label">ESPAÇO DE TRABALHO</span><h1>Cuide do registro.<br><em>Concentre-se na pessoa.</em></h1><p>Organize observações, planejamento e evolução em um só lugar, durante a prática supervisionada.</p><div class="hero-actions">${button('＋ Novo paciente','new-patient','light')}${button('Consulta rápida →','go-quick','outline-light')}</div></div><div class="hero-art" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="hero-flower">✳</div><span class="art-dot dot-a"></span><span class="art-dot dot-b"></span></div></section>
   ${advisory}
   <section class="stats" aria-label="Resumo"><div class="stat"><span>Pacientes ativos</span><strong>${active.length}</strong><small>Registros neste dispositivo</small></div><div class="stat"><span>Sessões registradas</span><strong>${state.sessions.length}</strong><small>Histórico de atendimento</small></div><div class="stat"><span>Planos criados</span><strong>${state.plans.length}</strong><small>Objetivos de acompanhamento</small></div></section>
-  <div class="section-grid"><section class="panel"><div class="section-title"><div><span class="eyebrow">ACESSO RÁPIDO</span><h2>Pacientes recentes</h2></div><a href="#pacientes">Ver todos →</a></div>${recent.length ? `<div class="record-list">${recent.map(p => `<a class="record" href="#pacientes/${encodeURIComponent(p.id)}"><span class="avatar">${esc(p.code.slice(0,2).toUpperCase())}</span><span class="record-info"><strong>${esc(p.code)}</strong><small>${esc(p.focus || 'Sem área registrada')}</small></span><span class="record-arrow">↗</span></a>`).join('')}</div>` : empty('Seu espaço começa aqui','Cadastre um código ou apelido para organizar o primeiro acompanhamento.',button('＋ Cadastrar paciente','new-patient','secondary'))}</section>
+  <div class="section-grid"><section class="panel"><div class="section-title"><div><span class="eyebrow">ACESSO RÁPIDO</span><h2>Pacientes recentes</h2></div><a href="#pacientes">Ver todos →</a></div>${recent.length ? `<div class="record-list">${recent.map(p => `<a class="record" href="#pacientes/${encodeURIComponent(p.id)}"><span class="avatar">${esc(patientInitials(p))}</span><span class="record-info"><strong>${esc(patientLabel(p))}</strong><small>${esc(p.chiefComplaint||p.focus||'Sem queixa registrada')}</small></span><span class="record-arrow">↗</span></a>`).join('')}</div>` : empty('Seu espaço começa aqui','Cadastre um código ou apelido para organizar o primeiro acompanhamento.',button('＋ Cadastrar paciente','new-patient','secondary'))}</section>
   <section class="panel"><div class="section-title"><div><span class="eyebrow">ATIVIDADE</span><h2>Últimas sessões</h2></div></div>${sessions.length ? `<div class="activity-list">${sessions.slice(0,4).map(s => {const p=state.patients.find(x=>x.id===s.patientId);return `<a href="#pacientes/${encodeURIComponent(s.patientId)}" class="activity"><span class="activity-date">${formatDate(s.date)}</span><strong>${esc(p?.code || 'Paciente removido')}</strong><small>${esc(short(s.summary || 'Sessão registrada',55))}</small></a>`}).join('')}</div>` : empty('Nenhuma sessão ainda','As sessões registradas aparecem aqui para consulta rápida.')}</section></div>`;
 }
 function patientsPage() {
-  const rows = state.patients.filter(p => (p.archived ? filter === 'arquivados' : filter !== 'arquivados') && (filter === 'arquivados' || `${p.code} ${p.focus||''}`.toLocaleLowerCase('pt-BR').includes(filter.toLocaleLowerCase('pt-BR')))).sort((a,b)=>b.createdAt.localeCompare(a.createdAt));
+  const rows = state.patients.filter(p => (p.archived ? filter === 'arquivados' : filter !== 'arquivados') && (filter === 'arquivados' || `${p.code||''} ${p.name||''} ${p.focus||''} ${p.chiefComplaint||''}`.toLocaleLowerCase('pt-BR').includes(filter.toLocaleLowerCase('pt-BR')))).sort((a,b)=>b.createdAt.localeCompare(a.createdAt));
   return `${pageHeader('ACOMPANHAMENTO','Pacientes','Use códigos ou apelidos. Evite nomes completos e outros dados identificáveis.',button('＋ Novo paciente','new-patient'))}
   <div class="toolbar"><label class="search"><span>⌕</span><input id="patient-search" type="search" placeholder="Buscar por código ou foco..." value="${esc(filter === 'arquivados'?'':filter)}" aria-label="Buscar pacientes"></label><button class="button ghost" data-action="toggle-archived">${filter==='arquivados'?'Ver ativos':'Ver arquivados'}</button></div>
-  <div class="panel list-panel">${rows.length ? `<div class="patient-table"><div class="table-head"><span>Paciente</span><span>Foco registrado</span><span>Cadastro</span><span></span></div>${rows.map(p=>`<a class="patient-row" href="#pacientes/${encodeURIComponent(p.id)}"><span class="person"><span class="avatar">${esc(p.code.slice(0,2).toUpperCase())}</span><strong>${esc(p.code)}</strong></span><span>${esc(p.focus||'—')}</span><span>${formatDate(p.createdAt.slice(0,10))}</span><span>→</span></a>`).join('')}</div>` : empty('Nenhum registro encontrado',filter==='arquivados'?'Não há pacientes arquivados.':'Cadastre o primeiro paciente ou ajuste a busca.',filter==='arquivados'?'':button('＋ Novo paciente','new-patient','secondary'))}</div>`;
+  <div class="panel list-panel">${rows.length ? `<div class="patient-table"><div class="table-head"><span>Paciente</span><span>Queixa principal</span><span>Cadastro</span><span></span></div>${rows.map(p=>`<a class="patient-row" href="#pacientes/${encodeURIComponent(p.id)}"><span class="person"><span class="avatar">${esc(patientInitials(p))}</span><strong>${esc(patientLabel(p))}</strong></span><span>${esc(p.chiefComplaint||p.focus||'—')}</span><span>${formatDate((p.createdAt||p.startDate||today()).slice(0,10))}</span><span>→</span></a>`).join('')}</div>` : empty('Nenhum registro encontrado',filter==='arquivados'?'Não há pacientes arquivados.':'Cadastre o primeiro paciente ou ajuste a busca.',filter==='arquivados'?'':button('＋ Novo paciente','new-patient','secondary'))}</div>`;
 }
 function patientPage(id) {
   const p = state.patients.find(x => x.id === id);
@@ -87,7 +99,7 @@ function patientPage(id) {
   <div class="patient-meta"><span><strong>Início</strong> ${formatDate(p.startDate)}</span><span><strong>Supervisor(a)</strong> ${esc(p.supervisor||'Não informado')}</span><span><strong>Local</strong> ${esc(p.setting||'Não informado')}</span></div>
   ${p.notes?`<div class="note-panel"><strong>Contexto do acompanhamento</strong><p>${esc(p.notes)}</p></div>`:''}
   ${advisory}
-  <div class="section-grid clinical-grid"><section class="panel"><div class="section-title"><div><span class="eyebrow">AVALIAÇÃO</span><h2>Observações</h2></div>${button('＋ Adicionar','new-assessment','small',`data-id="${esc(id)}"`)}</div>${assess.length?assess.map(a=>`<article class="entry"><div class="entry-top"><strong>${formatDate(a.date)}</strong>${badge(a.type||'Avaliação')}</div>${a.complaint?`<p><b>Queixa/objetivo:</b> ${esc(a.complaint)}</p>`:''}${a.findings?`<p><b>Achados registrados:</b> ${esc(a.findings)}</p>`:''}${a.function?`<p><b>Função relatada:</b> ${esc(a.function)}</p>`:''}${a.pain!==''?`<small>Dor referida: ${esc(a.pain)}/10</small>`:''}</article>`).join(''):empty('Sem avaliação registrada','Registre observações após avaliação supervisionada.')}</section>
+  <div class="section-grid clinical-grid"><section class="panel"><div class="section-title"><div><span class="eyebrow">AVALIAÇÃO</span><h2>Observações</h2></div><div class="section-actions">${button('Avaliar marcha','new-gait-assessment','small secondary',`data-id="${esc(id)}"`)}${button('＋ Geral','new-assessment','small',`data-id="${esc(id)}"`)}</div></div>${assess.length?assess.map(a=>`<article class="entry ${a.type==='Marcha'?'gait-entry':''}"><div class="entry-top"><strong>${formatDate(a.date)}</strong>${badge(a.type||'Avaliação',a.type==='Marcha'?'green':'')}</div>${a.complaint?`<p><b>Queixa/objetivo:</b> ${esc(a.complaint)}</p>`:''}${a.findings?`<p><b>${a.type==='Marcha'?'Resumo observacional':'Achados registrados'}:</b> ${esc(a.findings)}</p>`:''}${a.function?`<p><b>Função relatada:</b> ${esc(a.function)}</p>`:''}${a.type==='Marcha'&&a.gait?.selectedTests?.length?`<div class="gait-tags">${a.gait.selectedTests.map(testId=>gaitTestGuide.find(x=>x.id===testId)?.name).filter(Boolean).map(name=>`<span>${esc(name)}</span>`).join('')}</div>`:''}${a.pain!==''&&a.pain!=null?`<small>Dor referida: ${esc(a.pain)}/10</small>`:''}</article>`).join(''):empty('Sem avaliação registrada','Registre observações após avaliação supervisionada.')}</section>
   <section class="panel"><div class="section-title"><div><span class="eyebrow">PLANEJAMENTO</span><h2>Planos e objetivos</h2></div>${button('＋ Adicionar','new-plan','small',`data-id="${esc(id)}"`)}</div>${plans.length?plans.map(x=>`<article class="entry"><div class="entry-top"><strong>${esc(x.title)}</strong>${badge(x.status||'Ativo','green')}</div><small>${formatDate(x.date)}</small><p>${esc(x.goal)}</p>${x.notes?`<p class="muted">${esc(x.notes)}</p>`:''}</article>`).join(''):empty('Sem plano registrado','Defina objetivos individualizados com a supervisão responsável.')}</section></div>
   <section class="panel full-panel"><div class="section-title"><div><span class="eyebrow">EVOLUÇÃO</span><h2>Sessões</h2></div>${button('＋ Montar sessão','build-session','small',`data-id="${esc(id)}"`)}</div>${pain.length>1?`<div class="chart-wrap"><h3>Dor referida antes das sessões <small>(escala 0–10, autorrelato)</small></h3>${painChart(pain)}</div>`:''}${sessions.length?`<div class="sessions">${sessions.map(s=>`<article class="session"><div class="session-date"><span>${formatDate(s.date)}</span>${s.painBefore!==''&&s.painBefore!=null?`<small>Dor ${esc(s.painBefore)}${s.painAfter!==''&&s.painAfter!=null?` → ${esc(s.painAfter)}`:''}/10</small>`:''}</div><div><strong>${esc(s.summary||'Sessão registrada')}</strong>${s.interventions?`<p><b>${s.evolutionShort?'Evolução curta: ':''}</b>${esc(s.interventions)}</p>`:''}${s.response?`<small>Resposta: ${esc(s.response)}</small>`:''}${s.exerciseId?`<small>Exercício: ${esc([...catalog,...state.exercises].find(e=>e.id===s.exerciseId)?.name||'Não encontrado')}</small>`:''}${s.evolutionDetailed?`<details class="evolution-draft"><summary>Ver evolução detalhada</summary><p>${esc(s.evolutionDetailed)}</p></details>`:''}</div></article>`).join('')}</div>`:empty('Nenhuma sessão registrada','A evolução das sessões aparecerá aqui.')}</section>`;
 }
@@ -98,7 +110,7 @@ function painChart(rows) {
 }
 
 const normalized = value => String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
-const allExercises = () => [...catalog, ...state.exercises.map((e,i)=>({id:e.id,name:e.name,category:e.category||'Pessoal',region:e.region||e.category||'Pessoal',objective:e.objective||e.notes||'Exercício registrado pelo usuário.',why:[e.objective||e.notes||'Item do repertório pessoal.'],tags:e.tags?String(e.tags).split(','):['pessoal'],source:e.source,primaryMuscles:e.primaryMuscles?String(e.primaryMuscles).split(','):[],auxiliaryMuscles:[],steps:e.steps||['Consulte as anotações próprias e a orientação do supervisor.'],equipment:[],progressions:[],regressions:[],commonCompensations:[],commonErrors:[],exampleDose:e.exampleDose||'Definir conforme avaliação e orientação supervisionada.',doseNotes:'Registro pessoal; revisar antes do uso.',care:e.care||'Confirmar adequação, ambiente e resposta individual.',stopWhen:'Interromper diante de resposta preocupante e reavaliar.',functionalApplication:e.functionalApplication||'',clinicalNotes:e.notes||'',difficulty:e.difficulty||'A definir',side:'A definir',joint:e.joint||'A definir',capacities:[],custom:true,kind:'exercise'}))];
+const allExercises = () => [...catalog, ...state.exercises.map(e=>({id:e.id,name:e.name,category:e.category||'Pessoal',region:e.region||e.category||'Pessoal',objective:e.objective||e.notes||'Exercício registrado pelo usuário.',why:[e.objective||e.notes||'Item do repertório pessoal.'],tags:e.tags?String(e.tags).split(','):['pessoal'],source:e.source,primaryMuscles:Array.isArray(e.primaryMuscles)?e.primaryMuscles:e.primaryMuscles?String(e.primaryMuscles).split(','):[],auxiliaryMuscles:[],steps:Array.isArray(e.steps)?e.steps:e.steps?[e.steps]:['Consulte as anotações próprias e a orientação do supervisor.'],equipment:Array.isArray(e.equipment)?e.equipment:[],progressions:Array.isArray(e.progressions)?e.progressions:[],regressions:Array.isArray(e.regressions)?e.regressions:[],indications:Array.isArray(e.indications)?e.indications:[],commonCompensations:[],commonErrors:[],exampleDose:e.exampleDose||'Definir conforme avaliação e orientação supervisionada.',doseNotes:[e.rest&&`Descanso: ${e.rest}`,'Registro pessoal; revisar antes do uso.'].filter(Boolean).join(' '),care:e.care||'Confirmar adequação, ambiente e resposta individual.',stopWhen:'Interromper diante de resposta preocupante e reavaliar.',functionalApplication:e.functionalApplication||'',clinicalNotes:e.notes||'',difficulty:e.difficulty||'A definir',side:e.side||'A definir',joint:e.joint||'A definir',videoUrl:e.videoUrl||'',capacities:[],custom:true,kind:'exercise'}))];
 const favoriteKey = (kind,id) => `${kind}:${id}`;
 const isFavorite = (kind,id) => state.favorites.includes(favoriteKey(kind,id));
 const favoriteButton = (kind,id,label='Favoritar') => button(isFavorite(kind,id)?'★ Favorito':`☆ ${label}`,'toggle-favorite',isFavorite(kind,id)?'secondary':'ghost',`data-kind="${kind}" data-id="${esc(id)}"`);
@@ -195,7 +207,7 @@ function neuroLibrary(){
 function exerciseDetail(id){
   const e=allExercises().find(x=>x.id===id);
   if(!e)return empty('Exercício não encontrado','Volte à biblioteca e tente novamente.',`<a class="button secondary" href="#biblioteca/exercicios">Biblioteca</a>`);
-  return `<div class="back"><a href="#biblioteca/exercicios">← Biblioteca</a></div><article class="detail-page"><div class="detail-hero"><div><span class="eyebrow">${esc(e.category)} · ${esc(e.difficulty)}</span><h1>${esc(e.name)}</h1><div class="tag-row">${(e.tags||[]).map(t=>`<span>${esc(t)}</span>`).join('')}</div></div><div class="detail-actions">${favoriteButton('exercise',e.id)}${button('＋ Repertório','add-repertoire','secondary',`data-kind="exercise" data-id="${e.id}"`)}${button('＋ Adicionar à sessão','add-session','primary',`data-id="${e.id}"`)}</div></div>${e.synonyms?.length?`<p class="synonyms"><b>Sinônimos:</b> ${esc(e.synonyms.join(', '))}</p>`:''}<section class="detail-highlight"><span>OBJETIVO</span><p>${esc(e.objective)}</p></section><section class="detail-section why"><h2>Por que utilizar este exercício?</h2><ul>${e.why.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></section><section class="detail-section"><h2>Como realizar</h2><p><b>Posição inicial:</b> ${esc(e.startPosition)}</p><ol>${e.steps.map(x=>`<li>${esc(x)}</li>`).join('')}</ol></section><div class="detail-columns"><section class="detail-section"><h2>Músculos</h2><h3>Principais</h3><p>${esc(e.primaryMuscles.join(', ')||'Variam conforme a tarefa.')}</p><h3>Participação</h3><p>${esc(e.auxiliaryMuscles.join(', ')||'Variam conforme execução.')}</p></section><section class="detail-section"><h2>Aplicação funcional</h2><p>${esc(e.functionalApplication)}</p><p><b>Capacidades:</b> ${esc(e.capacities.join(', '))}</p><p><b>Equipamentos:</b> ${esc(e.equipment.join(', ')||'Nenhum')}</p><p><b>Lado:</b> ${esc(e.side)}</p></section></div><section class="detail-section dose-box"><h2>Dose de exemplo</h2><p>${esc(e.exampleDose)}</p><small>${esc(e.doseNotes)}</small></section><div class="detail-columns"><section class="detail-section"><h2>Progressões</h2><ul>${e.progressions.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></section><section class="detail-section"><h2>Regressões</h2><ul>${e.regressions.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></section></div><div class="detail-columns"><section class="detail-section"><h2>Compensações e erros comuns</h2><ul>${[...e.commonCompensations,...e.commonErrors].map(x=>`<li>${esc(x)}</li>`).join('')}</ul></section><section class="detail-section care-box"><h2>Cuidados</h2><p>${esc(e.care)}</p><h3>Quando interromper</h3><p>${esc(e.stopWhen)}</p></section></div><section class="detail-section"><h2>Observações clínicas</h2><p>${esc(e.clinicalNotes)}</p></section><footer class="source-box"><strong>Fonte / proveniência</strong><p>${esc(e.source)}</p></footer></article>`;
+  return `<div class="back"><a href="#biblioteca/exercicios">← Biblioteca</a></div><article class="detail-page"><div class="detail-hero"><div><span class="eyebrow">${esc(e.category)} · ${esc(e.difficulty)}</span><h1>${esc(e.name)}</h1><div class="tag-row">${(e.tags||[]).map(t=>`<span>${esc(t)}</span>`).join('')}</div></div><div class="detail-actions">${favoriteButton('exercise',e.id)}${button('＋ Repertório','add-repertoire','secondary',`data-kind="exercise" data-id="${e.id}"`)}${button('＋ Adicionar à sessão','add-session','primary',`data-id="${e.id}"`)}</div></div>${e.synonyms?.length?`<p class="synonyms"><b>Sinônimos:</b> ${esc(e.synonyms.join(', '))}</p>`:''}<section class="detail-highlight"><span>OBJETIVO</span><p>${esc(e.objective)}</p></section><section class="detail-section why"><h2>Por que utilizar este exercício?</h2><ul>${e.why.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></section><section class="detail-section"><h2>Como realizar</h2><p><b>Posição inicial:</b> ${esc(e.startPosition)}</p><ol>${e.steps.map(x=>`<li>${esc(x)}</li>`).join('')}</ol></section><div class="detail-columns"><section class="detail-section"><h2>Músculos</h2><h3>Principais</h3><p>${esc(e.primaryMuscles.join(', ')||'Variam conforme a tarefa.')}</p><h3>Participação</h3><p>${esc(e.auxiliaryMuscles.join(', ')||'Variam conforme execução.')}</p></section><section class="detail-section"><h2>Aplicação funcional</h2><p>${esc(e.functionalApplication)}</p><p><b>Capacidades:</b> ${esc(e.capacities.join(', '))}</p><p><b>Equipamentos:</b> ${esc(e.equipment.join(', ')||'Nenhum')}</p><p><b>Lado:</b> ${esc(e.side)}</p></section></div><section class="detail-section dose-box"><h2>Dose de exemplo</h2><p>${esc(e.exampleDose)}</p><small>${esc(e.doseNotes)}</small></section><div class="detail-columns"><section class="detail-section"><h2>Progressões</h2><ul>${e.progressions.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></section><section class="detail-section"><h2>Regressões</h2><ul>${e.regressions.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></section></div><div class="detail-columns"><section class="detail-section"><h2>Compensações e erros comuns</h2><ul>${[...e.commonCompensations,...e.commonErrors].map(x=>`<li>${esc(x)}</li>`).join('')}</ul></section><section class="detail-section care-box"><h2>Cuidados</h2><p>${esc(e.care)}</p><h3>Quando interromper</h3><p>${esc(e.stopWhen)}</p></section></div>${e.indications?.length?`<section class="detail-section"><h2>Indicações registradas</h2><ul>${e.indications.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></section>`:''}<section class="detail-section"><h2>Observações clínicas</h2><p>${esc(e.clinicalNotes)}</p>${/^https?:\/\//i.test(e.videoUrl||'')?`<p><a class="button secondary small" href="${esc(e.videoUrl)}" target="_blank" rel="noreferrer">Ver demonstração visual</a></p>`:''}</section><footer class="source-box"><strong>Fonte / proveniência</strong><p>${esc(e.source)}</p></footer></article>`;
 }
 function muscleDetail(id){
   const m=muscles.find(x=>x.id===id);if(!m)return empty('Músculo não encontrado','Consulte a biblioteca.');
@@ -247,20 +259,42 @@ function modal(title,body,formId) {
 }
 function closeModal() { $('#dialog-root').innerHTML = ''; }
 function patientForm(p) {
-  modal(p?'Editar paciente':'Novo paciente',`<p class="form-hint">Identifique por código ou apelido. Não inclua nome completo, documento ou contato.</p><div class="form-grid">${input('Código ou apelido *','code','text',p?.code,'required maxlength="60"')}${input('Data de início','startDate','date',p?.startDate||today())}${input('Foco do acompanhamento','focus','text',p?.focus,'maxlength="100"')}${input('Supervisor(a)','supervisor','text',p?.supervisor,'maxlength="100"')}${input('Local / contexto','setting','text',p?.setting,'maxlength="100"')}</div>${area('Notas gerais','notes',p?.notes,'Contexto desidentificado e relevante para o acompanhamento')}${p?`<input type="hidden" name="id" value="${esc(p.id)}">`:''}`,'patient-form');
+  modal(p?'Editar paciente':'Novo paciente',patientFormBody(p||{},today()),'patient-form');
 }
 function assessmentForm(id) {
   modal('Nova avaliação',`<input type="hidden" name="patientId" value="${esc(id)}"><div class="form-grid">${input('Data *','date','date',today(),'required')}${select('Tipo','type',[['Inicial','Inicial'],['Reavaliação','Reavaliação'],['Objetiva','Objetiva']])}${input('Dor referida (0–10)','pain','number','','min="0" max="10" step="1"')}</div>${area('Queixa / objetivo relatado','complaint','','Descreva apenas o que foi avaliado')}${area('Achados registrados','findings','','Exame e observações sob supervisão')}${area('Função relatada','function','','Atividades e limitações relatadas')}`,'assessment-form');
 }
+function clinicalAssessmentForm(id) {
+  modal('Avaliação fisioterapêutica',clinicalAssessmentBody(id,today()),'clinical-assessment-form');
+  $('.modal')?.classList.add('workflow-modal');
+}
+function gaitField(label,name,options) {
+  return select(label,name,options);
+}
+function gaitAssessmentForm(id) {
+  const testCards = gaitTestGuide.map(test=>`<label class="gait-test"><input type="checkbox" name="selectedTest" value="${esc(test.id)}"><span><strong>${esc(test.name)}</strong><b>${esc(test.question)}</b><small>${esc(test.note)}</small></span></label>`).join('');
+  const checklist = gaitChecklist.map(item=>`<div class="gait-check-row"><label><input type="checkbox" name="gaitFinding" value="${esc(item.id)}"><span>${esc(item.label)}</span></label>${item.sideApplicable?select('Lado',`gaitSide-${item.id}`,[['','Não definido'],['Direito','Direito'],['Esquerdo','Esquerdo'],['Bilateral','Bilateral']]):''}</div>`).join('');
+  modal('Avaliação guiada da marcha',`<input type="hidden" name="patientId" value="${esc(id)}"><input type="hidden" name="type" value="Marcha">
+    <div class="gait-intro"><strong>Observe em 3 passadas</strong><ol><li>Segurança e padrão global.</li><li>Apoio: contato, tempo, pelve, joelho e tronco.</li><li>Balanço, liberação do pé, braços e virada.</li></ol><p>Marque apenas o que você realmente observou. “Sem alteração evidente” não significa normalidade nem exclui alterações fora do plano observado.</p></div>
+    <section class="gait-step"><div class="gait-step-head"><span>1</span><div><strong>Condições e segurança</strong><small>Use o dispositivo habitual e permaneça próximo se houver risco de queda.</small></div></div><div class="form-grid">${input('Data *','date','date',today(),'required')}${input('Dor referida (0–10)','pain','number','','min="0" max="10" step="1"')}${input('Ambiente / superfície','environment','text','','placeholder="Ex.: corredor plano, 8 m" maxlength="100"')}${input('Calçado','footwear','text','','placeholder="Ex.: tênis habitual" maxlength="80"')}${input('Dispositivo auxiliar','device','text','','placeholder="Ex.: sem dispositivo, bengala" maxlength="100"')}${select('Nível de assistência','assistance',[['','Não registrado'],['independente','Independente'],['supervisao','Supervisão próxima'],['contato','Assistência por contato'],['minima','Assistência mínima'],['moderada','Assistência moderada'],['maxima','Assistência máxima']])}</div>${area('Sintomas e resposta durante a tarefa','symptoms','','Dor, tontura, dispneia, fadiga, medo ou mudança do padrão')}${area('Segurança / intercorrências','safetyNotes','','Quase queda, apoio em móveis, necessidade de interromper ou outro fato observado')}</section>
+    <section class="gait-step"><div class="gait-step-head"><span>2</span><div><strong>Padrão global e fase de apoio</strong><small>Observe de frente, de costas e de lado, sem tentar preencher tudo de uma vez.</small></div></div><div class="gait-grid">${gaitField('Ritmo','pace',gaitSelects.pace)}${gaitField('Simetria / passo','symmetry',gaitSelects.symmetry)}${gaitField('Base de suporte','base',gaitSelects.base)}${gaitField('Contato inicial','initialContact',gaitSelects.initialContact)}${gaitField('Tempo de apoio','stanceTime',gaitSelects.stanceTime)}${gaitField('Controle da pelve','pelvis',gaitSelects.pelvis)}${gaitField('Joelho no apoio','knee',gaitSelects.knee)}${gaitField('Tronco','trunk',gaitSelects.trunk)}</div></section>
+    <section class="gait-step"><div class="gait-step-head"><span>3</span><div><strong>Balanço, braços e virada</strong><small>Procure liberação do pé e mudanças de estabilidade ao virar.</small></div></div><div class="gait-grid">${gaitField('Liberação do pé','clearance',gaitSelects.clearance)}${gaitField('Joelho no balanço','swingKnee',gaitSelects.swingKnee)}${gaitField('Balanço dos braços','armSwing',gaitSelects.armSwing)}${gaitField('Virada','turn',gaitSelects.turn)}</div><div class="form-grid">${input('Distância observada','distance','text','','placeholder="Ex.: 10 m" maxlength="40"')}${input('Tempo, se cronometrado','time','text','','placeholder="Ex.: 12,4 s" maxlength="40"')}${input('Número de passos, se contado','steps','text','','placeholder="Ex.: 18" maxlength="40"')}</div>${area('Outras observações','notes','','Descreva fatos observáveis; evite concluir a causa sem completar o exame')}</section>
+    <section class="gait-step"><div class="gait-step-head"><span>4</span><div><strong>Checklist de achados</strong><small>Marque somente o observado e informe o lado quando aplicável.</small></div></div><div class="gait-checklist">${checklist}</div>${input('Outro achado','otherGaitFinding','text','','maxlength="160"')}</section>
+    <section class="gait-step"><div class="gait-step-head"><span>5</span><div><strong>Qual medida responde à sua dúvida?</strong><small>Escolha pela pergunta clínica e pelo perfil da pessoa; não é necessário aplicar todas.</small></div></div><div class="gait-tests">${testCards}</div>${area('Resultados e protocolo usado','testResults','','Ex.: TUG, 11,8 s, com bengala habitual e supervisão próxima. Registre adaptações e motivo de interrupção.')}</section>
+    <div class="gait-source"><strong>Importante</strong><p>Este roteiro organiza a observação; não identifica sozinho a causa da alteração e não substitui exame neurológico, musculoesquelético, cardiorrespiratório, análise do risco de queda ou protocolo institucional. Discuta achados novos, instabilidade ou sintomas preocupantes com a supervisão.</p><p>Referências de apoio: <a href="https://www.cdc.gov/steadi/hcp/clinical-resources/index.html" target="_blank" rel="noreferrer">CDC STEADI</a> e <a href="https://www.sralab.org/rehabilitation-measures/10-meter-walk-test" target="_blank" rel="noreferrer">Rehabilitation Measures Database</a>.</p></div>`,'gait-assessment-form');
+  $('.modal')?.classList.add('gait-modal');
+}
 function planForm(id) {
-  modal('Novo plano',`<input type="hidden" name="patientId" value="${esc(id)}"><div class="form-grid">${input('Data *','date','date',today(),'required')}${input('Título *','title','text','','required maxlength="100"')}${select('Status','status',[['Ativo','Ativo'],['Em revisão','Em revisão'],['Concluído','Concluído']])}</div>${area('Objetivo individualizado *','goal','','Defina com a supervisão responsável')}${area('Observações','notes','','Critérios, acompanhamento ou contexto')}`,'plan-form');
+  modal('Diagnóstico, objetivos e plano',planFormBody(state,id,today()),'plan-form');
+  $('.modal')?.classList.add('workflow-modal');
 }
 function sessionForm(id) {
   const options = [['','Nenhum selecionado'],...[...catalog,...state.exercises].map(e=>[e.id,e.name])];
   modal('Registrar sessão',`<input type="hidden" name="patientId" value="${esc(id)}"><div class="form-grid">${input('Data *','date','date',today(),'required')}${input('Dor antes (0–10)','painBefore','number','','min="0" max="10" step="1"')}${input('Dor depois (0–10)','painAfter','number','','min="0" max="10" step="1"')}${select('Exercício registrado','exerciseId',options)}</div>${input('Resumo *','summary','text','','required maxlength="120"')}${area('Intervenções / atividades','interventions','','Registre o que de fato ocorreu')}${area('Resposta observada','response','','Resposta da pessoa e decisão supervisionada')}`,'session-form');
 }
 function exerciseForm() {
-  modal('Adicionar exercício',`${input('Nome *','name','text','','required maxlength="100"')}${select('Categoria','category',[['Tronco e coluna','Tronco e coluna'],['Membros inferiores','Membros inferiores'],['Membros superiores','Membros superiores'],['Mobilidade','Mobilidade'],['Outro','Outro']])}${input('Fonte / referência / proveniência *','source','text','','required maxlength="300"')}${area('Notas próprias (opcional)','notes','','Evite transformar em prescrição padronizada')}`,'exercise-form');
+  modal('Adicionar exercício',`<div class="form-grid">${input('Nome *','name','text','','required maxlength="100"')}${select('Categoria','category',[['Tronco e coluna','Tronco e coluna'],['Membros inferiores','Membros inferiores'],['Membros superiores','Membros superiores'],['Mobilidade','Mobilidade'],['Equilíbrio','Equilíbrio'],['Marcha','Marcha'],['Outro','Outro']])}${input('Região','region','text','','maxlength="80"')}${input('Articulação','joint','text','','maxlength="80"')}${input('Grupo muscular','primaryMuscles','text','','placeholder="Separe por vírgulas" maxlength="180"')}${input('Equipamento','equipment','text','','placeholder="Separe por vírgulas" maxlength="180"')}${select('Lado','side',[['A definir','A definir'],['Direito','Direito'],['Esquerdo','Esquerdo'],['Bilateral','Bilateral']])}${select('Nível','difficulty',[['A definir','A definir'],['Inicial','Inicial'],['Intermediário','Intermediário'],['Avançado','Avançado']])}</div>${area('Objetivo','objective','','O que se pretende trabalhar')}${area('Como fazer / execução *','steps','','Uma etapa por linha')}<div class="form-grid">${input('Dose inicial editável','exampleDose','text','','placeholder="Ex.: 2 x 10, manter 5 s" maxlength="120"')}${input('Descanso','rest','text','','maxlength="80"')}${input('Vídeo ou link demonstrativo','videoUrl','url','','placeholder="https://..." maxlength="300"')}</div>${area('Indicações','indications','','Uma por linha')}${area('Cuidados','care','','Condições para adaptar, interromper ou reavaliar')}${area('Progressões','progressions','','Uma por linha; nunca serão aplicadas automaticamente')}${area('Regressões','regressions','','Uma por linha')}${area('Observações','notes','','Registro próprio e ajustes supervisionados')}${input('Fonte / referência / proveniência *','source','text','','required maxlength="300"')}`,'exercise-form');
+  $('.modal')?.classList.add('workflow-modal');
 }
 
 function repertoireForm(existing){
@@ -276,18 +310,21 @@ function gonioForm(id){
   const g=goniometry.find(x=>x.id===id);if(!g)return;
   modal(`Registrar ${g.joint} — ${g.movement}`,`${input('Data *','date','date',today(),'required')}${input('Paciente / código (opcional)','patientCode','text','','maxlength="60"')}${input('Lado','side','text','','maxlength="30"')}${input('Valor medido *','value','number','','required step="0.1"')}${area('Observações','notes','','Posição, sintomas ou variações do método')}<input type="hidden" name="goniometryId" value="${g.id}"><p class="form-hint">O app não compara com valores normativos. Registre unidade e método de forma consistente.</p>`,'goniometry-form');
 }
+function patientGonioForm(patientId){
+  const options=goniometry.map(item=>[item.id,`${item.joint} — ${item.movement}`]);
+  modal('Registrar goniometria',`<input type="hidden" name="patientId" value="${esc(patientId)}"><div class="form-grid">${input('Data *','date','date',today(),'required')}${select('Articulação e movimento','goniometryId',options)}${select('Lado','side',[['Direito','Direito'],['Esquerdo','Esquerdo'],['Bilateral','Bilateral']])}${input('Graus *','value','number','','required step="0.1"')}${input('Método','method','text','Goniômetro universal','maxlength="80"')}</div>${area('Observações','notes','','Posição, sintomas, compensações ou variações do método')}`,'patient-goniometry-form');
+}
 function choosePatientForSession(exerciseId){
   if(!state.patients.filter(p=>!p.archived).length){toast('Cadastre um paciente para montar uma sessão.',true);location.hash='pacientes';return;}
   modal('Adicionar à sessão',`${select('Paciente','patientId',state.patients.filter(p=>!p.archived).map(p=>[p.id,p.code]))}<input type="hidden" name="exerciseId" value="${esc(exerciseId||'')}"><p class="form-hint">A seleção abre o gerador. Parâmetros e status serão definidos na sessão.</p>`,'choose-session-form');
 }
 function sessionFromForm(form){
-  const fd=new FormData(form);const values=Object.fromEntries(fd.entries());const ids=fd.getAll('exerciseId');
-  if(!ids.length)throw new Error('Selecione pelo menos um exercício.');
-  if(!inRange(values.painBefore)||!inRange(values.painAfter))throw new Error('Informe dor entre 0 e 10.');
-  const items=ids.map(id=>({exerciseId:id,status:values[`status-${id}`]||'planejado',sets:values[`sets-${id}`]||'',reps:values[`reps-${id}`]||'',time:values[`time-${id}`]||'',load:values[`load-${id}`]||'',assistance:values[`assist-${id}`]||'',pain:values[`pain-${id}`]||'',note:values[`note-${id}`]||''}));
-  const payload={patientId:values.patientId,date:values.date,objective:values.objective,summary:values.objective,generalState:values.generalState,orientation:values.orientation,bpInitial:values.bpInitial,bpFinal:values.bpFinal,painBefore:values.painBefore,painAfter:values.painAfter,response:values.response,incidents:values.incidents,items};
-  payload.evolutionShort=evolutionDraft(values,items,false);payload.evolutionDetailed=evolutionDraft(values,items,true);payload.interventions=payload.evolutionShort;
-  return payload;
+  return sessionPayloadFromForm(form,id=>allExercises().find(item=>item.id===id));
+}
+
+function updateSessionTotal(){
+  const total=[...document.querySelectorAll('[name^="minutes-"]')].reduce((sum,field)=>sum+(Number(field.value)||0),0);
+  const output=$('#session-total');if(output)output.textContent=`${total} min`;
 }
 
 function formValues(form) { return Object.fromEntries(new FormData(form).entries()); }
@@ -298,19 +335,54 @@ document.addEventListener('submit', event => {
     try{const payload=sessionFromForm(form);addRecord(state,'sessions',payload);sessionDrafts.delete(payload.patientId);saveState(state);toast('Sessão concluída e evolução gerada.');location.hash=`pacientes/${payload.patientId}`;}catch(error){toast(error.message,true);}return;
   }
   const values=formValues(form);
+  if(form.id==='clinical-assessment-form'){
+    const clinical=clinicalAssessmentFromForm(new FormData(form));
+    if(!inRange(values.pain)){toast('Informe dor entre 0 e 10.',true);return;}
+    if(!assessmentHasContent(clinical)&&!values.complaint?.trim()){toast('Registre ao menos um achado ou uma queixa avaliada.',true);return;}
+    const payload={patientId:values.patientId,date:values.date,type:values.type||'Estruturada',pain:values.pain,complaint:values.complaint||'',function:values.function||'',clinical,findings:buildAssessmentSummary(clinical)};
+    try{addRecord(state,'assessments',payload);closeModal();saved();}catch(error){toast(error.message,true);}
+    return;
+  }
+  if(form.id==='gait-assessment-form'){
+    const gaitData=new FormData(form);
+    const selectedTests=gaitData.getAll('selectedTest');
+    const checklist=gaitData.getAll('gaitFinding').map(findingId=>({id:findingId,side:gaitData.get(`gaitSide-${findingId}`)||''}));
+    if(!inRange(values.pain)){toast('Informe dor entre 0 e 10.',true);return;}
+    if(!gaitHasObservation(values)&&!selectedTests.length&&!checklist.length&&!values.otherGaitFinding?.trim()){toast('Registre ao menos uma observação, achado ou medida selecionada.',true);return;}
+    values.gait={...values,selectedTests,checklist};
+    values.findings=buildGaitSummary(values,selectedTests,checklist);
+    delete values.selectedTest;
+    try{addRecord(state,'assessments',values);closeModal();saved();}catch(error){toast(error.message,true);}
+    return;
+  }
   if(form.id==='case-discussion-form'){if(!values.caseCode.trim()){toast('Informe um código desidentificado.',true);return;}addRecord(state,'caseDiscussions',values);saveState(state);toast('Roteiro de discussão salvo.');render();return;}
   if(form.id==='repertoire-form'){if(!values.name.trim()){toast('Informe o nome do grupo.',true);return;}if(values.id){const r=state.repertoires.find(x=>x.id===values.id);if(r)Object.assign(r,{name:values.name,notes:values.notes,items:new FormData(form).getAll('keepItem')});}else addRecord(state,'repertoires',{name:values.name,notes:values.notes,items:[]});closeModal();saved();return;}
   if(form.id==='add-repertoire-form'){try{addToRepertoire(state,values.repertoireId,values.itemKey);closeModal();saved();}catch(error){toast(error.message,true);}return;}
   if(form.id==='goniometry-form'){addRecord(state,'goniometryRecords',values);closeModal();saved();return;}
+  if(form.id==='patient-goniometry-form'){
+    const reference=goniometry.find(item=>item.id===values.goniometryId);
+    const patient=state.patients.find(item=>item.id===values.patientId);
+    addRecord(state,'goniometryRecords',{...values,patientCode:patientLabel(patient),joint:reference?.joint||'',movement:reference?.movement||'',source:'manual'});
+    closeModal();saved();return;
+  }
   if(form.id==='choose-session-form'){const draft=sessionDrafts.get(values.patientId)||{selected:[],query:''};if(values.exerciseId&&!draft.selected.includes(values.exerciseId))draft.selected.push(values.exerciseId);sessionDrafts.set(values.patientId,draft);closeModal();location.hash=`sessao/${values.patientId}`;return;}
   if(['assessment-form','session-form'].includes(form.id)&&!['pain','painBefore','painAfter'].every(k=>!(k in values)||inRange(values[k]))){toast('Informe dor entre 0 e 10.',true);return;}
   if(form.id==='patient-form'){
-    if(!values.code.trim()){toast('Informe um código ou apelido.',true);return;}
-    if(values.id){const p=state.patients.find(x=>x.id===values.id);if(p)Object.assign(p,values);}else{const p=addRecord(state,'patients',values);location.hash=`pacientes/${p.id}`;}
+    if(!values.code?.trim()&&!values.name?.trim()){toast('Informe ao menos o nome ou um código/apelido.',true);return;}
+    if(values.id){updateRecord(state,'patients',values.id,values);}else{const p=addRecord(state,'patients',values);location.hash=`pacientes/${p.id}`;}
   }else{
     const collection=({'assessment-form':'assessments','plan-form':'plans','session-form':'sessions','exercise-form':'exercises'})[form.id];
-    if(collection==='plans'&&!values.goal.trim()){toast('Informe o objetivo do plano.',true);return;}
-    if(collection==='exercises')values.custom=true;
+    if(collection==='plans'&&!values.title?.trim()){toast('Informe um título para o plano.',true);return;}
+    if(collection==='exercises'){
+      values.custom=true;
+      values.steps=values.steps.split(/\r?\n/).map(item=>item.trim()).filter(Boolean);
+      values.primaryMuscles=values.primaryMuscles.split(',').map(item=>item.trim()).filter(Boolean);
+      values.equipment=values.equipment.split(',').map(item=>item.trim()).filter(Boolean);
+      values.indications=values.indications.split(/\r?\n/).map(item=>item.trim()).filter(Boolean);
+      values.progressions=values.progressions.split(/\r?\n/).map(item=>item.trim()).filter(Boolean);
+      values.regressions=values.regressions.split(/\r?\n/).map(item=>item.trim()).filter(Boolean);
+      if(values.videoUrl&&!/^https?:\/\//i.test(values.videoUrl)){toast('O link demonstrativo deve começar com http:// ou https://.',true);return;}
+    }
     try{addRecord(state,collection,values);}catch(error){toast(error.message,true);return;}
   }
   closeModal();saved();
@@ -323,6 +395,9 @@ document.addEventListener('click',event=>{
   if(action==='edit-patient')patientForm(state.patients.find(p=>p.id===id));
   if(action==='archive-patient'){const p=state.patients.find(x=>x.id===id);if(p){p.archived=!p.archived;saved();}}
   if(action==='new-assessment')assessmentForm(id);
+  if(action==='new-clinical-assessment')clinicalAssessmentForm(id);
+  if(action==='new-gait-assessment')gaitAssessmentForm(id);
+  if(action==='new-patient-gonio')patientGonioForm(id);
   if(action==='new-plan')planForm(id);
   if(action==='new-session')sessionForm(id);
   if(action==='build-session')location.hash=`sessao/${id}`;
@@ -340,6 +415,34 @@ document.addEventListener('click',event=>{
   if(action==='delete-case'){state.caseDiscussions=state.caseDiscussions.filter(x=>x.id!==id);saveState(state);toast('Roteiro excluído.');render();}
   if(action==='session-add-exercise'){const [,patientId]=route();const draft=sessionDrafts.get(patientId)||{selected:[],query:''};if(!draft.selected.includes(id))draft.selected.push(id);sessionDrafts.set(patientId,draft);render();}
   if(action==='session-remove-exercise'){const [,patientId]=route();const draft=sessionDrafts.get(patientId);if(draft)draft.selected=draft.selected.filter(x=>x!==id);render();}
+  if(action==='session-move-up'||action==='session-move-down'){
+    const [,patientId]=route();const draft=sessionDrafts.get(patientId);const index=draft?.selected.indexOf(id)??-1;
+    const next=action==='session-move-up'?index-1:index+1;
+    if(draft&&index>=0&&next>=0&&next<draft.selected.length){[draft.selected[index],draft.selected[next]]=[draft.selected[next],draft.selected[index]];render();}
+  }
+  if(action==='generate-evolution'){
+    const form=target.closest('form');const field=form?.elements.evolution;if(!form||!field)return;
+    const previous=field.value;field.value='';
+    try{field.value=sessionFromForm(form).evolutionDetailed;field.focus();toast('Sugestão gerada. Revise antes de salvar.');}catch(error){field.value=previous;toast(error.message,true);}
+  }
+  if(action==='add-assessment-row'){const group=target.dataset.group;target.closest('.repeat-section')?.querySelector('[data-repeat-group]')?.insertAdjacentHTML('beforeend',assessmentRow(group));}
+  if(action==='remove-row')target.closest('[data-repeat-row]')?.remove();
+  if(action==='append-goal'){const field=document.querySelector(`[name="${target.dataset.target}"]`);if(field){field.value+=(field.value?'\n':'')+(target.dataset.text||'');field.focus();}}
+  if(action==='delete-record'){
+    const collection=target.dataset.collection;
+    if(confirm('Excluir este registro deste dispositivo?')){removeRecord(state,collection,id);saved();}
+  }
+  if(action==='print-page')window.print();
+  if(['copy-evolution','share-evolution','export-evolution'].includes(action)){
+    const session=state.sessions.find(item=>item.id===id);const content=session?.evolutionDetailed||session?.evolutionShort||session?.interventions||'';
+    if(!content){toast('Não há texto de evolução neste registro.',true);return;}
+    if(action==='copy-evolution')navigator.clipboard.writeText(content).then(()=>toast('Evolução copiada.')).catch(()=>toast('Não foi possível copiar.',true));
+    if(action==='share-evolution'){
+      if(navigator.share)navigator.share({title:'Evolução fisioterapêutica',text:content}).catch(()=>{});
+      else navigator.clipboard.writeText(content).then(()=>toast('Compartilhamento indisponível; texto copiado.'));
+    }
+    if(action==='export-evolution'){const blob=new Blob([content],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download=`evolucao-${session.date||today()}.txt`;link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+  }
   if(action==='export-data'){
     const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob),link=document.createElement('a');
     link.href=url;link.download=`fisio-clinico-backup-${today()}.json`;link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
@@ -353,6 +456,7 @@ document.addEventListener('input',event=>{
   if(event.target.id==='library-search'){libraryQuery=event.target.value;rerenderField('#library-search',pos);}
   if(event.target.id==='session-search'){const [,patientId]=route();const draft=sessionDrafts.get(patientId);if(draft){draft.query=event.target.value;rerenderField('#session-search',pos);}}
   if(event.target.id==='global-search'){quickQuery=event.target.value;if(location.hash!=='#consulta')location.hash='consulta';else render();}
+  if(event.target.name?.startsWith('minutes-'))updateSessionTotal();
 });
 document.addEventListener('change',async event=>{
   if(event.target.id==='library-category'){libraryCategory=event.target.value;render();return;}

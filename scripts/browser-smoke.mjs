@@ -15,9 +15,9 @@ await evaluate(`localStorage.setItem('fisio-clinico:v2', JSON.stringify({version
 await call('Page.reload');await wait(800);
 await call('Page.navigate',{url:'http://localhost:4173/#sessao/qa-patient'});await wait(400);
 await evaluate(`document.querySelector('[data-action="session-add-exercise"]').click()`);await wait(300);
-await evaluate(`document.querySelector('[name="objective"]').value='Treino funcional supervisionado';document.querySelector('[name^="status-"]').value='realizado';document.querySelector('[name^="sets-"]').value='2';document.querySelector('[name="generalState"]').value='Sem alteração relatada';document.querySelector('#session-builder-form').requestSubmit()`);await wait(500);
+await evaluate(`document.querySelector('[name="objective"]').value='Treino funcional supervisionado';document.querySelector('[name^="status-"]').value='realizado';document.querySelector('[name^="actualSets-"]').value='2';document.querySelector('[name="generalState"]').value='Sem alteração relatada';document.querySelector('#session-builder-form').requestSubmit()`);await wait(500);
 const session=await evaluate(`JSON.parse(localStorage.getItem('fisio-clinico:v2')).sessions[0]`);
-if(!session||session.items?.length!==1||!session.evolutionDetailed.includes('Estado geral')||session.evolutionDetailed.includes('PA inicial'))throw new Error('Fluxo de sessão/evolução falhou.');
+if(!session||session.items?.length!==1||!session.evolutionDetailed.includes('Paciente apresenta-se')||!session.evolutionDetailed.includes('Realizados')||session.evolutionDetailed.includes('PA inicial'))throw new Error('Fluxo de sessão/evolução falhou: '+JSON.stringify(session));
 await call('Page.navigate',{url:'http://localhost:4173/#exercicio/ex-001'});await wait(400);
 await evaluate(`document.querySelector('[data-action="toggle-favorite"]').click()`);await wait(250);
 const favorite=await evaluate(`JSON.parse(localStorage.getItem('fisio-clinico:v2')).favorites[0]`);

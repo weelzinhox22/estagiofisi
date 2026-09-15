@@ -35,6 +35,12 @@ Os registros de caso são locais e devem usar somente códigos. A interface orie
 
 As fichas de conduta usam uma estrutura fixa: propósito, quando considerar, avaliação prévia, possibilidades, monitoramento, progressão ou adaptação, atalhos a evitar e perguntas para supervisão. O objetivo é tornar explícito o raciocínio, não fornecer uma receita. Diagnóstico, idade ou local da dor nunca são tratados como indicação automática.
 
+## Avaliação guiada da marcha
+
+O roteiro de marcha separa fatos observáveis de interpretação e organiza a observação em três passadas: segurança/padrão global, fase de apoio e fase de balanço/virada. As opções “sem alteração evidente” são qualificadas como observações limitadas ao plano e à tarefa, não como declaração de normalidade. A seleção de testes parte da pergunta clínica (mobilidade, velocidade, tolerância, equilíbrio ou transferência), não de um diagnóstico automático. Pontos de corte não são aplicados fora de uma população e de um protocolo definidos.
+
+As orientações gerais e a seleção das medidas foram conferidas no material [CDC STEADI](https://www.cdc.gov/steadi/hcp/clinical-resources/index.html) e nas fichas da [Rehabilitation Measures Database](https://www.sralab.org/rehabilitation-measures/10-meter-walk-test). A aplicação exige protocolo completo, condições padronizadas, triagem de segurança e supervisão compatível com o contexto.
+
 A expansão adiciona 44 exercícios/atividades em cardiorrespiratória, condicionamento, tarefas cotidianas e mobilidade no leito. Atividades respiratórias específicas, higiene brônquica, treino muscular inspiratório e mobilização hospitalar exigem avaliação, competência, estabilidade clínica, monitoramento e coordenação com protocolos/equipe. Doses continuam sendo exemplos educacionais produzidos pelo gerador do catálogo.
 
 A biblioteca de condutas referencia publicações institucionais da OMS, NICE, IASP e o relatório global de tecnologia assistiva OMS/UNICEF. As fichas são sínteses originais e não reproduzem algoritmos, tabelas, instrumentos ou trechos extensos.
