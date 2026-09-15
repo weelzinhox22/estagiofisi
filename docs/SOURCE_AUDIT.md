@@ -26,3 +26,20 @@ A auditoria abrange os três diretórios encontrados e seus arquivos de licença
 | Dependência | Uso | Licença | Decisão |
 |---|---|---|---|
 | @mediapipe/tasks-vision 0.10.35 e Pose Landmarker Lite oficial | Detecção local de 33 pontos corporais na câmera | Apache-2.0 | Distribuído em public/vendor/mediapipe, com licença integral e aviso em THIRD_PARTY_NOTICES.md. O cálculo angular, a interface, o contador e a persistência são código original do Fisio Clínico. |
+
+
+## Conteúdo clínico adicionado na versão 0.4
+
+A área **Fisioterapia Geral** e as fichas de queixas comuns foram redigidas originalmente para este projeto. O roteiro de nove encontros foi fornecido pelo usuário em imagem e serviu apenas como lista temática; nenhum texto de material didático de terceiros foi transcrito.
+
+Foram consultadas páginas oficiais da Organização Mundial da Saúde, NICE, International Association for the Study of Pain e CDC STEADI. O aplicativo apresenta links para as fontes completas em cada ficha. Os resumos, perguntas e checklists são texto original e não reproduzem tabelas, questionários, algoritmos ou recomendações extensas dessas publicações.
+
+| Fonte | Uso no aplicativo | Conduta de reutilização |
+|---|---|---|
+| OMS — guideline de lombalgia crônica primária (2023) | Princípios de cuidado centrado na pessoa, educação, atividade e exercício | Referência e síntese original; nenhum texto, tabela ou asset copiado |
+| NICE NG59 e NG127 | Estrutura de avaliação de lombalgia e atenção a apresentações que exigem encaminhamento | Links e paráfrases curtas; nenhuma ferramenta protegida reproduzida |
+| IASP — terminologia e definição revisada da dor | Encontro sobre dor e ficha de dor persistente | Conceito referenciado e texto original |
+| CDC STEADI e NICE NG249 | Discussão sobre quedas e pessoa idosa | Links e estrutura conceitual; nenhum formulário ou algoritmo copiado |
+| NICE NG226 e OMS Rehabilitation | Osteoartrite, função, avaliação e reabilitação geral | Síntese original com atribuição |
+
+Os dez exercícios adicionais usam texto original e o mesmo esquema editorial do catálogo. Os itens relacionados à lombalgia registram também a guideline da OMS em seu campo de proveniência. As fichas de queixa organizam consulta e discussão; não oferecem diagnóstico, prescrição automática ou regra de encaminhamento independente dos protocolos locais e da supervisão.

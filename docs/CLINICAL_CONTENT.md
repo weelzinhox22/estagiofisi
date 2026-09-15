@@ -22,3 +22,10 @@ Essas fontes orientam os princípios gerais e os avisos. Seus textos, tabelas e 
 - Atividades pediátricas exigem individualização por idade, desenvolvimento, interesse, comunicação, família e segurança.
 - A área de escalas inclui apenas classificações simples e não reproduz questionários protegidos.
 
+
+
+## Fisioterapia Geral e discussões de caso
+
+A versão 0.4 acrescenta encontros de estudo, fichas de queixas comuns e um organizador de casos. Cada ficha deve separar perguntas, exame possível, sinais que pedem pausa/encaminhamento e possibilidades para discussão. As referências precisam apontar para fontes institucionais completas.
+
+Os registros de caso são locais e devem usar somente códigos. A interface orienta a separar achados registrados, problemas ou hipóteses, objetivos, conduta realizada, resposta e dúvidas para o supervisor. O módulo não completa dados ausentes e não transforma hipóteses em diagnóstico.
