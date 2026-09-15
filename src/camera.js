@@ -1,15 +1,23 @@
 const RUNTIME = '/public/vendor/mediapipe';
 const MODEL = `${RUNTIME}/models/pose_landmarker_lite.task`;
 
+const midpoint = (a,b) => a && b ? ({x:(a.x+b.x)/2,y:(a.y+b.y)/2,z:((a.z||0)+(b.z||0))/2,visibility:Math.min(a.visibility??1,b.visibility??1)}) : null;
 export const ANGLE_OPTIONS = {
-  elbow:{ label:'Cotovelo', points:[11,13,15], rightPoints:[12,14,16], vertex:1 },
-  shoulder:{ label:'Ombro', points:[13,11,23], rightPoints:[14,12,24], vertex:1 },
-  hip:{ label:'Quadril', points:[11,23,25], rightPoints:[12,24,26], vertex:1 },
-  knee:{ label:'Joelho', points:[23,25,27], rightPoints:[24,26,28], vertex:1 },
-  ankle:{ label:'Tornozelo', points:[25,27,31], rightPoints:[26,28,32], vertex:1 }
+  elbow:{ label:'Cotovelo', points:[11,13,15], rightPoints:[12,14,16], hint:'Mostre ombro, cotovelo e punho no mesmo plano.', low:70, high:150 },
+  wrist:{ label:'Punho', points:[13,15,19], rightPoints:[14,16,20], hint:'Mostre cotovelo, punho e base da mão; movimentos pequenos variam mais.', low:70, high:140 },
+  shoulder:{ label:'Ombro', points:[13,11,23], rightPoints:[14,12,24], hint:'Mostre tronco, ombro, cotovelo e mantenha a câmera perpendicular ao movimento.', low:45, high:130 },
+  armElevation:{ label:'Elevação do braço', points:[13,11,23], rightPoints:[14,12,24], hint:'Use vista frontal para abdução ou lateral para flexão e registre a posição.', low:35, high:130 },
+  hip:{ label:'Quadril', points:[11,23,25], rightPoints:[12,24,26], hint:'Mostre ombro, quadril e joelho do lado avaliado.', low:80, high:150 },
+  knee:{ label:'Joelho', points:[23,25,27], rightPoints:[24,26,28], hint:'Mostre quadril, joelho e tornozelo do lado avaliado.', low:70, high:150 },
+  ankle:{ label:'Tornozelo', points:[25,27,31], rightPoints:[26,28,32], hint:'Mostre joelho, tornozelo e antepé; a estimativa é sensível ao calçado e perspectiva.', low:70, high:110 },
+  squat:{ label:'Agachamento — ângulo do joelho', points:[23,25,27], rightPoints:[24,26,28], hint:'Enquadre o corpo inteiro de lado e mantenha os pés visíveis.', low:75, high:155 },
+  sitToStand:{ label:'Sentar e levantar — quadril', points:[11,23,25], rightPoints:[12,24,26], hint:'Enquadre tronco, quadril e joelho de lado, incluindo a cadeira.', low:75, high:155 },
+  trunk:{ label:'Inclinação do tronco', sideIndependent:true, hint:'Use vista frontal para inclinação lateral; mantenha ombros e pelve visíveis.', low:5, high:25,
+    resolve: landmarks => { const shoulder=midpoint(landmarks[11],landmarks[12]),hip=midpoint(landmarks[23],landmarks[24]); return shoulder&&hip?[shoulder,hip,{x:hip.x,y:hip.y-.25,visibility:Math.min(shoulder.visibility,hip.visibility)}]:[]; } },
+  manual:{ label:'Manual — marcar 3 pontos', manual:true, hint:'Congele a imagem e toque em três pontos; o segundo será o vértice.', low:70, high:150 }
 };
 
-const CONNECTIONS = [[11,12],[11,13],[13,15],[12,14],[14,16],[11,23],[12,24],[23,24],[23,25],[25,27],[27,29],[29,31],[27,31],[24,26],[26,28],[28,30],[30,32],[28,32]];
+const CONNECTIONS = [[11,12],[11,13],[13,15],[15,19],[12,14],[14,16],[16,20],[11,23],[12,24],[23,24],[23,25],[25,27],[27,29],[29,31],[27,31],[24,26],[26,28],[28,30],[30,32],[28,32]];
 let stream;
 let landmarker;
 let frameHandle;
@@ -27,7 +35,8 @@ export function calculateAngle(a,b,c,aspectRatio=1) {
 
 export function selectedPoints(landmarks,joint,side) {
   const option=ANGLE_OPTIONS[joint];
-  if (!option || !landmarks) return [];
+  if (!option || !landmarks || option.manual) return [];
+  if (option.resolve) return option.resolve(landmarks);
   return (side==='right'?option.rightPoints:option.points).map(index=>landmarks[index]);
 }
 
@@ -39,98 +48,56 @@ export function updateRepCounter(counter,angle,low,high) {
   return next;
 }
 
+export function framingGuidance(points,landmarks=[]) {
+  if (!points.length) return 'Selecione o modo e mantenha os pontos necessários no enquadramento.';
+  const visibility=Math.min(...points.map(p=>p?.visibility??1));
+  if(visibility<.45)return 'Reposicione-se: um ou mais pontos necessários não estão visíveis.';
+  if(points.some(p=>p.x<.04||p.x>.96||p.y<.04||p.y>.96))return 'Centralize o segmento: há um ponto muito próximo da borda.';
+  const visible=landmarks.filter(p=>(p.visibility??0)>=.45);
+  if(visible.length){const height=Math.max(...visible.map(p=>p.y))-Math.min(...visible.map(p=>p.y));if(height<.28)return 'Aproxime a câmera ou o segmento para aumentar o enquadramento.';if(height>.96)return 'Afaste a câmera: parte do corpo pode estar fora do quadro.';}
+  return visibility>=.75?'Bom enquadramento dos pontos selecionados.':'Pontos detectados; melhore luz e contraste se possível.';
+}
+
 function cameraMarkup() {
   return `<div class="back"><a href="#biblioteca/goniometria">← Goniometria</a></div>
-  <div class="page-head camera-heading"><div><span class="eyebrow">ANÁLISE DE MOVIMENTO</span><h1>Goniometria por câmera</h1><p>Estimativa angular bidimensional com processamento local no dispositivo.</p></div><span class="privacy-pill">◉ Vídeo não armazenado</span></div>
-  <div class="camera-warning"><strong>Medida assistiva, não goniometria clínica validada</strong><p>A perspectiva, o posicionamento, roupas, oclusões e a detecção dos pontos alteram o resultado. Compare com avaliação e instrumento apropriado. Não use isoladamente para diagnóstico, liberação funcional ou decisão clínica.</p></div>
-  <section class="camera-controls panel"><div class="camera-control-grid"><label class="field"><span>Articulação</span><select id="camera-joint">${Object.entries(ANGLE_OPTIONS).map(([id,x])=>`<option value="${id}">${x.label}</option>`).join('')}</select></label><label class="field"><span>Lado anatômico</span><select id="camera-side"><option value="left">Esquerdo</option><option value="right">Direito</option></select></label><label class="field"><span>Câmera</span><select id="camera-facing"><option value="user">Frontal</option><option value="environment">Traseira</option></select></label><div class="camera-start"><button class="button primary" id="camera-start" type="button">Iniciar câmera</button><button class="button ghost" id="camera-stop" type="button" disabled>Parar</button></div></div><p id="camera-status" class="camera-status" role="status">A câmera só será acessada após tocar em “Iniciar câmera”.</p></section>
-  <div class="camera-layout"><section class="camera-stage panel"><div class="video-wrap"><video id="camera-video" playsinline muted></video><canvas id="camera-canvas"></canvas><div id="camera-placeholder"><span>◎</span><strong>Câmera desligada</strong><small>Posicione o corpo inteiro ou o segmento avaliado no enquadramento.</small></div></div><div class="live-measure"><span>Ângulo geométrico</span><strong id="camera-angle">—°</strong><small id="camera-confidence">Aguardando detecção</small></div></section>
-  <aside class="camera-data panel"><span class="eyebrow">OBSERVAÇÃO ATUAL</span><div class="camera-metrics"><div><span>Mínimo</span><strong id="camera-min">—°</strong></div><div><span>Máximo</span><strong id="camera-max">—°</strong></div><div><span>Amplitude observada</span><strong id="camera-range">—°</strong></div></div><button class="button secondary full" id="camera-capture" type="button" disabled>Capturar medida</button><button class="button ghost full" id="camera-reset" type="button">Zerar observação</button><hr><span class="eyebrow">CONTADOR DE CICLOS</span><p class="microcopy">Conta uma passagem do limiar baixo ao alto. É um contador de movimento, não de qualidade ou execução correta.</p><div class="threshold-grid"><label class="field"><span>Limiar baixo</span><input id="camera-low" type="number" value="70" min="0" max="180"></label><label class="field"><span>Limiar alto</span><input id="camera-high" type="number" value="150" min="0" max="180"></label></div><div class="rep-count"><span>Ciclos</span><strong id="camera-reps">0</strong></div></aside></div>
-  <section class="panel camera-guide"><h2>Como obter uma estimativa mais consistente</h2><ol><li>Use boa iluminação e mantenha os três pontos articulares visíveis.</li><li>Posicione a câmera aproximadamente perpendicular ao plano do movimento.</li><li>Evite mover a câmera durante a observação e mantenha distância suficiente.</li><li>Repita a medida nas mesmas condições e registre lado, posição e contexto.</li></ol><p>A medição usa as coordenadas normalizadas dos pontos detectados pelo MediaPipe Pose Landmarker e calcula o ângulo interno entre três pontos na imagem.</p></section>`;
+  <div class="page-head camera-heading"><div><span class="eyebrow">ANÁLISE DE MOVIMENTO</span><h1>Goniometria por câmera</h1><p>Estimativa angular 2D, movimentos funcionais e marcação manual com processamento local.</p></div><span class="privacy-pill">◉ Vídeo não armazenado</span></div>
+  <div class="camera-warning"><strong>Medida assistiva, não goniometria clínica validada</strong><p>Perspectiva, posicionamento, roupas, oclusões e detecção dos pontos alteram o resultado. Compare com avaliação e instrumento apropriado. Não use isoladamente para diagnóstico, liberação funcional ou decisão clínica.</p></div>
+  <section class="camera-controls panel"><div class="camera-control-grid"><label class="field"><span>Movimento / segmento</span><select id="camera-joint">${Object.entries(ANGLE_OPTIONS).map(([id,x])=>`<option value="${id}">${x.label}</option>`).join('')}</select></label><label class="field"><span>Lado anatômico</span><select id="camera-side"><option value="left">Esquerdo</option><option value="right">Direito</option></select></label><label class="field"><span>Câmera</span><select id="camera-facing"><option value="environment">Traseira</option><option value="user">Frontal</option></select></label><label class="field"><span>Paciente/código (opcional)</span><input id="camera-patient" maxlength="60" autocomplete="off" placeholder="Somente código"></label><div class="camera-start"><button class="button primary" id="camera-start" type="button">Iniciar câmera</button><button class="button ghost" id="camera-stop" type="button" disabled>Parar</button></div></div><p id="camera-hint" class="camera-hint">${ANGLE_OPTIONS.elbow.hint}</p><p id="camera-status" class="camera-status" role="status">A câmera só será acessada após tocar em “Iniciar câmera”.</p></section>
+  <div class="camera-layout"><section class="camera-stage panel"><div class="video-wrap"><video id="camera-video" playsinline muted></video><canvas id="camera-canvas"></canvas><div class="frame-guide" aria-hidden="true"><span></span></div><div id="camera-placeholder"><span>◎</span><strong>Câmera desligada</strong><small>Posicione o corpo inteiro ou o segmento avaliado no enquadramento.</small></div><div class="framing-feedback" id="camera-framing">Aguardando câmera</div></div><div class="live-measure"><span>Ângulo geométrico</span><strong id="camera-angle">—°</strong><small id="camera-confidence">Aguardando detecção</small></div><div class="camera-stage-actions"><button class="button secondary" id="camera-freeze" type="button" disabled>Congelar imagem</button><button class="button ghost" id="camera-fullscreen" type="button">Tela cheia</button></div><div class="angle-chart"><div><span>HISTÓRICO EM TEMPO REAL</span><small>Últimas amostras válidas</small></div><svg id="camera-chart" viewBox="0 0 320 90" role="img" aria-label="Gráfico do ângulo observado"><line x1="0" y1="89" x2="320" y2="89"></line><polyline points=""></polyline></svg></div></section>
+  <aside class="camera-data panel"><span class="eyebrow">OBSERVAÇÃO ATUAL</span><div class="camera-metrics"><div><span>Mínimo</span><strong id="camera-min">—°</strong></div><div><span>Máximo</span><strong id="camera-max">—°</strong></div><div><span>Amplitude observada</span><strong id="camera-range">—°</strong></div></div><button class="button secondary full" id="camera-capture" type="button" disabled>Registrar estimativa</button><button class="button ghost full" id="camera-reset" type="button">Zerar observação</button><hr><span class="eyebrow">CONTADOR DE CICLOS</span><p class="microcopy">Conta uma passagem do limiar baixo ao alto. É um contador de movimento, não de qualidade.</p><div class="threshold-grid"><label class="field"><span>Limiar baixo</span><input id="camera-low" type="number" value="70" min="0" max="180"></label><label class="field"><span>Limiar alto</span><input id="camera-high" type="number" value="150" min="0" max="180"></label></div><div class="rep-count"><span>Ciclos</span><strong id="camera-reps">0</strong></div></aside></div>
+  <section class="panel camera-guide"><h2>Como obter uma estimativa mais consistente</h2><ol><li>Use boa iluminação, fundo contrastante e mantenha os pontos necessários visíveis.</li><li>Posicione a câmera aproximadamente perpendicular ao plano do movimento.</li><li>Use “Congelar imagem” para revisar; no modo manual, toque em três pontos e use o segundo como vértice.</li><li>Repita nas mesmas condições e registre vista, lado, posição e contexto.</li></ol><p>A medição automática usa coordenadas normalizadas do MediaPipe Pose Landmarker. O modo manual calcula o ângulo dos três pontos escolhidos na imagem congelada.</p></section>`;
 }
 
 export function cameraPage() { return cameraMarkup(); }
-
-function setStatus(message,error=false) {
-  const element=document.querySelector('#camera-status');
-  if(element){element.textContent=message;element.classList.toggle('error',error);}
-}
-
-function drawPose(canvas,video,landmarks,selected) {
-  const context=canvas.getContext('2d');
-  const width=video.videoWidth||640,height=video.videoHeight||480;
+function setStatus(message,error=false){const element=document.querySelector('#camera-status');if(element){element.textContent=message;element.classList.toggle('error',error);}}
+function drawPose(canvas,video,landmarks,selected,manualPoints=[]) {
+  const context=canvas.getContext('2d');const width=video.videoWidth||640,height=video.videoHeight||480;
   if(canvas.width!==width||canvas.height!==height){canvas.width=width;canvas.height=height;}
-  context.clearRect(0,0,width,height);
-  context.lineWidth=Math.max(2,width/240);context.lineCap='round';
-  context.strokeStyle='rgba(128,201,179,.72)';
+  context.clearRect(0,0,width,height);context.lineWidth=Math.max(2,width/240);context.lineCap='round';context.strokeStyle='rgba(128,201,179,.72)';
   for(const [from,to] of CONNECTIONS){const a=landmarks[from],b=landmarks[to];if(!a||!b||(a.visibility??1)<.45||(b.visibility??1)<.45)continue;context.beginPath();context.moveTo(a.x*width,a.y*height);context.lineTo(b.x*width,b.y*height);context.stroke();}
   landmarks.forEach(point=>{if((point.visibility??1)<.45)return;context.beginPath();context.arc(point.x*width,point.y*height,Math.max(3,width/180),0,Math.PI*2);context.fillStyle='rgba(255,255,255,.85)';context.fill();});
-  if(selected.length===3){context.strokeStyle='#e9b661';context.lineWidth=Math.max(4,width/150);context.beginPath();context.moveTo(selected[0].x*width,selected[0].y*height);context.lineTo(selected[1].x*width,selected[1].y*height);context.lineTo(selected[2].x*width,selected[2].y*height);context.stroke();for(const point of selected){context.beginPath();context.arc(point.x*width,point.y*height,Math.max(6,width/100),0,Math.PI*2);context.fillStyle='#e9b661';context.fill();}}
+  const active=manualPoints.length?manualPoints:selected;if(active.length){context.strokeStyle='#e9b661';context.lineWidth=Math.max(4,width/150);context.beginPath();active.forEach((point,index)=>{const x=point.x*width,y=point.y*height;if(index)context.lineTo(x,y);else context.moveTo(x,y);});context.stroke();for(const [index,point] of active.entries()){context.beginPath();context.arc(point.x*width,point.y*height,Math.max(7,width/95),0,Math.PI*2);context.fillStyle=index===1?'#fff2b6':'#e9b661';context.fill();context.fillStyle='#102e29';context.font=`bold ${Math.max(11,width/55)}px sans-serif`;context.fillText(String(index+1),point.x*width-4,point.y*height+5);}}
 }
 
 export async function mountCamera({onCapture}={}) {
-  const video=document.querySelector('#camera-video');
-  if(!video)return;
-  const canvas=document.querySelector('#camera-canvas');
-  const startButton=document.querySelector('#camera-start');
-  const stopButton=document.querySelector('#camera-stop');
-  const captureButton=document.querySelector('#camera-capture');
-  const placeholder=document.querySelector('#camera-placeholder');
-  let latest=null,min=Infinity,max=-Infinity,lastVideoTime=-1,counter={count:0,phase:'high'};
-  const updateMetrics=()=>{document.querySelector('#camera-min').textContent=Number.isFinite(min)?`${Math.round(min)}°`:'—°';document.querySelector('#camera-max').textContent=Number.isFinite(max)?`${Math.round(max)}°`:'—°';document.querySelector('#camera-range').textContent=Number.isFinite(min)&&Number.isFinite(max)?`${Math.round(max-min)}°`:'—°';document.querySelector('#camera-reps').textContent=String(counter.count);};
-  const reset=()=>{latest=null;min=Infinity;max=-Infinity;counter={count:0,phase:'high'};document.querySelector('#camera-angle').textContent='—°';document.querySelector('#camera-confidence').textContent='Aguardando detecção';captureButton.disabled=true;updateMetrics();};
+  const video=document.querySelector('#camera-video');if(!video)return;
+  const canvas=document.querySelector('#camera-canvas'),startButton=document.querySelector('#camera-start'),stopButton=document.querySelector('#camera-stop'),freezeButton=document.querySelector('#camera-freeze'),captureButton=document.querySelector('#camera-capture'),placeholder=document.querySelector('#camera-placeholder');
+  let latest=null,min=Infinity,max=-Infinity,lastVideoTime=-1,counter={count:0,phase:'high'},history=[],lastLandmarks=[],manualPoints=[],frozen=false;
+  const option=()=>ANGLE_OPTIONS[document.querySelector('#camera-joint').value];
+  const updateChart=()=>{const poly=document.querySelector('#camera-chart polyline');if(!poly)return;poly.setAttribute('points',history.map((value,index)=>`${index*320/Math.max(history.length-1,1)},${88-Math.max(0,Math.min(180,value))*86/180}`).join(' '));};
+  const updateMetrics=()=>{document.querySelector('#camera-min').textContent=Number.isFinite(min)?`${Math.round(min)}°`:'—°';document.querySelector('#camera-max').textContent=Number.isFinite(max)?`${Math.round(max)}°`:'—°';document.querySelector('#camera-range').textContent=Number.isFinite(min)&&Number.isFinite(max)?`${Math.round(max-min)}°`:'—°';document.querySelector('#camera-reps').textContent=String(counter.count);updateChart();};
+  const setAngle=(angle,joint,side,visibility=1)=>{latest={angle,joint,side,visibility};min=Math.min(min,angle);max=Math.max(max,angle);history.push(angle);if(history.length>120)history.shift();document.querySelector('#camera-angle').textContent=`${Math.round(angle)}°`;document.querySelector('#camera-confidence').textContent=option().manual?'Marcação manual — ponto 2 é o vértice':`Pontos visíveis · confiança mínima ${Math.round(visibility*100)}%`;captureButton.disabled=false;counter=updateRepCounter(counter,angle,Number(document.querySelector('#camera-low').value),Number(document.querySelector('#camera-high').value));updateMetrics();};
+  const reset=()=>{latest=null;min=Infinity;max=-Infinity;counter={count:0,phase:'high'};history=[];manualPoints=[];document.querySelector('#camera-angle').textContent='—°';document.querySelector('#camera-confidence').textContent='Aguardando detecção';captureButton.disabled=true;updateMetrics();if(lastLandmarks.length)drawPose(canvas,video,lastLandmarks,[],manualPoints);};
   document.querySelector('#camera-reset').onclick=reset;
-  async function initializeModel(){
-    if(landmarker)return;
-    setStatus('Carregando o modelo de pose no dispositivo…');
-    const {FilesetResolver,PoseLandmarker}=await import(`${RUNTIME}/vision_bundle.mjs`);
-    const vision=await FilesetResolver.forVisionTasks(`${RUNTIME}/wasm`);
-    const options={runningMode:'VIDEO',numPoses:1,minPoseDetectionConfidence:.5,minPosePresenceConfidence:.5,minTrackingConfidence:.5};
-    try{landmarker=await PoseLandmarker.createFromOptions(vision,{...options,baseOptions:{modelAssetPath:MODEL,delegate:'GPU'}});}catch{landmarker=await PoseLandmarker.createFromOptions(vision,{...options,baseOptions:{modelAssetPath:MODEL,delegate:'CPU'}});}
-  }
-  async function loop(){
-    if(!running)return;
-    if(video.readyState>=2&&video.currentTime!==lastVideoTime){
-      lastVideoTime=video.currentTime;
-      try{
-        const result=landmarker.detectForVideo(video,performance.now());
-        const landmarks=result.landmarks?.[0];
-        if(landmarks){
-          const joint=document.querySelector('#camera-joint').value,side=document.querySelector('#camera-side').value;
-          const points=selectedPoints(landmarks,joint,side);drawPose(canvas,video,landmarks,points);
-          const visibility=Math.min(...points.map(p=>p?.visibility??0));
-          const angle=visibility>=.45?calculateAngle(...points,video.videoWidth/video.videoHeight):null;
-          if(angle!=null){latest={angle,joint,side,visibility};min=Math.min(min,angle);max=Math.max(max,angle);document.querySelector('#camera-angle').textContent=`${Math.round(angle)}°`;document.querySelector('#camera-confidence').textContent=`Pontos visíveis · confiança mínima ${Math.round(visibility*100)}%`;captureButton.disabled=false;const low=Number(document.querySelector('#camera-low').value),high=Number(document.querySelector('#camera-high').value);counter=updateRepCounter(counter,angle,low,high);updateMetrics();}else{document.querySelector('#camera-confidence').textContent='Mantenha os três pontos selecionados visíveis';captureButton.disabled=true;}
-        }else{canvas.getContext('2d').clearRect(0,0,canvas.width,canvas.height);document.querySelector('#camera-confidence').textContent='Nenhuma postura detectada';captureButton.disabled=true;}
-      }catch(error){setStatus(`Falha ao analisar quadro: ${error.message}`,true);}
-    }
-    frameHandle=requestAnimationFrame(loop);
-  }
-  startButton.onclick=async()=>{
-    try{
-      if(!navigator.mediaDevices?.getUserMedia)throw new Error('Acesso à câmera indisponível. Use HTTPS ou localhost e um navegador compatível.');
-      startButton.disabled=true;await initializeModel();
-      const facingMode=document.querySelector('#camera-facing').value;
-      video.closest('.video-wrap')?.classList.toggle('mirrored',facingMode==='user');
-      stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:facingMode},width:{ideal:1280},height:{ideal:720}},audio:false});
-      video.srcObject=stream;await video.play();running=true;placeholder.hidden=true;stopButton.disabled=false;setStatus('Câmera ativa. O vídeo é processado localmente e não é gravado.');loop();
-    }catch(error){startButton.disabled=false;setStatus(error.name==='NotAllowedError'?'Permissão de câmera negada. Libere o acesso nas configurações do navegador.':error.message,true);}
-  };
+  document.querySelector('#camera-fullscreen').onclick=()=>video.closest('.video-wrap')?.requestFullscreen?.();
+  document.querySelector('#camera-joint').onchange=()=>{const current=option();document.querySelector('#camera-hint').textContent=current.hint;document.querySelector('#camera-side').disabled=Boolean(current.sideIndependent||current.manual);document.querySelector('#camera-low').value=current.low;document.querySelector('#camera-high').value=current.high;canvas.classList.toggle('manual-active',Boolean(current.manual&&frozen));reset();};
+  async function initializeModel(){if(landmarker)return;setStatus('Carregando o modelo de pose no dispositivo…');const {FilesetResolver,PoseLandmarker}=await import(`${RUNTIME}/vision_bundle.mjs`);const vision=await FilesetResolver.forVisionTasks(`${RUNTIME}/wasm`);const options={runningMode:'VIDEO',numPoses:1,minPoseDetectionConfidence:.5,minPosePresenceConfidence:.5,minTrackingConfidence:.5};try{landmarker=await PoseLandmarker.createFromOptions(vision,{...options,baseOptions:{modelAssetPath:MODEL,delegate:'GPU'}});}catch{landmarker=await PoseLandmarker.createFromOptions(vision,{...options,baseOptions:{modelAssetPath:MODEL,delegate:'CPU'}});}}
+  async function loop(){if(!running)return;if(!frozen&&video.readyState>=2&&video.currentTime!==lastVideoTime){lastVideoTime=video.currentTime;try{const result=landmarker.detectForVideo(video,performance.now()),landmarks=result.landmarks?.[0];if(landmarks){lastLandmarks=landmarks;const joint=document.querySelector('#camera-joint').value,side=document.querySelector('#camera-side').value,points=selectedPoints(landmarks,joint,side);drawPose(canvas,video,landmarks,points,manualPoints);document.querySelector('#camera-framing').textContent=option().manual?'Congele a imagem para marcar os três pontos.':framingGuidance(points,landmarks);if(!option().manual){const visibility=Math.min(...points.map(p=>p?.visibility??0)),angle=visibility>=.45?calculateAngle(...points,video.videoWidth/video.videoHeight):null;if(angle!=null)setAngle(angle,joint,side,visibility);else{document.querySelector('#camera-confidence').textContent='Mantenha os pontos selecionados visíveis';captureButton.disabled=true;}}}else{canvas.getContext('2d').clearRect(0,0,canvas.width,canvas.height);document.querySelector('#camera-confidence').textContent='Nenhuma postura detectada';document.querySelector('#camera-framing').textContent='Entre no quadro e mantenha o segmento visível.';captureButton.disabled=true;}}catch(error){setStatus(`Falha ao analisar quadro: ${error.message}`,true);}}frameHandle=requestAnimationFrame(loop);}
+  freezeButton.onclick=async()=>{if(!running)return;frozen=!frozen;if(frozen){video.pause();freezeButton.textContent='Retomar vídeo';setStatus(option().manual?'Imagem congelada. Toque em três pontos, usando o segundo como vértice.':'Imagem congelada para revisão.');}else{manualPoints=[];await video.play();freezeButton.textContent='Congelar imagem';setStatus('Câmera ativa. O vídeo é processado localmente e não é gravado.');}canvas.classList.toggle('manual-active',Boolean(option().manual&&frozen));};
+  canvas.onclick=event=>{if(!frozen||!option().manual)return;const box=canvas.getBoundingClientRect(),mirrored=video.closest('.video-wrap')?.classList.contains('mirrored');let x=(event.clientX-box.left)/box.width;if(mirrored)x=1-x;const y=(event.clientY-box.top)/box.height;manualPoints.push({x,y,visibility:1});if(manualPoints.length>3)manualPoints=[{x,y,visibility:1}];drawPose(canvas,video,lastLandmarks,[],manualPoints);document.querySelector('#camera-framing').textContent=manualPoints.length<3?`Marque o ponto ${manualPoints.length+1}; o ponto 2 será o vértice.`:'Três pontos marcados. Revise a sobreposição antes de registrar.';if(manualPoints.length===3){const angle=calculateAngle(...manualPoints,video.videoWidth/video.videoHeight);if(angle!=null)setAngle(angle,'manual','',1);}};
+  startButton.onclick=async()=>{try{if(!navigator.mediaDevices?.getUserMedia)throw new Error('Acesso à câmera indisponível. Use HTTPS ou localhost e um navegador compatível.');startButton.disabled=true;await initializeModel();const facingMode=document.querySelector('#camera-facing').value;video.closest('.video-wrap')?.classList.toggle('mirrored',facingMode==='user');stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:facingMode},width:{ideal:1280},height:{ideal:720}},audio:false});video.srcObject=stream;await video.play();running=true;frozen=false;placeholder.hidden=true;stopButton.disabled=false;freezeButton.disabled=false;setStatus('Câmera ativa. O vídeo é processado localmente e não é gravado.');loop();}catch(error){startButton.disabled=false;setStatus(error.name==='NotAllowedError'?'Permissão de câmera negada. Libere o acesso nas configurações do navegador.':error.message,true);}};
   stopButton.onclick=()=>cleanupCamera();
-  captureButton.onclick=()=>{
-    if(!latest)return;
-    const detail={date:new Date().toLocaleDateString('sv-SE'),value:String(Math.round(latest.angle*10)/10),side:latest.side==='left'?'Esquerdo':'Direito',joint:ANGLE_OPTIONS[latest.joint].label,goniometryId:`camera-${latest.joint}`,notes:`Estimativa 2D por câmera; confiança mínima dos pontos: ${Math.round(latest.visibility*100)}%; mínimo ${Math.round(min)}°, máximo ${Math.round(max)}°, amplitude observada ${Math.round(max-min)}°; ciclos ${counter.count}.`,source:'MediaPipe Pose Landmarker 0.10.35; cálculo angular original do Fisio Clínico.'};
-    onCapture?.(detail);
-  };
+  captureButton.onclick=()=>{if(!latest)return;const patientCode=document.querySelector('#camera-patient').value.trim(),current=ANGLE_OPTIONS[latest.joint];const detail={date:new Date().toLocaleDateString('sv-SE'),value:String(Math.round(latest.angle*10)/10),side:latest.side==='left'?'Esquerdo':latest.side==='right'?'Direito':'Não se aplica',joint:current.label,goniometryId:`camera-${latest.joint}`,patientCode,notes:`Estimativa 2D ${current.manual?'por marcação manual':'por câmera'}; confiança mínima dos pontos: ${Math.round(latest.visibility*100)}%; mínimo ${Math.round(min)}°, máximo ${Math.round(max)}°, amplitude observada ${Math.round(max-min)}°; ciclos ${counter.count}.`,source:'MediaPipe Pose Landmarker 0.10.35 e cálculo angular original do Fisio Clínico.'};onCapture?.(detail);};
 }
 
-export function cleanupCamera() {
-  running=false;
-  if(frameHandle)cancelAnimationFrame(frameHandle);
-  frameHandle=undefined;
-  if(stream){stream.getTracks().forEach(track=>track.stop());stream=undefined;}
-  const video=document.querySelector('#camera-video');if(video)video.srcObject=null;const canvas=document.querySelector('#camera-canvas');if(canvas)canvas.getContext('2d').clearRect(0,0,canvas.width,canvas.height);
-  const start=document.querySelector('#camera-start'),stop=document.querySelector('#camera-stop'),placeholder=document.querySelector('#camera-placeholder');
-  if(start)start.disabled=false;if(stop)stop.disabled=true;if(placeholder)placeholder.hidden=false;
-  setStatus('Câmera desligada.');
-}
+export function cleanupCamera(){running=false;if(frameHandle)cancelAnimationFrame(frameHandle);frameHandle=undefined;if(stream){stream.getTracks().forEach(track=>track.stop());stream=undefined;}const video=document.querySelector('#camera-video');if(video){video.pause();video.srcObject=null;}const canvas=document.querySelector('#camera-canvas');if(canvas)canvas.getContext('2d').clearRect(0,0,canvas.width,canvas.height);const start=document.querySelector('#camera-start'),stop=document.querySelector('#camera-stop'),freeze=document.querySelector('#camera-freeze'),placeholder=document.querySelector('#camera-placeholder');if(start)start.disabled=false;if(stop)stop.disabled=true;if(freeze)freeze.disabled=true;if(placeholder)placeholder.hidden=false;setStatus('Câmera desligada.');}

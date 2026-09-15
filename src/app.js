@@ -1,6 +1,7 @@
 import { loadState, saveState, addRecord, patientRecords, painSeries, catalog, today, toggleFavorite, addToRepertoire } from './store.js';
 import { muscles, clinicalTests, goniometry, reflexes, scales, functionalProblems } from './reference-data.js';
 import { cameraPage, mountCamera, cleanupCamera } from './camera.js';
+import { generalLibraryPage, meetingPage, complaintPage, casesPage, generalSearch } from './general-physio-ui.js';
 
 let state = loadState();
 let filter = '';
@@ -28,10 +29,11 @@ const advisory = `<div class="advisory"><span class="advisory-icon">ⓘ</span><d
 const navItems = [['inicio','Visão geral','◫'],['consulta','Consulta rápida','⌕'],['pacientes','Pacientes','♧'],['biblioteca','Biblioteca','◇'],['repertorio','Meu repertório','★']];
 function route() { return decodeURIComponent(location.hash.slice(1) || 'inicio').split('/'); }
 function renderNav(section) {
-  const html = navItems.map(([id,label,icon]) => `<a href="#${id}" class="nav-item ${section===id?'active':''}" ${section===id?'aria-current="page"':''}><span aria-hidden="true">${icon}</span><span>${label}</span></a>`).join('');
+  const activeSection = ['camera','encontro','queixa','casos'].includes(section) ? 'biblioteca' : section;
+  const html = navItems.map(([id,label,icon]) => `<a href="#${id}" class="nav-item ${activeSection===id?'active':''}" ${activeSection===id?'aria-current="page"':''}><span aria-hidden="true">${icon}</span><span>${label}</span></a>`).join('');
   $('#desktop-nav').innerHTML = html;
   $('#mobile-nav').innerHTML = html;
-  $('#breadcrumb').textContent = navItems.find(([id]) => id === section)?.[1] || 'Visão geral';
+  $('#breadcrumb').textContent = navItems.find(([id]) => id === activeSection)?.[1] || 'Visão geral';
 }
 function render() {
   cleanupCamera();
@@ -39,6 +41,9 @@ function render() {
   renderNav(section);
   const main = $('#main');
   if (section === 'camera') { main.innerHTML = cameraPage(); queueMicrotask(() => mountCamera({onCapture:detail => { addRecord(state,'goniometryRecords',detail); saveState(state); toast('Medida estimada registrada.'); }})); }
+  else if (section === 'encontro' && id) main.innerHTML = meetingPage(id);
+  else if (section === 'queixa' && id) main.innerHTML = complaintPage(id,allExercises());
+  else if (section === 'casos') main.innerHTML = casesPage(state,today());
   else if (section === 'exercicio' && id) main.innerHTML = exerciseDetail(id);
   else if (section === 'musculo' && id) main.innerHTML = muscleDetail(id);
   else if (section === 'teste' && id) main.innerHTML = testDetail(id);
@@ -102,7 +107,7 @@ const lookupItem = key => {
   const item=source.find(x=>x.id===id);
   return item?{kind,item}:null;
 };
-const tabs = active => `<div class="library-tabs">${[['exercicios','Exercícios'],['musculos','Músculos'],['testes','Testes'],['goniometria','Goniometria'],['reflexos','Reflexos'],['escalas','Escalas'],['neuro','Neuro'],['problemas','Problemas funcionais']].map(([id,label])=>`<a class="${active===id?'active':''}" href="#biblioteca/${id}">${label}</a>`).join('')}</div>`;
+const tabs = active => `<div class="library-tabs">${[['exercicios','Exercícios'],['musculos','Músculos'],['testes','Testes'],['goniometria','Goniometria'],['reflexos','Reflexos'],['escalas','Escalas'],['neuro','Neuro'],['problemas','Problemas funcionais'],['geral','Fisio Geral']].map(([id,label])=>`<a class="${active===id?'active':''}" href="#biblioteca/${id}">${label}</a>`).join('')}</div>`;
 const exerciseCard = e => `<article class="exercise-card rich-card"><div class="card-actions"><span class="source-label">${esc(e.category)}</span><button class="star-button ${isFavorite('exercise',e.id)?'active':''}" data-action="toggle-favorite" data-kind="exercise" data-id="${esc(e.id)}" aria-label="Favoritar">${isFavorite('exercise',e.id)?'★':'☆'}</button></div><h3><a href="#exercicio/${encodeURIComponent(e.id)}">${esc(e.name)}</a></h3><p class="card-objective">${esc(e.objective)}</p><div class="tag-row">${(e.tags||[]).slice(0,3).map(t=>`<span>${esc(t)}</span>`).join('')}</div><a class="text-link" href="#exercicio/${encodeURIComponent(e.id)}">Abrir ficha completa →</a></article>`;
 
 function quickResults(query) {
@@ -112,15 +117,17 @@ function quickResults(query) {
   const te=clinicalTests.filter(x=>normalized([x.name,x.region,x.objective,x.structure].join(' ')).includes(normalized(query))).slice(0,5);
   const sc=scales.filter(x=>normalized([x.name,x.purpose].join(' ')).includes(normalized(query))).slice(0,4);
   const ne=allExercises().filter(x=>x.kind==='neuro'&&matchExercise(x,query)).slice(0,5);
-  const groups=[['Exercícios',ex,x=>`#exercicio/${x.id}`],['Músculos',mu,x=>`#musculo/${x.id}`],['Testes',te,x=>`#teste/${x.id}`],['Escalas',sc,x=>`#biblioteca/escalas`],['Neuro',ne,x=>`#exercicio/${x.id}`]];
+  const general=generalSearch(query);
+  const groups=[['Exercícios',ex,x=>`#exercicio/${x.id}`],['Músculos',mu,x=>`#musculo/${x.id}`],['Testes',te,x=>`#teste/${x.id}`],['Escalas',sc,x=>`#biblioteca/escalas`],['Neuro',ne,x=>`#exercicio/${x.id}`],['Queixas comuns',general.complaints,x=>`#queixa/${x.id}`],['Encontros',general.meetings,x=>`#encontro/${x.id}`]];
   const total=groups.reduce((n,g)=>n+g[1].length,0);
-  return total?`<div class="result-groups">${groups.filter(g=>g[1].length).map(([title,items,href])=>`<section class="result-group"><h2>${title} <span>${items.length}</span></h2>${items.map(item=>`<a href="${href(item)}"><strong>${esc(item.name)}</strong><small>${esc(item.objective||item.function||item.purpose||item.region||'Ficha de consulta')}</small><b>→</b></a>`).join('')}</section>`).join('')}</div>`:empty('Nenhum resultado','Tente outro termo, região, função ou sinônimo.');
+  return total?`<div class="result-groups">${groups.filter(g=>g[1].length).map(([title,items,href])=>`<section class="result-group"><h2>${title} <span>${items.length}</span></h2>${items.map(item=>`<a href="${href(item)}"><strong>${esc(item.name||item.title)}</strong><small>${esc(item.objective||item.function||item.purpose||item.summary||item.region||'Ficha de consulta')}</small><b>→</b></a>`).join('')}</section>`).join('')}</div>`:empty('Nenhum resultado','Tente outro termo, região, função ou sinônimo.');
 }
 function quickPage() {
-  return `${pageHeader('MODO RÁPIDO','Consulta rápida','Pesquise sem selecionar um paciente. Os resultados aparecem agrupados por tipo.')}<div class="quick-search"><span>⌕</span><input id="quick-search" type="search" value="${esc(quickQuery)}" placeholder="Ex.: quadríceps, equilíbrio, AVE, joelho, sentar levantar" autofocus></div>${quickQuery?quickResults(quickQuery):`<div class="quick-prompts"><span>Experimente:</span>${['quadríceps','equilíbrio','AVE','joelho','ombro','marcha','glúteo médio','sentar levantar'].map(q=>`<button data-action="quick-term" data-term="${q}">${q}</button>`).join('')}</div>${empty('O que você quer consultar?','Busque um problema, músculo, articulação, teste ou atividade. A consulta não gera prescrição.')}`}`;
+  return `${pageHeader('MODO RÁPIDO','Consulta rápida','Pesquise sem selecionar um paciente. Os resultados aparecem agrupados por tipo.')}<div class="quick-search"><span>⌕</span><input id="quick-search" type="search" value="${esc(quickQuery)}" placeholder="Ex.: quadríceps, equilíbrio, AVE, joelho, sentar levantar" autofocus></div>${quickQuery?quickResults(quickQuery):`<div class="quick-prompts"><span>Experimente:</span>${['lombalgia','cervicalgia','quedas','quadríceps','equilíbrio','AVE','joelho','ombro','marcha','sentar levantar'].map(q=>`<button data-action="quick-term" data-term="${q}">${q}</button>`).join('')}</div>${empty('O que você quer consultar?','Busque um problema, músculo, articulação, teste ou atividade. A consulta não gera prescrição.')}`}`;
 }
 function libraryPage(active='exercicios') {
   const header=`${pageHeader('CONHECIMENTO CLÍNICO','Biblioteca prática',`${catalog.length} exercícios e atividades, referências anatômicas e apoio ao exame supervisionado.`,button('Consulta rápida','go-quick','secondary'))}${tabs(active)}`;
+  if(active==='geral') return header+generalLibraryPage(state);
   if(active==='musculos') return header+muscleLibrary();
   if(active==='testes') return header+testLibrary();
   if(active==='goniometria') return header+goniometryLibrary();
@@ -142,7 +149,7 @@ function testLibrary(){
 function goniometryLibrary(){
   const records=[...state.goniometryRecords].sort((a,b)=>String(b.date).localeCompare(String(a.date)));
   const cameraRecords=records.filter(r=>String(r.goniometryId).startsWith('camera-'));
-  return `<div class="camera-entry"><div><strong>Usar câmera para estimativa angular</strong><p>Processamento local, sobreposição dos pontos e captura no histórico.</p></div><a class="button primary" href="#camera">Abrir câmera →</a></div><div class="info-banner">Sem valores normativos. Registre posição e método de modo consistente. Medidas salvas: ${records.length}.</div>${cameraRecords.length?`<section class="panel camera-history"><div class="section-title"><div><span class="eyebrow">CAPTURAS DA CÂMERA</span><h2>Estimativas recentes</h2></div></div><div class="sessions">${cameraRecords.slice(0,8).map(r=>`<article class="session"><div class="session-date"><span>${formatDate(r.date)}</span><small>${esc(r.side)}</small></div><div><strong>${esc(r.joint)} · ${esc(r.value)}°</strong><p>${esc(r.notes)}</p></div></article>`).join('')}</div></section>`:''}<div class="mobile-cards">${goniometry.map(g=>`<article class="measurement-card"><div><span class="source-label">${esc(g.joint)}</span><h3>${esc(g.movement)}</h3></div><dl><dt>Posição</dt><dd>${esc(g.position)}</dd><dt>Eixo</dt><dd>${esc(g.axis)}</dd><dt>Braço fixo</dt><dd>${esc(g.fixedArm)}</dd><dt>Braço móvel</dt><dd>${esc(g.movingArm)}</dd></dl>${button('Registrar valor','record-gonio','secondary',`data-id="${g.id}"`)}${records.filter(r=>r.goniometryId===g.id).slice(0,2).map(r=>`<div class="saved-measure"><strong>${esc(r.value)}° · ${formatDate(r.date)}</strong><small>${esc([r.patientCode,r.side,r.notes].filter(Boolean).join(' · ')||'Registro local')}</small></div>`).join('')}</article>`).join('')}</div>`;
+  return `<div class="camera-entry"><div><strong>Usar câmera para estimativa angular</strong><p>Processamento local, sobreposição dos pontos e captura no histórico.</p></div><a class="button primary" href="#camera">Abrir câmera →</a></div><div class="info-banner">Sem valores normativos. Registre posição e método de modo consistente. Medidas salvas: ${records.length}.</div>${cameraRecords.length?`<section class="panel camera-history"><div class="section-title"><div><span class="eyebrow">CAPTURAS DA CÂMERA</span><h2>Estimativas recentes</h2></div></div><div class="sessions">${cameraRecords.slice(0,8).map(r=>`<article class="session"><div class="session-date"><span>${formatDate(r.date)}</span><small>${esc([r.patientCode,r.side].filter(Boolean).join(' · '))}</small></div><div><strong>${esc(r.joint)} · ${esc(r.value)}°</strong><p>${esc(r.notes)}</p></div></article>`).join('')}</div></section>`:''}<div class="mobile-cards">${goniometry.map(g=>`<article class="measurement-card"><div><span class="source-label">${esc(g.joint)}</span><h3>${esc(g.movement)}</h3></div><dl><dt>Posição</dt><dd>${esc(g.position)}</dd><dt>Eixo</dt><dd>${esc(g.axis)}</dd><dt>Braço fixo</dt><dd>${esc(g.fixedArm)}</dd><dt>Braço móvel</dt><dd>${esc(g.movingArm)}</dd></dl>${button('Registrar valor','record-gonio','secondary',`data-id="${g.id}"`)}${records.filter(r=>r.goniometryId===g.id).slice(0,2).map(r=>`<div class="saved-measure"><strong>${esc(r.value)}° · ${formatDate(r.date)}</strong><small>${esc([r.patientCode,r.side,r.notes].filter(Boolean).join(' · ')||'Registro local')}</small></div>`).join('')}</article>`).join('')}</div>`;
 }
 function reflexLibrary(){
   return `<div class="info-banner">Consulta de registro. A resposta reflexa é apenas uma parte do exame neurológico.</div><div class="reference-grid">${reflexes.map(r=>`<article class="reference-card"><span class="source-label">REFLEXO</span><h3>${esc(r.name)}</h3><p><b>Raiz:</b> ${esc(r.root)}</p><p><b>Estrutura:</b> ${esc(r.structure)}</p><p><b>Resposta:</b> ${esc(r.expected)}</p><details><summary>Escala de registro</summary><p>${esc(r.scale)}</p><p>${esc(r.note)}</p></details></article>`).join('')}</div>`;
@@ -270,6 +277,7 @@ document.addEventListener('submit', event => {
     try{const payload=sessionFromForm(form);addRecord(state,'sessions',payload);sessionDrafts.delete(payload.patientId);saveState(state);toast('Sessão concluída e evolução gerada.');location.hash=`pacientes/${payload.patientId}`;}catch(error){toast(error.message,true);}return;
   }
   const values=formValues(form);
+  if(form.id==='case-discussion-form'){if(!values.caseCode.trim()){toast('Informe um código desidentificado.',true);return;}addRecord(state,'caseDiscussions',values);saveState(state);toast('Roteiro de discussão salvo.');render();return;}
   if(form.id==='repertoire-form'){if(!values.name.trim()){toast('Informe o nome do grupo.',true);return;}if(values.id){const r=state.repertoires.find(x=>x.id===values.id);if(r)Object.assign(r,{name:values.name,notes:values.notes,items:new FormData(form).getAll('keepItem')});}else addRecord(state,'repertoires',{name:values.name,notes:values.notes,items:[]});closeModal();saved();return;}
   if(form.id==='add-repertoire-form'){try{addToRepertoire(state,values.repertoireId,values.itemKey);closeModal();saved();}catch(error){toast(error.message,true);}return;}
   if(form.id==='goniometry-form'){addRecord(state,'goniometryRecords',values);closeModal();saved();return;}
@@ -308,6 +316,7 @@ document.addEventListener('click',event=>{
   if(action==='add-repertoire')addRepertoireForm(target.dataset.kind,id);
   if(action==='add-session')choosePatientForSession(id);
   if(action==='record-gonio')gonioForm(id);
+  if(action==='delete-case'){state.caseDiscussions=state.caseDiscussions.filter(x=>x.id!==id);saveState(state);toast('Roteiro excluído.');render();}
   if(action==='session-add-exercise'){const [,patientId]=route();const draft=sessionDrafts.get(patientId)||{selected:[],query:''};if(!draft.selected.includes(id))draft.selected.push(id);sessionDrafts.set(patientId,draft);render();}
   if(action==='session-remove-exercise'){const [,patientId]=route();const draft=sessionDrafts.get(patientId);if(draft)draft.selected=draft.selected.filter(x=>x!==id);render();}
   if(action==='export-data'){
