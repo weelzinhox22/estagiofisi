@@ -1,5 +1,5 @@
-const CACHE = 'fisio-clinico-v5';
-const ASSETS = ['/', '/index.html', '/src/app.js', '/src/store.js', '/src/clinical-data.js', '/src/reference-data.js', '/src/general-physio-data.js', '/src/general-physio-ui.js', '/src/camera.js', '/src/styles.css', '/manifest.webmanifest', '/icons/icon.svg', '/icons/icon-192.png', '/icons/icon-512.png'];
+const CACHE = 'fisio-clinico-v6';
+const ASSETS = ['/', '/index.html', '/src/app.js', '/src/store.js', '/src/clinical-data.js', '/src/reference-data.js', '/src/general-physio-data.js', '/src/general-physio-ui.js', '/src/clinical-reasoning-data.js', '/src/clinical-reasoning-ui.js', '/src/camera.js', '/src/styles.css', '/manifest.webmanifest', '/icons/icon.svg', '/icons/icon-192.png', '/icons/icon-512.png'];
 self.addEventListener('install', event => { event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS)).then(() => self.skipWaiting())); });
 self.addEventListener('activate', event => { event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(key => key !== CACHE).map(key => caches.delete(key)))).then(() => self.clients.claim())); });
 self.addEventListener('fetch', event => {

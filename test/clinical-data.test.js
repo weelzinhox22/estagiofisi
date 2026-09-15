@@ -4,10 +4,10 @@ import { exercises } from '../src/clinical-data.js';
 import { muscles, clinicalTests, goniometry, reflexes, scales, functionalProblems } from '../src/reference-data.js';
 
 test('metas de conteúdo clínico são atendidas', () => {
-  assert.ok(exercises.length >= 100);
+  assert.ok(exercises.length >= 160);
   assert.ok(muscles.length >= 20);
   assert.ok(clinicalTests.length >= 20);
-  assert.ok(functionalProblems.length >= 10);
+  assert.ok(functionalProblems.length >= 20);
   assert.ok(exercises.filter(x => x.kind === 'neuro').length >= 10);
   assert.ok(goniometry.length >= 20 && reflexes.length >= 5 && scales.length >= 5);
 });
@@ -24,4 +24,11 @@ test('testes não incluem acurácia diagnóstica inventada', () => {
     assert.ok(item.objective && item.position && item.execution && item.interpretation && item.positive && item.structure && item.notes);
     assert.doesNotMatch(JSON.stringify(item),/sensibilidade|especificidade|%/i);
   }
+});
+
+test('novas áreas práticas têm variedade e proveniência específica', () => {
+  const expected={'Cardiorrespiratória':12,'Condicionamento':10,'Funcional e cotidiano':12,'Mobilidade no leito':10};
+  for(const [category,minimum] of Object.entries(expected)) assert.ok(exercises.filter(x=>x.category===category).length>=minimum,category);
+  assert.ok(exercises.filter(x=>x.category==='Cardiorrespiratória').every(x=>x.source.includes('Cardiopulmonary')));
+  assert.equal(new Set(exercises.map(x=>x.name)).size,exercises.length);
 });

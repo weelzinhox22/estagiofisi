@@ -29,6 +29,9 @@ if(resultCount<1)throw new Error('Busca sem acento falhou.');
 await evaluate(`const q2=document.querySelector('#quick-search');q2.value='lombalgia';q2.dispatchEvent(new Event('input',{bubbles:true}))`);await wait(350);
 const generalResult=await evaluate(`Array.from(document.querySelectorAll('.result-group h2')).some(x=>x.textContent.includes('Queixas comuns'))`);
 if(!generalResult)throw new Error('Busca de Fisioterapia Geral falhou.');
+await evaluate(`const q3=document.querySelector('#quick-search');q3.value='fortalecimento';q3.dispatchEvent(new Event('input',{bubbles:true}))`);await wait(350);
+const conductResult=await evaluate(`Array.from(document.querySelectorAll('.result-group h2')).some(x=>x.textContent.includes('Condutas'))`);
+if(!conductResult)throw new Error('Busca de condutas falhou.');
 await call('Page.navigate',{url:'http://localhost:4173/#casos'});await wait(350);
 await evaluate(`document.querySelector('[name="caseCode"]').value='Caso QA';document.querySelector('#case-discussion-form').requestSubmit()`);await wait(350);
 const savedCase=await evaluate(`JSON.parse(localStorage.getItem('fisio-clinico:v2')).caseDiscussions[0]?.caseCode`);
@@ -39,7 +42,7 @@ const cameraState=await evaluate("({status:document.querySelector('#camera-statu
 if(!cameraState.active||!cameraState.status.includes('Câmera ativa'))throw new Error('Inicialização da câmera/MediaPipe falhou: '+JSON.stringify(cameraState));
 await evaluate("document.querySelector('#camera-stop').click()");
 await call('Emulation.setDeviceMetricsOverride',{width:390,height:844,deviceScaleFactor:1,mobile:true});
-const mobileRoutes=['inicio','consulta','biblioteca/exercicios','biblioteca/testes','biblioteca/goniometria','biblioteca/geral','encontro/coluna','queixa/lombalgia','casos','camera','exercicio/ex-001','repertorio','pacientes/qa-patient'];
+const mobileRoutes=['inicio','consulta','biblioteca/exercicios','biblioteca/testes','biblioteca/goniometria','biblioteca/geral','biblioteca/condutas','biblioteca/problemas','conduta/fortalecimento','encontro/coluna','queixa/lombalgia','casos','camera','exercicio/ex-001','repertorio','pacientes/qa-patient'];
 const mobileChecks=[];
 for(const route of mobileRoutes){
   await call('Page.navigate',{url:'http://localhost:4173/#'+route});await wait(300);
@@ -47,8 +50,6 @@ for(const route of mobileRoutes){
   if(metrics.scroll>metrics.width+1||metrics.bottom==='none')throw new Error('Layout móvel com overflow ou navegação ausente: '+JSON.stringify(metrics));
   mobileChecks.push(metrics.route);
 }
-console.log(JSON.stringify({session:true,evolution:true,favorite:true,accentInsensitiveSearch:true,generalSearch:true,caseDiscussion:true,camera:true,resultCount,mobileRoutes:mobileChecks.length},null,2));
+console.log(JSON.stringify({session:true,evolution:true,favorite:true,accentInsensitiveSearch:true,generalSearch:true,conductSearch:true,caseDiscussion:true,camera:true,resultCount,mobileRoutes:mobileChecks.length},null,2));
 socket.close();
-
-
 

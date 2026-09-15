@@ -2,6 +2,7 @@ import { loadState, saveState, addRecord, patientRecords, painSeries, catalog, t
 import { muscles, clinicalTests, goniometry, reflexes, scales, functionalProblems } from './reference-data.js';
 import { cameraPage, mountCamera, cleanupCamera } from './camera.js';
 import { generalLibraryPage, meetingPage, complaintPage, casesPage, generalSearch } from './general-physio-ui.js';
+import { reasoningLibraryPage, reasoningDetailPage, reasoningSearch } from './clinical-reasoning-ui.js';
 
 let state = loadState();
 let filter = '';
@@ -29,7 +30,7 @@ const advisory = `<div class="advisory"><span class="advisory-icon">ⓘ</span><d
 const navItems = [['inicio','Visão geral','◫'],['consulta','Consulta rápida','⌕'],['pacientes','Pacientes','♧'],['biblioteca','Biblioteca','◇'],['repertorio','Meu repertório','★']];
 function route() { return decodeURIComponent(location.hash.slice(1) || 'inicio').split('/'); }
 function renderNav(section) {
-  const activeSection = ['camera','encontro','queixa','casos'].includes(section) ? 'biblioteca' : section;
+  const activeSection = ['camera','encontro','queixa','casos','conduta'].includes(section) ? 'biblioteca' : section;
   const html = navItems.map(([id,label,icon]) => `<a href="#${id}" class="nav-item ${activeSection===id?'active':''}" ${activeSection===id?'aria-current="page"':''}><span aria-hidden="true">${icon}</span><span>${label}</span></a>`).join('');
   $('#desktop-nav').innerHTML = html;
   $('#mobile-nav').innerHTML = html;
@@ -41,6 +42,7 @@ function render() {
   renderNav(section);
   const main = $('#main');
   if (section === 'camera') { main.innerHTML = cameraPage(); queueMicrotask(() => mountCamera({onCapture:detail => { addRecord(state,'goniometryRecords',detail); saveState(state); toast('Medida estimada registrada.'); }})); }
+  else if (section === 'conduta' && id) main.innerHTML = reasoningDetailPage(id);
   else if (section === 'encontro' && id) main.innerHTML = meetingPage(id);
   else if (section === 'queixa' && id) main.innerHTML = complaintPage(id,allExercises());
   else if (section === 'casos') main.innerHTML = casesPage(state,today());
@@ -107,7 +109,7 @@ const lookupItem = key => {
   const item=source.find(x=>x.id===id);
   return item?{kind,item}:null;
 };
-const tabs = active => `<div class="library-tabs">${[['exercicios','Exercícios'],['musculos','Músculos'],['testes','Testes'],['goniometria','Goniometria'],['reflexos','Reflexos'],['escalas','Escalas'],['neuro','Neuro'],['problemas','Problemas funcionais'],['geral','Fisio Geral']].map(([id,label])=>`<a class="${active===id?'active':''}" href="#biblioteca/${id}">${label}</a>`).join('')}</div>`;
+const tabs = active => `<div class="library-tabs">${[['exercicios','Exercícios'],['musculos','Músculos'],['testes','Testes'],['goniometria','Goniometria'],['reflexos','Reflexos'],['escalas','Escalas'],['neuro','Neuro'],['problemas','Problemas funcionais'],['geral','Fisio Geral'],['condutas','Condutas']].map(([id,label])=>`<a class="${active===id?'active':''}" href="#biblioteca/${id}">${label}</a>`).join('')}</div>`;
 const exerciseCard = e => `<article class="exercise-card rich-card"><div class="card-actions"><span class="source-label">${esc(e.category)}</span><button class="star-button ${isFavorite('exercise',e.id)?'active':''}" data-action="toggle-favorite" data-kind="exercise" data-id="${esc(e.id)}" aria-label="Favoritar">${isFavorite('exercise',e.id)?'★':'☆'}</button></div><h3><a href="#exercicio/${encodeURIComponent(e.id)}">${esc(e.name)}</a></h3><p class="card-objective">${esc(e.objective)}</p><div class="tag-row">${(e.tags||[]).slice(0,3).map(t=>`<span>${esc(t)}</span>`).join('')}</div><a class="text-link" href="#exercicio/${encodeURIComponent(e.id)}">Abrir ficha completa →</a></article>`;
 
 function quickResults(query) {
@@ -118,16 +120,18 @@ function quickResults(query) {
   const sc=scales.filter(x=>normalized([x.name,x.purpose].join(' ')).includes(normalized(query))).slice(0,4);
   const ne=allExercises().filter(x=>x.kind==='neuro'&&matchExercise(x,query)).slice(0,5);
   const general=generalSearch(query);
-  const groups=[['Exercícios',ex,x=>`#exercicio/${x.id}`],['Músculos',mu,x=>`#musculo/${x.id}`],['Testes',te,x=>`#teste/${x.id}`],['Escalas',sc,x=>`#biblioteca/escalas`],['Neuro',ne,x=>`#exercicio/${x.id}`],['Queixas comuns',general.complaints,x=>`#queixa/${x.id}`],['Encontros',general.meetings,x=>`#encontro/${x.id}`]];
+  const conduct=reasoningSearch(query);
+  const groups=[['Exercícios',ex,x=>`#exercicio/${x.id}`],['Músculos',mu,x=>`#musculo/${x.id}`],['Testes',te,x=>`#teste/${x.id}`],['Escalas',sc,x=>`#biblioteca/escalas`],['Neuro',ne,x=>`#exercicio/${x.id}`],['Queixas comuns',general.complaints,x=>`#queixa/${x.id}`],['Encontros',general.meetings,x=>`#encontro/${x.id}`],['Condutas',conduct,x=>`#conduta/${x.id}`]];
   const total=groups.reduce((n,g)=>n+g[1].length,0);
   return total?`<div class="result-groups">${groups.filter(g=>g[1].length).map(([title,items,href])=>`<section class="result-group"><h2>${title} <span>${items.length}</span></h2>${items.map(item=>`<a href="${href(item)}"><strong>${esc(item.name||item.title)}</strong><small>${esc(item.objective||item.function||item.purpose||item.summary||item.region||'Ficha de consulta')}</small><b>→</b></a>`).join('')}</section>`).join('')}</div>`:empty('Nenhum resultado','Tente outro termo, região, função ou sinônimo.');
 }
 function quickPage() {
-  return `${pageHeader('MODO RÁPIDO','Consulta rápida','Pesquise sem selecionar um paciente. Os resultados aparecem agrupados por tipo.')}<div class="quick-search"><span>⌕</span><input id="quick-search" type="search" value="${esc(quickQuery)}" placeholder="Ex.: quadríceps, equilíbrio, AVE, joelho, sentar levantar" autofocus></div>${quickQuery?quickResults(quickQuery):`<div class="quick-prompts"><span>Experimente:</span>${['lombalgia','cervicalgia','quedas','quadríceps','equilíbrio','AVE','joelho','ombro','marcha','sentar levantar'].map(q=>`<button data-action="quick-term" data-term="${q}">${q}</button>`).join('')}</div>${empty('O que você quer consultar?','Busque um problema, músculo, articulação, teste ou atividade. A consulta não gera prescrição.')}`}`;
+  return `${pageHeader('MODO RÁPIDO','Consulta rápida','Pesquise sem selecionar um paciente. Os resultados aparecem agrupados por tipo.')}<div class="quick-search"><span>⌕</span><input id="quick-search" type="search" value="${esc(quickQuery)}" placeholder="Ex.: quadríceps, equilíbrio, AVE, joelho, sentar levantar" autofocus></div>${quickQuery?quickResults(quickQuery):`<div class="quick-prompts"><span>Experimente:</span>${['lombalgia','condicionamento','respiração','transferências','quedas','quadríceps','equilíbrio','AVE','marcha','sentar levantar'].map(q=>`<button data-action="quick-term" data-term="${q}">${q}</button>`).join('')}</div>${empty('O que você quer consultar?','Busque um problema, músculo, articulação, teste ou atividade. A consulta não gera prescrição.')}`}`;
 }
 function libraryPage(active='exercicios') {
   const header=`${pageHeader('CONHECIMENTO CLÍNICO','Biblioteca prática',`${catalog.length} exercícios e atividades, referências anatômicas e apoio ao exame supervisionado.`,button('Consulta rápida','go-quick','secondary'))}${tabs(active)}`;
   if(active==='geral') return header+generalLibraryPage(state);
+  if(active==='condutas') return header+reasoningLibraryPage();
   if(active==='musculos') return header+muscleLibrary();
   if(active==='testes') return header+testLibrary();
   if(active==='goniometria') return header+goniometryLibrary();

@@ -1,4 +1,4 @@
-# Fisio Clínico 0.4
+# Fisio Clínico 0.5
 
 Aplicação web responsiva e PWA instalável para apoiar consulta, documentação e estudo durante a prática de fisioterapia supervisionada.
 
@@ -6,9 +6,9 @@ Aplicação web responsiva e PWA instalável para apoiar consulta, documentaçã
 
 - pacientes identificados por código ou apelido;
 - avaliações, planos, objetivos e histórico de sessões;
-- 122 exercícios e atividades com ficha clínica educacional completa;
+- 166 exercícios e atividades com ficha clínica educacional completa;
 - consulta por 22 músculos/grupos, 25 testes clínicos, 24 movimentos de goniometria, 8 reflexos e 6 escalas simples;
-- 15 problemas funcionais ligados a possibilidades de consulta;
+- 21 problemas funcionais ligados a possibilidades de consulta;
 - filtros Neuro por objetivo, posição e assistência;
 - favoritos e grupos editáveis em “Meu repertório”;
 - gerador de sessão com parâmetros e status por exercício;
@@ -19,6 +19,8 @@ Aplicação web responsiva e PWA instalável para apoiar consulta, documentaçã
 - enquadramento guiado, congelamento, tela cheia, gráfico angular, mínimo/máximo, amplitude observada, registro por código e contador configurável de ciclos;
 - área Fisioterapia Geral com 9 encontros de discussão e 10 fichas de queixas comuns, incluindo lombalgia, cervicalgia, dor no ombro, joelho, tornozelo, quedas, marcha e dor persistente;
 - organizador local e desidentificado de discussões de caso;
+- biblioteca com 21 fichas de conduta e raciocínio: metas, educação, carga, mobilidade, fortalecimento, condicionamento, equilíbrio, marcha, transferências, cardiorrespiratória, mobilização, recursos, tecnologia assistiva e reavaliação;
+- 44 novas atividades nas áreas Cardiorrespiratória, Condicionamento, Funcional e cotidiano e Mobilidade no leito;
 - funcionamento offline após a primeira visita;
 - exportação e importação de backup JSON;
 - layout para Android e desktop, pronto para futura adoção pelo Capacitor.

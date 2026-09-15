@@ -43,3 +43,19 @@ Foram consultadas páginas oficiais da Organização Mundial da Saúde, NICE, In
 | NICE NG226 e OMS Rehabilitation | Osteoartrite, função, avaliação e reabilitação geral | Síntese original com atribuição |
 
 Os dez exercícios adicionais usam texto original e o mesmo esquema editorial do catálogo. Os itens relacionados à lombalgia registram também a guideline da OMS em seu campo de proveniência. As fichas de queixa organizam consulta e discussão; não oferecem diagnóstico, prescrição automática ou regra de encaminhamento independente dos protocolos locais e da supervisão.
+
+
+## Expansão de exercícios e raciocínio — versão 0.5
+
+Foram adicionadas 44 atividades com redação original nas categorias Cardiorrespiratória, Condicionamento, Funcional e cotidiano e Mobilidade no leito, além de 21 fichas originais de conduta e raciocínio. Nenhum código, texto clínico, tabela, figura, instrumento ou asset foi copiado de outro repositório.
+
+| Fonte consultada | Tema | Reutilização |
+|---|---|---|
+| OMS — Package of interventions for rehabilitation, módulos 2, 3 e 4 (2023) | Reabilitação musculoesquelética, neurológica e cardiorrespiratória | Links e síntese conceitual original; nenhum conteúdo tabular reproduzido |
+| OMS — Guidelines on physical activity and sedentary behaviour (2020) | Atividade física e condicionamento | Princípios gerais referenciados, sem reprodução de tabelas de recomendação |
+| NICE NG115 | Reabilitação pulmonar | Referência institucional para individualização e integração de exercício/educação |
+| NICE NG249 | Quedas e fatores multifatoriais | Estrutura conceitual, sem copiar algoritmo ou instrumento |
+| OMS/UNICEF — Global report on assistive technology (2022) | Tecnologia assistiva e participação | Conceitos gerais e link para a publicação |
+| IASP — terminologia da dor | Dor persistente e retomada de atividade | Conceitos referenciados e redação própria |
+
+As fontes são apresentadas dentro das fichas para aprofundamento. As listas de possibilidades não são transcrições das publicações e não constituem recomendação clínica individual.
