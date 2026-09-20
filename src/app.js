@@ -17,13 +17,14 @@ import { enhanceVoiceInputs, stopVoiceDictation } from './voice-dictation.js';
 import { authPage, accountPage } from './auth-ui.js';
 import { adminPage } from './admin-ui.js';
 import { signUp, signIn, signOut, restoreSession, persistSession, changePassword, requestPasswordReset, getProfile, sessionUser } from './supabase-client.js';
-import { scheduleCloudSync, syncAllPatients, loadCloudSnapshots, mergeCloudSnapshots } from './cloud-sync.js';
+import { scheduleCloudSync, syncCloudState, loadCloudSnapshots, loadCloudWorkspace, mergeCloudSnapshots, mergeCloudWorkspace } from './cloud-sync.js';
 import { structureTranscript, voiceStructurePreview } from './voice-structure.js';
 import { rapidCarePage, buildRapidEvolution } from './rapid-care-ui.js';
 import { clinicalMentorPage } from './clinical-mentor-ui.js';
+import { learningHub, learningToolPage } from './learning-lab-ui.js';
 
 let state=emptyState(),currentStorage=localStorage;
-let authState={ready:false,session:null,profile:null,message:''},adminRows=null,voiceStructureDraft=null,mentorDraft={};
+let authState={ready:false,session:null,profile:null,message:''},adminRows=null,voiceStructureDraft=null,mentorDraft={},learningDraft={tool:'',history:[]};
 const rapidTimers=new Map();
 let filter = '';
 let quickQuery = '';
@@ -52,15 +53,16 @@ const badge = (text,kind='') => `<span class="badge ${kind}">${esc(text)}</span>
 const pageHeader = (eyebrow,title,desc,action='') => `<div class="page-head"><div><span class="eyebrow">${eyebrow}</span><h1>${title}</h1><p>${desc}</p></div>${action}</div>`;
 const advisory = `<div class="advisory"><span class="advisory-icon">ⓘ</span><div><strong>Uso educacional e apoio clínico supervisionado</strong><p>Registros e exercícios exigem avaliação e decisão individual do profissional responsável. Não substitui diagnóstico ou julgamento clínico.</p></div></div>`;
 
-const navItems = [['inicio','Visão geral','◫'],['atendimento-rapido','Atendimento rápido','⚡'],['consulta','Consulta rápida','⌕'],['pacientes','Pacientes','♧'],['mentor','Mentor IA','✺'],['assistente','Assistente','✦'],['biblioteca','Biblioteca','◇'],['repertorio','Meu repertório','★'],['mais','Mais','☰'],['conta','Conta','●']];
+const navItems = [['inicio','Visão geral','◫'],['atendimento-rapido','Atendimento rápido','⚡'],['consulta','Consulta rápida','⌕'],['pacientes','Pacientes','♧'],['aprender','Aprender','✺'],['assistente','Assistente','✦'],['biblioteca','Biblioteca','◇'],['repertorio','Meu repertório','★'],['mais','Mais','☰'],['conta','Conta','●']];
 function route() { return decodeURIComponent((location.hash.slice(1) || 'inicio').split('?')[0]).split('/'); }
 function routeQuery() { return new URLSearchParams((location.hash.split('?')[1]||'')); }
 function renderNav(section) {
-  const activeSection = ['camera','encontro','queixa','casos','conduta','testes-funcionais','medidas'].includes(section) ? 'biblioteca' : ['reavaliacao','alta','modelo-funcional','neuro','pediatria','domiciliar','ferramentas'].includes(section)?'mais':section;
+  const activeSection = section==='mentor'?'aprender':['camera','encontro','queixa','casos','conduta','testes-funcionais','medidas'].includes(section) ? 'biblioteca' : ['reavaliacao','alta','modelo-funcional','neuro','pediatria','domiciliar','ferramentas'].includes(section)?'mais':section;
   const items=authState.profile?.role==='admin'?[...navItems,['admin','Admin','◆']]:navItems;
-  const html = items.map(([id,label,icon]) => `<a href="#${id}" class="nav-item ${activeSection===id?'active':''}" ${activeSection===id?'aria-current="page"':''}><span aria-hidden="true">${icon}</span><span>${label}</span></a>`).join('');
-  $('#desktop-nav').innerHTML = html;
-  $('#mobile-nav').innerHTML = html;
+  const itemHtml=([id,label,icon])=>`<a href="#${id}" class="nav-item ${activeSection===id?'active':''}" ${activeSection===id?'aria-current="page"':''}><span aria-hidden="true">${icon}</span><span>${label}</span></a>`;
+  $('#desktop-nav').innerHTML = items.map(itemHtml).join('');
+  const mobileIds=new Set(['inicio','atendimento-rapido','aprender','pacientes','mais']);
+  $('#mobile-nav').innerHTML = items.filter(([id])=>mobileIds.has(id)).map(([id,label,icon])=>itemHtml([id,({inicio:'Início','atendimento-rapido':'Atender',aprender:'Aprender',pacientes:'Pacientes',mais:'Mais'})[id]||label,icon])).join('');
   $('#breadcrumb').textContent = items.find(([id]) => id === activeSection)?.[1] || 'Visão geral';
 }
 function render() {
@@ -72,10 +74,11 @@ function render() {
   if(!authState.session){$('#desktop-nav').innerHTML=$('#mobile-nav').innerHTML='';$('#breadcrumb').textContent='Conta';main.innerHTML=authPage(['cadastro','recuperar'].includes(section)?section:'login',authState.message);queueMicrotask(()=>enhanceVoiceInputs(main));return;}
   if(['login','cadastro','recuperar'].includes(section)){location.hash='inicio';return;}
   renderNav(section);
-  if(section==='conta') main.innerHTML=accountPage(authState.profile);
+  if(section==='conta') main.innerHTML=accountPage(authState.profile,state.syncConflicts||[]);
   else if(section==='admin'){if(authState.profile?.role!=='admin')main.innerHTML=empty('Acesso restrito','Esta área está disponível apenas para administradores autorizados.');else{main.innerHTML=adminPage(adminRows||[],adminRows===null);if(adminRows===null)loadAdminCases();}}
   else if(section==='atendimento-rapido') main.innerHTML=rapidCarePage(state,routeQuery().get('a')||'',routeQuery().get('b')||'');
   else if(section==='mentor') main.innerHTML=clinicalMentorPage(state,{...mentorDraft,patientId:routeQuery().get('patient')||mentorDraft.patientId||''});
+  else if(section==='aprender'){if(id&&learningDraft.tool!==id)learningDraft={tool:id,history:[]};main.innerHTML=id?learningToolPage(state,id,learningDraft):learningHub();}
   else if (section === 'camera') { main.innerHTML = cameraPage(state.patients,routeQuery().get('patient')); queueMicrotask(() => mountCamera({onCapture:detail => { addRecord(state,'goniometryRecords',detail); saveState(state); toast('Medida estimada registrada.'); }})); }
   else if (section === 'assistente') main.innerHTML=assessmentAssistantPage(state,{...assistantDraft,patientId:routeQuery().get('patient')||assistantDraft.patientId||''});
   else if (section === 'medidas' && id) main.innerHTML=measureDetailPage(id);
@@ -395,6 +398,7 @@ document.addEventListener('submit', async event => {
   if(form.id==='password-reset-form'){try{await requestPasswordReset(authValues.email);authState.message='Confira seu e-mail para redefinir a senha.';location.hash='login';render();}catch(error){authState.message=error.message;render();}return;}
   if(form.id==='change-password-form'){if(authValues.password!==authValues.passwordConfirm){toast('As senhas não coincidem.',true);return;}try{await changePassword(authState.session,authValues.password);form.reset();toast('Senha alterada com segurança.');}catch(error){toast(error.message,true);}return;}
   if(form.id==='voice-structure-form'){const selected=new FormData(form).getAll('structuredField'),fields={};for(const name of selected){const el=form.querySelector(`[data-structured-name="${CSS.escape(name)}"]`);fields[name]={...voiceStructureDraft.fields[name],value:el?.value.trim()||''};const targetField=document.querySelector(`#main [name="${CSS.escape(name)}"]`);if(targetField&&el?.value.trim())targetField.value+=(targetField.value?'\n':'')+el.value.trim();}const patientId=document.querySelector('#main [name="patientId"]')?.value||'';addRecord(state,'voiceStructuredRecords',{patientId,sourceText:voiceStructureDraft.sourceText,fields});saveState(state);closeModal();toast('Ficha estruturada confirmada e salva.');return;}
+  if(form.id==='learning-tool-form'){const tool=authValues.tool,mode=authValues.mode,raw=Object.fromEntries(Object.entries(authValues).filter(([key])=>!['tool','mode','patientId','aiConsent'].includes(key))),input=JSON.stringify(raw);try{const history=[...(learningDraft.history||[])];if(mode==='simulation-reply'&&learningDraft.result?.primaryOutput)history.push({role:'assistant',content:learningDraft.result.primaryOutput});learningDraft={...learningDraft,tool,patientId:authValues.patientId,input:raw.input||'',loading:true,history};render();const response=await fetch('/api/learning-tool',{method:'POST',headers:{'Content-Type':'application/json',Authorization:`Bearer ${authState.session.access_token}`},body:JSON.stringify({mode,input,memory:learningDraft.memory||'',history})}),payload=await response.json().catch(()=>({}));if(!response.ok)throw new Error(payload.error||'Não foi possível gerar a atividade.');if(mode==='simulation-reply')history.push({role:'user',content:raw.input||''});const finished=mode==='simulation-feedback'||mode==='exam-grade';learningDraft={...learningDraft,loading:false,result:payload.result,memory:payload.result.memory||learningDraft.memory||'',history,finished};addRecord(state,'learningToolRecords',{patientId:authValues.patientId||'',tool,mode,input:raw,result:payload.result});saveState(state);render();toast('Resultado salvo para uso offline.');}catch(error){learningDraft.loading=false;toast(error.message,true);render();}return;}
   if(form.id==='clinical-mentor-form'){const intent=event.submitter?.value||'analyze';if(intent==='save'){if(!authValues.patientId){toast('Selecione um paciente para salvar a análise.',true);return;}if(!mentorDraft.result){toast('Gere a análise antes de salvar.',true);return;}addRecord(state,'clinicalMentorCases',{patientId:authValues.patientId,caseText:mentorDraft.caseText,goal:mentorDraft.goal,result:mentorDraft.result});saveState(state);toast('Análise educacional salva no paciente.');return;}try{mentorDraft={patientId:authValues.patientId,caseText:authValues.caseText,goal:authValues.goal,loading:true};render();const response=await fetch('/api/clinical-mentor',{method:'POST',headers:{'Content-Type':'application/json',Authorization:`Bearer ${authState.session.access_token}`},body:JSON.stringify({caseText:authValues.caseText,goal:authValues.goal})}),payload=await response.json().catch(()=>({}));if(!response.ok)throw new Error(payload.error||'Não foi possível analisar o caso.');mentorDraft={...mentorDraft,loading:false,result:payload.result};render();}catch(error){mentorDraft.loading=false;toast(error.message,true);render();}return;}
   if(form.id.startsWith('rapid-care-form-')){const payload=formValues(form),rapidData=new FormData(form);payload.painRegions=rapidData.getAll('painRegion');payload.painCharacteristics=rapidData.getAll('painCharacteristic');payload.evolutionDetailed=buildRapidEvolution(payload);if(payload.painRegions.length||payload.pain?.trim())addRecord(state,'painMaps',{patientId:payload.patientId,date:payload.date,regions:payload.painRegions,characteristics:payload.painCharacteristics,irradiationChange:payload.irradiationChange||'',notes:payload.pain||''});addRecord(state,'quickCareSessions',payload);addRecord(state,'sessions',{patientId:payload.patientId,date:payload.date,summary:'Atendimento rápido',interventions:payload.exercise||'',response:payload.response||'',evolutionDetailed:payload.evolutionDetailed});if(payload.supervisorQuestion?.trim())addRecord(state,'supervisorQuestions',{patientId:payload.patientId,date:payload.date,question:payload.supervisorQuestion,status:'Pendente'});saveState(state);toast('Atendimento salvo e evolução gerada sem acrescentar dados.');render();return;}
   if(form.id==='session-builder-form'){
@@ -478,9 +482,13 @@ document.addEventListener('submit', async event => {
 document.addEventListener('click',async event=>{
   const target=event.target.closest('[data-action]');if(!target)return;
   const action=target.dataset.action,id=target.dataset.id;
+  if(action==='reset-learning-tool'){learningDraft={tool:route()[1]||'',history:[]};render();return;}
+  if(action==='finish-simulation'){const form=$('#learning-tool-form'),input=form?.elements.input;if(input)input.value='Encerrar entrevista e receber feedback.';if(form?.elements.mode)form.elements.mode.value='simulation-feedback';form?.requestSubmit();return;}
+  if(action==='copy-learning-result'){const result=learningDraft.result,text=[result?.primaryOutput,...(result?.sections||[]).flatMap(s=>[s.title,s.content,...s.items])].filter(Boolean).join('\n\n');navigator.clipboard.writeText(text).then(()=>toast('Resultado copiado.')).catch(()=>toast('Não foi possível copiar.',true));return;}
   if(action==='copy-mentor-writing'){const text=mentorDraft.result?.clinicalWritingDraft||'';navigator.clipboard.writeText(text).then(()=>toast('Rascunho copiado.')).catch(()=>toast('Não foi possível copiar.',true));return;}
+  if(action==='resolve-sync-conflict'){const conflict=state.syncConflicts.find(row=>row.id===id),choice=target.dataset.choice;if(!conflict)return;const selected=choice==='cloud'?conflict.cloud:conflict.local,rows=state[conflict.collection];if(Array.isArray(rows)){const index=rows.findIndex(row=>row.id===conflict.recordId);if(index>=0)rows[index]=selected;else rows.push(selected);}state.syncConflicts=state.syncConflicts.filter(row=>row.id!==id);saved();return;}
   if(action==='logout'){await signOut(authState.session);authState={ready:true,session:null,profile:null,message:''};state=emptyState();currentStorage=localStorage;location.hash='login';render();return;}
-  if(action==='sync-cloud'){try{const result=await syncAllPatients(state,authState.session);toast(`${result.synced} paciente(s) sincronizado(s).`);}catch(error){toast(error.message,true);}return;}
+  if(action==='sync-cloud'){try{const result=await syncCloudState(state,authState.session);saveLocalState(state,currentStorage);toast(`${result.synced} paciente(s) sincronizado(s)${result.conflicts?` · ${result.conflicts} conflito(s) para revisar`:''}.`);render();}catch(error){toast(error.message,true);}return;}
   if(action==='open-rapid-patients'){const a=$('#rapid-a')?.value||'',b=$('#rapid-b')?.value||'';if(!a){toast('Selecione ao menos o paciente A.',true);return;}location.hash=`atendimento-rapido?a=${encodeURIComponent(a)}${b?`&b=${encodeURIComponent(b)}`:''}`;return;}
   if(action==='rapid-preset'){const field=target.closest('form')?.elements[target.dataset.target];field?.focus();return;}
   if(action==='rapid-timer'){const form=target.closest('form'),output=form?.querySelector('.rapid-timer-output'),key=form?.dataset.patient;clearInterval(rapidTimers.get(key));let remaining=Number(target.dataset.seconds)*1000,last=performance.now();const handle=setInterval(()=>{const now=performance.now();remaining=Math.max(0,remaining-(now-last));last=now;if(output){const total=Math.ceil(remaining/1000);output.textContent=`${String(Math.floor(total/60)).padStart(2,'0')}:${String(total%60).padStart(2,'0')}`;}if(!remaining){clearInterval(handle);rapidTimers.delete(key);}},200);rapidTimers.set(key,handle);return;}
@@ -576,7 +584,7 @@ document.addEventListener('change',async event=>{
 });
 document.addEventListener('voice-transcribed',event=>{voiceStructureDraft=structureTranscript(event.detail?.text||'');$('#dialog-root').innerHTML=voiceStructurePreview(voiceStructureDraft);});
 window.addEventListener('hashchange',render);
-window.addEventListener('online',updateNetwork);
+window.addEventListener('online',async()=>{updateNetwork();if(authState.session)try{await syncCloudState(state,authState.session);saveLocalState(state,currentStorage);render();toast('Dados atualizados e disponíveis offline.');}catch(error){toast(`Sincronização pendente: ${error.message}`,true);}});
 window.addEventListener('offline',updateNetwork);
 function updateNetwork(){ $('#network-status').textContent=navigator.onLine?'Disponível offline':'Modo offline'; }
 window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();deferredInstall=event;$('#install-button').hidden=false;});
@@ -584,7 +592,7 @@ $('#install-button').addEventListener('click',async()=>{if(deferredInstall){defe
 function showUpdate(registration){if(document.querySelector('.update-banner'))return;const banner=document.createElement('div');banner.className='update-banner';banner.innerHTML='<span>Nova versão disponível</span><button class="button light" type="button">Atualizar agora</button>';banner.querySelector('button').onclick=()=>registration.waiting?.postMessage({type:'SKIP_WAITING'});document.body.append(banner);}
 if('serviceWorker'in navigator)navigator.serviceWorker.register('/sw.js').then(registration=>{if(registration.waiting)showUpdate(registration);registration.addEventListener('updatefound',()=>{const worker=registration.installing;worker?.addEventListener('statechange',()=>{if(worker.state==='installed'&&navigator.serviceWorker.controller)showUpdate(registration);});});navigator.serviceWorker.addEventListener('controllerchange',()=>location.reload());}).catch(()=>{});
 function accountStorage(session){const id=sessionUser(session).sub;return {getItem:key=>localStorage.getItem(`${key}:${id}`),setItem:(key,value)=>localStorage.setItem(`${key}:${id}`,value),removeItem:key=>localStorage.removeItem(`${key}:${id}`)};}
-async function activateSession(session){authState.session=session;currentStorage=accountStorage(session);state=loadState(currentStorage);authState.profile=await getProfile(session);mergeCloudSnapshots(state,await loadCloudSnapshots(session));saveLocalState(state,currentStorage);authState.ready=true;render();}
+async function activateSession(session){authState.session=session;currentStorage=accountStorage(session);state=loadState(currentStorage);authState.profile=await getProfile(session);mergeCloudSnapshots(state,await loadCloudSnapshots(session));mergeCloudWorkspace(state,await loadCloudWorkspace(session));saveLocalState(state,currentStorage);authState.ready=true;render();}
 async function initializeAccount(){try{const session=await restoreSession();if(session)await activateSession(session);else{authState.ready=true;render();}}catch(error){authState={ready:true,session:null,profile:null,message:`Não foi possível restaurar a sessão: ${error.message}`};render();}}
 async function loadAdminCases(){adminRows=[];try{adminRows=await loadCloudSnapshots(authState.session,true);}catch(error){toast(error.message,true);}render();}
 updateNetwork();render();initializeAccount();

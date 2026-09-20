@@ -5,7 +5,7 @@ const requests=new Map();
 function send(res,status,payload){res.writeHead(status,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'}).end(JSON.stringify(payload));}
 function address(req){return String(req.headers['x-forwarded-for']||req.socket?.remoteAddress||'local').split(',')[0].trim();}
 function allowed(key,now=Date.now()){const recent=(requests.get(key)||[]).filter(time=>now-time<60000);if(recent.length>=8)return false;recent.push(now);requests.set(key,recent);return true;}
-async function readJson(req){const chunks=[];let size=0;for await(const chunk of req){size+=chunk.length;if(size>30000)throw Object.assign(new Error('O relato é muito grande.'),{statusCode:413});chunks.push(chunk);}return JSON.parse(Buffer.concat(chunks).toString('utf8')||'{}');}
+async function readJson(req){if(req.body&&typeof req.body==='object'&&!Buffer.isBuffer(req.body))return req.body;if(typeof req.body==='string')return JSON.parse(req.body||'{}');const chunks=[];let size=0;for await(const chunk of req){size+=chunk.length;if(size>30000)throw Object.assign(new Error('O relato é muito grande.'),{statusCode:413});chunks.push(chunk);}return JSON.parse(Buffer.concat(chunks).toString('utf8')||'{}');}
 async function authenticate(req,fetchImpl,env){
   const token=String(req.headers.authorization||'').replace(/^Bearer\s+/i,'');
   if(!token)return null;

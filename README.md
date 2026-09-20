@@ -91,3 +91,7 @@ A chave publicável fica no cliente. As permissões reais são impostas por RLS.
 ## Mentor Clínico
 
 Recebe um relato clínico desidentificado por texto ou voz e usa a Groq para produzir uma resposta estruturada: fatos confirmados, lacunas, perguntas de segurança, avaliações possíveis, condutas possíveis, exercícios para estudo e um rascunho de escrita clínica. O endpoint exige uma sessão Supabase válida e mantém a chave Groq somente no servidor.
+
+## Central Aprender e funcionamento offline
+
+A navegação mobile possui cinco destinos principais. A Central Aprender reúne professor de escrita, roteiro do próximo passo, simulador, explicador de raciocínio, primeira sessão, tradutor clínico e prova prática. Toda resposta da IA é persistida localmente antes da sincronização. Execute também `supabase/migrations/20260921_offline_workspace.sql` para sincronizar resultados sem paciente vinculado e habilitar a resolução de conflitos entre dispositivos.

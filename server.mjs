@@ -4,6 +4,7 @@ import { resolve, sep, extname } from 'node:path';
 import { loadEnvFile } from 'node:process';
 import { handleTranscription } from './scripts/transcription-proxy.mjs';
 import { handleClinicalMentor } from './scripts/clinical-mentor.mjs';
+import { handleLearningTool } from './scripts/learning-tools.mjs';
 
 const root = resolve(import.meta.dirname);
 try { loadEnvFile(resolve(root,'.env.local')); } catch {}
@@ -15,6 +16,7 @@ createServer(async (req, res) => {
     const pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
     if (pathname === '/api/transcribe') { await handleTranscription(req,res); return; }
     if (pathname === '/api/clinical-mentor') { await handleClinicalMentor(req,res); return; }
+    if (pathname === '/api/learning-tool') { await handleLearningTool(req,res); return; }
     const target = resolve(root, '.' + pathname);
     if (target !== root && !target.startsWith(root + sep)) { res.writeHead(403).end(); return; }
     const file = (await stat(target)).isDirectory() ? resolve(target, 'index.html') : target;

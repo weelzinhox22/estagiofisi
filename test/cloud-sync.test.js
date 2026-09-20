@@ -1,0 +1,5 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import { mergeCloudSnapshots, mergeCloudWorkspace } from '../src/cloud-sync.js';
+const base=()=>({patients:[{id:'p1',code:'Local',updatedAt:'2026-01-02T00:00:00Z'}],sessions:[{id:'s1',patientId:'p1',summary:'local',updatedAt:'2026-01-03T00:00:00Z'}],learningToolRecords:[],favorites:[],syncConflicts:[]});
+test('merge preserva registro local mais novo e registra conflito',()=>{const state=base();mergeCloudSnapshots(state,[{updated_at:'2026-01-01T00:00:00Z',snapshot:{patient:{id:'p1',code:'Nuvem',updatedAt:'2026-01-01T00:00:00Z'},collections:{sessions:[{id:'s1',patientId:'p1',summary:'nuvem',updatedAt:'2026-01-01T00:00:00Z'}]}}}]);assert.equal(state.sessions[0].summary,'local');assert.equal(state.syncConflicts.length,2);});
+test('workspace remoto fica disponível localmente',()=>{const state=base();mergeCloudWorkspace(state,{snapshot:{collections:{learningToolRecords:[{id:'l1',tool:'writing',createdAt:'2026-01-01T00:00:00Z'}],favorites:['exercise:x']}}});assert.equal(state.learningToolRecords[0].id,'l1');assert.deepEqual(state.favorites,['exercise:x']);});
