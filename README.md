@@ -87,3 +87,7 @@ A aplicação mostra um aviso antes do primeiro envio. O áudio é transmitido �
 3. Para promover uma conta a administrador, execute a instrução comentada no fim da migração com o e-mail correto.
 
 A chave publicável fica no cliente. As permissões reais são impostas por RLS. A opção “manter conectado” persiste somente a sessão, nunca a senha.
+
+## Mentor Clínico
+
+Recebe um relato clínico desidentificado por texto ou voz e usa a Groq para produzir uma resposta estruturada: fatos confirmados, lacunas, perguntas de segurança, avaliações possíveis, condutas possíveis, exercícios para estudo e um rascunho de escrita clínica. O endpoint exige uma sessão Supabase válida e mantém a chave Groq somente no servidor.

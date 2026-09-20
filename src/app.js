@@ -20,9 +20,10 @@ import { signUp, signIn, signOut, restoreSession, persistSession, changePassword
 import { scheduleCloudSync, syncAllPatients, loadCloudSnapshots, mergeCloudSnapshots } from './cloud-sync.js';
 import { structureTranscript, voiceStructurePreview } from './voice-structure.js';
 import { rapidCarePage, buildRapidEvolution } from './rapid-care-ui.js';
+import { clinicalMentorPage } from './clinical-mentor-ui.js';
 
 let state=emptyState(),currentStorage=localStorage;
-let authState={ready:false,session:null,profile:null,message:''},adminRows=null,voiceStructureDraft=null;
+let authState={ready:false,session:null,profile:null,message:''},adminRows=null,voiceStructureDraft=null,mentorDraft={};
 const rapidTimers=new Map();
 let filter = '';
 let quickQuery = '';
@@ -51,7 +52,7 @@ const badge = (text,kind='') => `<span class="badge ${kind}">${esc(text)}</span>
 const pageHeader = (eyebrow,title,desc,action='') => `<div class="page-head"><div><span class="eyebrow">${eyebrow}</span><h1>${title}</h1><p>${desc}</p></div>${action}</div>`;
 const advisory = `<div class="advisory"><span class="advisory-icon">ⓘ</span><div><strong>Uso educacional e apoio clínico supervisionado</strong><p>Registros e exercícios exigem avaliação e decisão individual do profissional responsável. Não substitui diagnóstico ou julgamento clínico.</p></div></div>`;
 
-const navItems = [['inicio','Visão geral','◫'],['atendimento-rapido','Atendimento rápido','⚡'],['consulta','Consulta rápida','⌕'],['pacientes','Pacientes','♧'],['assistente','Assistente','✦'],['biblioteca','Biblioteca','◇'],['repertorio','Meu repertório','★'],['mais','Mais','☰'],['conta','Conta','●']];
+const navItems = [['inicio','Visão geral','◫'],['atendimento-rapido','Atendimento rápido','⚡'],['consulta','Consulta rápida','⌕'],['pacientes','Pacientes','♧'],['mentor','Mentor IA','✺'],['assistente','Assistente','✦'],['biblioteca','Biblioteca','◇'],['repertorio','Meu repertório','★'],['mais','Mais','☰'],['conta','Conta','●']];
 function route() { return decodeURIComponent((location.hash.slice(1) || 'inicio').split('?')[0]).split('/'); }
 function routeQuery() { return new URLSearchParams((location.hash.split('?')[1]||'')); }
 function renderNav(section) {
@@ -74,6 +75,7 @@ function render() {
   if(section==='conta') main.innerHTML=accountPage(authState.profile);
   else if(section==='admin'){if(authState.profile?.role!=='admin')main.innerHTML=empty('Acesso restrito','Esta área está disponível apenas para administradores autorizados.');else{main.innerHTML=adminPage(adminRows||[],adminRows===null);if(adminRows===null)loadAdminCases();}}
   else if(section==='atendimento-rapido') main.innerHTML=rapidCarePage(state,routeQuery().get('a')||'',routeQuery().get('b')||'');
+  else if(section==='mentor') main.innerHTML=clinicalMentorPage(state,{...mentorDraft,patientId:routeQuery().get('patient')||mentorDraft.patientId||''});
   else if (section === 'camera') { main.innerHTML = cameraPage(state.patients,routeQuery().get('patient')); queueMicrotask(() => mountCamera({onCapture:detail => { addRecord(state,'goniometryRecords',detail); saveState(state); toast('Medida estimada registrada.'); }})); }
   else if (section === 'assistente') main.innerHTML=assessmentAssistantPage(state,{...assistantDraft,patientId:routeQuery().get('patient')||assistantDraft.patientId||''});
   else if (section === 'medidas' && id) main.innerHTML=measureDetailPage(id);
@@ -393,6 +395,7 @@ document.addEventListener('submit', async event => {
   if(form.id==='password-reset-form'){try{await requestPasswordReset(authValues.email);authState.message='Confira seu e-mail para redefinir a senha.';location.hash='login';render();}catch(error){authState.message=error.message;render();}return;}
   if(form.id==='change-password-form'){if(authValues.password!==authValues.passwordConfirm){toast('As senhas não coincidem.',true);return;}try{await changePassword(authState.session,authValues.password);form.reset();toast('Senha alterada com segurança.');}catch(error){toast(error.message,true);}return;}
   if(form.id==='voice-structure-form'){const selected=new FormData(form).getAll('structuredField'),fields={};for(const name of selected){const el=form.querySelector(`[data-structured-name="${CSS.escape(name)}"]`);fields[name]={...voiceStructureDraft.fields[name],value:el?.value.trim()||''};const targetField=document.querySelector(`#main [name="${CSS.escape(name)}"]`);if(targetField&&el?.value.trim())targetField.value+=(targetField.value?'\n':'')+el.value.trim();}const patientId=document.querySelector('#main [name="patientId"]')?.value||'';addRecord(state,'voiceStructuredRecords',{patientId,sourceText:voiceStructureDraft.sourceText,fields});saveState(state);closeModal();toast('Ficha estruturada confirmada e salva.');return;}
+  if(form.id==='clinical-mentor-form'){const intent=event.submitter?.value||'analyze';if(intent==='save'){if(!authValues.patientId){toast('Selecione um paciente para salvar a análise.',true);return;}if(!mentorDraft.result){toast('Gere a análise antes de salvar.',true);return;}addRecord(state,'clinicalMentorCases',{patientId:authValues.patientId,caseText:mentorDraft.caseText,goal:mentorDraft.goal,result:mentorDraft.result});saveState(state);toast('Análise educacional salva no paciente.');return;}try{mentorDraft={patientId:authValues.patientId,caseText:authValues.caseText,goal:authValues.goal,loading:true};render();const response=await fetch('/api/clinical-mentor',{method:'POST',headers:{'Content-Type':'application/json',Authorization:`Bearer ${authState.session.access_token}`},body:JSON.stringify({caseText:authValues.caseText,goal:authValues.goal})}),payload=await response.json().catch(()=>({}));if(!response.ok)throw new Error(payload.error||'Não foi possível analisar o caso.');mentorDraft={...mentorDraft,loading:false,result:payload.result};render();}catch(error){mentorDraft.loading=false;toast(error.message,true);render();}return;}
   if(form.id.startsWith('rapid-care-form-')){const payload=formValues(form),rapidData=new FormData(form);payload.painRegions=rapidData.getAll('painRegion');payload.painCharacteristics=rapidData.getAll('painCharacteristic');payload.evolutionDetailed=buildRapidEvolution(payload);if(payload.painRegions.length||payload.pain?.trim())addRecord(state,'painMaps',{patientId:payload.patientId,date:payload.date,regions:payload.painRegions,characteristics:payload.painCharacteristics,irradiationChange:payload.irradiationChange||'',notes:payload.pain||''});addRecord(state,'quickCareSessions',payload);addRecord(state,'sessions',{patientId:payload.patientId,date:payload.date,summary:'Atendimento rápido',interventions:payload.exercise||'',response:payload.response||'',evolutionDetailed:payload.evolutionDetailed});if(payload.supervisorQuestion?.trim())addRecord(state,'supervisorQuestions',{patientId:payload.patientId,date:payload.date,question:payload.supervisorQuestion,status:'Pendente'});saveState(state);toast('Atendimento salvo e evolução gerada sem acrescentar dados.');render();return;}
   if(form.id==='session-builder-form'){
     try{const payload=sessionFromForm(form);addRecord(state,'sessions',payload);sessionDrafts.delete(payload.patientId);saveState(state);toast('Sessão concluída e evolução gerada.');location.hash=`pacientes/${payload.patientId}`;}catch(error){toast(error.message,true);}return;
@@ -475,6 +478,7 @@ document.addEventListener('submit', async event => {
 document.addEventListener('click',async event=>{
   const target=event.target.closest('[data-action]');if(!target)return;
   const action=target.dataset.action,id=target.dataset.id;
+  if(action==='copy-mentor-writing'){const text=mentorDraft.result?.clinicalWritingDraft||'';navigator.clipboard.writeText(text).then(()=>toast('Rascunho copiado.')).catch(()=>toast('Não foi possível copiar.',true));return;}
   if(action==='logout'){await signOut(authState.session);authState={ready:true,session:null,profile:null,message:''};state=emptyState();currentStorage=localStorage;location.hash='login';render();return;}
   if(action==='sync-cloud'){try{const result=await syncAllPatients(state,authState.session);toast(`${result.synced} paciente(s) sincronizado(s).`);}catch(error){toast(error.message,true);}return;}
   if(action==='open-rapid-patients'){const a=$('#rapid-a')?.value||'',b=$('#rapid-b')?.value||'';if(!a){toast('Selecione ao menos o paciente A.',true);return;}location.hash=`atendimento-rapido?a=${encodeURIComponent(a)}${b?`&b=${encodeURIComponent(b)}`:''}`;return;}

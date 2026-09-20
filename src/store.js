@@ -4,7 +4,7 @@ export const STORAGE_KEY = 'fisio-clinico:v2';
 export const LEGACY_KEY = 'fisio-clinico:v1';
 export const SOURCE = 'Conteúdo educacional original do Fisio Clínico (2026).';
 export const catalog = clinicalExercises;
-export const V06_COLLECTIONS=['functionalTestResults','assessmentAssistantCases','goals','discharges','functionalModels','neuroAssessments','pediatricAssessments','homePrograms','voiceStructuredRecords','quickCareSessions','supervisorQuestions','painMaps'];
+export const V06_COLLECTIONS=['functionalTestResults','assessmentAssistantCases','goals','discharges','functionalModels','neuroAssessments','pediatricAssessments','homePrograms','voiceStructuredRecords','quickCareSessions','supervisorQuestions','painMaps','clinicalMentorCases'];
 export const emptyState = () => ({ version:5, patients:[], assessments:[], plans:[], sessions:[], exercises:[], favorites:[], repertoires:[], goniometryRecords:[], caseDiscussions:[], ...Object.fromEntries(V06_COLLECTIONS.map(key=>[key,[]])) });
 export const uid = () => globalThis.crypto?.randomUUID?.() || `${Date.now()}-${Math.random().toString(36).slice(2)}`;
 export const today = () => new Date().toLocaleDateString('sv-SE');
@@ -30,7 +30,7 @@ export function validateState(value) {
     if (!Array.isArray(value.caseDiscussions) || !value.caseDiscussions.every(validRow)) throw new Error('Dados inválidos: discussões de caso.');
     state.caseDiscussions = value.caseDiscussions;
   }
-  if(value.version>=5)for(const key of V06_COLLECTIONS){if(!Array.isArray(value[key])||!value[key].every(validRow))throw new Error(`Dados inválidos: ${key}.`);state[key]=value[key];}
+  if(value.version>=5)for(const key of V06_COLLECTIONS){const rows=value[key]??[];if(!Array.isArray(rows)||!rows.every(validRow))throw new Error(`Dados inválidos: ${key}.`);state[key]=rows;}
   state.version = 5;
   return state;
 }
