@@ -1,4 +1,4 @@
-# Fisio Clínico 0.5
+# Fisio Clínico 0.6
 
 Aplicação web responsiva e PWA instalável para apoiar consulta, documentação e estudo durante a prática de fisioterapia supervisionada.
 
@@ -57,3 +57,33 @@ Consulte [docs/SOURCE_AUDIT.md](docs/SOURCE_AUDIT.md) para decisões de licença
 ## Hospedagem no Vercel
 
 Importe o repositório no Vercel. O arquivo vercel.json define npm ci, npm run build e saída dist. A implantação HTTPS permite solicitar a câmera no Android. O PWA pode ser instalado pelo menu do navegador após carregar a página. Os registros permanecem apenas no armazenamento local de cada dispositivo e não sincronizam entre celular e desktop; use exportação/importação de backup para transferi-los.
+
+## Assistente de Avaliação — 0.6
+
+A versão 0.6 acrescenta um fluxo local e offline de **caso → achados confirmados → pergunta clínica → medida → execução → registro → comparação**. O texto livre identifica apenas possibilidades, que precisam ser confirmadas pelo usuário. O motor determinístico explica cada sugestão e não produz diagnóstico ou prescrição.
+
+A área **Testes e medidas** inclui executores estruturados para TUG, 10MWT, cadência, 2MWT, 6MWT, 5xSTS, 30-Second Chair Stand, Functional Reach, Romberg, apoio unipodal, escala de dor e MRC. Os registros guardam contexto, histórico, resumo para evolução, repetição de protocolo e diferença absoluta. 10MWT, cadência e Functional Reach têm cálculo local validado. O modo sem paciente permite consulta e cálculo sem persistir dados.
+
+SPADI, QuickDASH, NDI, ODI, KOOS e Berg aparecem somente como instrumentos externos: o app não reproduz seus itens e solicita versão autorizada, resultado, unidade e observações. Não há pontos de corte, valores normativos, MCID ou MDC universais.
+## Ditado por voz com Groq
+
+Campos clínicos longos exibem o botão **Ditar**: caso do Assistente, queixa, história, achados, sintomas, observações, discussão de caso, evolução e relatório. A gravação dura no máximo 90 segundos, pode ser interrompida manualmente e a transcrição é inserida no cursor sem salvar o áudio no estado local. O texto precisa ser revisado antes de salvar.
+
+A transcrição usa `whisper-large-v3-turbo`, idioma `pt`, através do proxy local `/api/transcribe`. A chave nunca é enviada ao navegador. Configure uma chave nova:
+
+```powershell
+Copy-Item .env.example .env.local
+# Edite .env.local e preencha GROQ_API_KEY
+npm start
+```
+
+No Vercel, cadastre `GROQ_API_KEY` nas variáveis de ambiente do projeto. Não use prefixos públicos e não coloque a chave em `src/`, `index.html` ou commits. O arquivo `.env.local` é ignorado pelo Git.
+
+A aplicação mostra um aviso antes do primeiro envio. O áudio é transmitido à Groq e exige internet; as demais funcionalidades continuam locais/offline. Não dite nome, documento, contato ou outro identificador. Consulte a política institucional e, quando aplicável, configure Zero Data Retention na conta Groq.
+## Supabase e contas
+
+1. No SQL Editor do projeto Supabase, execute `supabase/migrations/20260920_auth_cloud.sql`.
+2. Crie a primeira conta pelo aplicativo.
+3. Para promover uma conta a administrador, execute a instrução comentada no fim da migração com o e-mail correto.
+
+A chave publicável fica no cliente. As permissões reais são impostas por RLS. A opção “manter conectado” persiste somente a sessão, nunca a senha.

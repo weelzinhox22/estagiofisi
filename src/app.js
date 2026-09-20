@@ -1,4 +1,4 @@
-import { loadState, saveState, addRecord, updateRecord, removeRecord, patientRecords, painSeries, catalog, today, toggleFavorite, addToRepertoire } from './store.js';
+import { loadState, saveState as saveLocalState, addRecord, updateRecord, removeRecord, patientRecords, painSeries, catalog, today, toggleFavorite, addToRepertoire, emptyState } from './store.js';
 import { muscles, clinicalTests, goniometry, reflexes, scales, functionalProblems } from './reference-data.js';
 import { cameraPage, mountCamera, cleanupCamera } from './camera.js';
 import { generalLibraryPage, meetingPage, complaintPage, casesPage, generalSearch } from './general-physio-ui.js';
@@ -7,8 +7,23 @@ import { gaitSelects, gaitTestGuide, gaitChecklist, buildGaitSummary, gaitHasObs
 import { buildEvolution, clinicalAssessmentFromForm, assessmentHasContent, buildAssessmentSummary, patientInitials, patientLabel, SESSION_BLOCKS } from './clinical-workflow.js';
 import { assessmentRow, clinicalAssessmentBody, patientFormBody, patientWorkflowPage, planFormBody, printPatientPage } from './patient-workflow-ui.js';
 import { sessionBuilderPage, sessionPayloadFromForm } from './session-workflow-ui.js';
+import { APP_VERSION } from './version.js';
+import { buildDischargeReport } from './v06-core.js';
+import { dischargePage, functionalModelPage, homeProgramPage, morePage, neuroPage, pediatricsPage, reassessmentPage, toolsPage } from './v06-ui.js';
+import { assessmentMeasures } from './assessment-measures-data.js';
+import { buildTestSummary, calculateMeasureResult, detectPossibleFindings, suggestionEngine } from './assessment-assistant.js';
+import { assessmentAssistantPage, measureDetailPage, measureExecutorPage, measuresLibraryPage } from './assessment-assistant-ui.js';
+import { enhanceVoiceInputs, stopVoiceDictation } from './voice-dictation.js';
+import { authPage, accountPage } from './auth-ui.js';
+import { adminPage } from './admin-ui.js';
+import { signUp, signIn, signOut, restoreSession, persistSession, changePassword, requestPasswordReset, getProfile, sessionUser } from './supabase-client.js';
+import { scheduleCloudSync, syncAllPatients, loadCloudSnapshots, mergeCloudSnapshots } from './cloud-sync.js';
+import { structureTranscript, voiceStructurePreview } from './voice-structure.js';
+import { rapidCarePage, buildRapidEvolution } from './rapid-care-ui.js';
 
-let state = loadState();
+let state=emptyState(),currentStorage=localStorage;
+let authState={ready:false,session:null,profile:null,message:''},adminRows=null,voiceStructureDraft=null;
+const rapidTimers=new Map();
 let filter = '';
 let quickQuery = '';
 let libraryQuery = '';
@@ -16,11 +31,16 @@ let libraryCategory = 'Todas';
 const neuroFilters = { objective:'', position:'', assistance:'' };
 const sessionDrafts = new Map();
 let deferredInstall;
+let testTimer={elapsed:0,started:0,handle:0};
+let toolTimer={elapsed:0,started:0,handle:0,laps:[]};
+let countdownHandle=0,metronomeHandle=0,manualReps=0,manualLaps=0;
+let assistantDraft={findings:[],detected:[]},measurePreview=null;
 const $ = selector => document.querySelector(selector);
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const formatDate = value => value ? new Date(`${value}T12:00:00`).toLocaleDateString('pt-BR') : '—';
 const short = (text, len=92) => String(text || '').length > len ? `${String(text).slice(0,len)}…` : String(text || '');
-const saved = () => { try { saveState(state); toast('Salvo neste dispositivo.'); render(); } catch { toast('Não foi possível salvar. Verifique o espaço do navegador.', true); } };
+const saveState=(nextState)=>{saveLocalState(nextState,currentStorage);if(authState.session)scheduleCloudSync(nextState,authState.session,error=>toast(`Salvo localmente; sincronização pendente: ${error.message}`,true));};
+const saved = () => { try { saveState(state); toast('Salvo e sincronização agendada.'); render(); } catch { toast('Não foi possível salvar. Verifique o espaço do navegador.', true); } };
 const toast = (message, error=false) => { const el = $('#toast'); el.textContent = message; el.className = error ? 'show error' : 'show'; clearTimeout(toast.timer); toast.timer = setTimeout(() => el.className = '', 3500); };
 const input = (label,name,type='text',value='',attrs='') => `<label class="field"><span>${label}</span><input name="${name}" type="${type}" value="${esc(value)}" ${attrs}></label>`;
 const area = (label,name,value='',placeholder='') => `<label class="field"><span>${label}</span><textarea name="${name}" rows="3" placeholder="${esc(placeholder)}">${esc(value)}</textarea></label>`;
@@ -31,22 +51,43 @@ const badge = (text,kind='') => `<span class="badge ${kind}">${esc(text)}</span>
 const pageHeader = (eyebrow,title,desc,action='') => `<div class="page-head"><div><span class="eyebrow">${eyebrow}</span><h1>${title}</h1><p>${desc}</p></div>${action}</div>`;
 const advisory = `<div class="advisory"><span class="advisory-icon">ⓘ</span><div><strong>Uso educacional e apoio clínico supervisionado</strong><p>Registros e exercícios exigem avaliação e decisão individual do profissional responsável. Não substitui diagnóstico ou julgamento clínico.</p></div></div>`;
 
-const navItems = [['inicio','Visão geral','◫'],['consulta','Consulta rápida','⌕'],['pacientes','Pacientes','♧'],['biblioteca','Biblioteca','◇'],['repertorio','Meu repertório','★']];
+const navItems = [['inicio','Visão geral','◫'],['atendimento-rapido','Atendimento rápido','⚡'],['consulta','Consulta rápida','⌕'],['pacientes','Pacientes','♧'],['assistente','Assistente','✦'],['biblioteca','Biblioteca','◇'],['repertorio','Meu repertório','★'],['mais','Mais','☰'],['conta','Conta','●']];
 function route() { return decodeURIComponent((location.hash.slice(1) || 'inicio').split('?')[0]).split('/'); }
 function routeQuery() { return new URLSearchParams((location.hash.split('?')[1]||'')); }
 function renderNav(section) {
-  const activeSection = ['camera','encontro','queixa','casos','conduta'].includes(section) ? 'biblioteca' : section;
-  const html = navItems.map(([id,label,icon]) => `<a href="#${id}" class="nav-item ${activeSection===id?'active':''}" ${activeSection===id?'aria-current="page"':''}><span aria-hidden="true">${icon}</span><span>${label}</span></a>`).join('');
+  const activeSection = ['camera','encontro','queixa','casos','conduta','testes-funcionais','medidas'].includes(section) ? 'biblioteca' : ['reavaliacao','alta','modelo-funcional','neuro','pediatria','domiciliar','ferramentas'].includes(section)?'mais':section;
+  const items=authState.profile?.role==='admin'?[...navItems,['admin','Admin','◆']]:navItems;
+  const html = items.map(([id,label,icon]) => `<a href="#${id}" class="nav-item ${activeSection===id?'active':''}" ${activeSection===id?'aria-current="page"':''}><span aria-hidden="true">${icon}</span><span>${label}</span></a>`).join('');
   $('#desktop-nav').innerHTML = html;
   $('#mobile-nav').innerHTML = html;
-  $('#breadcrumb').textContent = navItems.find(([id]) => id === activeSection)?.[1] || 'Visão geral';
+  $('#breadcrumb').textContent = items.find(([id]) => id === activeSection)?.[1] || 'Visão geral';
 }
 function render() {
+  stopVoiceDictation();
   cleanupCamera();
   const [section,id,tab] = route();
-  renderNav(section);
   const main = $('#main');
-  if (section === 'camera') { main.innerHTML = cameraPage(state.patients,routeQuery().get('patient')); queueMicrotask(() => mountCamera({onCapture:detail => { addRecord(state,'goniometryRecords',detail); saveState(state); toast('Medida estimada registrada.'); }})); }
+  if(!authState.ready){$('#desktop-nav').innerHTML=$('#mobile-nav').innerHTML='';main.innerHTML='<div class="auth-shell"><section class="auth-card"><h1>Carregando conta…</h1></section></div>';return;}
+  if(!authState.session){$('#desktop-nav').innerHTML=$('#mobile-nav').innerHTML='';$('#breadcrumb').textContent='Conta';main.innerHTML=authPage(['cadastro','recuperar'].includes(section)?section:'login',authState.message);queueMicrotask(()=>enhanceVoiceInputs(main));return;}
+  if(['login','cadastro','recuperar'].includes(section)){location.hash='inicio';return;}
+  renderNav(section);
+  if(section==='conta') main.innerHTML=accountPage(authState.profile);
+  else if(section==='admin'){if(authState.profile?.role!=='admin')main.innerHTML=empty('Acesso restrito','Esta área está disponível apenas para administradores autorizados.');else{main.innerHTML=adminPage(adminRows||[],adminRows===null);if(adminRows===null)loadAdminCases();}}
+  else if(section==='atendimento-rapido') main.innerHTML=rapidCarePage(state,routeQuery().get('a')||'',routeQuery().get('b')||'');
+  else if (section === 'camera') { main.innerHTML = cameraPage(state.patients,routeQuery().get('patient')); queueMicrotask(() => mountCamera({onCapture:detail => { addRecord(state,'goniometryRecords',detail); saveState(state); toast('Medida estimada registrada.'); }})); }
+  else if (section === 'assistente') main.innerHTML=assessmentAssistantPage(state,{...assistantDraft,patientId:routeQuery().get('patient')||assistantDraft.patientId||''});
+  else if (section === 'medidas' && id) main.innerHTML=measureDetailPage(id);
+  else if (section === 'medidas') main.innerHTML=measuresLibraryPage(routeQuery().get('filter')||'todos');
+  else if (section === 'testes-funcionais' && id) main.innerHTML=measureExecutorPage(state,id,routeQuery().get('patient')||tab||'',routeQuery().get('repeat')||'',measurePreview?.measureId===id?measurePreview:null);
+  else if (section === 'testes-funcionais') main.innerHTML=measuresLibraryPage('todos');
+  else if (section === 'reavaliacao') main.innerHTML=reassessmentPage(state,id);
+  else if (section === 'alta') main.innerHTML=dischargePage(state,id);
+  else if (section === 'modelo-funcional') main.innerHTML=functionalModelPage(state,id);
+  else if (section === 'neuro') main.innerHTML=neuroPage(state,id);
+  else if (section === 'pediatria') main.innerHTML=pediatricsPage(state,id);
+  else if (section === 'domiciliar') main.innerHTML=homeProgramPage(state,allExercises(),id);
+  else if (section === 'ferramentas') main.innerHTML=toolsPage();
+  else if (section === 'mais') main.innerHTML=morePage();
   else if (section === 'imprimir' && id) main.innerHTML = printPatientPage(state,id,tab,allExercises());
   else if (section === 'conduta' && id) main.innerHTML = reasoningDetailPage(id);
   else if (section === 'encontro' && id) main.innerHTML = meetingPage(id);
@@ -69,7 +110,9 @@ function render() {
   else if (section === 'pacientes') main.innerHTML = patientsPage();
   else if (section === 'dados') main.innerHTML = dataPage();
   else main.innerHTML = homePage();
+  queueMicrotask(()=>enhanceVoiceInputs(main));
   document.title = `${$('#breadcrumb').textContent} · Fisio Clínico`;
+  const version=$('#app-version');if(version)version.textContent=`VERSÃO ${APP_VERSION} · OFFLINE`;
 }
 function homePage() {
   const active = state.patients.filter(p => !p.archived);
@@ -131,9 +174,10 @@ function quickResults(query) {
   const te=clinicalTests.filter(x=>normalized([x.name,x.region,x.objective,x.structure].join(' ')).includes(normalized(query))).slice(0,5);
   const sc=scales.filter(x=>normalized([x.name,x.purpose].join(' ')).includes(normalized(query))).slice(0,4);
   const ne=allExercises().filter(x=>x.kind==='neuro'&&matchExercise(x,query)).slice(0,5);
+  const measures=assessmentMeasures.filter(x=>normalized([x.name,x.shortName,x.clinicalQuestion,x.domain,...x.tags].join(' ')).includes(normalized(query))).slice(0,6);
   const general=generalSearch(query);
   const conduct=reasoningSearch(query);
-  const groups=[['Exercícios',ex,x=>`#exercicio/${x.id}`],['Músculos',mu,x=>`#musculo/${x.id}`],['Testes',te,x=>`#teste/${x.id}`],['Escalas',sc,x=>`#biblioteca/escalas`],['Neuro',ne,x=>`#exercicio/${x.id}`],['Queixas comuns',general.complaints,x=>`#queixa/${x.id}`],['Encontros',general.meetings,x=>`#encontro/${x.id}`],['Condutas',conduct,x=>`#conduta/${x.id}`]];
+  const groups=[['Testes e medidas',measures,x=>`#medidas/${x.id}`],['Exercícios',ex,x=>`#exercicio/${x.id}`],['Músculos',mu,x=>`#musculo/${x.id}`],['Testes',te,x=>`#teste/${x.id}`],['Escalas',sc,x=>`#biblioteca/escalas`],['Neuro',ne,x=>`#exercicio/${x.id}`],['Queixas comuns',general.complaints,x=>`#queixa/${x.id}`],['Encontros',general.meetings,x=>`#encontro/${x.id}`],['Condutas',conduct,x=>`#conduta/${x.id}`]];
   const total=groups.reduce((n,g)=>n+g[1].length,0);
   return total?`<div class="result-groups">${groups.filter(g=>g[1].length).map(([title,items,href])=>`<section class="result-group"><h2>${title} <span>${items.length}</span></h2>${items.map(item=>`<a href="${href(item)}"><strong>${esc(item.name||item.title)}</strong><small>${esc(item.objective||item.function||item.purpose||item.summary||item.region||'Ficha de consulta')}</small><b>→</b></a>`).join('')}</section>`).join('')}</div>`:empty('Nenhum resultado','Tente outro termo, região, função ou sinônimo.');
 }
@@ -251,7 +295,7 @@ function exercisesPage() {
   return `${pageHeader('BIBLIOTECA','Exercícios','Catálogo de nomes para registro e estudo. A prescrição deve ser individualizada.',button('＋ Adicionar exercício','new-exercise'))}${advisory}<div class="library-intro"><span class="intro-mark">◇</span><div><strong>Proveniência em cada exercício</strong><p>Os itens iniciais são apenas nomes traduzidos de um projeto MIT. Não incluem técnica, dose ou indicação clínica.</p></div></div>${groups.map(g=>`<section class="library-group"><div class="section-title"><div><span class="eyebrow">CATÁLOGO</span><h2>${esc(g)}</h2></div><span class="group-count">${all.filter(e=>e.category===g).length} itens</span></div><div class="exercise-grid">${all.filter(e=>e.category===g).map(e=>`<article class="exercise-card"><div class="exercise-symbol">${g==='Mobilidade'?'↗':g==='Membros inferiores'?'◉':g==='Membros superiores'?'✳':'◎'}</div><h3>${esc(e.name)}</h3><span class="source-label">${e.custom?'Adicionado pelo usuário':'Catálogo MIT'}</span><p><strong>Fonte:</strong> ${esc(e.source)}</p>${e.notes?`<p>${esc(e.notes)}</p>`:''}</article>`).join('')}</div></section>`).join('')}`;
 }
 function dataPage() {
-  return `${pageHeader('CONTROLE LOCAL','Dados e privacidade','Controle seus registros e faça cópias de segurança.')}${advisory}<div class="section-grid"><section class="panel settings-card"><div class="settings-icon">⇩</div><h2>Exportar backup</h2><p>Baixe um arquivo JSON com pacientes, avaliações, planos, sessões e exercícios personalizados.</p>${button('Exportar dados','export-data')}</section><section class="panel settings-card"><div class="settings-icon">⇧</div><h2>Importar backup</h2><p>A importação substitui os dados locais atuais. Exporte uma cópia antes de importar.</p><label class="button secondary import-label">Selecionar arquivo<input id="import-file" type="file" accept="application/json,.json" hidden></label></section></div><section class="panel privacy"><span class="eyebrow">PRIVACIDADE</span><h2>Antes de usar em estágio</h2><p>Este protótipo guarda dados no armazenamento local do navegador, sem criptografia, autenticação ou sincronização. Use apenas códigos ou apelidos e dados desidentificados. Verifique as regras da instituição e a supervisão antes de registrar dados reais. Limpar dados do navegador pode apagar todos os registros.</p><p>O aplicativo funciona offline após a primeira visita pela rede. O arquivo de backup deve ser guardado de forma segura pelo responsável.</p><div class="data-count">${state.patients.length} pacientes · ${state.assessments.length} avaliações · ${state.sessions.length} sessões</div></section>`;
+  return `${pageHeader('CONTROLE LOCAL','Dados e privacidade','Controle seus registros e faça cópias de segurança.')}${advisory}<div class="section-grid"><section class="panel settings-card"><div class="settings-icon">⇩</div><h2>Exportar backup v${state.version}</h2><p>Baixe um JSON versionado com todos os registros locais, inclusive testes, reavaliações e programas.</p>${button('Exportar dados','export-data')}</section><section class="panel settings-card"><div class="settings-icon">⇧</div><h2>Importar backup</h2><p>A importação valida a versão e substitui os dados locais atuais. Exporte uma cópia antes.</p><label class="button secondary import-label">Selecionar arquivo<input id="import-file" type="file" accept="application/json,.json" hidden></label></section></div><section class="panel privacy"><span class="eyebrow">PRIVACIDADE</span><h2>Local-first e desidentificado</h2><p>Os dados ficam no localStorage deste navegador, sem servidor, autenticação ou criptografia. Prefira “paciente de estudo”, códigos como IL-01 e somente informações necessárias. Não registre CPF, RG ou documentos.</p><p>O volume da v0.6 ainda é compatível com o armazenamento atual. Uma futura migração para IndexedDB deverá ser não destrutiva. PIN e criptografia ficam para uma versão posterior, usando Web Crypto e revisão específica de segurança.</p><p>O arquivo de backup não é criptografado: guarde-o de forma segura.</p><div class="data-count">${state.patients.length} pacientes · ${state.assessments.length} avaliações · ${state.functionalTestResults.length} testes funcionais · ${state.sessions.length} sessões</div></section>`;
 }
 function modal(title,body,formId) {
   $('#dialog-root').innerHTML = `<div class="modal-backdrop" data-action="close-modal"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="modal-head"><div><span class="eyebrow">FISIO CLÍNICO</span><h2 id="modal-title">${title}</h2></div><button type="button" class="icon-button close" data-action="close-modal" aria-label="Fechar">×</button></div><form id="${formId}"><div class="modal-body">${body}</div><div class="modal-foot"><button type="button" class="button ghost" data-action="close-modal">Cancelar</button><button type="submit" class="button primary">Salvar registro</button></div></form></div></div>`;
@@ -260,6 +304,7 @@ function modal(title,body,formId) {
 function closeModal() { $('#dialog-root').innerHTML = ''; }
 function patientForm(p) {
   modal(p?'Editar paciente':'Novo paciente',patientFormBody(p||{},today()),'patient-form');
+  $('.modal-body')?.insertAdjacentHTML('afterbegin',`<label class="study-patient"><input type="checkbox" name="studyPatient" value="sim" ${p?.studyPatient==='sim'?'checked':''}><span>Paciente de estudo / desidentificado</span></label>`);
 }
 function assessmentForm(id) {
   modal('Nova avaliação',`<input type="hidden" name="patientId" value="${esc(id)}"><div class="form-grid">${input('Data *','date','date',today(),'required')}${select('Tipo','type',[['Inicial','Inicial'],['Reavaliação','Reavaliação'],['Objetiva','Objetiva']])}${input('Dor referida (0–10)','pain','number','','min="0" max="10" step="1"')}</div>${area('Queixa / objetivo relatado','complaint','','Descreva apenas o que foi avaliado')}${area('Achados registrados','findings','','Exame e observações sob supervisão')}${area('Função relatada','function','','Atividades e limitações relatadas')}`,'assessment-form');
@@ -322,6 +367,17 @@ function sessionFromForm(form){
   return sessionPayloadFromForm(form,id=>allExercises().find(item=>item.id===id));
 }
 
+const clockText=milliseconds=>{const total=Math.max(0,Math.floor(milliseconds)),minutes=Math.floor(total/60000),seconds=Math.floor(total%60000/1000),hundredths=Math.floor(total%1000/10);return `${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}.${String(hundredths).padStart(2,'0')}`;};
+function runClock(timer,selector){if(timer.handle)return;timer.started=performance.now();timer.handle=setInterval(()=>{const element=$(selector);if(element)element.textContent=clockText(timer.elapsed+performance.now()-timer.started);},50);}
+function pauseClock(timer,selector){if(timer.handle){timer.elapsed+=performance.now()-timer.started;clearInterval(timer.handle);timer.handle=0;}const element=$(selector);if(element)element.textContent=clockText(timer.elapsed);}
+function resetClock(timer,selector){if(timer.handle)clearInterval(timer.handle);Object.assign(timer,{elapsed:0,started:0,handle:0});const element=$(selector);if(element)element.textContent='00:00.00';}
+function runTestClock(){
+  if(testTimer.handle)return;const box=document.querySelector('.integrated-timer'),mode=box?.dataset.mode||'stopwatch',duration=(Number(box?.dataset.seconds)||0)*1000;testTimer.started=performance.now();testTimer.mode=mode;testTimer.duration=duration;
+  testTimer.handle=setInterval(()=>{const elapsed=testTimer.elapsed+performance.now()-testTimer.started,shown=mode==='countdown'?Math.max(0,duration-elapsed):elapsed;const output=$('#test-timer');if(output)output.textContent=clockText(shown);if(mode==='countdown'&&shown<=0)pauseTestClock();},50);
+}
+function pauseTestClock(){if(testTimer.handle){testTimer.elapsed+=performance.now()-testTimer.started;clearInterval(testTimer.handle);testTimer.handle=0;}const shown=testTimer.mode==='countdown'?Math.max(0,testTimer.duration-testTimer.elapsed):testTimer.elapsed;const output=$('#test-timer');if(output)output.textContent=clockText(shown);const time=document.querySelector('#functional-test-form [name="time"]');if(time&&!time.value&&testTimer.mode==='stopwatch')time.value=(testTimer.elapsed/1000).toFixed(2);}
+function resetTestClock(){if(testTimer.handle)clearInterval(testTimer.handle);const box=document.querySelector('.integrated-timer'),duration=(Number(box?.dataset.seconds)||0)*1000;Object.assign(testTimer,{elapsed:0,started:0,handle:0,duration,mode:box?.dataset.mode||'stopwatch'});const output=$('#test-timer');if(output)output.textContent=clockText(testTimer.mode==='countdown'?duration:0);}
+
 function updateSessionTotal(){
   const total=[...document.querySelectorAll('[name^="minutes-"]')].reduce((sum,field)=>sum+(Number(field.value)||0),0);
   const output=$('#session-total');if(output)output.textContent=`${total} min`;
@@ -329,12 +385,40 @@ function updateSessionTotal(){
 
 function formValues(form) { return Object.fromEntries(new FormData(form).entries()); }
 function inRange(value) { return value === '' || (Number.isInteger(Number(value)) && Number(value)>=0 && Number(value)<=10); }
-document.addEventListener('submit', event => {
+document.addEventListener('submit', async event => {
   const form=event.target;if(!form.id?.endsWith('-form'))return;event.preventDefault();
+  const authValues=formValues(form);
+  if(form.id==='login-form'){try{authState.message='';await activateSession(await signIn({email:authValues.email,password:authValues.password,remember:form.elements.remember.checked}));location.hash='inicio';}catch(error){authState.message=error.message;render();}return;}
+  if(form.id==='signup-form'){if(authValues.password!==authValues.passwordConfirm){authState.message='As senhas não coincidem.';render();return;}try{const result=await signUp({email:authValues.email,password:authValues.password,displayName:authValues.displayName});if(result.access_token){await activateSession(persistSession(result,true));location.hash='inicio';}else{authState.message='Conta criada. Confirme o e-mail antes de entrar.';location.hash='login';render();}}catch(error){authState.message=error.message;render();}return;}
+  if(form.id==='password-reset-form'){try{await requestPasswordReset(authValues.email);authState.message='Confira seu e-mail para redefinir a senha.';location.hash='login';render();}catch(error){authState.message=error.message;render();}return;}
+  if(form.id==='change-password-form'){if(authValues.password!==authValues.passwordConfirm){toast('As senhas não coincidem.',true);return;}try{await changePassword(authState.session,authValues.password);form.reset();toast('Senha alterada com segurança.');}catch(error){toast(error.message,true);}return;}
+  if(form.id==='voice-structure-form'){const selected=new FormData(form).getAll('structuredField'),fields={};for(const name of selected){const el=form.querySelector(`[data-structured-name="${CSS.escape(name)}"]`);fields[name]={...voiceStructureDraft.fields[name],value:el?.value.trim()||''};const targetField=document.querySelector(`#main [name="${CSS.escape(name)}"]`);if(targetField&&el?.value.trim())targetField.value+=(targetField.value?'\n':'')+el.value.trim();}const patientId=document.querySelector('#main [name="patientId"]')?.value||'';addRecord(state,'voiceStructuredRecords',{patientId,sourceText:voiceStructureDraft.sourceText,fields});saveState(state);closeModal();toast('Ficha estruturada confirmada e salva.');return;}
+  if(form.id.startsWith('rapid-care-form-')){const payload=formValues(form),rapidData=new FormData(form);payload.painRegions=rapidData.getAll('painRegion');payload.painCharacteristics=rapidData.getAll('painCharacteristic');payload.evolutionDetailed=buildRapidEvolution(payload);if(payload.painRegions.length||payload.pain?.trim())addRecord(state,'painMaps',{patientId:payload.patientId,date:payload.date,regions:payload.painRegions,characteristics:payload.painCharacteristics,irradiationChange:payload.irradiationChange||'',notes:payload.pain||''});addRecord(state,'quickCareSessions',payload);addRecord(state,'sessions',{patientId:payload.patientId,date:payload.date,summary:'Atendimento rápido',interventions:payload.exercise||'',response:payload.response||'',evolutionDetailed:payload.evolutionDetailed});if(payload.supervisorQuestion?.trim())addRecord(state,'supervisorQuestions',{patientId:payload.patientId,date:payload.date,question:payload.supervisorQuestion,status:'Pendente'});saveState(state);toast('Atendimento salvo e evolução gerada sem acrescentar dados.');render();return;}
   if(form.id==='session-builder-form'){
     try{const payload=sessionFromForm(form);addRecord(state,'sessions',payload);sessionDrafts.delete(payload.patientId);saveState(state);toast('Sessão concluída e evolução gerada.');location.hash=`pacientes/${payload.patientId}`;}catch(error){toast(error.message,true);}return;
   }
   const values=formValues(form);
+  if(form.id==='assessment-assistant-form'){
+    const data=new FormData(form),intent=event.submitter?.value||'analyze';values.findings=data.getAll('findings');assistantDraft={...assistantDraft,...values,findings:values.findings};
+    if(intent==='detect'){assistantDraft.detected=detectPossibleFindings(values.caseText).map(item=>item.findingId);assistantDraft.analysis=null;render();return;}
+    assistantDraft.analysis=suggestionEngine(values);
+    if(intent==='save'){if(!values.patientId){toast('Selecione um paciente para salvar; o modo sem paciente continua disponível para consulta.',true);render();return;}addRecord(state,'assessmentAssistantCases',{...values,detected:assistantDraft.detected,questions:assistantDraft.analysis.questions,suggestions:assistantDraft.analysis.suggestions.map(item=>item.measureId)});saveState(state);toast('Caso e achados confirmados salvos neste dispositivo.');}
+    render();return;
+  }
+  if(form.id==='functional-test-form'){
+    const data=new FormData(form),safetyFlags=data.getAll('safetyFlags');if(safetyFlags.length&&!data.get('safetyReviewed')){toast('Revise a informação de segurança e confirme avaliação/supervisão antes de prosseguir.',true);return;}
+    try{const measure=assessmentMeasures.find(item=>item.id===values.testId);const calculation=calculateMeasureResult(values.testId,values);const payload={...values,...calculation,safetyFlags,safetyReviewed:data.get('safetyReviewed')||'',summary:buildTestSummary(measure,values,calculation),contextSnapshot:Object.fromEntries(['pace','timedDistance','device','assistance','side','chairHeight','footwear'].map(key=>[key,values[key]||'']))};if(values.patientId){addRecord(state,'functionalTestResults',payload);measurePreview=null;saveState(state);toast('Resultado salvo neste dispositivo.');location.hash=`testes-funcionais/${values.testId}?patient=${values.patientId}`;}else{measurePreview={measureId:values.testId,...payload};toast('Resultado calculado. Selecione um paciente para salvar.');render();}}catch(error){toast(error.message,true);}return;
+  }
+  if(form.id==='goal-form'){addRecord(state,'goals',values);saved();return;}
+  if(form.id==='discharge-form'){if(!values.report?.trim())values.report=buildDischargeReport(values);addRecord(state,'discharges',values);saved();return;}
+  if(form.id==='functional-model-form'){addRecord(state,'functionalModels',values);saved();return;}
+  if(form.id==='neuro-assessment-form'){addRecord(state,'neuroAssessments',values);saved();return;}
+  if(form.id==='pediatric-assessment-form'){addRecord(state,'pediatricAssessments',values);saved();return;}
+  if(form.id==='home-program-form'){
+    const fd=new FormData(form),ids=fd.getAll('exerciseIds');if(!ids.length){toast('Selecione ao menos um exercício.',true);return;}
+    values.items=ids.map(exerciseId=>{const exercise=allExercises().find(item=>item.id===exerciseId);return {exerciseId,name:exercise?.name||'Exercício'};});
+    addRecord(state,'homePrograms',values);saved();return;
+  }
   if(form.id==='clinical-assessment-form'){
     const clinical=clinicalAssessmentFromForm(new FormData(form));
     if(!inRange(values.pain)){toast('Informe dor entre 0 e 10.',true);return;}
@@ -368,6 +452,7 @@ document.addEventListener('submit', event => {
   if(form.id==='choose-session-form'){const draft=sessionDrafts.get(values.patientId)||{selected:[],query:''};if(values.exerciseId&&!draft.selected.includes(values.exerciseId))draft.selected.push(values.exerciseId);sessionDrafts.set(values.patientId,draft);closeModal();location.hash=`sessao/${values.patientId}`;return;}
   if(['assessment-form','session-form'].includes(form.id)&&!['pain','painBefore','painAfter'].every(k=>!(k in values)||inRange(values[k]))){toast('Informe dor entre 0 e 10.',true);return;}
   if(form.id==='patient-form'){
+    values.studyPatient=form.elements.studyPatient?.checked?'sim':'';
     if(!values.code?.trim()&&!values.name?.trim()){toast('Informe ao menos o nome ou um código/apelido.',true);return;}
     if(values.id){updateRecord(state,'patients',values.id,values);}else{const p=addRecord(state,'patients',values);location.hash=`pacientes/${p.id}`;}
   }else{
@@ -387,9 +472,30 @@ document.addEventListener('submit', event => {
   }
   closeModal();saved();
 });
-document.addEventListener('click',event=>{
+document.addEventListener('click',async event=>{
   const target=event.target.closest('[data-action]');if(!target)return;
   const action=target.dataset.action,id=target.dataset.id;
+  if(action==='logout'){await signOut(authState.session);authState={ready:true,session:null,profile:null,message:''};state=emptyState();currentStorage=localStorage;location.hash='login';render();return;}
+  if(action==='sync-cloud'){try{const result=await syncAllPatients(state,authState.session);toast(`${result.synced} paciente(s) sincronizado(s).`);}catch(error){toast(error.message,true);}return;}
+  if(action==='open-rapid-patients'){const a=$('#rapid-a')?.value||'',b=$('#rapid-b')?.value||'';if(!a){toast('Selecione ao menos o paciente A.',true);return;}location.hash=`atendimento-rapido?a=${encodeURIComponent(a)}${b?`&b=${encodeURIComponent(b)}`:''}`;return;}
+  if(action==='rapid-preset'){const field=target.closest('form')?.elements[target.dataset.target];field?.focus();return;}
+  if(action==='rapid-timer'){const form=target.closest('form'),output=form?.querySelector('.rapid-timer-output'),key=form?.dataset.patient;clearInterval(rapidTimers.get(key));let remaining=Number(target.dataset.seconds)*1000,last=performance.now();const handle=setInterval(()=>{const now=performance.now();remaining=Math.max(0,remaining-(now-last));last=now;if(output){const total=Math.ceil(remaining/1000);output.textContent=`${String(Math.floor(total/60)).padStart(2,'0')}:${String(total%60).padStart(2,'0')}`;}if(!remaining){clearInterval(handle);rapidTimers.delete(key);}},200);rapidTimers.set(key,handle);return;}
+  if(action==='route-patient'){const patient=document.querySelector('[name="routePatient"]')?.value;if(!patient){toast('Selecione o paciente.',true);return;}location.hash=`${target.dataset.route}/${patient}`;return;}
+  if(action==='test-timer-start'){runTestClock();return;}
+  if(action==='test-timer-pause'||action==='test-timer-finish'){pauseTestClock();return;}
+  if(action==='test-timer-reset'){resetTestClock();return;}
+  if(action==='copy-test-summary'){const row=state.functionalTestResults.find(item=>item.id===id);if(!row?.summary){toast('Resumo indisponível.',true);return;}navigator.clipboard.writeText(row.summary).then(()=>toast('Resumo copiado para apoiar a evolução.')).catch(()=>toast('Não foi possível copiar.',true));return;}
+  if(action==='tool-start'){runClock(toolTimer,'#tool-stopwatch');return;}
+  if(action==='tool-pause'){pauseClock(toolTimer,'#tool-stopwatch');return;}
+  if(action==='tool-reset'){resetClock(toolTimer,'#tool-stopwatch');toolTimer.laps=[];const list=$('#tool-laps');if(list)list.innerHTML='';return;}
+  if(action==='tool-lap'){const elapsed=toolTimer.elapsed+(toolTimer.handle?performance.now()-toolTimer.started:0);toolTimer.laps.push(elapsed);const list=$('#tool-laps');if(list)list.innerHTML=toolTimer.laps.map((lap,index)=>`<li>Volta ${index+1}: ${clockText(lap)}</li>`).join('');return;}
+  if(action==='timer-preset'){const field=document.querySelector('[name="timerSeconds"]');if(field)field.value=target.dataset.seconds;const output=$('#tool-countdown');if(output)output.textContent=clockText(Number(target.dataset.seconds)*1000).slice(0,5);return;}
+  if(action==='timer-start'){clearInterval(countdownHandle);let remaining=Math.max(1,Number(document.querySelector('[name="timerSeconds"]')?.value)||30)*1000,last=performance.now();const output=$('#tool-countdown');countdownHandle=setInterval(()=>{const now=performance.now();remaining=Math.max(0,remaining-(now-last));last=now;if(output)output.textContent=clockText(remaining).slice(0,5);if(remaining<=0)clearInterval(countdownHandle);},100);return;}
+  if(action==='metronome-toggle'){if(metronomeHandle){clearInterval(metronomeHandle);metronomeHandle=0;$('#metronome-beat')?.classList.remove('active');return;}const bpm=Math.max(30,Math.min(240,Number(document.querySelector('[name="metronomeBpm"]')?.value)||80));const beat=()=>{const dot=$('#metronome-beat');dot?.classList.add('active');setTimeout(()=>dot?.classList.remove('active'),80);try{const context=new AudioContext(),osc=context.createOscillator(),gain=context.createGain();gain.gain.value=.03;osc.frequency.value=880;osc.connect(gain).connect(context.destination);osc.start();osc.stop(context.currentTime+.04);}catch{}};beat();metronomeHandle=setInterval(beat,60000/bpm);return;}
+  if(action==='count-rep'){manualReps++;const output=$('#manual-reps');if(output)output.textContent=manualReps;return;}
+  if(action==='count-lap'){manualLaps++;const output=$('#manual-laps');if(output)output.textContent=manualLaps;return;}
+  if(action==='count-reset'){manualReps=manualLaps=0;if($('#manual-reps'))$('#manual-reps').textContent='0';if($('#manual-laps'))$('#manual-laps').textContent='0';return;}
+  if(action==='generate-discharge'){const form=target.closest('form'),report=form?.elements.report;if(report)report.value=buildDischargeReport(formValues(form));return;}
   if(action==='close-modal'){if(event.target===target||target.tagName==='BUTTON')closeModal();return;}
   if(action==='new-patient')patientForm();
   if(action==='edit-patient')patientForm(state.patients.find(p=>p.id===id));
@@ -464,11 +570,17 @@ document.addEventListener('change',async event=>{
   if(event.target.id!=='import-file'||!event.target.files?.[0])return;
   try{const {validateState}=await import('./store.js');const next=validateState(JSON.parse(await event.target.files[0].text()));if(!confirm('Substituir todos os dados locais pelos dados do arquivo selecionado?'))return;state=next;saveState(state);toast('Backup importado.');render();}catch(error){toast(`Arquivo inválido: ${error.message}`,true);}
 });
+document.addEventListener('voice-transcribed',event=>{voiceStructureDraft=structureTranscript(event.detail?.text||'');$('#dialog-root').innerHTML=voiceStructurePreview(voiceStructureDraft);});
 window.addEventListener('hashchange',render);
 window.addEventListener('online',updateNetwork);
 window.addEventListener('offline',updateNetwork);
 function updateNetwork(){ $('#network-status').textContent=navigator.onLine?'Disponível offline':'Modo offline'; }
 window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();deferredInstall=event;$('#install-button').hidden=false;});
 $('#install-button').addEventListener('click',async()=>{if(deferredInstall){deferredInstall.prompt();await deferredInstall.userChoice;deferredInstall=undefined;$('#install-button').hidden=true;}});
-if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(()=>{});
-updateNetwork();render();
+function showUpdate(registration){if(document.querySelector('.update-banner'))return;const banner=document.createElement('div');banner.className='update-banner';banner.innerHTML='<span>Nova versão disponível</span><button class="button light" type="button">Atualizar agora</button>';banner.querySelector('button').onclick=()=>registration.waiting?.postMessage({type:'SKIP_WAITING'});document.body.append(banner);}
+if('serviceWorker'in navigator)navigator.serviceWorker.register('/sw.js').then(registration=>{if(registration.waiting)showUpdate(registration);registration.addEventListener('updatefound',()=>{const worker=registration.installing;worker?.addEventListener('statechange',()=>{if(worker.state==='installed'&&navigator.serviceWorker.controller)showUpdate(registration);});});navigator.serviceWorker.addEventListener('controllerchange',()=>location.reload());}).catch(()=>{});
+function accountStorage(session){const id=sessionUser(session).sub;return {getItem:key=>localStorage.getItem(`${key}:${id}`),setItem:(key,value)=>localStorage.setItem(`${key}:${id}`,value),removeItem:key=>localStorage.removeItem(`${key}:${id}`)};}
+async function activateSession(session){authState.session=session;currentStorage=accountStorage(session);state=loadState(currentStorage);authState.profile=await getProfile(session);mergeCloudSnapshots(state,await loadCloudSnapshots(session));saveLocalState(state,currentStorage);authState.ready=true;render();}
+async function initializeAccount(){try{const session=await restoreSession();if(session)await activateSession(session);else{authState.ready=true;render();}}catch(error){authState={ready:true,session:null,profile:null,message:`Não foi possível restaurar a sessão: ${error.message}`};render();}}
+async function loadAdminCases(){adminRows=[];try{adminRows=await loadCloudSnapshots(authState.session,true);}catch(error){toast(error.message,true);}render();}
+updateNetwork();render();initializeAccount();

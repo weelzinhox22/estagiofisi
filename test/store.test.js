@@ -18,7 +18,7 @@ test('backup validado persiste e rejeita formato incompatível', () => {
   const state = emptyState(); addRecord(state, 'patients', {code:'P-02'});
   saveState(state, storage);
   assert.equal(loadState(storage).patients[0].code, 'P-02');
-  assert.equal(JSON.parse(memory.get(STORAGE_KEY)).version, 4);
+  assert.equal(JSON.parse(memory.get(STORAGE_KEY)).version, 5);
   assert.throws(() => validateState({version:99}), /incompatível/);
 });
 
@@ -26,7 +26,7 @@ test('backup validado persiste e rejeita formato incompatível', () => {
 test('migra versão 2 e persiste discussões de caso desidentificadas', () => {
   const legacy={version:2,patients:[],assessments:[],plans:[],sessions:[],exercises:[],favorites:[],repertoires:[],goniometryRecords:[]};
   const state=validateState(legacy);
-  assert.equal(state.version,4);
+  assert.equal(state.version,5);
   const row=addRecord(state,'caseDiscussions',{caseCode:'Caso L-01',topic:'Lombalgia'});
   assert.equal(state.caseDiscussions[0].id,row.id);
 });

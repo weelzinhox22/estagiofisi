@@ -44,3 +44,14 @@ As orientações gerais e a seleção das medidas foram conferidas no material [
 A expansão adiciona 44 exercícios/atividades em cardiorrespiratória, condicionamento, tarefas cotidianas e mobilidade no leito. Atividades respiratórias específicas, higiene brônquica, treino muscular inspiratório e mobilização hospitalar exigem avaliação, competência, estabilidade clínica, monitoramento e coordenação com protocolos/equipe. Doses continuam sendo exemplos educacionais produzidos pelo gerador do catálogo.
 
 A biblioteca de condutas referencia publicações institucionais da OMS, NICE, IASP e o relatório global de tecnologia assistiva OMS/UNICEF. As fichas são sínteses originais e não reproduzem algoritmos, tabelas, instrumentos ou trechos extensos.
+
+## Assistente de Avaliação e medidas funcionais — versão 0.6
+
+O Assistente parte de achados confirmados e formula perguntas clínicas antes de relacionar medidas. Termos encontrados em texto livre são mostrados como possibilidades editáveis; nunca se tornam fatos automaticamente. As sugestões têm justificativa rastreável, níveis de relevância e aviso de que resultado não é diagnóstico.
+
+Medidas funcionais, escalas simples, testes clínicos/observacionais e instrumentos externos são separados visualmente. A execução registra protocolo, assistência, dispositivo, sintomas e demais condições pertinentes. Comparações mostram valor inicial, atual, diferença absoluta e compatibilidade das condições, sem declarar mudança significativa quando não há propriedade de medida apropriada à população.
+
+Pontos de corte, valores normativos, MDC e MCID não são exibidos de forma universal. Instrumentos com licença incerta não têm itens reproduzidos. Em pediatria o motor não sugere automaticamente medidas de adultos; nos contextos pós-operatório, oncológico, hospitalar e cardiorrespiratório a interface reforça confirmação de restrições, protocolo e supervisão.
+## Ditado e revisão clínica
+
+A transcrição de voz é uma facilidade de entrada de dados, não um registro clínico validado. O usuário deve revisar termos, números, lados, negações, nomes de testes e unidades antes de salvar. O sistema não transforma a fala em diagnóstico, conduta ou fato confirmado. O áudio não é incorporado ao prontuário local.

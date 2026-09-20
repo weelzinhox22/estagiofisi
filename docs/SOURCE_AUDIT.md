@@ -59,3 +59,22 @@ Foram adicionadas 44 atividades com redação original nas categorias Cardiorres
 | IASP — terminologia da dor | Dor persistente e retomada de atividade | Conceitos referenciados e redação própria |
 
 As fontes são apresentadas dentro das fichas para aprofundamento. As listas de possibilidades não são transcrições das publicações e não constituem recomendação clínica individual.
+
+## Assistente e medidas — versão 0.6
+
+O catálogo 0.6 usa sínteses originais e links para CDC STEADI, Rehabilitation Measures Database, American Thoracic Society e OMS. Protocolos completos, tabelas, limites e textos extensos não foram copiados. TUG, 10MWT, 2MWT, 6MWT e Chair Stand reaproveitam os IDs e as perguntas já presentes no guia de marcha do projeto; não foram criadas entidades clínicas duplicadas.
+
+| Conteúdo | Fonte de referência | Status de incorporação |
+|---|---|---|
+| TUG, 30s Chair Stand e triagem funcional | CDC STEADI | `public/simple`; instruções resumidas e originais, sem pontos de corte |
+| 10MWT, 2MWT, 5xSTS, Functional Reach, apoio unipodal e registros observacionais | Rehabilitation Measures Database | `public/simple`; links e estrutura de registro, sem copiar protocolos extensos |
+| 6MWT | American Thoracic Society e Rehabilitation Measures Database | `public/simple`; exige protocolo/triagem, sem inventar critérios de interrupção |
+| Escala numérica de dor, MRC e goniometria | Recursos simples já existentes no app e referências institucionais | `public/simple`; integração sem duplicar o recurso original |
+| Berg, SPADI, QuickDASH, NDI, ODI e KOOS | Referência externa | `license-review-required`; itens não reproduzidos, somente resultado informado e versão utilizada |
+
+A classificação é conservadora e não constitui parecer jurídico. Uma versão completa de qualquer instrumento externo só pode ser incorporada após confirmação documentada de licença e versão.
+## Serviço externo de transcrição
+
+A transcrição opcional usa a API Groq `POST /openai/v1/audio/transcriptions` com `whisper-large-v3-turbo`. A integração é realizada por proxy do próprio projeto para manter `GROQ_API_KEY` somente no servidor. O navegador envia áudio WebM ou OGG e recebe apenas o texto. O aplicativo não persiste o áudio, não registra a chave e não reutiliza a transcrição para diagnóstico ou prescrição.
+
+Por ser um serviço externo, a funcionalidade exige conexão, autorização institucional e fala desidentificada. A política de retenção e eventual configuração Zero Data Retention pertencem à conta Groq utilizada. Fonte técnica: https://console.groq.com/docs/speech-to-text e https://console.groq.com/docs/your-data.

@@ -4,13 +4,14 @@ export const STORAGE_KEY = 'fisio-clinico:v2';
 export const LEGACY_KEY = 'fisio-clinico:v1';
 export const SOURCE = 'Conteúdo educacional original do Fisio Clínico (2026).';
 export const catalog = clinicalExercises;
-export const emptyState = () => ({ version:4, patients:[], assessments:[], plans:[], sessions:[], exercises:[], favorites:[], repertoires:[], goniometryRecords:[], caseDiscussions:[] });
+export const V06_COLLECTIONS=['functionalTestResults','assessmentAssistantCases','goals','discharges','functionalModels','neuroAssessments','pediatricAssessments','homePrograms','voiceStructuredRecords','quickCareSessions','supervisorQuestions','painMaps'];
+export const emptyState = () => ({ version:5, patients:[], assessments:[], plans:[], sessions:[], exercises:[], favorites:[], repertoires:[], goniometryRecords:[], caseDiscussions:[], ...Object.fromEntries(V06_COLLECTIONS.map(key=>[key,[]])) });
 export const uid = () => globalThis.crypto?.randomUUID?.() || `${Date.now()}-${Math.random().toString(36).slice(2)}`;
 export const today = () => new Date().toLocaleDateString('sv-SE');
 
 function validRow(row) { return row && typeof row === 'object' && !Array.isArray(row) && typeof row.id === 'string'; }
 export function validateState(value) {
-  if (!value || ![1,2,3,4].includes(value.version)) throw new Error('Arquivo de backup incompatível.');
+  if (!value || ![1,2,3,4,5].includes(value.version)) throw new Error('Arquivo de backup incompatível.');
   const state = emptyState();
   for (const key of ['patients','assessments','plans','sessions','exercises']) {
     if (!Array.isArray(value[key]) || !value[key].every(validRow)) throw new Error(`Dados inválidos: ${key}.`);
@@ -29,7 +30,8 @@ export function validateState(value) {
     if (!Array.isArray(value.caseDiscussions) || !value.caseDiscussions.every(validRow)) throw new Error('Dados inválidos: discussões de caso.');
     state.caseDiscussions = value.caseDiscussions;
   }
-  state.version = 4;
+  if(value.version>=5)for(const key of V06_COLLECTIONS){if(!Array.isArray(value[key])||!value[key].every(validRow))throw new Error(`Dados inválidos: ${key}.`);state[key]=value[key];}
+  state.version = 5;
   return state;
 }
 export function loadState(storage = globalThis.localStorage) {
@@ -43,21 +45,21 @@ export function loadState(storage = globalThis.localStorage) {
 }
 export function saveState(state, storage = globalThis.localStorage) { storage.setItem(STORAGE_KEY, JSON.stringify(validateState(state))); }
 export function addRecord(state, collection, payload) {
-  if (!['patients','assessments','plans','sessions','exercises','repertoires','goniometryRecords','caseDiscussions'].includes(collection)) throw new Error('Coleção inválida.');
+  if (!['patients','assessments','plans','sessions','exercises','repertoires','goniometryRecords','caseDiscussions',...V06_COLLECTIONS].includes(collection)) throw new Error('Coleção inválida.');
   if (collection === 'exercises' && (!payload.name?.trim() || !payload.source?.trim())) throw new Error('Informe nome e fonte do exercício.');
   const row = { ...payload, id:uid(), createdAt:new Date().toISOString() };
   state[collection].push(row);
   return row;
 }
 export function updateRecord(state, collection, id, payload) {
-  if (!['patients','assessments','plans','sessions','exercises','repertoires','goniometryRecords','caseDiscussions'].includes(collection)) throw new Error('Coleção inválida.');
+  if (!['patients','assessments','plans','sessions','exercises','repertoires','goniometryRecords','caseDiscussions',...V06_COLLECTIONS].includes(collection)) throw new Error('Coleção inválida.');
   const row=state[collection].find(item=>item.id===id);
   if(!row)throw new Error('Registro não encontrado.');
   Object.assign(row,payload,{id:row.id,updatedAt:new Date().toISOString()});
   return row;
 }
 export function removeRecord(state, collection, id) {
-  if (!['assessments','plans','sessions','goniometryRecords'].includes(collection)) throw new Error('Coleção inválida para exclusão.');
+  if (!['assessments','plans','sessions','goniometryRecords',...V06_COLLECTIONS].includes(collection)) throw new Error('Coleção inválida para exclusão.');
   const index=state[collection].findIndex(item=>item.id===id);
   if(index<0)throw new Error('Registro não encontrado.');
   return state[collection].splice(index,1)[0];
@@ -74,7 +76,7 @@ export function addToRepertoire(state, repertoireId, itemKey) {
   if (!repertoire.items.includes(itemKey)) repertoire.items.push(itemKey);
 }
 export function patientRecords(state, patientId) {
-  return { assessments:state.assessments.filter(x => x.patientId === patientId), plans:state.plans.filter(x => x.patientId === patientId), sessions:state.sessions.filter(x => x.patientId === patientId), goniometryRecords:state.goniometryRecords.filter(x => x.patientId === patientId) };
+  return { assessments:state.assessments.filter(x => x.patientId === patientId), plans:state.plans.filter(x => x.patientId === patientId), sessions:state.sessions.filter(x => x.patientId === patientId), goniometryRecords:state.goniometryRecords.filter(x => x.patientId === patientId), ...Object.fromEntries(V06_COLLECTIONS.map(key=>[key,state[key].filter(x=>x.patientId===patientId)])) };
 }
 export function painSeries(sessions) {
   return sessions.filter(s => s.painBefore !== '' && s.painBefore != null).sort((a,b) => a.date.localeCompare(b.date)).map(s => ({date:s.date, before:Number(s.painBefore), after:s.painAfter === '' || s.painAfter == null ? null : Number(s.painAfter)}));
