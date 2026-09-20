@@ -95,3 +95,7 @@ Recebe um relato clínico desidentificado por texto ou voz e usa a Groq para pro
 ## Central Aprender e funcionamento offline
 
 A navegação mobile possui cinco destinos principais. A Central Aprender reúne professor de escrita, roteiro do próximo passo, simulador, explicador de raciocínio, primeira sessão, tradutor clínico e prova prática. Toda resposta da IA é persistida localmente antes da sincronização. Execute também `supabase/migrations/20260921_offline_workspace.sql` para sincronizar resultados sem paciente vinculado e habilitar a resolução de conflitos entre dispositivos.
+
+## Banco antigo / reset controlado
+
+Se o projeto Supabase já possuir uma tabela `profiles` incompatível, execute `supabase/migrations/20260922_reset_fisio_schema.sql` no SQL Editor. O script remove e recria somente os objetos do Fisio Clínico; ele preserva `auth.users`, Storage e outras tabelas.
