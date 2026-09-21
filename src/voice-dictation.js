@@ -10,7 +10,6 @@ export const VOICE_FIELD_NAMES=new Set([
 
 const MAX_RECORDING_MS=10*60*1000;
 let active=null;
-let consented=false;
 
 const eligible=field=>field instanceof HTMLTextAreaElement||(field instanceof HTMLInputElement&&field.type==='text'&&VOICE_FIELD_NAMES.has(field.name));
 export function appendTranscript(current,transcript,start=current.length,end=start){
@@ -35,12 +34,8 @@ async function transcribe(blob,mime){
 
 async function start(field,button){
   if(active){active.recorder.stop();return;}
-  if(!navigator.onLine){announce('A transcrição por Groq precisa de conexão com a internet.',true);return;}
+  if(!navigator.onLine){announce('A transcrição de voz precisa de conexão com a internet.',true);return;}
   if(!navigator.mediaDevices?.getUserMedia||!globalThis.MediaRecorder){announce('Este navegador não oferece gravação de voz compatível.',true);return;}
-  if(!consented){
-    const accepted=confirm('O áudio será enviado à Groq para transcrição e não será salvo pelo Fisio Clínico. Não fale nome, documento, contato ou outro identificador do paciente. Deseja continuar?');
-    if(!accepted)return;consented=true;
-  }
   try{
     const stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true},video:false}),mime=preferredMime(),chunks=[];
     const recorder=new MediaRecorder(stream,mime?{mimeType:mime}:undefined),selection={start:field.selectionStart??field.value.length,end:field.selectionEnd??field.value.length};
