@@ -1,1 +1,114 @@
-.auth-shell{min-height:70vh;display:grid;place-items:center;padding:2rem}.auth-card{width:min(100%,34rem);background:#fff;border:1px solid #dce8e2;border-radius:24px;padding:clamp(1.3rem,4vw,2.4rem);box-shadow:0 18px 60px #163b3220}.auth-card form,.auth-links{display:grid;gap:1rem}.auth-links{grid-template-columns:1fr 1fr;margin-top:1rem}.consent-check{display:flex;gap:.7rem;align-items:flex-start;font-size:.9rem}.full{width:100%}.admin-case-grid{display:grid;gap:1rem}.admin-case-grid pre{white-space:pre-wrap;max-height:24rem;overflow:auto}.structure-modal{max-width:48rem}.structure-row{display:grid;grid-template-columns:auto 1fr;gap:.7rem;margin:.7rem 0}.structure-row textarea{width:100%}.rapid-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:1rem}.dual-picker,.rapid-buttons,.timer-presets{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin-bottom:1rem}.rapid-buttons button,.timer-presets button{border:1px solid #bed7ce;background:#edf7f3;border-radius:12px;padding:.75rem}.rapid-pane fieldset{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.5rem;margin:1rem 0}.last-summary{background:#f2f7f5;padding:1rem;border-radius:14px}.rapid-timer-output{font-size:1.4rem;font-weight:700}
+/* ============================================================
+   ACCOUNT, CLOUD SYNC & AUTH — Fisio Clínico v2
+   ============================================================ */
+
+/* ── Auth Shell ────────────────────────────────────────────── */
+.auth-shell {
+  min-height: 80vh;
+  display: grid;
+  place-items: center;
+  padding: 2rem 1rem;
+}
+
+.auth-card {
+  width: min(100%, 36rem);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: clamp(1.5rem, 5vw, 2.5rem);
+  box-shadow: 0 20px 60px rgba(18,61,56,.12), 0 4px 16px rgba(18,61,56,.06);
+  animation: modal-in var(--t-base) var(--t-spring) both;
+}
+
+.auth-card form, .auth-links { display: grid; gap: 1rem; }
+.auth-links { grid-template-columns: 1fr 1fr; margin-top: 1rem; }
+
+.consent-check {
+  display: flex;
+  gap: .75rem;
+  align-items: flex-start;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+/* ── Admin ─────────────────────────────────────────────────── */
+.admin-case-grid { display: grid; gap: 1rem; }
+.admin-case-grid pre {
+  white-space: pre-wrap;
+  max-height: 24rem;
+  overflow: auto;
+  background: var(--teal-50);
+  border-radius: var(--r-md);
+  padding: 1rem;
+  font-size: 12px;
+}
+
+/* ── Structure modal ────────────────────────────────────────── */
+.structure-modal { max-width: 48rem; }
+.structure-row { display: grid; grid-template-columns: auto 1fr; gap: .75rem; margin: .75rem 0; }
+.structure-row textarea { width: 100%; }
+
+/* ── Rapid care ─────────────────────────────────────────────── */
+.rapid-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+  gap: 1rem;
+}
+
+.dual-picker, .rapid-buttons, .timer-presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .6rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.rapid-buttons button, .timer-presets button {
+  border: 1.5px solid var(--teal-200);
+  background: var(--teal-50);
+  border-radius: 12px;
+  padding: .75rem 1rem;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--teal-700);
+  cursor: pointer;
+  transition: background var(--t-fast), border-color var(--t-fast), transform var(--t-fast);
+}
+.rapid-buttons button:hover, .timer-presets button:hover {
+  background: var(--teal-100);
+  transform: translateY(-1px);
+}
+
+.rapid-pane fieldset {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: .5rem;
+  margin: 1rem 0;
+}
+
+.last-summary {
+  background: var(--teal-50);
+  border: 1px solid var(--teal-100);
+  padding: 1rem;
+  border-radius: 14px;
+}
+
+.rapid-timer-output {
+  font: 400 1.6rem var(--font-serif);
+  color: var(--teal-900);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Sync conflict ──────────────────────────────────────────── */
+.sync-conflict {
+  border: 1.5px solid #fde68a;
+  background: #fffbeb;
+  border-radius: 16px;
+  padding: 14px;
+  margin-top: 10px;
+}
+.sync-conflict-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+
+/* Full width utility */
+.full { width: 100%; }
