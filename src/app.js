@@ -22,6 +22,7 @@ import { structureTranscript, voiceStructurePreview } from './voice-structure.js
 import { rapidCarePage, buildRapidEvolution } from './rapid-care-ui.js';
 import { clinicalMentorPage } from './clinical-mentor-ui.js';
 import { learningHub, learningToolPage } from './learning-lab-ui.js';
+import { downloadsPage } from './downloads-ui.js';
 
 let state=emptyState(),currentStorage=localStorage;
 let authState={ready:false,session:null,profile:null,message:''},adminRows=null,voiceStructureDraft=null,mentorDraft={},learningDraft={tool:'',history:[]};
@@ -30,6 +31,7 @@ let filter = '';
 let quickQuery = '';
 let libraryQuery = '';
 let libraryCategory = 'Todas';
+let downloadsQuery='',downloadsCategory='Todos';
 const neuroFilters = { objective:'', position:'', assistance:'' };
 const sessionDrafts = new Map();
 let deferredInstall;
@@ -53,7 +55,7 @@ const badge = (text,kind='') => `<span class="badge ${kind}">${esc(text)}</span>
 const pageHeader = (eyebrow,title,desc,action='') => `<div class="page-head"><div><span class="eyebrow">${eyebrow}</span><h1>${title}</h1><p>${desc}</p></div>${action}</div>`;
 const advisory = `<div class="advisory"><span class="advisory-icon">ⓘ</span><div><strong>Uso educacional e apoio clínico supervisionado</strong><p>Registros e exercícios exigem avaliação e decisão individual do profissional responsável. Não substitui diagnóstico ou julgamento clínico.</p></div></div>`;
 
-const navItems = [['inicio','Visão geral','◫'],['atendimento-rapido','Atendimento rápido','⚡'],['consulta','Consulta rápida','⌕'],['pacientes','Pacientes','♧'],['aprender','Aprender','✺'],['assistente','Assistente','✦'],['biblioteca','Biblioteca','◇'],['repertorio','Meu repertório','★'],['mais','Mais','☰'],['conta','Conta','●']];
+const navItems = [['inicio','Visão geral','◫'],['atendimento-rapido','Atendimento rápido','⚡'],['consulta','Consulta rápida','⌕'],['pacientes','Pacientes','♧'],['aprender','Aprender','✺'],['assistente','Assistente','✦'],['biblioteca','Biblioteca','◇'],['repertorio','Meu repertório','★'],['mais','Mais','☰'],['downloads','Downloads','⇩'],['conta','Conta','●']];
 function route() { return decodeURIComponent((location.hash.slice(1) || 'inicio').split('?')[0]).split('/'); }
 function routeQuery() { return new URLSearchParams((location.hash.split('?')[1]||'')); }
 function renderNav(section) {
@@ -79,6 +81,7 @@ function render() {
   else if(section==='atendimento-rapido') main.innerHTML=rapidCarePage(state,routeQuery().get('a')||'',routeQuery().get('b')||'');
   else if(section==='mentor') main.innerHTML=clinicalMentorPage(state,{...mentorDraft,patientId:routeQuery().get('patient')||mentorDraft.patientId||''});
   else if(section==='aprender'){if(id&&learningDraft.tool!==id)learningDraft={tool:id,history:[]};main.innerHTML=id?learningToolPage(state,id,learningDraft):learningHub();}
+  else if(section==='downloads') main.innerHTML=downloadsPage(downloadsQuery,downloadsCategory);
   else if (section === 'camera') { main.innerHTML = cameraPage(state.patients,routeQuery().get('patient')); queueMicrotask(() => mountCamera({onCapture:detail => { addRecord(state,'goniometryRecords',detail); saveState(state); toast('Medida estimada registrada.'); }})); }
   else if (section === 'assistente') main.innerHTML=assessmentAssistantPage(state,{...assistantDraft,patientId:routeQuery().get('patient')||assistantDraft.patientId||''});
   else if (section === 'medidas' && id) main.innerHTML=measureDetailPage(id);
@@ -572,12 +575,14 @@ document.addEventListener('input',event=>{
   if(event.target.id==='patient-search'){filter=event.target.value;rerenderField('#patient-search',pos);}
   if(event.target.id==='quick-search'){quickQuery=event.target.value;rerenderField('#quick-search',pos);}
   if(event.target.id==='library-search'){libraryQuery=event.target.value;rerenderField('#library-search',pos);}
+  if(event.target.id==='downloads-search'){downloadsQuery=event.target.value;rerenderField('#downloads-search',pos);}
   if(event.target.id==='session-search'){const [,patientId]=route();const draft=sessionDrafts.get(patientId);if(draft){draft.query=event.target.value;rerenderField('#session-search',pos);}}
   if(event.target.id==='global-search'){quickQuery=event.target.value;if(location.hash!=='#consulta')location.hash='consulta';else render();}
   if(event.target.name?.startsWith('minutes-'))updateSessionTotal();
 });
 document.addEventListener('change',async event=>{
   if(event.target.id==='library-category'){libraryCategory=event.target.value;render();return;}
+  if(event.target.id==='downloads-category'){downloadsCategory=event.target.value;render();return;}
   if(event.target.name==='neuroObjective'||event.target.name==='neuroPosition'||event.target.name==='neuroAssistance'){const key=event.target.name.replace('neuro','');neuroFilters[key.charAt(0).toLowerCase()+key.slice(1)]=event.target.value;render();return;}
   if(event.target.id!=='import-file'||!event.target.files?.[0])return;
   try{const {validateState}=await import('./store.js');const next=validateState(JSON.parse(await event.target.files[0].text()));if(!confirm('Substituir todos os dados locais pelos dados do arquivo selecionado?'))return;state=next;saveState(state);toast('Backup importado.');render();}catch(error){toast(`Arquivo inválido: ${error.message}`,true);}
