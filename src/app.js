@@ -61,10 +61,12 @@ function routeQuery() { return new URLSearchParams((location.hash.split('?')[1]|
 function renderNav(section) {
   const activeSection = section==='mentor'?'aprender':['camera','encontro','queixa','casos','conduta','testes-funcionais','medidas'].includes(section) ? 'biblioteca' : ['reavaliacao','alta','modelo-funcional','neuro','pediatria','domiciliar','ferramentas'].includes(section)?'mais':section;
   const items=authState.profile?.role==='admin'?[...navItems,['admin','Admin','◆']]:navItems;
-  const itemHtml=([id,label,icon])=>`<a href="#${id}" class="nav-item ${activeSection===id?'active':''}" ${activeSection===id?'aria-current="page"':''}><span aria-hidden="true">${icon}</span><span>${label}</span></a>`;
+  const itemHtml=([id,label,icon],selected=activeSection)=>`<a href="#${id}" class="nav-item ${selected===id?'active':''}" ${selected===id?'aria-current="page"':''}><span aria-hidden="true">${icon}</span><span>${label}</span></a>`;
   $('#desktop-nav').innerHTML = items.map(itemHtml).join('');
-  const mobileIds=new Set(['inicio','atendimento-rapido','aprender','pacientes','mais']);
-  $('#mobile-nav').innerHTML = items.filter(([id])=>mobileIds.has(id)).map(([id,label,icon])=>itemHtml([id,({inicio:'Início','atendimento-rapido':'Atender',aprender:'Aprender',pacientes:'Pacientes',mais:'Mais'})[id]||label,icon])).join('');
+  const mobileOrder=['inicio','atendimento-rapido','pacientes','downloads','mais'];
+  const moreSections=new Set(['aprender','biblioteca','assistente','repertorio','mais','dados','conta','admin']);
+  const mobileActive=moreSections.has(activeSection)?'mais':activeSection;
+  $('#mobile-nav').innerHTML = mobileOrder.map(id=>items.find(([itemId])=>itemId===id)).filter(Boolean).map(([id,label,icon])=>itemHtml([id,({inicio:'Início','atendimento-rapido':'Atender',pacientes:'Pacientes',downloads:'Downloads',mais:'Mais'})[id]||label,icon],mobileActive)).join('');
   $('#breadcrumb').textContent = items.find(([id]) => id === activeSection)?.[1] || 'Visão geral';
 }
 function render() {
