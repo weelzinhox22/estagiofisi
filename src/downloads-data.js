@@ -2,13 +2,13 @@ const drive=(id,name,category,restricted=false)=>({id,name,category,restricted,v
 
 export const downloadMaterials=[
   drive('1yq1jOkQ7YHMq-XlcqvAICw3_ST7VXnOS','Apostila de Músculos','Anatomia'),
-  drive('1kDBc2n_UL0Ze0gJE1bmTX8cVkDePADmC','Material com acesso restrito 1','Outros',true),
+  drive('1kDBc2n_UL0Ze0gJE1bmTX8cVkDePADmC','Dermatologia','Dermatologia'),
   drive('1h8wdddn6iHryZX0m0-KYMUyadnlMGOAu','Exercícios Terapêuticos — Fundamentos e Técnicas (Kisner)','Exercício terapêutico'),
   drive('1mcBik8Hvyi95OSJWGAknbHaTCHWvcyUr','Exercícios Terapêuticos','Exercício terapêutico'),
   drive('1J322xtntmUMlIv305Duwrr-d9i-S-sEX','Fisiologia do Esporte e do Exercício — 7ª edição','Fisiologia e esporte'),
   drive('1yGB0XUqY6wpDNQ0IGvjgQqg1K0mCF-Zg','Fisiopatologia Pulmonar — Princípios Básicos','Cardiorrespiratória'),
-  drive('1NtupvoV6JrVc3vQcl1c_aa4ikcFJ1LAy','Material com acesso restrito 2','Outros',true),
-  drive('1KmTemhCI_nWaT5Xe9ZsptXAkSjUxLzU8','Material com acesso restrito 3','Outros',true),
+  drive('1NtupvoV6JrVc3vQcl1c_aa4ikcFJ1LAy','Fisiopatologia Pulmonar — West, 8ª edição','Cardiorrespiratória'),
+  drive('1KmTemhCI_nWaT5Xe9ZsptXAkSjUxLzU8','Fisioterapia Aplicada à Saúde da Mulher — Elza Baracho','Saúde da mulher'),
   drive('1iRw5qtOBluxuxTnPM6snxSkM9P02ren3','Fisioterapia na Prática Esportiva','Fisiologia e esporte'),
   drive('1qdZg2VXkLILynSYU5Z7CmLRtlEBDE_VK','Intervenções para Crianças e Adolescentes com Paralisia Cerebral','Pediatria e neuro'),
   drive('1plkeUz1fb2jC9m9L_Oul8EkC4LqKQGAN','Lesões no Esporte — Uma Abordagem Anatômica','Fisiologia e esporte'),
