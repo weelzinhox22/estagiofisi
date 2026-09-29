@@ -33,7 +33,14 @@ export const downloadMaterials=[
   drive('1bUu-suUSR_5nbSlY4ElsfCUwhyMOUMcT','Atlas de Anatomia Humana Sobotta — Cabeça e Pescoço, 21ª edição','Atlas e anatomia'),
   drive('1f9uUFrcJgBWZ_3k1excFuo3erdesRSdi','Atlas de Anatomia Palpatória I','Anatomia palpatória'),
   drive('1lY1-_41FmeFr5Sl2eNb-GiRqt19z3EUz','Atlas de Anatomia Seccional','Atlas e anatomia'),
-  drive('1v7Epm_3biRz5ziLNAHckm7IR2iK_Q0_s','Atlas de Anatomia Palpatória II','Anatomia palpatória')
+  drive('1v7Epm_3biRz5ziLNAHckm7IR2iK_Q0_s','Atlas de Anatomia Palpatória II','Anatomia palpatória'),
+  drive('10T9qq1nFOLOc2gBASJYUk-flk0m2P-pU','Massoterapia Clínica','Terapia manual'),
+  drive('17jT-ZxIcwcWLdMpdPKyQyToOvbRPpWSC','Dor — Um Guia Completo','Dor'),
+  drive('1IQTPGv_3JqFlcIAdhWPMrS0agmJRJBbu','Ortopedia e Traumatologia — Temas Fundamentais e a Reabilitação','Ortopedia e traumatologia'),
+  drive('1ScJzYXDsDJeIbhWKEwwgrnFXItsGRBGi','Manual Prático de Cinesioterapia — Terapia pelo Movimento','Exercício terapêutico'),
+  drive('1UubY_KkJDZxFphQGOUBV0vfsMt1fU-yI','Cinesiologia Clínica e Anatomia — Lippert, 5ª edição','Cinesiologia'),
+  drive('1ZMLVZpgMygiSlD0gbG7qXs-m0VnnEL8D','Ventosaterapia — Augusto Cunha','Terapia manual'),
+  drive('1lzOhZcSPxC_qv1uh9iPnlzPOaoaPTsok','Manual para Avaliação Musculoesquelética — Magee e Sueki','Avaliação musculoesquelética')
 ];
 
 export const downloadCategories=['Todos',...new Set(downloadMaterials.map(item=>item.category))];

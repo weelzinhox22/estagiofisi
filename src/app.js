@@ -23,6 +23,7 @@ import { rapidCarePage, buildRapidEvolution } from './rapid-care-ui.js';
 import { clinicalMentorPage } from './clinical-mentor-ui.js';
 import { learningHub, learningToolPage } from './learning-lab-ui.js';
 import { downloadsPage } from './downloads-ui.js';
+import { videoLibraryPage } from './video-library-ui.js';
 
 let state=emptyState(),currentStorage=localStorage;
 let authState={ready:false,session:null,profile:null,message:''},adminRows=null,voiceStructureDraft=null,mentorDraft={},learningDraft={tool:'',history:[]};
@@ -32,6 +33,8 @@ let quickQuery = '';
 let libraryQuery = '';
 let libraryCategory = 'Todas';
 let downloadsQuery='',downloadsCategory='Todos';
+let videoCatalog=null,videoCatalogError='',videoCatalogPromise=null;
+let videoQuery='',videoCategory='Todas';
 const neuroFilters = { objective:'', position:'', assistance:'' };
 const sessionDrafts = new Map();
 let deferredInstall;
@@ -175,8 +178,14 @@ const lookupItem = key => {
   const item=source.find(x=>x.id===id);
   return item?{kind,item}:null;
 };
-const tabs = active => `<div class="library-tabs">${[['exercicios','Exercícios'],['musculos','Músculos'],['testes','Testes'],['goniometria','Goniometria'],['reflexos','Reflexos'],['escalas','Escalas'],['neuro','Neuro'],['problemas','Problemas funcionais'],['geral','Fisio Geral'],['condutas','Condutas']].map(([id,label])=>`<a class="${active===id?'active':''}" href="#biblioteca/${id}">${label}</a>`).join('')}</div>`;
+const tabs = active => `<div class="library-tabs">${[['exercicios','Exercícios'],['videos','Vídeos'],['musculos','Músculos'],['testes','Testes'],['goniometria','Goniometria'],['reflexos','Reflexos'],['escalas','Escalas'],['neuro','Neuro'],['problemas','Problemas funcionais'],['geral','Fisio Geral'],['condutas','Condutas']].map(([id,label])=>`<a class="${active===id?'active':''}" href="#biblioteca/${id}">${label}</a>`).join('')}</div>`;
 const exerciseCard = e => `<article class="exercise-card rich-card"><div class="card-actions"><span class="source-label">${esc(e.category)}</span><button class="star-button ${isFavorite('exercise',e.id)?'active':''}" data-action="toggle-favorite" data-kind="exercise" data-id="${esc(e.id)}" aria-label="Favoritar">${isFavorite('exercise',e.id)?'★':'☆'}</button></div><h3><a href="#exercicio/${encodeURIComponent(e.id)}">${esc(e.name)}</a></h3><p class="card-objective">${esc(e.objective)}</p><div class="tag-row">${(e.tags||[]).slice(0,3).map(t=>`<span>${esc(t)}</span>`).join('')}</div><a class="text-link" href="#exercicio/${encodeURIComponent(e.id)}">Abrir ficha completa →</a></article>`;
+
+function ensureVideoCatalog(){
+  if(videoCatalog||videoCatalogPromise)return;
+  videoCatalogError='';
+  videoCatalogPromise=fetch('/videos/catalogo.json').then(response=>{if(!response.ok)throw new Error('O catálogo de vídeos não foi encontrado.');return response.json();}).then(rows=>{if(!Array.isArray(rows)||rows.length!==50)throw new Error('O catálogo de vídeos está incompleto.');videoCatalog=rows;}).catch(error=>{videoCatalogError=error.message;}).finally(()=>{videoCatalogPromise=null;const [section,id]=route();if(section==='biblioteca'&&id==='videos')render();});
+}
 
 function quickResults(query) {
   if (!query.trim()) return '';
@@ -197,6 +206,7 @@ function quickPage() {
 }
 function libraryPage(active='exercicios') {
   const header=`${pageHeader('CONHECIMENTO CLÍNICO','Biblioteca prática',`${catalog.length} exercícios e atividades, referências anatômicas e apoio ao exame supervisionado.`,button('Consulta rápida','go-quick','secondary'))}${tabs(active)}`;
+  if(active==='videos'){if(!videoCatalog&&!videoCatalogError)queueMicrotask(ensureVideoCatalog);return header+videoLibraryPage(videoCatalog||[],videoQuery,videoCategory,{loading:!videoCatalog&&!videoCatalogError,error:videoCatalogError});}
   if(active==='geral') return header+generalLibraryPage(state);
   if(active==='condutas') return header+reasoningLibraryPage();
   if(active==='musculos') return header+muscleLibrary();
@@ -579,6 +589,7 @@ document.addEventListener('input',event=>{
   if(event.target.id==='quick-search'){quickQuery=event.target.value;rerenderField('#quick-search',pos);}
   if(event.target.id==='library-search'){libraryQuery=event.target.value;rerenderField('#library-search',pos);}
   if(event.target.id==='downloads-search'){downloadsQuery=event.target.value;rerenderField('#downloads-search',pos);}
+  if(event.target.id==='video-search'){videoQuery=event.target.value;rerenderField('#video-search',pos);}
   if(event.target.id==='session-search'){const [,patientId]=route();const draft=sessionDrafts.get(patientId);if(draft){draft.query=event.target.value;rerenderField('#session-search',pos);}}
   if(event.target.id==='global-search'){quickQuery=event.target.value;if(location.hash!=='#consulta')location.hash='consulta';else render();}
   if(event.target.name?.startsWith('minutes-'))updateSessionTotal();
@@ -586,6 +597,7 @@ document.addEventListener('input',event=>{
 document.addEventListener('change',async event=>{
   if(event.target.id==='library-category'){libraryCategory=event.target.value;render();return;}
   if(event.target.id==='downloads-category'){downloadsCategory=event.target.value;render();return;}
+  if(event.target.id==='video-category'){videoCategory=event.target.value;render();return;}
   if(event.target.name==='neuroObjective'||event.target.name==='neuroPosition'||event.target.name==='neuroAssistance'){const key=event.target.name.replace('neuro','');neuroFilters[key.charAt(0).toLowerCase()+key.slice(1)]=event.target.value;render();return;}
   if(event.target.id!=='import-file'||!event.target.files?.[0])return;
   try{const {validateState}=await import('./store.js');const next=validateState(JSON.parse(await event.target.files[0].text()));if(!confirm('Substituir todos os dados locais pelos dados do arquivo selecionado?'))return;state=next;saveState(state);toast('Backup importado.');render();}catch(error){toast(`Arquivo inválido: ${error.message}`,true);}

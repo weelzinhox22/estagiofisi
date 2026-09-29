@@ -1,0 +1,903 @@
+[
+  {
+    "id": "exercicio-01",
+    "nome": "Marcha com transposição de cones",
+    "arquivo": "videos/marcha_com_transposicao_de_cones.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Equilíbrio e marcha",
+    "descricao": "Em pé, deslocar-se entre cones coloridos, elevando cada pé para transpor os obstáculos. O vídeo mostra tornozeleira com peso.",
+    "objetivos": "Treinar marcha, coordenação dos passos e equilíbrio dinâmico.",
+    "orientacoes": "Manter o olhar à frente e apoiar-se perto de uma superfície estável se necessário.",
+    "dosagem_mencionada_no_video": null,
+    "duracao_original_utilizada_segundos": 7.95,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.10.mp4",
+    "trecho_de_origem_segundos": [
+      0,
+      7.95
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-02",
+    "nome": "Abertura horizontal dos braços com faixa elástica e bola",
+    "arquivo": "videos/abertura_horizontal_dos_bracos_com_faixa_elastica_e_bola.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Ombro",
+    "descricao": "Em pé, segurar a bola em uma mão e a faixa entre as mãos; afastar os braços horizontalmente, controlando o retorno.",
+    "objetivos": "Trabalhar mobilidade e força dos ombros e controle do movimento dos braços.",
+    "orientacoes": "Manter os ombros relaxados e usar resistência confortável.",
+    "dosagem_mencionada_no_video": "30 repetições (texto no vídeo)",
+    "duracao_original_utilizada_segundos": 15.3,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.11.mp4",
+    "trecho_de_origem_segundos": [
+      0,
+      15.3
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-03",
+    "nome": "Elevação e circundução do ombro com bola",
+    "arquivo": "videos/elevacao_e_circunducao_do_ombro_com_bola.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Ombro",
+    "descricao": "Em pé, conduzir a bola com uma das mãos em movimento amplo, elevando e circulando o braço; alternar o lado demonstrado.",
+    "objetivos": "Trabalhar mobilidade ativa e coordenação do ombro.",
+    "orientacoes": "Fazer uma amplitude confortável, sem elevar o ombro em direção à orelha.",
+    "dosagem_mencionada_no_video": null,
+    "duracao_original_utilizada_segundos": 11.7,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.21.mp4",
+    "trecho_de_origem_segundos": [
+      0,
+      11.7
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-04",
+    "nome": "Deslocamento horizontal da bola entre as mãos",
+    "arquivo": "videos/deslocamento_horizontal_da_bola_entre_as_maos.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Ombro",
+    "descricao": "Em pé, segurar a bola à frente e alternar o alcance dos braços para os lados, levando a bola de uma mão à outra.",
+    "objetivos": "Treinar mobilidade e coordenação dos membros superiores.",
+    "orientacoes": "Manter o tronco estável e movimentar os braços sem forçar a amplitude.",
+    "dosagem_mencionada_no_video": null,
+    "duracao_original_utilizada_segundos": 15.9,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.21.mp4",
+    "trecho_de_origem_segundos": [
+      11.7,
+      27.6
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-05",
+    "nome": "Pronação e supinação do antebraço com halter",
+    "arquivo": "videos/pronacao_e_supinacao_do_antebraco_com_halter.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Antebraço e punho",
+    "descricao": "Sentada, apoiar o antebraço e girar lentamente a mão com um halter, alternando palma para cima e para baixo.",
+    "objetivos": "Treinar o movimento de rotação do antebraço e a força de punho e antebraço.",
+    "orientacoes": "Manter o cotovelo apoiado e usar carga leve e controlada.",
+    "dosagem_mencionada_no_video": null,
+    "duracao_original_utilizada_segundos": 7.4,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.22 (1).mp4",
+    "trecho_de_origem_segundos": [
+      4.4,
+      11.8
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-06",
+    "nome": "Pronação e supinação do antebraço com bastão",
+    "arquivo": "videos/pronacao_e_supinacao_do_antebraco_com_bastao.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Antebraço e punho",
+    "descricao": "Sentada, segurar um bastão com as duas mãos e girar os antebraços alternadamente para controlar as extremidades.",
+    "objetivos": "Treinar mobilidade de rotação do antebraço e coordenação das mãos.",
+    "orientacoes": "Manter o movimento lento e dentro de uma amplitude confortável.",
+    "dosagem_mencionada_no_video": null,
+    "duracao_original_utilizada_segundos": 6.9,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.22 (1).mp4",
+    "trecho_de_origem_segundos": [
+      13.9,
+      20.8
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-07",
+    "nome": "Flexão dos dedos dos pés sobre bolinhas com faixa",
+    "arquivo": "videos/flexao_dos_dedos_dos_pes_sobre_bolinhas_com_faixa.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Pé e dedos",
+    "descricao": "Em pé, apoiar a parte anterior dos pés sobre pequenas bolas e movimentar os dedos contra a resistência da faixa presa ao rolo.",
+    "objetivos": "Trabalhar mobilidade e controle dos dedos e do antepé.",
+    "orientacoes": "Fazer o movimento sem prender a respiração nem perder o equilíbrio.",
+    "dosagem_mencionada_no_video": null,
+    "duracao_original_utilizada_segundos": 5.0,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.22 (2).mp4",
+    "trecho_de_origem_segundos": [
+      0,
+      5.0
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-08",
+    "nome": "Flexão do hálux contra faixa elástica",
+    "arquivo": "videos/flexao_do_halux_contra_faixa_elastica.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Pé e dedos",
+    "descricao": "Sentada, manter o pé apoiado e flexionar o hálux contra uma faixa segurada pelo terapeuta.",
+    "objetivos": "Treinar mobilidade e força dos músculos que movimentam o hálux.",
+    "orientacoes": "Usar resistência leve e evitar compensar com o tornozelo.",
+    "dosagem_mencionada_no_video": null,
+    "duracao_original_utilizada_segundos": 7.27,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.22 (2).mp4",
+    "trecho_de_origem_segundos": [
+      5.0,
+      12.27
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-09",
+    "nome": "Mobilidade dos hálux com faixa elástica",
+    "arquivo": "videos/mobilidade_dos_halux_com_faixa_elastica.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Pé e dedos",
+    "descricao": "Com os pés apoiados, movimentar os hálux contra a resistência suave da faixa, mantendo as pernas estáveis.",
+    "objetivos": "Trabalhar controle e mobilidade dos dedos dos pés.",
+    "orientacoes": "Usar pouca tensão; interromper se houver dor crescente.",
+    "dosagem_mencionada_no_video": null,
+    "duracao_original_utilizada_segundos": 4.03,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.22 (2).mp4",
+    "trecho_de_origem_segundos": [
+      15.27,
+      19.3
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-10",
+    "nome": "Mobilidade do tornozelo em pé sobre prancha",
+    "arquivo": "videos/mobilidade_do_tornozelo_em_pe_sobre_prancha.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Tornozelo e pé",
+    "descricao": "Em pé, com os pés sobre uma prancha baixa, realizar movimentos controlados do antepé conforme mostrado.",
+    "objetivos": "Treinar mobilidade do tornozelo e controle dos pés em apoio.",
+    "orientacoes": "Usar apoio próximo para equilíbrio e manter os joelhos confortáveis.",
+    "dosagem_mencionada_no_video": null,
+    "duracao_original_utilizada_segundos": 12.33,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.22 (2).mp4",
+    "trecho_de_origem_segundos": [
+      20.27,
+      32.6
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-11",
+    "nome": "Movimentos de tornozelo com faixa sobre rolo",
+    "arquivo": "videos/movimentos_de_tornozelo_com_faixa_sobre_rolo.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Tornozelo e pé",
+    "descricao": "Em pé junto ao rolo, movimentar cada pé contra a faixa elástica que oferece resistência ao redor dos pés.",
+    "objetivos": "Treinar mobilidade e controle do tornozelo contra resistência.",
+    "orientacoes": "Executar devagar e manter apoio seguro.",
+    "dosagem_mencionada_no_video": null,
+    "duracao_original_utilizada_segundos": 7.1,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.22 (2).mp4",
+    "trecho_de_origem_segundos": [
+      32.6,
+      39.7
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-12",
+    "nome": "Mobilidade dos pés sobre prancha",
+    "arquivo": "videos/mobilidade_dos_pes_sobre_prancha.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Tornozelo e pé",
+    "descricao": "Em pé, movimentar os pés sobre uma prancha, deslocando suavemente o apoio entre as bordas.",
+    "objetivos": "Trabalhar mobilidade do pé e tornozelo e ajuste do equilíbrio em pé.",
+    "orientacoes": "Apoiar-se se necessário; não forçar os limites articulares.",
+    "dosagem_mencionada_no_video": null,
+    "duracao_original_utilizada_segundos": 13.25,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.22 (2).mp4",
+    "trecho_de_origem_segundos": [
+      39.7,
+      52.95
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-13",
+    "nome": "Inversão e eversão dos pés sobre prancha",
+    "arquivo": "videos/inversao_e_eversao_dos_pes_sobre_prancha.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Tornozelo e pé",
+    "descricao": "Em pé, alternar o movimento de inclinar a planta dos pés para dentro e para fora sobre a prancha.",
+    "objetivos": "Treinar controle dos movimentos de inversão e eversão do pé.",
+    "orientacoes": "Fazer amplitude pequena, com apoio próximo para evitar desequilíbrio.",
+    "dosagem_mencionada_no_video": null,
+    "duracao_original_utilizada_segundos": 6.1,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.22 (2).mp4",
+    "trecho_de_origem_segundos": [
+      52.95,
+      59.05
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-14",
+    "nome": "Elevação alternada dos pés com faixa e apoio",
+    "arquivo": "videos/elevacao_alternada_dos_pes_com_faixa_e_apoio.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Tornozelo e pé",
+    "descricao": "Em pé, alternar pequenas elevações e deslocamentos dos pés contra a faixa, mantendo o outro pé apoiado.",
+    "objetivos": "Trabalhar mobilidade do tornozelo e controle do apoio unilateral.",
+    "orientacoes": "Apoiar-se em superfície firme e manter a faixa sem risco de escorregar.",
+    "dosagem_mencionada_no_video": null,
+    "duracao_original_utilizada_segundos": 12.15,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.22 (2).mp4",
+    "trecho_de_origem_segundos": [
+      59.05,
+      71.2
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-15",
+    "nome": "Anatomia e função do quadríceps (material complementar)",
+    "arquivo": "videos/anatomia_e_funcao_do_quadriceps_material_complementar.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Educação em saúde",
+    "descricao": "Animação educativa sobre as partes do quadríceps, sua localização e sua participação na extensão do joelho. Não é uma demonstração de exercício.",
+    "objetivos": "Apoiar a compreensão da anatomia e da função do quadríceps.",
+    "orientacoes": "Conteúdo educativo; não usar como demonstração de exercício.",
+    "dosagem_mencionada_no_video": null,
+    "duracao_original_utilizada_segundos": 95.5,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.22.mp4",
+    "trecho_de_origem_segundos": [
+      0,
+      95.5
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente.",
+    "tipo_conteudo": "material_complementar_educativo"
+  },
+  {
+    "id": "exercicio-16",
+    "nome": "Extensão de quadril em quatro apoios com faixa",
+    "arquivo": "videos/extensao_de_quadril_em_quatro_apoios_com_faixa.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Quadril e glúteos",
+    "descricao": "Em quatro apoios, prender a faixa entre as mãos e o pé e elevar a coxa para trás contra a resistência, com o joelho flexionado.",
+    "objetivos": "Treinar extensores do quadril e controle do tronco.",
+    "orientacoes": "Manter o abdome ativo e evitar arquear a lombar.",
+    "dosagem_mencionada_no_video": null,
+    "duracao_original_utilizada_segundos": 4.83,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.23 (1).mp4",
+    "trecho_de_origem_segundos": [
+      0,
+      4.83
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-17",
+    "nome": "Flexão e extensão de joelho em pé com miniband",
+    "arquivo": "videos/flexao_e_extensao_de_joelho_em_pe_com_miniband.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Joelho",
+    "descricao": "Em pé, com miniband acima dos joelhos, flexionar e estender o joelho controladamente, mantendo o equilíbrio.",
+    "objetivos": "Treinar força e controle dos membros inferiores em apoio.",
+    "orientacoes": "Usar apoio próximo e manter o joelho alinhado ao pé.",
+    "dosagem_mencionada_no_video": null,
+    "duracao_original_utilizada_segundos": 4.93,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.23 (1).mp4",
+    "trecho_de_origem_segundos": [
+      4.83,
+      9.76
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-18",
+    "nome": "Rotação interna do quadril sentado com faixa — variação 1",
+    "arquivo": "videos/rotacao_interna_do_quadril_sentado_com_faixa_variacao_1.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Quadril",
+    "descricao": "Sentado, com faixa ao redor dos tornozelos, rodar a coxa para dentro conduzindo o pé para fora; retornar devagar.",
+    "objetivos": "Treinar rotação do quadril e controle do membro inferior.",
+    "orientacoes": "Manter a coxa apoiada e evitar rodar o tronco.",
+    "dosagem_mencionada_no_video": null,
+    "duracao_original_utilizada_segundos": 7.74,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.23 (1).mp4",
+    "trecho_de_origem_segundos": [
+      9.76,
+      17.5
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-19",
+    "nome": "Extensão de quadril unilateral em ponte",
+    "arquivo": "videos/extensao_de_quadril_unilateral_em_ponte.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Quadril e glúteos",
+    "descricao": "Deitado de costas, elevar a pelve apoiando-se em uma perna, com a outra perna elevada; descer de forma controlada.",
+    "objetivos": "Treinar força dos extensores do quadril e controle da pelve.",
+    "orientacoes": "Manter a pelve nivelada; escolher uma amplitude que permita controle.",
+    "dosagem_mencionada_no_video": null,
+    "duracao_original_utilizada_segundos": 5.1,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.23 (1).mp4",
+    "trecho_de_origem_segundos": [
+      17.5,
+      22.6
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-20",
+    "nome": "Rotação interna do quadril sentado com faixa — variação 2",
+    "arquivo": "videos/rotacao_interna_do_quadril_sentado_com_faixa_variacao_2.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Quadril",
+    "descricao": "Sentado, conduzir um pé para fora contra a faixa, mantendo a coxa apoiada, e voltar lentamente.",
+    "objetivos": "Trabalhar rotação do quadril e controle do membro inferior.",
+    "orientacoes": "Evitar compensar inclinando o tronco.",
+    "dosagem_mencionada_no_video": null,
+    "duracao_original_utilizada_segundos": 6.7,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.23 (1).mp4",
+    "trecho_de_origem_segundos": [
+      22.6,
+      29.3
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-21",
+    "nome": "Flexão de quadril sentado com faixa elástica",
+    "arquivo": "videos/flexao_de_quadril_sentado_com_faixa_elastica_variacao_1.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Quadril",
+    "descricao": "Sentado, elevar a coxa contra a resistência da faixa presa ao pé e retornar devagar.",
+    "objetivos": "Treinar flexores do quadril e controle do movimento da perna.",
+    "orientacoes": "Manter o tronco ereto e usar resistência confortável.",
+    "dosagem_mencionada_no_video": null,
+    "duracao_original_utilizada_segundos": 4.13,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.23 (1).mp4",
+    "trecho_de_origem_segundos": [
+      29.3,
+      33.43
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-22",
+    "nome": "Abdução de quadril de lado com miniband (concha)",
+    "arquivo": "videos/abducao_de_quadril_de_lado_com_miniband_concha.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Quadril e glúteos",
+    "descricao": "Deitado de lado com joelhos flexionados e miniband acima deles, abrir o joelho de cima sem rodar a pelve e retornar.",
+    "objetivos": "Treinar abdutores do quadril e controle pélvico.",
+    "orientacoes": "Manter os pés juntos e a pelve estável.",
+    "dosagem_mencionada_no_video": null,
+    "duracao_original_utilizada_segundos": 6.37,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.23 (1).mp4",
+    "trecho_de_origem_segundos": [
+      33.43,
+      39.8
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-23",
+    "nome": "Extensão de quadril em pé com halter",
+    "arquivo": "videos/extensao_de_quadril_em_pe_com_halter.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Quadril e glúteos",
+    "descricao": "Em pé, inclinar levemente o tronco com apoio e levar uma perna estendida para trás, segurando um halter.",
+    "objetivos": "Treinar extensores do quadril e estabilidade em apoio unilateral.",
+    "orientacoes": "Manter a coluna neutra e usar apoio para equilíbrio.",
+    "dosagem_mencionada_no_video": null,
+    "duracao_original_utilizada_segundos": 3.6,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.23 (1).mp4",
+    "trecho_de_origem_segundos": [
+      39.8,
+      43.4
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-24",
+    "nome": "Rotação interna do quadril sentado com miniband",
+    "arquivo": "videos/rotacao_interna_do_quadril_sentado_com_miniband.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Quadril",
+    "descricao": "Sentado, com miniband ao redor dos tornozelos, conduzir um pé para fora e retornar, mantendo a coxa apoiada.",
+    "objetivos": "Treinar rotação do quadril e controle do membro inferior.",
+    "orientacoes": "Movimentar sem inclinar o tronco.",
+    "dosagem_mencionada_no_video": "2 séries de 10 repetições (texto no vídeo)",
+    "duracao_original_utilizada_segundos": 6.03,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.23 (2).mp4",
+    "trecho_de_origem_segundos": [
+      0,
+      6.03
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-25",
+    "nome": "Extensão de joelho sentado com faixa elástica",
+    "arquivo": "videos/extensao_de_joelho_sentado_com_faixa_elastica.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Joelho",
+    "descricao": "Sentado, estender o joelho contra a faixa ancorada à frente e retornar lentamente.",
+    "objetivos": "Trabalhar força do quadríceps e controle da extensão do joelho.",
+    "orientacoes": "Evitar dar impulso; controlar a volta.",
+    "dosagem_mencionada_no_video": "2 séries de 8 repetições (texto no vídeo)",
+    "duracao_original_utilizada_segundos": 5.4,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.23 (2).mp4",
+    "trecho_de_origem_segundos": [
+      6.03,
+      11.43
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-26",
+    "nome": "Isometria de extensão do joelho sentado com faixa",
+    "arquivo": "videos/isometria_de_extensao_do_joelho_sentado_com_faixa.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Joelho",
+    "descricao": "Sentado, manter a perna estendida contra a resistência da faixa durante o tempo demonstrado.",
+    "objetivos": "Treinar ativação isométrica do quadríceps.",
+    "orientacoes": "Manter a posição sem prender a respiração.",
+    "dosagem_mencionada_no_video": "2 séries de 20 segundos (texto no vídeo)",
+    "duracao_original_utilizada_segundos": 5.1,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.23 (2).mp4",
+    "trecho_de_origem_segundos": [
+      11.43,
+      16.53
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-27",
+    "nome": "Flexão de quadril sentado com faixa elástica",
+    "arquivo": "videos/flexao_de_quadril_sentado_com_faixa_elastica_variacao_2.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Quadril",
+    "descricao": "Sentado, elevar o joelho contra a faixa presa ao pé e retornar com controle.",
+    "objetivos": "Trabalhar força dos flexores do quadril.",
+    "orientacoes": "Manter o tronco estável e usar resistência confortável.",
+    "dosagem_mencionada_no_video": "2 séries de 10 repetições (texto no vídeo)",
+    "duracao_original_utilizada_segundos": 6.6,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.23 (2).mp4",
+    "trecho_de_origem_segundos": [
+      16.53,
+      23.13
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-28",
+    "nome": "Passos coordenados na escada de agilidade — vista lateral",
+    "arquivo": "videos/passos_coordenados_na_escada_de_agilidade_vista_lateral.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Marcha e coordenação",
+    "descricao": "Com miniband nos tornozelos, realizar passos curtos e alternados junto à escada de agilidade, seguindo a demonstração lateral.",
+    "objetivos": "Treinar coordenação dos passos, força dos membros inferiores e equilíbrio dinâmico.",
+    "orientacoes": "Manter passos controlados e deixar espaço livre ao redor.",
+    "dosagem_mencionada_no_video": null,
+    "duracao_original_utilizada_segundos": 3.16,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.23 (3).mp4",
+    "trecho_de_origem_segundos": [
+      0,
+      3.16
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-29",
+    "nome": "Marcha à frente na escada de agilidade",
+    "arquivo": "videos/marcha_a_frente_na_escada_de_agilidade.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Marcha e coordenação",
+    "descricao": "Avançar pela escada de agilidade colocando os pés dentro dos espaços, com passos alternados e controlados.",
+    "objetivos": "Treinar coordenação e precisão da marcha.",
+    "orientacoes": "Não pisar nas barras; ajustar a velocidade ao equilíbrio.",
+    "dosagem_mencionada_no_video": null,
+    "duracao_original_utilizada_segundos": 5.27,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.23 (3).mp4",
+    "trecho_de_origem_segundos": [
+      3.16,
+      8.43
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-30",
+    "nome": "Passos laterais na escada com miniband",
+    "arquivo": "videos/passos_laterais_na_escada_com_miniband.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Marcha e coordenação",
+    "descricao": "Com miniband ao redor dos tornozelos, dar passos laterais para entrar e sair dos espaços da escada de agilidade.",
+    "objetivos": "Treinar deslocamento lateral, coordenação e controle dos membros inferiores.",
+    "orientacoes": "Manter tensão leve na faixa e evitar cruzar os pés.",
+    "dosagem_mencionada_no_video": null,
+    "duracao_original_utilizada_segundos": 5.13,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.23 (3).mp4",
+    "trecho_de_origem_segundos": [
+      8.43,
+      13.56
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-31",
+    "nome": "Abdução de quadril em pé com miniband",
+    "arquivo": "videos/abducao_de_quadril_em_pe_com_miniband.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Quadril",
+    "descricao": "Em pé, com miniband acima dos joelhos, afastar uma perna para o lado e retornar, alternando os lados conforme o vídeo.",
+    "objetivos": "Treinar abdutores do quadril e controle do joelho em apoio.",
+    "orientacoes": "Manter o tronco estável e os joelhos alinhados aos pés.",
+    "dosagem_mencionada_no_video": "4 séries de 15 repetições (texto no vídeo)",
+    "duracao_original_utilizada_segundos": 6.55,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.23.mp4",
+    "trecho_de_origem_segundos": [
+      0,
+      6.55
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-32",
+    "nome": "Passos laterais com miniband",
+    "arquivo": "videos/passos_laterais_com_miniband.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Quadril e membros inferiores",
+    "descricao": "Com faixa ao redor dos tornozelos, agachar levemente e deslocar-se lateralmente com passos curtos.",
+    "objetivos": "Trabalhar força dos membros inferiores e controle dinâmico do quadril.",
+    "orientacoes": "Manter tensão leve na faixa e evitar deixar os joelhos caírem para dentro.",
+    "dosagem_mencionada_no_video": "4 séries de 15 repetições (texto no vídeo)",
+    "duracao_original_utilizada_segundos": 3.35,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.23.mp4",
+    "trecho_de_origem_segundos": [
+      6.55,
+      9.9
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-33",
+    "nome": "Dorsiflexão do tornozelo com faixa elástica",
+    "arquivo": "videos/dorsiflexao_do_tornozelo_com_faixa_elastica.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Tornozelo",
+    "descricao": "Sentado, com a perna estendida e a faixa envolvendo o antepé, puxar os dedos em direção à canela contra resistência.",
+    "objetivos": "Treinar os músculos que elevam o pé e o controle do tornozelo.",
+    "orientacoes": "Manter o joelho confortável e evitar movimentos bruscos.",
+    "dosagem_mencionada_no_video": "2 séries de 20 movimentos (texto no vídeo)",
+    "duracao_original_utilizada_segundos": 18.4,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.24 (1).mp4",
+    "trecho_de_origem_segundos": [
+      0,
+      18.4
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-34",
+    "nome": "Flexão do joelho contra faixa elástica",
+    "arquivo": "videos/flexao_do_joelho_contra_faixa_elastica.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Joelho",
+    "descricao": "Sentado, dobrar o joelho levando o pé para baixo e para trás contra a faixa e retornar.",
+    "objetivos": "Treinar flexores do joelho contra resistência.",
+    "orientacoes": "Manter o tronco apoiado e executar com controle.",
+    "dosagem_mencionada_no_video": "2 séries de 10 movimentos (texto no vídeo)",
+    "duracao_original_utilizada_segundos": 5.13,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.24 (1).mp4",
+    "trecho_de_origem_segundos": [
+      18.4,
+      23.53
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-35",
+    "nome": "Abdução de quadril sentado com faixa",
+    "arquivo": "videos/abducao_de_quadril_sentado_com_faixa.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Quadril",
+    "descricao": "Sentado, com faixa acima dos joelhos, afastar os joelhos e retornar mantendo os pés apoiados.",
+    "objetivos": "Treinar abdutores do quadril e controle da posição dos joelhos.",
+    "orientacoes": "Manter o tronco ereto; usar resistência confortável.",
+    "dosagem_mencionada_no_video": "2 séries de 30 movimentos (texto no vídeo)",
+    "duracao_original_utilizada_segundos": 11.4,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.24 (1).mp4",
+    "trecho_de_origem_segundos": [
+      23.53,
+      34.93
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-36",
+    "nome": "Nado no solo com bola — elevação alternada dos braços",
+    "arquivo": "videos/nado_no_solo_com_bola_elevacao_alternada_dos_bracos.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Ombro e tronco",
+    "descricao": "Deitado de barriga para baixo, segurar a bola e alternar alcances dos braços à frente, levando a bola para cada lado.",
+    "objetivos": "Treinar mobilidade dos ombros e controle do tronco em prono.",
+    "orientacoes": "Manter o pescoço confortável e evitar elevar os ombros.",
+    "dosagem_mencionada_no_video": null,
+    "duracao_original_utilizada_segundos": 3.6,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.24 (2).mp4",
+    "trecho_de_origem_segundos": [
+      3.83,
+      7.43
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-37",
+    "nome": "Rotações dos braços abertos com bolas",
+    "arquivo": "videos/rotacoes_dos_bracos_abertos_com_bolas.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Ombro",
+    "descricao": "Em pé com os braços abertos na altura dos ombros, girar os braços e as bolas controladamente, como demonstrado.",
+    "objetivos": "Treinar mobilidade e coordenação dos ombros.",
+    "orientacoes": "Manter braços dentro de amplitude confortável.",
+    "dosagem_mencionada_no_video": null,
+    "duracao_original_utilizada_segundos": 4.67,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.24 (2).mp4",
+    "trecho_de_origem_segundos": [
+      7.43,
+      12.1
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-38",
+    "nome": "Rotação interna e externa do ombro com cotovelos flexionados",
+    "arquivo": "videos/rotacao_interna_e_externa_do_ombro_com_cotovelos_flexionados.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Ombro",
+    "descricao": "Em pé, manter os cotovelos dobrados junto ao corpo e alternar a rotação dos antebraços segurando as bolas.",
+    "objetivos": "Treinar mobilidade rotacional e coordenação dos ombros.",
+    "orientacoes": "Manter os cotovelos próximos ao corpo e evitar compensar com o tronco.",
+    "dosagem_mencionada_no_video": null,
+    "duracao_original_utilizada_segundos": 3.67,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.24 (2).mp4",
+    "trecho_de_origem_segundos": [
+      12.1,
+      15.77
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-39",
+    "nome": "Movimento circular da bola ao redor da cabeça",
+    "arquivo": "videos/movimento_circular_da_bola_ao_redor_da_cabeca.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Ombro",
+    "descricao": "Em pé, conduzir uma bola ao redor da cabeça com os braços, passando-a à frente e atrás do corpo.",
+    "objetivos": "Treinar mobilidade dos ombros e coordenação dos braços.",
+    "orientacoes": "Manter o movimento confortável e evitar forçar a amplitude.",
+    "dosagem_mencionada_no_video": null,
+    "duracao_original_utilizada_segundos": 4.96,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.24 (2).mp4",
+    "trecho_de_origem_segundos": [
+      15.77,
+      20.73
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-40",
+    "nome": "Extensão isométrica do joelho sentado com faixa",
+    "arquivo": "videos/extensao_isometrica_do_joelho_sentado_com_faixa.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Joelho",
+    "descricao": "Sentado, manter o joelho estendido contra a faixa, usando uma contração sustentada conforme a demonstração.",
+    "objetivos": "Treinar ativação isométrica do quadríceps.",
+    "orientacoes": "Ajustar a resistência e interromper se houver dor crescente.",
+    "dosagem_mencionada_no_video": null,
+    "duracao_original_utilizada_segundos": 2.73,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.24.mp4",
+    "trecho_de_origem_segundos": [
+      0,
+      2.73
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-41",
+    "nome": "Abdução de quadril deitado de lado com miniband",
+    "arquivo": "videos/abducao_de_quadril_deitado_de_lado_com_miniband.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Quadril e glúteos",
+    "descricao": "Deitado de lado com miniband acima dos joelhos, elevar a perna de cima mantendo a pelve estável.",
+    "objetivos": "Treinar abdutores do quadril e controle pélvico.",
+    "orientacoes": "Manter a pelve alinhada e não girar o tronco.",
+    "dosagem_mencionada_no_video": null,
+    "duracao_original_utilizada_segundos": 3.7,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.24.mp4",
+    "trecho_de_origem_segundos": [
+      2.73,
+      6.43
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-42",
+    "nome": "Ponte bilateral",
+    "arquivo": "videos/ponte_bilateral.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Quadril e glúteos",
+    "descricao": "Deitado de costas, joelhos dobrados e pés apoiados, elevar a pelve e descer controladamente.",
+    "objetivos": "Treinar extensores do quadril e controle lombo-pélvico.",
+    "orientacoes": "Evitar arquear excessivamente a lombar.",
+    "dosagem_mencionada_no_video": null,
+    "duracao_original_utilizada_segundos": 1.09,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.24.mp4",
+    "trecho_de_origem_segundos": [
+      2.73,
+      3.82
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-43",
+    "nome": "Ponte unilateral com elevação do joelho",
+    "arquivo": "videos/ponte_unilateral_com_elevacao_do_joelho.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Quadril e glúteos",
+    "descricao": "Em decúbito dorsal, sustentar a pelve elevada sobre uma perna enquanto a outra permanece flexionada e elevada.",
+    "objetivos": "Treinar força dos extensores do quadril e estabilidade pélvica.",
+    "orientacoes": "Manter o quadril nivelado; o trecho original é curto.",
+    "dosagem_mencionada_no_video": null,
+    "duracao_original_utilizada_segundos": 1.31,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.24.mp4",
+    "trecho_de_origem_segundos": [
+      3.82,
+      5.13
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-44",
+    "nome": "Alongamento de isquiotibiais com faixa",
+    "arquivo": "videos/alongamento_de_isquiotibiais_com_faixa.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Coxa posterior",
+    "descricao": "Deitado de costas, usar a faixa no pé para elevar a perna e depois dobrar o joelho, mantendo a outra perna apoiada.",
+    "objetivos": "Trabalhar flexibilidade dos músculos posteriores da coxa com assistência da faixa.",
+    "orientacoes": "Evitar puxar com força; manter a lombar confortável.",
+    "dosagem_mencionada_no_video": null,
+    "duracao_original_utilizada_segundos": 3.88,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.24.mp4",
+    "trecho_de_origem_segundos": [
+      6.43,
+      10.31
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-45",
+    "nome": "Alcance horizontal do ombro com bola na parede",
+    "arquivo": "videos/alcance_horizontal_do_ombro_com_bola_na_parede.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Ombro",
+    "descricao": "De frente para a parede, apoiar a mão na bola e deslocá-la horizontalmente em movimento confortável.",
+    "objetivos": "Treinar mobilidade ativa do ombro com apoio da bola.",
+    "orientacoes": "Manter o tronco alinhado e a pressão leve.",
+    "dosagem_mencionada_no_video": null,
+    "duracao_original_utilizada_segundos": 3.3,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.25 (1).mp4",
+    "trecho_de_origem_segundos": [
+      0,
+      3.3
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-46",
+    "nome": "Círculos com bola na parede",
+    "arquivo": "videos/circulos_com_bola_na_parede.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Ombro",
+    "descricao": "Apoiar a bola na parede e desenhar círculos pequenos com a mão, controlando o movimento do ombro.",
+    "objetivos": "Treinar mobilidade e controle do ombro.",
+    "orientacoes": "Fazer círculos pequenos, sem elevar o ombro em direção à orelha.",
+    "dosagem_mencionada_no_video": null,
+    "duracao_original_utilizada_segundos": 3.09,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.25 (1).mp4",
+    "trecho_de_origem_segundos": [
+      3.3,
+      6.39
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-47",
+    "nome": "Rotação externa do ombro com faixa",
+    "arquivo": "videos/rotacao_externa_do_ombro_com_faixa.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Ombro",
+    "descricao": "Com o cotovelo flexionado junto ao corpo e a faixa presa, girar o antebraço para fora.",
+    "objetivos": "Treinar rotadores externos do ombro.",
+    "orientacoes": "Manter o cotovelo junto ao corpo e o punho neutro.",
+    "dosagem_mencionada_no_video": null,
+    "duracao_original_utilizada_segundos": 1.44,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.25 (1).mp4",
+    "trecho_de_origem_segundos": [
+      6.39,
+      7.83
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-48",
+    "nome": "Flexão de ombro com bola na parede",
+    "arquivo": "videos/flexao_de_ombro_com_bola_na_parede.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Ombro",
+    "descricao": "De lado para a parede, apoiar a mão ou o antebraço na bola e deslizar o braço para cima.",
+    "objetivos": "Treinar mobilidade de elevação do ombro com apoio.",
+    "orientacoes": "Subir somente até a amplitude confortável.",
+    "dosagem_mencionada_no_video": null,
+    "duracao_original_utilizada_segundos": 3.17,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.25 (1).mp4",
+    "trecho_de_origem_segundos": [
+      7.83,
+      11.0
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-49",
+    "nome": "Abdução de ombro com bola na parede",
+    "arquivo": "videos/abducao_de_ombro_com_bola_na_parede.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Ombro",
+    "descricao": "De lado para a parede, apoiar o antebraço na bola e deslizar o braço lateralmente para cima.",
+    "objetivos": "Treinar mobilidade de abdução do ombro.",
+    "orientacoes": "Manter o tronco sem inclinação lateral e respeitar a amplitude confortável.",
+    "dosagem_mencionada_no_video": null,
+    "duracao_original_utilizada_segundos": 6.36,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.25 (1).mp4",
+    "trecho_de_origem_segundos": [
+      11.0,
+      17.36
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  },
+  {
+    "id": "exercicio-50",
+    "nome": "Liberação manual da região periescapular",
+    "arquivo": "videos/liberacao_manual_da_regiao_periescapular.mp4",
+    "formato": "video/mp4",
+    "regiao_ou_categoria": "Terapia manual",
+    "descricao": "Demonstração de técnica manual com pressão e deslizamento de tecidos ao redor da escápula, com a pessoa deitada de lado.",
+    "objetivos": "Demonstrar uma técnica manual dirigida à região periescapular.",
+    "orientacoes": "Técnica para profissional treinado; aplicar somente após avaliação e com consentimento.",
+    "dosagem_mencionada_no_video": null,
+    "duracao_original_utilizada_segundos": 18.83,
+    "video_de_origem": "WhatsApp Video 2026-09-29 at 14.17.25.mp4",
+    "trecho_de_origem_segundos": [
+      0,
+      18.83
+    ],
+    "nota": "A descrição identifica o movimento demonstrado; escolha, amplitude, resistência e dosagem devem ser individualizadas para cada paciente."
+  }
+]
