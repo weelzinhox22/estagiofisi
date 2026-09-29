@@ -8,3 +8,5 @@ Prompt Codex — transformar Fisio Clínico em ferramenta prática.md
 
 .env*
 !.env.example
+
+public/fisio-clinico-mobile-kit/
