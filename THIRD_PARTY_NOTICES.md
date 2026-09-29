@@ -37,3 +37,23 @@ Licensed under the Apache License, Version 2.0. You may obtain a copy at https:/
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND.
 
+## Workout Guide — ilustrações de exercícios
+
+A Biblioteca usa uma pose central de cada exercício do pacote `@bryllim/workout-guide` 1.0.0, criado e mantido por Bryl Lim. Os recursos visuais são distribuídos sob CC BY-SA 4.0.
+
+Parte das poses é adaptação rasterizada do acervo Everkinetic, também sob CC BY-SA 4.0. Atribuição detalhada e a licença acompanham os arquivos em `icons/exercises/workout-guide/`.
+
+Projeto: https://github.com/avidevper/workout-guide-svgs
+
+Licença: https://creativecommons.org/licenses/by-sa/4.0/
+
+## Body Anatomy 3D Viewer e Z-Anatomy
+
+O atlas tridimensional incorporado à Biblioteca usa o visualizador `body-anatomy-3d-viewer`, de hpfrei, e um modelo otimizado derivado do projeto Z-Anatomy. O código e os dados do modelo são distribuídos sob CC BY-SA 4.0. Os arquivos e os avisos originais foram preservados em `public/anatomy3d/`.
+
+Visualizador: https://github.com/hpfrei/body-anatomy-3d-viewer
+
+Modelo: https://www.z-anatomy.com/
+
+Licença: https://creativecommons.org/licenses/by-sa/4.0/
+

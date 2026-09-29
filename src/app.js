@@ -24,12 +24,17 @@ import { clinicalMentorPage } from './clinical-mentor-ui.js';
 import { learningHub, learningToolPage } from './learning-lab-ui.js';
 import { downloadsPage } from './downloads-ui.js';
 import { videoLibraryPage } from './video-library-ui.js';
+import { exerciseVisual } from './exercise-visuals.js';
+import { palpationGuides } from './palpation-data.js';
+import { orthopedicCases, orthopedicVideoResources } from './orthopedic-pathways-data.js';
 
 let state=emptyState(),currentStorage=localStorage;
 let authState={ready:false,session:null,profile:null,message:''},adminRows=null,voiceStructureDraft=null,mentorDraft={},learningDraft={tool:'',history:[]};
 const rapidTimers=new Map();
 let filter = '';
 let quickQuery = '';
+const QUICK_HISTORY_KEY='fisio-clinico-quick-history';
+let quickHistory=(()=>{try{return JSON.parse(localStorage.getItem(QUICK_HISTORY_KEY)||'[]').filter(Boolean).slice(0,6);}catch{return[];}})();
 let libraryQuery = '';
 let libraryCategory = 'Todas';
 let downloadsQuery='',downloadsCategory='Todos';
@@ -43,6 +48,9 @@ let toolTimer={elapsed:0,started:0,handle:0,laps:[]};
 let countdownHandle=0,metronomeHandle=0,manualReps=0,manualLaps=0;
 let assistantDraft={findings:[],detected:[]},measurePreview=null;
 const $ = selector => document.querySelector(selector);
+let lastRenderedRoute='';
+function scrollPageTop(){window.scrollTo({top:0,left:0,behavior:'auto'});document.documentElement.scrollTop=0;document.body.scrollTop=0;$('#main')?.scrollTo?.({top:0,left:0,behavior:'auto'});}
+function enterPage(main,routeKey){if(routeKey===lastRenderedRoute)return;lastRenderedRoute=routeKey;scrollPageTop();main.classList.remove('route-enter');requestAnimationFrame(()=>{main.classList.add('route-enter');requestAnimationFrame(scrollPageTop);});}
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const formatDate = value => value ? new Date(`${value}T12:00:00`).toLocaleDateString('pt-BR') : '—';
 const short = (text, len=92) => String(text || '').length > len ? `${String(text).slice(0,len)}…` : String(text || '');
@@ -55,6 +63,8 @@ const select = (label,name,options,value='') => `<label class="field"><span>${la
 const empty = (title,desc,action='') => `<div class="empty"><div class="empty-icon">✳</div><h3>${title}</h3><p>${desc}</p>${action}</div>`;
 const button = (label,action,cls='primary',extra='') => `<button type="button" class="button ${cls}" data-action="${action}" ${extra}>${label}</button>`;
 const badge = (text,kind='') => `<span class="badge ${kind}">${esc(text)}</span>`;
+const patientAvatarIndex=patient=>[...String(patient?.id||patient?.code||patient?.name||'paciente')].reduce((sum,char)=>sum+char.charCodeAt(0),0)%6;
+const patientAvatar=patient=>`<span class="avatar patient-chibi chibi-${patientAvatarIndex(patient)}" role="img" aria-label="Avatar ilustrado de ${esc(patientLabel(patient))}"><span>${esc(patientInitials(patient))}</span></span>`;
 const pageHeader = (eyebrow,title,desc,action='') => `<div class="page-head"><div><span class="eyebrow">${eyebrow}</span><h1>${title}</h1><p>${desc}</p></div>${action}</div>`;
 const advisory = `<div class="advisory"><span class="advisory-icon">ⓘ</span><div><strong>Uso educacional e apoio clínico supervisionado</strong><p>Registros e exercícios exigem avaliação e decisão individual do profissional responsável. Não substitui diagnóstico ou julgamento clínico.</p></div></div>`;
 
@@ -64,7 +74,8 @@ function routeQuery() { return new URLSearchParams((location.hash.split('?')[1]|
 function renderNav(section) {
   const activeSection = section==='mentor'?'aprender':['camera','encontro','queixa','casos','conduta','testes-funcionais','medidas'].includes(section) ? 'biblioteca' : ['reavaliacao','alta','modelo-funcional','neuro','pediatria','domiciliar','ferramentas'].includes(section)?'mais':section;
   const items=authState.profile?.role==='admin'?[...navItems,['admin','Admin','◆']]:navItems;
-  const itemHtml=([id,label,icon],selected=activeSection)=>`<a href="#${id}" class="nav-item ${selected===id?'active':''}" ${selected===id?'aria-current="page"':''}><span aria-hidden="true">${icon}</span><span>${label}</span></a>`;
+  const iconNames={inicio:'home','atendimento-rapido':'plusCircle',consulta:'search',pacientes:'users',aprender:'learn',assistente:'bolt',biblioteca:'book',repertorio:'clipboard',mais:'dots',downloads:'download',conta:'user',admin:'shield'};
+  const itemHtml=([id,label,icon],selected=activeSection)=>`<a href="#${id}" class="nav-item nav-${id} ${selected===id?'active':''}" ${selected===id?'aria-current="page"':''}><span aria-hidden="true">${iconNames[id]?homeIcon(iconNames[id]):icon}</span><span>${label}</span></a>`;
   $('#desktop-nav').innerHTML = items.map(itemHtml).join('');
   const mobileOrder=['inicio','atendimento-rapido','pacientes','biblioteca','mais'];
   const moreSections=new Set(['aprender','assistente','repertorio','downloads','mais','dados','conta','admin']);
@@ -75,10 +86,11 @@ function renderNav(section) {
 function render() {
   stopVoiceDictation();
   cleanupCamera();
-  const [section,id,tab] = route();
+  const [section,id,tab] = route(),routeKey=[section,id,tab].filter(Boolean).join('/');
   const main = $('#main');
   main.dataset.route=section;
-  if(!authState.ready){$('#desktop-nav').innerHTML=$('#mobile-nav').innerHTML='';main.innerHTML='<div class="auth-shell"><section class="auth-card"><h1>Carregando conta…</h1></section></div>';return;}
+  if(!authState.ready){document.body.classList.add('app-booting');$('#desktop-nav').innerHTML=$('#mobile-nav').innerHTML='';main.innerHTML='<div class="app-start-skeleton" aria-label="Preparando aplicativo"><div class="boot-brand"><img src="/icons/brand-mark.svg" alt=""><span><strong>Fisio Clínico</strong><small>PRÁTICA SUPERVISIONADA</small></span></div><div class="skeleton-hero"></div><div class="skeleton-grid"><i></i><i></i><i></i><i></i></div><div class="skeleton-line"></div><div class="skeleton-card"></div></div>';return;}
+  document.body.classList.remove('app-booting');
   if(!authState.session){$('#desktop-nav').innerHTML=$('#mobile-nav').innerHTML='';$('#breadcrumb').textContent='Conta';main.innerHTML=authPage(['cadastro','recuperar'].includes(section)?section:'login',authState.message);queueMicrotask(()=>enhanceVoiceInputs(main));return;}
   if(['login','cadastro','recuperar'].includes(section)){location.hash='inicio';return;}
   renderNav(section);
@@ -124,11 +136,12 @@ function render() {
   else if (section === 'pacientes') main.innerHTML = patientsPage();
   else if (section === 'dados') main.innerHTML = dataPage();
   else main.innerHTML = homePage();
+  enterPage(main,routeKey);
   queueMicrotask(()=>enhanceVoiceInputs(main));
   document.title = `${$('#breadcrumb').textContent} · Fisio Clínico`;
   const version=$('#app-version');if(version)version.textContent=`VERSÃO ${APP_VERSION} · OFFLINE`;
 }
-function homeIcon(name){
+    function homeIcon(name){
   const paths={
     brand:'<path d="M12 1.8v20.4M1.8 12h20.4M4.8 4.8l14.4 14.4M19.2 4.8 4.8 19.2"/><circle cx="12" cy="12" r="3.1"/>',
     search:'<circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/>',
@@ -138,9 +151,32 @@ function homeIcon(name){
     users:'<circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.4"/><path d="M3.5 20c.6-4 2.5-6 5.5-6s5 2 5.5 6M14.5 15c3.2-.7 5.3 1 6 4"/>',
     book:'<path d="M3 5.5c3.4-.8 6.4 0 9 2.2v12c-2.6-2.2-5.6-3-9-2.2zM21 5.5c-3.4-.8-6.4 0-9 2.2v12c2.6-2.2 5.6-3 9-2.2z"/>',
     bolt:'<path d="m13.5 2-8 11h6l-1 9 8-12h-6z"/>',
-    learn:'<path d="M4 9a8 8 0 0 1 16 0c0 3-1.7 4.8-3.2 6.1-.8.7-1.3 1.4-1.3 2.4h-7c0-1-.5-1.7-1.3-2.4C5.7 13.8 4 12 4 9Z"/><path d="M9 21h6M9 7.8c1.8-1.5 4.2-1.5 6 0"/>'
+    learn:'<path d="M4 9a8 8 0 0 1 16 0c0 3-1.7 4.8-3.2 6.1-.8.7-1.3 1.4-1.3 2.4h-7c0-1-.5-1.7-1.3-2.4C5.7 13.8 4 12 4 9Z"/><path d="M9 21h6M9 7.8c1.8-1.5 4.2-1.5 6 0"/>',
+    pain:'<path d="M13 2 6 13h6l-1 9 7-12h-6z"/>',
+    mobility:'<path d="M4 19 19 4M6 8V4h4M14 20h6v-6"/><path d="M7 17c3 2 7 2 10-1"/>',
+    strength:'<path d="M3 9v6M6 7v10M9 10h6M18 7v10M21 9v6"/>',
+    balance:'<path d="M4 19h16M12 5v14M6 9h12M7 9l-3 6h6zM17 9l-3 6h6z"/>',
+    gait:'<circle cx="13" cy="4" r="2"/><path d="m11 7-3 7 5 3 2 5M9 11l7 2 4-3M8 14l-5 7"/>',
+    neuro:'<path d="M8 4c-4 1-5 7-2 9-2 4 2 8 6 6V5C11 3 9 3 8 4ZM16 4c4 1 5 7 2 9 2 4-2 8-6 6V5c1-2 3-2 4-1Z"/><path d="M8 9h4M12 14h5"/>',
+    respiratory:'<path d="M11 5v7c-3-5-7-4-8 1-1 5 3 8 8 7M13 5v7c3-5 7-4 8 1 1 5-3 8-8 7"/>',
+    function:'<circle cx="12" cy="5" r="2"/><path d="m12 8-3 5 3 3 3-3-3-5ZM9 13l-5 7M15 13l5 7"/>',
+    home:'<path d="m3 11 9-8 9 8v10h-6v-6H9v6H3z"/>',
+    plusCircle:'<circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/>',
+    dots:'<circle cx="5" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="19" cy="12" r="1.5" fill="currentColor" stroke="none"/>',
+    download:'<path d="M12 3v12M7 10l5 5 5-5M4 21h16"/>',
+    shield:'<path d="M12 2 4 5v6c0 5 3.4 9 8 11 4.6-2 8-6 8-11V5z"/><path d="m8.5 12 2.2 2.2 4.8-5"/>'
   };
   return `<svg class="app-icon app-icon-${name}" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${paths[name]||''}</svg>`;
+}
+function patientFocusIcon(patient){
+  const text=normalized([patient?.chiefComplaint,patient?.focus,patient?.clinicalDiagnosis].filter(Boolean).join(' '));
+  let kind='person',path='<circle cx="32" cy="22" r="8"/><path d="M15 55c2-15 8-22 17-22s15 7 17 22"/>';
+  if(/joelho|patel|menisc/.test(text)){kind='knee';path='<path d="M24 7c3 12 2 19-2 27-3 6-1 15 5 23M42 7c-2 10-1 17 3 24 4 7 2 17-5 26"/><path d="M23 31c7-5 15-5 22 0M25 39c6 4 12 4 18 0"/>';}
+  else if(/lomb|coluna|cervic|dors/.test(text)){kind='spine';path='<path d="M32 6c-5 6 5 9 0 14s5 9 0 14 5 9 0 14 5 7 0 11"/><path d="M23 11h18M24 22h16M23 34h18M24 46h16M26 56h12"/>';}
+  else if(/ombro|manguito|escap/.test(text)){kind='shoulder';path='<path d="M11 51c4-23 14-34 29-32 8 1 12 7 13 16M18 30c10 0 17 6 20 18"/><circle cx="41" cy="27" r="7"/>';}
+  else if(/quadril|pelve|glute/.test(text)){kind='hip';path='<path d="M17 11c-4 12 0 22 10 28l-5 19M47 11c4 12 0 22-10 28l5 19"/><path d="M17 25c9 7 21 7 30 0M27 39h10"/>';}
+  else if(/marcha|andar|caminh|equil/.test(text)){kind='gait';path='<circle cx="35" cy="10" r="5"/><path d="m31 18-6 15 11 7 4 18M28 27l14 6 8-5M25 33l-9 18"/>';}
+  return `<svg class="patient-focus-icon patient-focus-${kind}" viewBox="0 0 64 64" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">${path}</svg>`;
 }
 function homePage() {
   const active = state.patients.filter(p => !p.archived);
@@ -148,8 +184,8 @@ function homePage() {
   const recent = active.slice().sort((a,b) => b.createdAt.localeCompare(a.createdAt)).slice(0,4);
   const firstName=String(authState.profile?.display_name||'').trim().split(/\s+/)[0]||'';
   const current=recent[0];
-  const mobileRecent=current?`<a class="mobile-home-patient" href="#pacientes/${encodeURIComponent(current.id)}"><span class="mobile-home-patient-icon">${esc(patientInitials(current))}</span><span><small>${esc(current.code||'PACIENTE')}</small><strong>${esc(current.chiefComplaint||current.focus||patientLabel(current))}</strong><em>Último registro disponível</em></span><b>›</b></a>`:`<button class="mobile-home-empty" type="button" data-action="new-patient"><strong>Cadastre seu primeiro paciente</strong><span>Toque para começar um acompanhamento</span></button>`;
-  const mobile=`<section class="mobile-home-shell"><header class="mobile-home-hero"><div class="mobile-home-brand"><span class="mobile-home-symbol">${homeIcon('brand')}</span><span><strong>Fisio Clínico</strong><small>FISIOTERAPIA BASEADA<br>EM EVIDÊNCIAS</small></span><a href="#conta" aria-label="Abrir conta">${homeIcon('user')}</a></div><div class="mobile-home-welcome"><h1>Olá${firstName?', '+esc(firstName):''}</h1><p>Como posso ajudar no seu atendimento?</p></div><a class="mobile-home-search" href="#consulta"><span>${homeIcon('search')}</span><strong>O que você precisa agora?</strong><b>${homeIcon('arrow')}</b></a></header><div class="mobile-home-body"><nav class="mobile-home-grid" aria-label="Ações principais"><button type="button" data-action="new-patient"><i>${homeIcon('clipboard')}</i><span><strong>Novo atendimento</strong><small>Avaliação e plano de tratamento</small></span><b>›</b></button><a href="#pacientes"><i>${homeIcon('users')}</i><span><strong>Pacientes</strong><small>Acompanhe seus atendimentos</small></span><b>›</b></a><a href="#biblioteca"><i>${homeIcon('book')}</i><span><strong>Biblioteca</strong><small>Exercícios, testes e recursos</small></span><b>›</b></a><a href="#consulta"><i>${homeIcon('bolt')}</i><span><strong>Consulta rápida</strong><small>Guias e raciocínio clínico</small></span><b>›</b></a></nav><a class="mobile-home-learning" href="#aprender"><span><small>APRENDIZADO CONTÍNUO</small><strong>Treine seu raciocínio clínico</strong><p>Casos práticos e ferramentas para evoluir na tomada de decisão.</p></span><i>${homeIcon('learn')}</i><b>${homeIcon('arrow')}</b></a><div class="mobile-home-section-title"><strong>ATENDIMENTO EM ANDAMENTO</strong><a href="#pacientes">Ver todos ›</a></div>${mobileRecent}</div></section>`;
+  const mobileRecent=current?`<a class="mobile-home-patient" href="#pacientes/${encodeURIComponent(current.id)}"><span class="mobile-home-patient-icon">${patientFocusIcon(current)}</span><span><small>${esc(current.code||'PACIENTE')}</small><strong>${esc(current.chiefComplaint||current.focus||patientLabel(current))}</strong><em>Último registro disponível</em></span><span class="mobile-home-status">Em acompanhamento</span><b>›</b></a>`:`<button class="mobile-home-empty" type="button" data-action="new-patient"><strong>Cadastre seu primeiro paciente</strong><span>Toque para começar um acompanhamento</span></button>`;
+  const mobile=`<section class="mobile-home-shell"><header class="mobile-home-hero"><div class="mobile-home-brand"><img class="mobile-home-symbol" src="/icons/brand-mark.svg" alt=""><span><strong>Fisio Clínico</strong><small>FISIOTERAPIA BASEADA<br>EM EVIDÊNCIAS</small></span><a href="#conta" aria-label="Abrir conta">${homeIcon('user')}</a></div><div class="mobile-home-welcome"><h1>Olá${firstName?', '+esc(firstName):''}</h1><p>Como posso ajudar no seu atendimento?</p></div><a class="mobile-home-search" href="#consulta"><span>${homeIcon('search')}</span><strong>O que você precisa agora?</strong><b>${homeIcon('arrow')}</b></a></header><div class="mobile-home-body"><nav class="mobile-home-grid" aria-label="Ações principais"><button type="button" data-action="new-patient"><i>${homeIcon('clipboard')}</i><span><strong>Novo atendimento</strong><small>Avaliação e plano de tratamento</small></span><b>›</b></button><a href="#pacientes"><i>${homeIcon('users')}</i><span><strong>Pacientes</strong><small>Acompanhe seus atendimentos</small></span><b>›</b></a><a href="#biblioteca"><i>${homeIcon('book')}</i><span><strong>Biblioteca</strong><small>Exercícios, testes e recursos</small></span><b>›</b></a><a href="#consulta"><i>${homeIcon('bolt')}</i><span><strong>Consulta rápida</strong><small>Guias e raciocínio clínico</small></span><b>›</b></a></nav><a class="mobile-home-learning" href="#aprender"><span><small>APRENDIZADO CONTÍNUO</small><strong>Treine seu raciocínio clínico</strong><p>Casos práticos e ferramentas para evoluir na tomada de decisão.</p></span><img src="/icons/learning-illustration.svg" alt=""><b>${homeIcon('arrow')}</b></a><div class="mobile-home-section-title"><strong>ATENDIMENTO EM ANDAMENTO</strong><a href="#pacientes">Ver todos ›</a></div>${mobileRecent}</div></section>`;
   const desktop=`<div class="desktop-home"><section class="hero"><div class="hero-copy"><span class="hero-label">ESPAÇO DE TRABALHO</span><h1>Cuide do registro.<br><em>Concentre-se na pessoa.</em></h1><p>Organize observações, planejamento e evolução em um só lugar, durante a prática supervisionada.</p><div class="hero-actions">${button('＋ Novo paciente','new-patient','light')}${button('Consulta rápida →','go-quick','outline-light')}</div></div><div class="hero-art" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="hero-flower">✳</div></div></section><section class="home-learning-card"><span class="home-learning-icon">✺</span><div class="home-learning-copy"><small>SEU ESPAÇO DE APRENDIZADO</small><h2>Aprender com IA</h2><p>Treine escrita clínica, simule atendimentos e entenda o raciocínio.</p></div><a class="home-learning-action" href="#aprender"><span>Abrir Aprender</span><b>→</b></a></section>${advisory}<section class="stats"><div class="stat"><span>Pacientes ativos</span><strong>${active.length}</strong></div><div class="stat"><span>Sessões registradas</span><strong>${sessions.length}</strong></div><div class="stat"><span>Planos criados</span><strong>${state.plans.length}</strong></div></section></div>`;
   return mobile+desktop;
 }
@@ -157,7 +193,7 @@ function patientsPage() {
   const rows = state.patients.filter(p => (p.archived ? filter === 'arquivados' : filter !== 'arquivados') && (filter === 'arquivados' || `${p.code||''} ${p.name||''} ${p.focus||''} ${p.chiefComplaint||''}`.toLocaleLowerCase('pt-BR').includes(filter.toLocaleLowerCase('pt-BR')))).sort((a,b)=>b.createdAt.localeCompare(a.createdAt));
   return `${pageHeader('ACOMPANHAMENTO','Pacientes','Use códigos ou apelidos. Evite nomes completos e outros dados identificáveis.',button('＋ Novo paciente','new-patient'))}
   <div class="toolbar"><label class="search"><span>⌕</span><input id="patient-search" type="search" placeholder="Buscar por código ou foco..." value="${esc(filter === 'arquivados'?'':filter)}" aria-label="Buscar pacientes"></label><button class="button ghost" data-action="toggle-archived">${filter==='arquivados'?'Ver ativos':'Ver arquivados'}</button></div>
-  <div class="panel list-panel">${rows.length ? `<div class="patient-table"><div class="table-head"><span>Paciente</span><span>Queixa principal</span><span>Cadastro</span><span></span></div>${rows.map(p=>`<a class="patient-row" href="#pacientes/${encodeURIComponent(p.id)}"><span class="person"><span class="avatar">${esc(patientInitials(p))}</span><strong>${esc(patientLabel(p))}</strong></span><span>${esc(p.chiefComplaint||p.focus||'—')}</span><span>${formatDate((p.createdAt||p.startDate||today()).slice(0,10))}</span><span>→</span></a>`).join('')}</div>` : empty('Nenhum registro encontrado',filter==='arquivados'?'Não há pacientes arquivados.':'Cadastre o primeiro paciente ou ajuste a busca.',filter==='arquivados'?'':button('＋ Novo paciente','new-patient','secondary'))}</div>`;
+  <div class="panel list-panel">${rows.length ? `<div class="patient-table"><div class="table-head"><span>Paciente</span><span>Queixa principal</span><span>Cadastro</span><span></span></div>${rows.map(p=>`<a class="patient-row" href="#pacientes/${encodeURIComponent(p.id)}">${patientAvatar(p)}<span class="patient-row-copy"><small>${esc(p.code||'PACIENTE')}</small><strong>${esc(patientLabel(p))}</strong><span>${esc(p.chiefComplaint||p.focus||'Foco não registrado')}</span><em>Atualizado em ${formatDate((p.updatedAt||p.createdAt||p.startDate||today()).slice(0,10))}</em></span><span class="patient-status-pill">${p.archived?'Arquivado':'Em acompanhamento'}</span><b>›</b></a>`).join('')}</div>` : empty('Nenhum registro encontrado',filter==='arquivados'?'Não há pacientes arquivados.':'Cadastre o primeiro paciente ou ajuste a busca.',filter==='arquivados'?'':button('＋ Novo paciente','new-patient','secondary'))}</div>`;
 }
 function patientPage(id) {
   const p = state.patients.find(x => x.id === id);
@@ -182,19 +218,22 @@ function painChart(rows) {
 }
 
 const normalized = value => String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+const quickTokens=value=>normalized(value).split(/\s+/).filter(token=>token.length>2&&!['para','com','uma','que','como','paciente','sente','quando','quero'].includes(token));
+const quickMatches=(text,query)=>{const haystack=normalized(text),tokens=quickTokens(query);return haystack.includes(normalized(query))||tokens.some(token=>haystack.includes(token));};
 const allExercises = () => [...catalog, ...state.exercises.map(e=>({id:e.id,name:e.name,category:e.category||'Pessoal',region:e.region||e.category||'Pessoal',objective:e.objective||e.notes||'Exercício registrado pelo usuário.',why:[e.objective||e.notes||'Item do repertório pessoal.'],tags:e.tags?String(e.tags).split(','):['pessoal'],source:e.source,primaryMuscles:Array.isArray(e.primaryMuscles)?e.primaryMuscles:e.primaryMuscles?String(e.primaryMuscles).split(','):[],auxiliaryMuscles:[],steps:Array.isArray(e.steps)?e.steps:e.steps?[e.steps]:['Consulte as anotações próprias e a orientação do supervisor.'],equipment:Array.isArray(e.equipment)?e.equipment:[],progressions:Array.isArray(e.progressions)?e.progressions:[],regressions:Array.isArray(e.regressions)?e.regressions:[],indications:Array.isArray(e.indications)?e.indications:[],commonCompensations:[],commonErrors:[],exampleDose:e.exampleDose||'Definir conforme avaliação e orientação supervisionada.',doseNotes:[e.rest&&`Descanso: ${e.rest}`,'Registro pessoal; revisar antes do uso.'].filter(Boolean).join(' '),care:e.care||'Confirmar adequação, ambiente e resposta individual.',stopWhen:'Interromper diante de resposta preocupante e reavaliar.',functionalApplication:e.functionalApplication||'',clinicalNotes:e.notes||'',difficulty:e.difficulty||'A definir',side:e.side||'A definir',joint:e.joint||'A definir',videoUrl:e.videoUrl||'',capacities:[],custom:true,kind:'exercise'}))];
 const favoriteKey = (kind,id) => `${kind}:${id}`;
 const isFavorite = (kind,id) => state.favorites.includes(favoriteKey(kind,id));
 const favoriteButton = (kind,id,label='Favoritar') => button(isFavorite(kind,id)?'★ Favorito':`☆ ${label}`,'toggle-favorite',isFavorite(kind,id)?'secondary':'ghost',`data-kind="${kind}" data-id="${esc(id)}"`);
-const matchExercise = (exercise,query) => normalized([exercise.name,exercise.synonyms?.join(' '),exercise.category,exercise.region,exercise.joint,exercise.primaryMuscles?.join(' '),exercise.auxiliaryMuscles?.join(' '),exercise.tags?.join(' '),exercise.problems?.join(' '),exercise.objective].join(' ')).includes(normalized(query));
+const matchExercise = (exercise,query) => quickMatches([exercise.name,exercise.synonyms?.join(' '),exercise.category,exercise.region,exercise.joint,exercise.primaryMuscles?.join(' '),exercise.auxiliaryMuscles?.join(' '),exercise.tags?.join(' '),exercise.problems?.join(' '),exercise.objective].join(' '),query);
 const lookupItem = key => {
   const [kind,id]=String(key).split(':');
   const source=kind==='exercise'?allExercises():kind==='muscle'?muscles:kind==='test'?clinicalTests:kind==='scale'?scales:[];
   const item=source.find(x=>x.id===id);
   return item?{kind,item}:null;
 };
-const tabs = active => `<div class="library-tabs">${[['exercicios','Exercícios'],['videos','Vídeos'],['musculos','Músculos'],['testes','Testes'],['goniometria','Goniometria'],['reflexos','Reflexos'],['escalas','Escalas'],['neuro','Neuro'],['problemas','Problemas funcionais'],['geral','Fisio Geral'],['condutas','Condutas']].map(([id,label])=>`<a class="${active===id?'active':''}" href="#biblioteca/${id}">${label}</a>`).join('')}</div>`;
-const exerciseCard = e => `<article class="exercise-card rich-card"><div class="card-actions"><span class="source-label">${esc(e.category)}</span><button class="star-button ${isFavorite('exercise',e.id)?'active':''}" data-action="toggle-favorite" data-kind="exercise" data-id="${esc(e.id)}" aria-label="Favoritar">${isFavorite('exercise',e.id)?'★':'☆'}</button></div><h3><a href="#exercicio/${encodeURIComponent(e.id)}">${esc(e.name)}</a></h3><p class="card-objective">${esc(e.objective)}</p><div class="tag-row">${(e.tags||[]).slice(0,3).map(t=>`<span>${esc(t)}</span>`).join('')}</div><a class="text-link" href="#exercicio/${encodeURIComponent(e.id)}">Abrir ficha completa →</a></article>`;
+const librarySections=[['exercicios','Exercícios','↗'],['ortopedia','Ortopedia','✚'],['videos','Vídeos','▶'],['anatomia3d','Anatomia 3D','◎'],['musculos','Músculos','◉'],['testes','Testes','✓'],['goniometria','Goniometria','∠'],['reflexos','Reflexos','⌁'],['escalas','Escalas','≋'],['neuro','Neuro','✦'],['problemas','Problemas','◇'],['geral','Fisio Geral','＋'],['condutas','Condutas','→']];
+const tabs = active => `<div class="library-tabs">${librarySections.map(([id,label,icon])=>`<a class="${active===id?'active':''}" href="#biblioteca/${id}"><i aria-hidden="true">${icon}</i><span>${label}</span></a>`).join('')}</div>`;
+const exerciseCard = e => {const visual=exerciseVisual(e);return `<article class="exercise-card rich-card"><a class="exercise-card-visual" href="#exercicio/${encodeURIComponent(e.id)}"><img src="${visual.url}" alt="${esc(visual.alt)}" loading="lazy"><span>${esc(e.category)}</span></a><div class="exercise-card-content"><div class="card-actions"><span class="source-label">${esc(e.region||e.category)}</span><button class="star-button ${isFavorite('exercise',e.id)?'active':''}" data-action="toggle-favorite" data-kind="exercise" data-id="${esc(e.id)}" aria-label="Favoritar">${isFavorite('exercise',e.id)?'★':'☆'}</button></div><h3><a href="#exercicio/${encodeURIComponent(e.id)}">${esc(e.name)}</a></h3><p class="card-objective">${esc(e.objective)}</p><div class="tag-row">${(e.tags||[]).slice(0,3).map(t=>`<span>${esc(t)}</span>`).join('')}</div><a class="text-link" href="#exercicio/${encodeURIComponent(e.id)}">Ver execução e objetivo <b>›</b></a></div></article>`;};
 
 function ensureVideoCatalog(){
   if(videoCatalog||videoCatalogPromise)return;
@@ -204,24 +243,31 @@ function ensureVideoCatalog(){
 
 function quickResults(query) {
   if (!query.trim()) return '';
+  const terms=[query,...quickTokens(query)],unique=rows=>[...new Map(rows.map(item=>[item.id,item])).values()];
   const ex=allExercises().filter(x=>matchExercise(x,query)).slice(0,8);
-  const mu=muscles.filter(x=>normalized([x.name,x.action,x.function].join(' ')).includes(normalized(query))).slice(0,5);
-  const te=clinicalTests.filter(x=>normalized([x.name,x.region,x.objective,x.structure].join(' ')).includes(normalized(query))).slice(0,5);
-  const sc=scales.filter(x=>normalized([x.name,x.purpose].join(' ')).includes(normalized(query))).slice(0,4);
+  const mu=muscles.filter(x=>quickMatches([x.name,x.action,x.function].join(' '),query)).slice(0,5);
+  const te=clinicalTests.filter(x=>quickMatches([x.name,x.region,x.objective,x.structure].join(' '),query)).slice(0,5);
+  const sc=scales.filter(x=>quickMatches([x.name,x.purpose].join(' '),query)).slice(0,4);
   const ne=allExercises().filter(x=>x.kind==='neuro'&&matchExercise(x,query)).slice(0,5);
-  const measures=assessmentMeasures.filter(x=>normalized([x.name,x.shortName,x.clinicalQuestion,x.domain,...x.tags].join(' ')).includes(normalized(query))).slice(0,6);
-  const general=generalSearch(query);
-  const conduct=reasoningSearch(query);
+  const measures=assessmentMeasures.filter(x=>quickMatches([x.name,x.shortName,x.clinicalQuestion,x.domain,...x.tags].join(' '),query)).slice(0,6);
+  const general={complaints:unique(terms.flatMap(term=>generalSearch(term).complaints)).slice(0,5),meetings:unique(terms.flatMap(term=>generalSearch(term).meetings)).slice(0,5)};
+  const conduct=unique(terms.flatMap(reasoningSearch)).slice(0,7);
   const groups=[['Testes e medidas',measures,x=>`#medidas/${x.id}`],['Exercícios',ex,x=>`#exercicio/${x.id}`],['Músculos',mu,x=>`#musculo/${x.id}`],['Testes',te,x=>`#teste/${x.id}`],['Escalas',sc,x=>`#biblioteca/escalas`],['Neuro',ne,x=>`#exercicio/${x.id}`],['Queixas comuns',general.complaints,x=>`#queixa/${x.id}`],['Encontros',general.meetings,x=>`#encontro/${x.id}`],['Condutas',conduct,x=>`#conduta/${x.id}`]];
   const total=groups.reduce((n,g)=>n+g[1].length,0);
-  return total?`<div class="result-groups">${groups.filter(g=>g[1].length).map(([title,items,href])=>`<section class="result-group"><h2>${title} <span>${items.length}</span></h2>${items.map(item=>`<a href="${href(item)}"><strong>${esc(item.name||item.title)}</strong><small>${esc(item.objective||item.function||item.purpose||item.summary||item.region||'Ficha de consulta')}</small><b>→</b></a>`).join('')}</section>`).join('')}</div>`:empty('Nenhum resultado','Tente outro termo, região, função ou sinônimo.');
+  return total?`<div class="quick-results-head"><div><small>RESULTADOS PARA</small><h2>“${esc(query)}”</h2></div><span>${total} encontrados</span></div><div class="result-groups quick-result-groups">${groups.filter(g=>g[1].length).map(([title,items,href])=>`<section class="result-group"><h2>${title} <span>${items.length}</span></h2>${items.map(item=>`<a class="quick-result-item" href="${href(item)}"><span class="quick-result-type">${esc(title)}</span><strong>${esc(item.name||item.title)}</strong><small>${esc(item.objective||item.function||item.purpose||item.summary||item.region||'Ficha de consulta')}</small><em>Ver ficha</em><b>→</b></a>`).join('')}</section>`).join('')}</div>`:empty('Nenhum resultado','Tente descrever de outra forma ou use uma das categorias abaixo.');
 }
+function rememberQuickQuery(value){const clean=String(value||'').trim();if(clean.length<2)return;quickHistory=[clean,...quickHistory.filter(item=>normalized(item)!==normalized(clean))].slice(0,6);localStorage.setItem(QUICK_HISTORY_KEY,JSON.stringify(quickHistory));}
 function quickPage() {
-  return `${pageHeader('MODO RÁPIDO','Consulta rápida','Pesquise sem selecionar um paciente. Os resultados aparecem agrupados por tipo.')}<div class="quick-search"><span>⌕</span><input id="quick-search" type="search" value="${esc(quickQuery)}" placeholder="Ex.: quadríceps, equilíbrio, AVE, joelho, sentar levantar" autofocus></div>${quickQuery?quickResults(quickQuery):`<div class="quick-prompts"><span>Experimente:</span>${['lombalgia','condicionamento','respiração','transferências','quedas','quadríceps','equilíbrio','AVE','marcha','sentar levantar'].map(q=>`<button data-action="quick-term" data-term="${q}">${q}</button>`).join('')}</div>${empty('O que você quer consultar?','Busque um problema, músculo, articulação, teste ou atividade. A consulta não gera prescrição.')}`}`;
+  const intents=[['search','Quero avaliar','testes funcionais'],['clipboard','Escolher um teste','equilíbrio'],['learn','Entender um achado','marcha'],['strength','Encontrar exercício','fortalecimento'],['book','Documentar','evolução clínica'],['pain','Sinais de atenção','alertas']];
+  const categories=[['pain','Dor e sintomas','dor'],['mobility','Mobilidade e ADM','mobilidade'],['strength','Força','força'],['balance','Equilíbrio','equilíbrio'],['gait','Marcha','marcha'],['neuro','Neurologia','neuro'],['respiratory','Respiratória','respiração'],['function','Funcionalidade','funcionalidade']];
+  const history=quickHistory.length?`<section class="quick-history"><div class="quick-section-title"><h2>Consultas recentes</h2><button type="button" data-action="clear-quick-history">Limpar</button></div><div>${quickHistory.map(item=>`<button type="button" data-action="quick-term" data-term="${esc(item)}"><span>↻</span>${esc(item)}</button>`).join('')}</div></section>`:'';
+  return `<section class="quick-consult-hero"><span class="eyebrow">CONSULTA DURANTE O ATENDIMENTO</span><h1>O que você precisa agora?</h1><p>Descreva com suas palavras, mesmo sem saber o termo técnico.</p><label class="quick-search"><span>${homeIcon('search')}</span><input id="quick-search" name="quickQuery" type="text" value="${esc(quickQuery)}" placeholder="Ex.: paciente manca e sente dor ao apoiar" autocomplete="off"><b>${homeIcon('arrow')}</b></label></section>${quickQuery?quickResults(quickQuery):`<section class="quick-intents"><div class="quick-section-title"><h2>Como posso ajudar?</h2></div><div>${intents.map(([icon,label,term])=>`<button type="button" data-action="quick-term" data-term="${term}"><i>${homeIcon(icon)}</i><span>${label}</span><b>›</b></button>`).join('')}</div></section>${history}<section class="quick-categories"><div class="quick-section-title"><h2>Explore por área</h2></div><div>${categories.map(([icon,label,term])=>`<button type="button" data-action="quick-term" data-term="${term}"><i>${homeIcon(icon)}</i><span>${label}</span></button>`).join('')}</div></section><div class="quick-education-note"><strong>Consulta educacional</strong><p>Os resultados ajudam a encontrar conteúdo do app. Não definem diagnóstico ou prescrição.</p><a href="#mentor">Precisa discutir um caso completo? Abrir Mentor Clínico →</a></div>`}`;
 }
 function libraryPage(active='exercicios') {
-  const header=`${pageHeader('CONHECIMENTO CLÍNICO','Biblioteca prática',`${catalog.length} exercícios e atividades, referências anatômicas e apoio ao exame supervisionado.`,button('Consulta rápida','go-quick','secondary'))}${tabs(active)}`;
+  const header=`<section class="library-native-hero"><span class="eyebrow">CONHECIMENTO CLÍNICO</span><h1>Biblioteca prática</h1><p>Encontre exercícios, vídeos, testes e referências durante o atendimento.</p><div class="library-hero-stats"><span><strong>${allExercises().length}</strong><small>exercícios</small></span><span><strong>50</strong><small>vídeos</small></span><span><strong>${clinicalTests.length}</strong><small>testes</small></span><button type="button" data-action="go-quick">⌕ <span>Consulta rápida</span></button></div></section>${tabs(active)}`;
   if(active==='videos'){if(!videoCatalog&&!videoCatalogError)queueMicrotask(ensureVideoCatalog);return header+videoLibraryPage(videoCatalog||[],videoQuery,videoCategory,{loading:!videoCatalog&&!videoCatalogError,error:videoCatalogError});}
+  if(active==='ortopedia') return header+orthopedicLibrary();
+  if(active==='anatomia3d') return header+anatomy3dLibrary();
   if(active==='geral') return header+generalLibraryPage(state);
   if(active==='condutas') return header+reasoningLibraryPage();
   if(active==='musculos') return header+muscleLibrary();
@@ -233,10 +279,25 @@ function libraryPage(active='exercicios') {
   if(active==='neuro') return header+neuroLibrary();
   const categories=['Todas',...new Set(allExercises().map(x=>x.category))];
   const rows=allExercises().filter(x=>(libraryCategory==='Todas'||x.category===libraryCategory)&&(!libraryQuery||matchExercise(x,libraryQuery)));
-  return header+`${advisory}<div class="library-toolbar"><label class="search"><span>⌕</span><input id="library-search" type="search" value="${esc(libraryQuery)}" placeholder="Buscar em ${allExercises().length} exercícios..."></label><select id="library-category" aria-label="Filtrar categoria">${categories.map(c=>`<option ${c===libraryCategory?'selected':''}>${esc(c)}</option>`).join('')}</select>${button('＋ Exercício pessoal','new-exercise','ghost')}</div><p class="result-count">${rows.length} possibilidades encontradas</p><div class="exercise-grid">${rows.map(exerciseCard).join('')}</div>`;
+  return header+`<div class="library-feature-strip"><span>ILUSTRAÇÕES OFFLINE</span><strong>Veja o movimento antes de abrir a ficha</strong><p>As imagens ajudam a reconhecer o exercício; execução e adaptação continuam dependentes da avaliação.</p></div><div class="library-toolbar"><label class="search"><span>⌕</span><input id="library-search" type="search" value="${esc(libraryQuery)}" placeholder="Buscar exercício, região ou objetivo..."></label><select id="library-category" aria-label="Filtrar categoria">${categories.map(c=>`<option ${c===libraryCategory?'selected':''}>${esc(c)}</option>`).join('')}</select>${button('＋ Criar exercício','new-exercise','ghost')}</div><div class="library-result-head"><span><strong>${rows.length}</strong> exercícios encontrados</span><small>Toque em um card para ver objetivo, execução e cuidados.</small></div><div class="exercise-grid visual-exercise-grid">${rows.map(exerciseCard).join('')}</div><p class="exercise-visual-credit">Ilustrações: Workout Guide / Bryl Lim e Everkinetic · CC BY-SA 4.0.</p>`;
+}
+function anatomy3dLibrary(){
+  const cards=palpationGuides.map(item=>`<details class="palpation-card"><summary><span><small>${esc(item.region)}</small><strong>${esc(item.name)}</strong></span><b>＋</b></summary><div><dl><dt>Posição</dt><dd>${esc(item.position)}</dd><dt>Referências</dt><dd>${esc(item.landmarks)}</dd><dt>Confirmar pelo movimento</dt><dd>${esc(item.confirmation)}</dd><dt>Palpação</dt><dd>${esc(item.palpation)}</dd></dl><p><strong>Cuidado:</strong> ${esc(item.caution)}</p></div></details>`).join('');
+  return `<section class="anatomy3d-hero"><div><span class="eyebrow">ATLAS INTERATIVO</span><h2>Explore músculos e ossos em 3D</h2><p>Gire o modelo, aproxime com pinça ou roda do mouse e toque em uma estrutura para identificá-la.</p></div><div class="anatomy3d-tips"><span>↻ Arraste para girar</span><span>⌕ Pinça para aproximar</span><span>☝ Toque para identificar</span></div></section><div class="anatomy3d-viewer"><iframe src="/anatomy3d/public/index.html" title="Atlas anatômico tridimensional interativo" loading="lazy" allowfullscreen></iframe><div class="anatomy3d-credit">Modelo Z-Anatomy · visualizador hpfrei · CC BY-SA 4.0</div></div><section class="palpation-guide"><div class="palpation-head"><span><small>ANATOMIA PALPATÓRIA</small><h2>Guias rápidos de localização</h2><p>Use referências ósseas e confirmação pelo movimento. Compare lados quando fizer sentido e sempre obtenha consentimento.</p></span><strong>${palpationGuides.length}<small>guias</small></strong></div><div class="palpation-list">${cards}</div><div class="anatomy-safety"><strong>Referência educacional</strong><p>O modelo e os guias ajudam a estudar localização. Eles não substituem aula prática, supervisão, avaliação clínica nem treinamento de segurança e consentimento.</p></div></section>`;
 }
 function muscleLibrary(){
-  return `<div class="info-banner">Selecione um grupo para ver função, componentes, ação e exercícios relacionados.</div><div class="reference-grid">${muscles.map(m=>`<article class="reference-card"><div class="card-actions"><span class="source-label">ANATOMIA</span><button class="star-button ${isFavorite('muscle',m.id)?'active':''}" data-action="toggle-favorite" data-kind="muscle" data-id="${m.id}">${isFavorite('muscle',m.id)?'★':'☆'}</button></div><h3><a href="#musculo/${m.id}">${esc(m.name)}</a></h3><p>${esc(m.function)}</p><a class="text-link" href="#musculo/${m.id}">Ver exercícios relacionados →</a></article>`).join('')}</div>`;
+  const regionOf=name=>/quadr|isquio|glute|ilio|adutor/.test(normalized(name))?'Quadril e coxa':/gastro|soleo|tibial|fibular/.test(normalized(name))?'Perna e pé':/delto|supra|infra|subesc|serrat|trapez/.test(normalized(name))?'Ombro e escápula':/biceps|triceps|punho|mao/.test(normalized(name))?'Braço e mão':'Tronco';
+  const iconOf=name=>{const n=normalized(name);if(/quadr|joelho/.test(n))return 'M8 5c3 5 4 9 2 14m7-14c-2 5-2 9 1 14M10 12h7';if(/glute|quadril|adutor|ilio/.test(n))return 'M6 5c1 5 3 7 6 8 3-1 5-3 6-8M9 13l-2 7m8-7 2 7';if(/gastro|soleo|tibial|fibular/.test(n))return 'M8 4c4 4 5 8 3 16m5-16c-2 6-1 11 2 16M11 14h6';if(/delto|supra|infra|subesc|serrat|trapez/.test(n))return 'M4 9c4-5 12-5 16 0M8 7l-2 13m10-13 2 13M8 12h8';if(/biceps|triceps|punho|mao/.test(n))return 'M5 8c4 0 5 2 7 5m0 0c3-2 5-5 7-8M12 13l-2 7m2-7 4 7';return 'M12 3v18M7 6c2 3 2 9 0 12m10-12c-2 3-2 9 0 12M7 12h10';};
+  const groups=['Quadril e coxa','Perna e pé','Ombro e escápula','Braço e mão','Tronco'];
+  const cards=groups.map(region=>`<section class="muscle-region"><div class="muscle-region-head"><span>${region}</span><small>${muscles.filter(m=>regionOf(m.name)===region).length} grupos</small></div><div class="muscle-card-grid">${muscles.filter(m=>regionOf(m.name)===region).map(m=>`<article class="muscle-card"><a class="muscle-card-art" href="#musculo/${m.id}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="${iconOf(m.name)}"/></svg><span>${esc(region)}</span></a><div><div class="card-actions"><small>ANATOMIA FUNCIONAL</small><button class="star-button ${isFavorite('muscle',m.id)?'active':''}" data-action="toggle-favorite" data-kind="muscle" data-id="${m.id}" aria-label="Favoritar ${esc(m.name)}">${isFavorite('muscle',m.id)?'★':'☆'}</button></div><h3><a href="#musculo/${m.id}">${esc(m.name)}</a></h3><p>${esc(m.action)}</p><span class="muscle-function">${esc(m.function)}</span><a class="text-link" href="#musculo/${m.id}">Função e exercícios <b>›</b></a></div></article>`).join('')}</div></section>`).join('');
+  return `<section class="muscle-intro"><div><span class="eyebrow">ANATOMIA APLICADA</span><h2>Entenda o músculo pela função</h2><p>Explore ação, função prática e exercícios relacionados. Use a divisão por região para consultar durante a avaliação.</p></div><a href="#biblioteca/anatomia3d"><b>◎</b><span><strong>Abrir corpo em 3D</strong><small>Músculos, ossos e palpação</small></span><i>→</i></a></section><nav class="muscle-region-nav">${groups.map(region=>`<a href="#muscle-${normalized(region).replace(/\s+/g,'-')}">${region}</a>`).join('')}</nav>${cards}`;
+}
+
+function orthopedicLibrary(){
+  const findExercise=name=>allExercises().find(e=>normalized(e.name)===normalized(name))||allExercises().find(e=>normalized(e.name).includes(normalized(name)));
+  const caseCards=orthopedicCases.map(item=>{const exercises=item.exerciseNames.map(findExercise).filter(Boolean);return `<details class="ortho-case" id="ortho-${item.id}"><summary><b>${item.icon}</b><span><small>${esc(item.region)}</small><strong>${esc(item.title)}</strong><em>${esc(item.short)}</em></span><i>＋</i></summary><div class="ortho-case-body"><section><h3>Confirmar antes de escolher</h3><ul>${item.confirm.map(text=>`<li>${esc(text)}</li>`).join('')}</ul></section><section><h3>Objetivos possíveis por fase</h3><ul>${item.goals.map(text=>`<li>${esc(text)}</li>`).join('')}</ul></section><div class="ortho-alert"><b>Atenção</b><p>${esc(item.alert)}</p></div><div class="ortho-case-exercises"><div><strong>Exercícios para consultar</strong><small>${exercises.length} fichas relacionadas</small></div><div class="exercise-grid visual-exercise-grid">${exercises.map(exerciseCard).join('')}</div></div></div></details>`}).join('');
+  const videos=orthopedicVideoResources.map(item=>`<a class="ortho-video-card" href="${esc(item.url)}" target="_blank" rel="noopener noreferrer"><b>▶</b><span><small>${esc(item.provider)}</small><strong>${esc(item.title)}</strong><p>${esc(item.topics)}</p></span><i>↗</i></a>`).join('');
+  return `<section class="ortho-hero"><div><span class="eyebrow">ORTOPEDIA E TRAUMATOLOGIA</span><h2>Condutas por situação clínica</h2><p>Consulte o que confirmar, objetivos por fase e exercícios relacionados sem transformar o diagnóstico em uma prescrição automática.</p></div><div class="ortho-body-map" aria-hidden="true"><span>OMBRO</span><span>COLUNA</span><span>MÃO</span><span>JOELHO</span><span>TÍBIA</span></div></section><nav class="ortho-case-nav">${orthopedicCases.map(item=>`<a href="#ortho-${item.id}"><b>${item.icon}</b><span>${esc(item.short)}</span></a>`).join('')}</nav><div class="ortho-note"><b>Escolha por fase</b><p>Em pós-operatório e fraturas, confirme procedimento, consolidação, carga, amplitude permitida, órtese e protocolo da equipe antes de usar qualquer ficha.</p></div><section class="ortho-cases"><div class="ortho-section-title"><span><small>GUIAS RÁPIDOS</small><h2>Situações frequentes no estágio</h2></span><strong>${orthopedicCases.length} casos</strong></div>${caseCards}</section><section class="ortho-videos"><div class="ortho-section-title"><span><small>FONTES EXTERNAS</small><h2>Vídeos clínicos institucionais</h2><p>Abra a fonte oficial para assistir. Os vídeos não foram copiados porque pertencem às instituições responsáveis.</p></span></div><div>${videos}</div></section>`;
 }
 function testLibrary(){
   const groups=[...new Set(clinicalTests.map(x=>x.region))];
@@ -340,7 +401,9 @@ function modal(title,body,formId) {
 function closeModal() { $('#dialog-root').innerHTML = ''; }
 function patientForm(p) {
   modal(p?'Editar paciente':'Novo paciente',patientFormBody(p||{},today()),'patient-form');
-  $('.modal-body')?.insertAdjacentHTML('afterbegin',`<label class="study-patient"><input type="checkbox" name="studyPatient" value="sim" ${p?.studyPatient==='sim'?'checked':''}><span>Paciente de estudo / desidentificado</span></label>`);
+  $('.modal')?.classList.add('patient-form-modal');
+  const submit=$('#patient-form .modal-foot .button.primary');
+  if(submit)submit.innerHTML=`<span aria-hidden="true">✓</span> ${p?'Salvar alterações':'Criar paciente'}`;
 }
 function assessmentForm(id) {
   modal('Nova avaliação',`<input type="hidden" name="patientId" value="${esc(id)}"><div class="form-grid">${input('Data *','date','date',today(),'required')}${select('Tipo','type',[['Inicial','Inicial'],['Reavaliação','Reavaliação'],['Objetiva','Objetiva']])}${input('Dor referida (0–10)','pain','number','','min="0" max="10" step="1"')}</div>${area('Queixa / objetivo relatado','complaint','','Descreva apenas o que foi avaliado')}${area('Achados registrados','findings','','Exame e observações sob supervisão')}${area('Função relatada','function','','Atividades e limitações relatadas')}`,'assessment-form');
@@ -420,6 +483,7 @@ function updateSessionTotal(){
 }
 
 function formValues(form) { return Object.fromEntries(new FormData(form).entries()); }
+function rapidCareHasContent(form){const data=new FormData(form);return ['focus','painScore','exercise','responseKind','response','observation','pain','vitals','rom','strength','balance','gait','test'].some(name=>String(data.get(name)||'').trim());}
 function persistRapidCareForm(form){const payload=formValues(form),rapidData=new FormData(form);payload.painRegions=rapidData.getAll('painRegion');payload.painCharacteristics=rapidData.getAll('painCharacteristic');payload.evolutionDetailed=buildRapidEvolution(payload);if(payload.painRegions.length||payload.pain?.trim())addRecord(state,'painMaps',{patientId:payload.patientId,date:payload.date,regions:payload.painRegions,characteristics:payload.painCharacteristics,irradiationChange:payload.irradiationChange||'',notes:payload.pain||''});addRecord(state,'quickCareSessions',payload);addRecord(state,'sessions',{patientId:payload.patientId,date:payload.date,summary:payload.focus||'Atendimento',interventions:payload.exercise||'',response:[payload.responseKind,payload.response].filter(Boolean).join(' — '),evolutionDetailed:payload.evolutionDetailed});if(payload.supervisorQuestion?.trim())addRecord(state,'supervisorQuestions',{patientId:payload.patientId,date:payload.date,question:payload.supervisorQuestion,status:'Pendente'});return payload;}
 function inRange(value) { return value === '' || (Number.isInteger(Number(value)) && Number(value)>=0 && Number(value)<=10); }
 document.addEventListener('submit', async event => {
@@ -432,7 +496,7 @@ document.addEventListener('submit', async event => {
   if(form.id==='voice-structure-form'){const selected=new FormData(form).getAll('structuredField'),fields={};for(const name of selected){const el=form.querySelector(`[data-structured-name="${CSS.escape(name)}"]`);fields[name]={...voiceStructureDraft.fields[name],value:el?.value.trim()||''};const targetField=document.querySelector(`#main [name="${CSS.escape(name)}"]`);if(targetField&&el?.value.trim())targetField.value+=(targetField.value?'\n':'')+el.value.trim();}const patientId=document.querySelector('#main [name="patientId"]')?.value||'';addRecord(state,'voiceStructuredRecords',{patientId,sourceText:voiceStructureDraft.sourceText,fields});saveState(state);closeModal();toast('Ficha estruturada confirmada e salva.');return;}
   if(form.id==='learning-tool-form'){const tool=authValues.tool,mode=authValues.mode,raw=Object.fromEntries(Object.entries(authValues).filter(([key])=>!['tool','mode','patientId','aiConsent'].includes(key))),input=JSON.stringify(raw);try{const history=[...(learningDraft.history||[])];if(mode==='simulation-reply'&&learningDraft.result?.primaryOutput)history.push({role:'assistant',content:learningDraft.result.primaryOutput});learningDraft={...learningDraft,tool,patientId:authValues.patientId,input:raw.input||'',loading:true,history};render();const response=await fetch('/api/learning-tool',{method:'POST',headers:{'Content-Type':'application/json',Authorization:`Bearer ${authState.session.access_token}`},body:JSON.stringify({mode,input,memory:learningDraft.memory||'',history})}),payload=await response.json().catch(()=>({}));if(!response.ok)throw new Error(payload.error||'Não foi possível gerar a atividade.');if(mode==='simulation-reply')history.push({role:'user',content:raw.input||''});const finished=mode==='simulation-feedback'||mode==='exam-grade';learningDraft={...learningDraft,loading:false,result:payload.result,memory:payload.result.memory||learningDraft.memory||'',history,finished};addRecord(state,'learningToolRecords',{patientId:authValues.patientId||'',tool,mode,input:raw,result:payload.result});saveState(state);render();toast('Resultado salvo para uso offline.');}catch(error){learningDraft.loading=false;toast(error.message,true);render();}return;}
   if(form.id==='clinical-mentor-form'){const intent=event.submitter?.value||'analyze';if(intent==='save'){if(!authValues.patientId){toast('Selecione um paciente para salvar a análise.',true);return;}if(!mentorDraft.result){toast('Gere a análise antes de salvar.',true);return;}addRecord(state,'clinicalMentorCases',{patientId:authValues.patientId,caseText:mentorDraft.caseText,goal:mentorDraft.goal,result:mentorDraft.result});saveState(state);toast('Análise educacional salva no paciente.');return;}try{mentorDraft={patientId:authValues.patientId,caseText:authValues.caseText,goal:authValues.goal,loading:true};render();const response=await fetch('/api/clinical-mentor',{method:'POST',headers:{'Content-Type':'application/json',Authorization:`Bearer ${authState.session.access_token}`},body:JSON.stringify({caseText:authValues.caseText,goal:authValues.goal})}),payload=await response.json().catch(()=>({}));if(!response.ok)throw new Error(payload.error||'Não foi possível analisar o caso.');mentorDraft={...mentorDraft,loading:false,result:payload.result};render();}catch(error){mentorDraft.loading=false;toast(error.message,true);render();}return;}
-  if(form.id.startsWith('rapid-care-form-')){persistRapidCareForm(form);saveState(state);toast('Atendimento salvo e evolução gerada sem acrescentar dados.');render();return;}
+  if(form.id.startsWith('rapid-care-form-')){if(!rapidCareHasContent(form)){toast('Registre ao menos uma informação clínica antes de salvar.',true);return;}persistRapidCareForm(form);saveState(state);toast('Atendimento salvo e evolução gerada sem acrescentar dados.');render();return;}
   if(form.id==='session-builder-form'){
     try{const payload=sessionFromForm(form);addRecord(state,'sessions',payload);sessionDrafts.delete(payload.patientId);saveState(state);toast('Sessão concluída e evolução gerada.');location.hash=`pacientes/${payload.patientId}`;}catch(error){toast(error.message,true);}return;
   }
@@ -511,10 +575,13 @@ document.addEventListener('submit', async event => {
   }
   closeModal();saved();
 });
+document.addEventListener('click',event=>{const link=event.target.closest('.muscle-region-nav a,.ortho-quick-nav a,.ortho-case-nav a');if(!link)return;event.preventDefault();let target=null;if(link.closest('.ortho-quick-nav,.ortho-case-nav'))target=document.querySelector(link.getAttribute('href'));else target=[...document.querySelectorAll('.muscle-region')].find(section=>section.querySelector('.muscle-region-head span')?.textContent===link.textContent);if(target?.tagName==='DETAILS')target.open=true;target?.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});});
 document.addEventListener('click',async event=>{
   const target=event.target.closest('[data-action]');if(!target)return;
   const action=target.dataset.action,id=target.dataset.id;
+  if(action==='download-category'){downloadsCategory=target.dataset.category||'Todos';render();return;}
   if(action==='reset-learning-tool'){learningDraft={tool:route()[1]||'',history:[]};render();return;}
+  if(action==='learning-example'){const field=$('#learning-tool-form [name="input"]');if(field){field.value=target.dataset.example||'';field.focus();field.dispatchEvent(new Event('input',{bubbles:true}));}return;}
   if(action==='finish-simulation'){const form=$('#learning-tool-form'),input=form?.elements.input;if(input)input.value='Encerrar entrevista e receber feedback.';if(form?.elements.mode)form.elements.mode.value='simulation-feedback';form?.requestSubmit();return;}
   if(action==='copy-learning-result'){const result=learningDraft.result,text=[result?.primaryOutput,...(result?.sections||[]).flatMap(s=>[s.title,s.content,...s.items])].filter(Boolean).join('\n\n');navigator.clipboard.writeText(text).then(()=>toast('Resultado copiado.')).catch(()=>toast('Não foi possível copiar.',true));return;}
   if(action==='copy-mentor-writing'){const text=mentorDraft.result?.clinicalWritingDraft||'';navigator.clipboard.writeText(text).then(()=>toast('Rascunho copiado.')).catch(()=>toast('Não foi possível copiar.',true));return;}
@@ -522,8 +589,8 @@ document.addEventListener('click',async event=>{
   if(action==='logout'){await signOut(authState.session);authState={ready:true,session:null,profile:null,message:''};state=emptyState();currentStorage=localStorage;location.hash='login';render();return;}
   if(action==='sync-cloud'){try{const result=await syncCloudState(state,authState.session);saveLocalState(state,currentStorage);toast(`${result.synced} paciente(s) sincronizado(s)${result.conflicts?` · ${result.conflicts} conflito(s) para revisar`:''}.`);render();}catch(error){toast(error.message,true);}return;}
   if(action==='open-rapid-patients'){const a=$('#rapid-a')?.value||'',b=$('#rapid-b')?.value||'',mode=target.dataset.mode||'individual';if(!a){toast('Selecione ao menos o paciente A.',true);return;}if(mode==='duplo'&&a===b){toast('Selecione pacientes diferentes para os registros A e B.',true);return;}location.hash=`atendimento-rapido?mode=${mode}&a=${encodeURIComponent(a)}${mode==='duplo'&&b?`&b=${encodeURIComponent(b)}`:''}`;return;}
-  if(action==='save-rapid-all'){const forms=[...document.querySelectorAll('.rapid-pane')];if(!forms.length){toast('Selecione ao menos um paciente.',true);return;}forms.forEach(persistRapidCareForm);saveState(state);toast(`${forms.length} registro(s) salvos e evoluções geradas.`);render();return;}
-  if(action==='rapid-conduct'){const field=target.closest('form')?.elements.exercise,value=target.dataset.value;if(field){const prefix=field.value.trim()?'; ':'';field.value+=`${prefix}${value}`;target.classList.toggle('selected');field.focus();}return;}
+  if(action==='save-rapid-all'){const forms=[...document.querySelectorAll('.rapid-pane')].filter(rapidCareHasContent);if(!forms.length){toast('Preencha ao menos um dos registros antes de salvar.',true);return;}forms.forEach(persistRapidCareForm);saveState(state);toast(`${forms.length} registro(s) preenchidos foram salvos.`);render();return;}
+  if(action==='rapid-conduct'){const field=target.closest('form')?.elements.exercise,value=target.dataset.value;if(field){const selected=target.classList.toggle('selected'),parts=field.value.split(';').map(item=>item.trim()).filter(Boolean),next=selected?[...parts.filter(item=>item!==value),value]:parts.filter(item=>item!==value);field.value=next.join('; ');target.setAttribute('aria-pressed',String(selected));field.dispatchEvent(new Event('input',{bubbles:true}));field.focus();}return;}
   if(action==='rapid-preset'){const field=target.closest('form')?.elements[target.dataset.target];field?.focus();return;}
   if(action==='rapid-timer'){const form=target.closest('form'),output=form?.querySelector('.rapid-timer-output'),key=form?.dataset.patient;clearInterval(rapidTimers.get(key));let remaining=Number(target.dataset.seconds)*1000,last=performance.now();const handle=setInterval(()=>{const now=performance.now();remaining=Math.max(0,remaining-(now-last));last=now;if(output){const total=Math.ceil(remaining/1000);output.textContent=`${String(Math.floor(total/60)).padStart(2,'0')}:${String(total%60).padStart(2,'0')}`;}if(!remaining){clearInterval(handle);rapidTimers.delete(key);}},200);rapidTimers.set(key,handle);return;}
   if(action==='route-patient'){const patient=document.querySelector('[name="routePatient"]')?.value;if(!patient){toast('Selecione o paciente.',true);return;}location.hash=`${target.dataset.route}/${patient}`;return;}
@@ -556,7 +623,8 @@ document.addEventListener('click',async event=>{
   if(action==='new-exercise')exerciseForm();
   if(action==='go-patients')location.hash='pacientes';
   if(action==='go-quick')location.hash='consulta';
-  if(action==='quick-term'){quickQuery=target.dataset.term||'';render();}
+  if(action==='quick-term'){quickQuery=target.dataset.term||'';rememberQuickQuery(quickQuery);render();}
+  if(action==='clear-quick-history'){quickHistory=[];localStorage.removeItem(QUICK_HISTORY_KEY);render();return;}
   if(action==='toggle-archived'){filter=filter==='arquivados'?'':'arquivados';render();}
   if(action==='toggle-favorite'){const added=toggleFavorite(state,favoriteKey(target.dataset.kind,id));saveState(state);toast(added?'Adicionado aos favoritos.':'Removido dos favoritos.');render();}
   if(action==='new-repertoire')repertoireForm();
@@ -613,6 +681,7 @@ document.addEventListener('input',event=>{
   if(event.target.name?.startsWith('minutes-'))updateSessionTotal();
 });
 document.addEventListener('change',async event=>{
+  if(event.target.id==='quick-search'){rememberQuickQuery(event.target.value);return;}
   if(event.target.id==='library-category'){libraryCategory=event.target.value;render();return;}
   if(event.target.id==='downloads-category'){downloadsCategory=event.target.value;render();return;}
   if(event.target.id==='video-category'){videoCategory=event.target.value;render();return;}
@@ -620,17 +689,33 @@ document.addEventListener('change',async event=>{
   if(event.target.id!=='import-file'||!event.target.files?.[0])return;
   try{const {validateState}=await import('./store.js');const next=validateState(JSON.parse(await event.target.files[0].text()));if(!confirm('Substituir todos os dados locais pelos dados do arquivo selecionado?'))return;state=next;saveState(state);toast('Backup importado.');render();}catch(error){toast(`Arquivo inválido: ${error.message}`,true);}
 });
-document.addEventListener('voice-transcribed',event=>{voiceStructureDraft=structureTranscript(event.detail?.text||'');$('#dialog-root').innerHTML=voiceStructurePreview(voiceStructureDraft);});
-window.addEventListener('hashchange',render);
+document.addEventListener('voice-transcribed',event=>{if(event.detail?.fieldName==='quickQuery'){rememberQuickQuery(event.detail.text);return;}voiceStructureDraft=structureTranscript(event.detail?.text||'');$('#dialog-root').innerHTML=voiceStructurePreview(voiceStructureDraft);});
+window.addEventListener('hashchange',()=>{scrollPageTop();render();});
 window.addEventListener('online',async()=>{updateNetwork();if(authState.session)try{await syncCloudState(state,authState.session);saveLocalState(state,currentStorage);render();toast('Dados atualizados e disponíveis offline.');}catch(error){toast(`Sincronização pendente: ${error.message}`,true);}});
 window.addEventListener('offline',updateNetwork);
 function updateNetwork(){ $('#network-status').textContent=navigator.onLine?'Disponível offline':'Modo offline'; }
-window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();deferredInstall=event;$('#install-button').hidden=false;});
-$('#install-button').addEventListener('click',async()=>{if(deferredInstall){deferredInstall.prompt();await deferredInstall.userChoice;deferredInstall=undefined;$('#install-button').hidden=true;}});
+const INSTALL_REMIND_KEY='fisio-install-remind-after';
+const isStandalone=()=>matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
+function closeInstallInvite(remind=true){document.querySelector('.install-invite')?.remove();if(remind)localStorage.setItem(INSTALL_REMIND_KEY,String(Date.now()+7*24*60*60*1000));}
+function showInstallInvite(force=false){
+  if(isStandalone()||document.querySelector('.install-invite'))return;
+  const ios=/iphone|ipad|ipod/i.test(navigator.userAgent),canInstall=Boolean(deferredInstall);
+  if(!force&&!canInstall&&!ios)return;
+  if(!force&&Date.now()<Number(localStorage.getItem(INSTALL_REMIND_KEY)||0))return;
+  const modal=document.createElement('div');modal.className='install-invite';modal.setAttribute('role','dialog');modal.setAttribute('aria-modal','true');modal.setAttribute('aria-labelledby','install-title');
+  modal.innerHTML=`<div class="install-invite-card"><button class="install-close" type="button" aria-label="Fechar">×</button><div class="install-app-icon"><img src="/icons/icon-192.png" alt=""></div><span>USE COMO APLICATIVO</span><h2 id="install-title">Instale o Fisio Clínico</h2><p>Acesse mais rápido pela tela inicial, use em tela cheia e mantenha recursos disponíveis mesmo com conexão instável.</p><div class="install-benefits"><span>✓ Abre como app</span><span>✓ Acesso rápido</span><span>✓ Conteúdo offline</span></div>${ios?'<div class="ios-install-guide"><b>No iPhone ou iPad:</b><span>1. Toque em Compartilhar <strong>⇧</strong></span><span>2. Escolha “Adicionar à Tela de Início”</span></div>':'<button class="install-primary" type="button">Baixar e instalar agora</button>'}<button class="install-later" type="button">Agora não</button></div>`;
+  document.body.append(modal);requestAnimationFrame(()=>modal.classList.add('show'));
+  modal.querySelector('.install-close').onclick=()=>closeInstallInvite();modal.querySelector('.install-later').onclick=()=>closeInstallInvite();
+  const primary=modal.querySelector('.install-primary');if(primary)primary.onclick=async()=>{if(!deferredInstall)return;deferredInstall.prompt();const result=await deferredInstall.userChoice;if(result.outcome==='accepted')closeInstallInvite(false);else closeInstallInvite();deferredInstall=undefined;$('#install-button').hidden=true;};
+}
+window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();deferredInstall=event;$('#install-button').hidden=false;setTimeout(()=>showInstallInvite(),1800);});
+window.addEventListener('appinstalled',()=>{closeInstallInvite(false);deferredInstall=undefined;$('#install-button').hidden=true;});
+$('#install-button').addEventListener('click',()=>showInstallInvite(true));
 function showUpdate(registration){if(document.querySelector('.update-banner'))return;const banner=document.createElement('div');banner.className='update-banner';banner.innerHTML='<span>Nova versão disponível</span><button class="button light" type="button">Atualizar agora</button>';banner.querySelector('button').onclick=()=>registration.waiting?.postMessage({type:'SKIP_WAITING'});document.body.append(banner);}
 if('serviceWorker'in navigator)navigator.serviceWorker.register('/sw.js').then(registration=>{if(registration.waiting)showUpdate(registration);registration.addEventListener('updatefound',()=>{const worker=registration.installing;worker?.addEventListener('statechange',()=>{if(worker.state==='installed'&&navigator.serviceWorker.controller)showUpdate(registration);});});navigator.serviceWorker.addEventListener('controllerchange',()=>location.reload());}).catch(()=>{});
 function accountStorage(session){const id=sessionUser(session).sub;return {getItem:key=>localStorage.getItem(`${key}:${id}`),setItem:(key,value)=>localStorage.setItem(`${key}:${id}`,value),removeItem:key=>localStorage.removeItem(`${key}:${id}`)};}
-async function activateSession(session){authState.session=session;currentStorage=accountStorage(session);state=loadState(currentStorage);authState.profile=await getProfile(session);mergeCloudSnapshots(state,await loadCloudSnapshots(session));mergeCloudWorkspace(state,await loadCloudWorkspace(session));saveLocalState(state,currentStorage);authState.ready=true;render();}
+async function activateSession(session){authState.session=session;currentStorage=accountStorage(session);state=loadState(currentStorage);authState.ready=true;render();const [profile,snapshots,workspace]=await Promise.all([getProfile(session),loadCloudSnapshots(session),loadCloudWorkspace(session)]);authState.profile=profile;mergeCloudSnapshots(state,snapshots);mergeCloudWorkspace(state,workspace);saveLocalState(state,currentStorage);render();}
 async function initializeAccount(){try{const session=await restoreSession();if(session)await activateSession(session);else{authState.ready=true;render();}}catch(error){authState={ready:true,session:null,profile:null,message:`Não foi possível restaurar a sessão: ${error.message}`};render();}}
 async function loadAdminCases(){adminRows=[];try{adminRows=await loadCloudSnapshots(authState.session,true);}catch(error){toast(error.message,true);}render();}
-updateNetwork();render();initializeAccount();
+if('scrollRestoration'in history)history.scrollRestoration='manual';
+scrollPageTop();updateNetwork();render();initializeAccount();setTimeout(()=>showInstallInvite(),2600);

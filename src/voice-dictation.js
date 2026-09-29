@@ -1,4 +1,5 @@
 export const VOICE_FIELD_NAMES=new Set([
+  'quickQuery',
   'caseText','complaint','functionalGoal','procedureContext','notes','symptoms','turnQuality','movementQuality','painLimitation',
   'response','incidents','nextNotes','evolution','findings','problems','goals','conduct','questions','context','report','initialCondition',
   'currentCondition','achieved','partial','notAchieved','initialResults','finalResults','guidance','homeExercises','followUp','instructions',

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 210" role="img" aria-labelledby="title desc">
+  <title id="title">Aprendizado e raciocínio clínico</title>
+  <desc id="desc">Perfil humano com conexões de raciocínio e pontos de movimento.</desc>
+  <defs><linearGradient id="halo" x1="30" y1="20" x2="220" y2="190" gradientUnits="userSpaceOnUse"><stop stop-color="#80C9B3" stop-opacity=".28"/><stop offset="1" stop-color="#E6A832" stop-opacity=".08"/></linearGradient></defs>
+  <circle cx="139" cy="104" r="88" fill="url(#halo)" stroke="#80C9B3" stroke-opacity=".26"/>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M112 42c-31 7-48 33-43 62 2 14 10 25 21 33 8 6 10 16 9 29h65c-2-14 2-25 14-35 13-11 20-28 16-47-6-31-45-51-82-42Z" stroke="#F5C55E" stroke-width="4"/>
+    <path d="M114 67c7-10 21-9 27 1 10-5 22 2 21 13 11 3 13 18 4 24-1 12-14 18-24 12-8 9-23 6-27-5-12-1-17-15-9-23-5-8 0-19 8-22Z" stroke="#BCE5D8" stroke-width="3"/>
+    <path d="M123 72c5 6 6 13 2 20M146 69c-5 6-5 13-1 18M109 91c8-1 14 3 17 10M164 89c-8 0-14 5-16 12M126 101c6-4 14-4 21 1M137 102v16" stroke="#BCE5D8" stroke-width="2.5"/>
+    <path d="M99 166h68M113 179h41" stroke="#F5C55E" stroke-width="4"/>
+    <path d="M35 68h22M44 57v22M204 66h18M213 57v18M42 133l15-8M211 132l-16-9" stroke="#80C9B3" stroke-width="3"/>
+  </g>
+  <g fill="#F5C55E"><circle cx="45" cy="43" r="4"/><circle cx="219" cy="102" r="4"/><circle cx="49" cy="157" r="3"/></g>
+</svg>

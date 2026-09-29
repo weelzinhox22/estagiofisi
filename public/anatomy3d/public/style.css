@@ -1,0 +1,165 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background: radial-gradient(circle at 50% 30%, #174b45 0%, #082d29 52%, #061d1a 100%);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#canvas-container {
+    width: 100%;
+    height: 100%;
+}
+
+canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.info-panel {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.85);
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    max-width: 300px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+    overflow-y: auto;
+    bottom: 20px;
+    font-size: 12px;
+}
+
+.info-panel.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-10px);
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.close-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.info-type {
+    display: inline-block;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #66b3ff;
+    background: rgba(102, 179, 255, 0.15);
+    padding: 4px 8px;
+    border-radius: 3px;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+#info-title {
+    margin-bottom: 8px;
+    font-size: 18px;
+    padding-right: 30px;
+}
+
+#info-detail {
+    line-height: 1.5;
+    color: #ddd;
+    margin-bottom: 10px;
+    font-size: 13px;
+}
+
+.wiki-link {
+    display: inline-block;
+    color: #66b3ff;
+    text-decoration: none;
+    font-size: 13px;
+    padding: 6px 12px;
+    background: rgba(102, 179, 255, 0.1);
+    border-radius: 4px;
+    border: 1px solid rgba(102, 179, 255, 0.3);
+    transition: all 0.2s;
+}
+
+.wiki-link:hover {
+    background: rgba(102, 179, 255, 0.2);
+    border-color: rgba(102, 179, 255, 0.5);
+    transform: translateX(2px);
+}
+
+.controls {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    display: flex;
+    gap: 8px;
+}
+
+.control-btn {
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 10px 16px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    backdrop-filter: blur(10px);
+}
+
+.control-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+#reset-btn {
+    background: rgba(237, 174, 65, 0.92);
+    border-color: rgba(255, 214, 132, 0.65);
+    color: #143d37;
+}
+
+#reset-btn:hover {
+    background: #f2bd59;
+}
+
+.toggle-btn.active {
+    background: rgba(21, 128, 113, 0.92);
+    border-color: rgba(128, 225, 203, 0.55);
+}
+
+@media (max-width: 680px) {
+    .controls { left: 10px; right: 10px; bottom: 10px; gap: 5px; justify-content: center; }
+    .control-btn { flex: 1; padding: 9px 5px; border-radius: 11px; font-size: 11px; }
+    .info-panel { top: 10px; left: 10px; right: 10px; bottom: auto; max-height: 43%; max-width: none; border-radius: 14px; }
+}
+
+.toggle-btn.active:hover {
+    background: rgba(102, 179, 255, 1);
+}

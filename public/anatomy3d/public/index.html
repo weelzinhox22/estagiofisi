@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atlas anatômico 3D</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="info-panel" class="info-panel hidden">
+        <button id="close-btn" class="close-btn">&times;</button>
+        <div id="info-type" class="info-type"></div>
+        <h3 id="info-title">Estrutura</h3>
+        <p id="info-detail"></p>
+        <a id="info-wiki-link" class="wiki-link" href="#" target="_blank" style="display:none;">Consultar referência →</a>
+    </div>
+
+    <div class="controls">
+        <button id="reset-btn" class="control-btn">Restaurar</button>
+        <button id="toggle-muscles" class="control-btn toggle-btn active">Músculos</button>
+        <button id="toggle-bones" class="control-btn toggle-btn active">Ossos</button>
+        <button id="toggle-axes" class="control-btn toggle-btn">Eixos</button>
+    </div>
+
+    <div id="canvas-container"></div>
+
+    <script src="./libs/tween.js"></script>
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "./libs/three.module.js",
+            "three/addons/": "./libs/"
+        }
+    }
+    </script>
+    <script type="module" src="viewer.js"></script>
+</body>
+</html>

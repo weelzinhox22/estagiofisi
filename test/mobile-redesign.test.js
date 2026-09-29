@@ -41,3 +41,82 @@ test('redesign diferencia todas as famílias de telas das pranchas',()=>{
   assert.match(css,/#clinical-assessment-form/);
   assert.match(css,/#gait-assessment-form/);
 });
+
+test('consulta rápida oferece voz, intenções, categorias e histórico local',()=>{
+  assert.match(app,/quick-consult-hero/);
+  assert.match(app,/name="quickQuery"/);
+  assert.match(app,/quick-intents/);
+  assert.match(app,/quick-categories/);
+  assert.match(app,/QUICK_HISTORY_KEY/);
+  assert.match(app,/quickTokens/);
+});
+
+test('atendimento rápido usa cabeçalho nativo, seleção compacta e valida registro clínico',()=>{
+  assert.match(app,/rapidCareHasContent/);
+  assert.match(css,/rapid-native-head/);
+  assert.match(css,/rapid-selection-summary/);
+  assert.match(css,/rapid-form-guide/);
+});
+
+test('pacientes usam avatares chibi e cards mobile enriquecidos',()=>{
+  assert.match(app,/patient-chibi chibi-/);
+  assert.match(css,/patient-chibi-sprite\.png/);
+  assert.match(css,/patient-row-copy/);
+  assert.match(css,/patient-status-pill/);
+});
+
+test('cadastro de paciente usa fluxo mobile por contexto clínico',()=>{
+  assert.match(app,/patient-form-modal/);
+  assert.match(css,/patient-form-welcome/);
+  assert.match(css,/patient-privacy-card/);
+  assert.match(css,/patient-form-section/);
+});
+
+test('inicialização não exibe mensagem técnica de carregamento',()=>{
+  assert.doesNotMatch(app,/Carregando conta/);
+  assert.match(app,/app-start-skeleton/);
+  assert.match(css,/skeleton-sweep/);
+});
+
+test('biblioteca usa hero, navegação visual e cards ilustrados',()=>{
+  assert.match(app,/library-native-hero/);
+  assert.match(app,/exercise-card-visual/);
+  assert.match(app,/exerciseVisual/);
+  assert.match(css,/visual-exercise-grid/);
+  assert.match(css,/mix-blend-mode:normal/);
+});
+
+test('troca de página sempre restaura o topo e anima a entrada',()=>{
+  assert.match(app,/history\.scrollRestoration='manual'/);
+  assert.match(app,/scrollPageTop/);
+  assert.match(app,/hashchange[^\n]*scrollPageTop/);
+  assert.match(css,/route-enter/);
+});
+
+test('Mais funciona como central visual de recursos',()=>{
+  assert.match(css,/more-native-hero/);
+  assert.match(css,/more-group>header/);
+});
+
+test('refresh oculta barras até a conta estar pronta',()=>{
+  assert.match(app,/classList\.add\('app-booting'\)/);
+  assert.match(app,/classList\.remove\('app-booting'\)/);
+  assert.match(css,/body\.app-booting \.bottom-nav/);
+  assert.match(css,/boot-brand/);
+  assert.match(index,/<body class="app-booting">/);
+  assert.match(css,/visibility:hidden!important/);
+});
+
+test('bottom bar usa ícones vetoriais e ação central elevada',()=>{
+  assert.match(app,/plusCircle/);
+  assert.match(app,/nav-\$\{id\}/);
+  assert.match(css,/bottom-nav \.nav-atendimento-rapido/);
+});
+
+test('Conta e Aprender possuem hierarquia mobile completa',()=>{
+  assert.match(css,/account-native-hero/);
+  assert.match(css,/account-status-grid/);
+  assert.match(css,/learning-native-hero/);
+  assert.match(css,/learning-tool-layout/);
+  assert.match(app,/learning-example/);
+});
