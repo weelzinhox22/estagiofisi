@@ -72,7 +72,7 @@ export function toolsPage(){
 
 export function morePage(){
   const groups=[
-    ['Estudo e consulta',[['aprender','✺','Aprender com IA','Escrita clínica, simulações e raciocínio'],['biblioteca/videos','▶','Vídeos de exercícios','50 demonstrações organizadas por região'],['biblioteca','◇','Biblioteca clínica','Testes, exercícios e referências'],['assistente','✦','Assistente de avaliação','Organize achados e próximos passos']]],
+    ['Estudo e consulta',[['aprender','✺','Aprender com IA','Escrita clínica, simulações e raciocínio'],['artigos','⌕','Buscar artigos','OpenAlex, DOI e acesso aberto'],['biblioteca/videos','▶','Vídeos de exercícios','50 demonstrações organizadas por região'],['biblioteca','◇','Biblioteca clínica','Testes, exercícios e referências'],['assistente','✦','Assistente de avaliação','Organize achados e próximos passos']]],
     ['Avaliação e acompanhamento',[['testes-funcionais','◷','Testes funcionais','Aplicar e acompanhar resultados'],['reavaliacao','↻','Reavaliação','Comparar avaliação inicial e atual'],['alta','✓','Alta','Criar relatório editável'],['modelo-funcional','▦','CIF e modelo funcional','Organizar funcionalidade'],['neuro','⌁','Neuro Adulto','Avaliação neurológica'],['pediatria','♧','Pediatria','Avaliação e atividades lúdicas']]],
     ['Rotina e organização',[['domiciliar','⌂','Programa domiciliar','Selecionar e imprimir exercícios'],['ferramentas','◴','Ferramentas rápidas','Timers, metrônomo e contadores'],['casos','▤','Discussão de caso','Preparar apresentação ao preceptor'],['dados','●','Dados e privacidade','Backup e controle local'],['conta','◎','Minha conta','Perfil, senha e sincronização']]]
   ];
