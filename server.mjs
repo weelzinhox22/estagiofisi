@@ -6,6 +6,7 @@ import { handleTranscription } from './scripts/transcription-proxy.mjs';
 import { handleClinicalMentor } from './scripts/clinical-mentor.mjs';
 import { handleLearningTool } from './scripts/learning-tools.mjs';
 import { handleArticleSearch } from './scripts/article-search.mjs';
+import { handleMentorChat } from './scripts/mentor-chat.mjs';
 
 const root = resolve(import.meta.dirname);
 try { loadEnvFile(resolve(root,'.env.local')); } catch {}
@@ -19,6 +20,7 @@ createServer(async (req, res) => {
     if (pathname === '/api/clinical-mentor') { await handleClinicalMentor(req,res); return; }
     if (pathname === '/api/learning-tool') { await handleLearningTool(req,res); return; }
     if (pathname === '/api/articles') { await handleArticleSearch(req,res); return; }
+    if (pathname === '/api/mentor-chat') { await handleMentorChat(req,res); return; }
     let target = resolve(root, '.' + pathname);
     if (target !== root && !target.startsWith(root + sep)) { res.writeHead(403).end(); return; }
     let targetStat;

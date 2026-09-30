@@ -28,6 +28,7 @@ import { exerciseVisual } from './exercise-visuals.js';
 import { palpationGuides } from './palpation-data.js';
 import { orthopedicCases, orthopedicVideoResources } from './orthopedic-pathways-data.js';
 import { scientificSearchPage } from './scientific-search-ui.js';
+import { mountMentorChat, unmountMentorChat } from './mentor-chat-ui.js';
 
 let state=emptyState(),currentStorage=localStorage;
 let authState={ready:false,session:null,profile:null,message:''},adminRows=null,voiceStructureDraft=null,mentorDraft={},learningDraft={tool:'',history:[]};
@@ -91,9 +92,9 @@ function render() {
   const [section,id,tab] = route(),routeKey=[section,id,tab].filter(Boolean).join('/');
   const main = $('#main');
   main.dataset.route=section;
-  if(!authState.ready){document.body.classList.add('app-booting');$('#desktop-nav').innerHTML=$('#mobile-nav').innerHTML='';main.innerHTML='<div class="app-start-skeleton" aria-label="Preparando aplicativo"><div class="boot-brand"><img src="/icons/brand-mark.svg" alt=""><span><strong>Fisio Clínico</strong><small>PRÁTICA SUPERVISIONADA</small></span></div><div class="skeleton-hero"></div><div class="skeleton-grid"><i></i><i></i><i></i><i></i></div><div class="skeleton-line"></div><div class="skeleton-card"></div></div>';return;}
+  if(!authState.ready){unmountMentorChat();document.body.classList.add('app-booting');$('#desktop-nav').innerHTML=$('#mobile-nav').innerHTML='';main.innerHTML='<div class="app-start-skeleton" aria-label="Preparando aplicativo"><div class="boot-brand"><img src="/icons/brand-mark.svg" alt=""><span><strong>Fisio Clínico</strong><small>PRÁTICA SUPERVISIONADA</small></span></div><div class="skeleton-hero"></div><div class="skeleton-grid"><i></i><i></i><i></i><i></i></div><div class="skeleton-line"></div><div class="skeleton-card"></div></div>';return;}
   document.body.classList.remove('app-booting');
-  if(!authState.session){$('#desktop-nav').innerHTML=$('#mobile-nav').innerHTML='';$('#breadcrumb').textContent='Conta';main.innerHTML=authPage(['cadastro','recuperar'].includes(section)?section:'login',authState.message);queueMicrotask(()=>enhanceVoiceInputs(main));return;}
+  if(!authState.session){unmountMentorChat();$('#desktop-nav').innerHTML=$('#mobile-nav').innerHTML='';$('#breadcrumb').textContent='Conta';main.innerHTML=authPage(['cadastro','recuperar'].includes(section)?section:'login',authState.message);queueMicrotask(()=>enhanceVoiceInputs(main));return;}
   if(['login','cadastro','recuperar'].includes(section)){location.hash='inicio';return;}
   renderNav(section);
   if(section==='conta') main.innerHTML=accountPage(authState.profile,state.syncConflicts||[]);
@@ -143,6 +144,7 @@ function render() {
   queueMicrotask(()=>enhanceVoiceInputs(main));
   document.title = `${$('#breadcrumb').textContent} · Fisio Clínico`;
   const version=$('#app-version');if(version)version.textContent=`VERSÃO ${APP_VERSION} · OFFLINE`;
+  mountMentorChat({userId:sessionUser(authState.session).sub,token:authState.session.access_token});
 }
     function homeIcon(name){
   const paths={
@@ -492,6 +494,7 @@ function persistRapidCareForm(form){const payload=formValues(form),rapidData=new
 function inRange(value) { return value === '' || (Number.isInteger(Number(value)) && Number(value)>=0 && Number(value)<=10); }
 document.addEventListener('submit', async event => {
   const form=event.target;if(!form.id?.endsWith('-form')&&!form.id?.startsWith('rapid-care-form-'))return;event.preventDefault();
+  if(form.id==='mentor-chat-form')return;
   const authValues=formValues(form);
   if(form.id==='login-form'){try{authState.message='';await activateSession(await signIn({email:authValues.email,password:authValues.password,remember:form.elements.remember.checked}));location.hash='inicio';}catch(error){authState.message=error.message;render();}return;}
   if(form.id==='signup-form'){if(authValues.password!==authValues.passwordConfirm){authState.message='As senhas não coincidem.';render();return;}try{const result=await signUp({email:authValues.email,password:authValues.password,displayName:authValues.displayName});if(result.access_token){await activateSession(persistSession(result,true));location.hash='inicio';}else{authState.message='Conta criada. Confirme o e-mail antes de entrar.';location.hash='login';render();}}catch(error){authState.message=error.message;render();}return;}
