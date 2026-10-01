@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.1.0",
+  "source_pdf_pages": 1945,
+  "total_exercicios_ilustrados": 479,
+  "categorias": {
+    "aquatico": 3,
+    "assoalho_pelvico": 4,
+    "coluna_cervical": 16,
+    "coluna_lombar_core": 42,
+    "coluna_toracica": 14,
+    "cotovelo_antebraco": 27,
+    "equilibrio": 11,
+    "fortalecimento_geral": 13,
+    "funcional": 32,
+    "geral": 23,
+    "idoso": 1,
+    "joelho": 46,
+    "linfatico": 7,
+    "ombro": 95,
+    "punho_mao": 67,
+    "quadril": 29,
+    "terapia_manual": 16,
+    "tornozelo_pe": 33
+  },
+  "tipos": {
+    "adm_mobilidade": 31,
+    "alongamento": 74,
+    "assoalho_pelvico_core": 4,
+    "bomba_muscular_linfatica": 7,
+    "equilibrio_propriocepcao": 37,
+    "estabilizacao_controle_motor": 30,
+    "exercicio_aquatico": 14,
+    "exercicio_idoso": 6,
+    "exercicio_terapeutico": 37,
+    "fortalecimento_resistido": 83,
+    "mobilizacao_terapia_manual": 103,
+    "neurodinamica": 6,
+    "treinamento_funcional": 47
+  },
+  "arquivos": {
+    "catalogo": "data/exercicios.json",
+    "instrucoes_codex": "CODEX_IMPORT.md",
+    "readme": "README.md",
+    "categorias_md": "categorias/*.md",
+    "imagens": "images/<categoria>/*"
+  }
+}

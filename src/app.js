@@ -28,7 +28,8 @@ import { exerciseVisual } from './exercise-visuals.js';
 import { palpationGuides } from './palpation-data.js';
 import { orthopedicCases, orthopedicVideoResources } from './orthopedic-pathways-data.js';
 import { scientificSearchPage } from './scientific-search-ui.js';
-import { mountMentorChat, unmountMentorChat } from './mentor-chat-ui.js';
+import { mountMentorChat, unmountMentorChat } from './mentor-chat-ui-v2.js';
+import { loadKisnerCatalog, kisnerLibraryPage, kisnerDetailPage } from './kisner-library-ui.js';
 
 let state=emptyState(),currentStorage=localStorage;
 let authState={ready:false,session:null,profile:null,message:''},adminRows=null,voiceStructureDraft=null,mentorDraft={},learningDraft={tool:'',history:[]};
@@ -43,6 +44,7 @@ let downloadsQuery='',downloadsCategory='Todos';
 let videoCatalog=null,videoCatalogError='',videoCatalogPromise=null;
 let videoQuery='',videoCategory='Todas';
 let articleDraft={query:'',year:new Date().getFullYear()-5,openAccess:true,results:[],searched:false};
+let kisnerCatalog=null,kisnerError='',kisnerPromise=null,kisnerQuery='',kisnerCategory='Todas',kisnerType='Todos',kisnerLimit=60;
 const neuroFilters = { objective:'', position:'', assistance:'' };
 const sessionDrafts = new Map();
 let deferredInstall;
@@ -104,6 +106,7 @@ function render() {
   else if(section==='aprender'){if(id&&learningDraft.tool!==id)learningDraft={tool:id,history:[]};main.innerHTML=id?learningToolPage(state,id,learningDraft):learningHub();}
   else if(section==='downloads') main.innerHTML=downloadsPage(downloadsQuery,downloadsCategory);
   else if(section==='artigos') main.innerHTML=scientificSearchPage(articleDraft);
+  else if(section==='kisner'&&id){if(!kisnerCatalog&&!kisnerError)queueMicrotask(ensureKisnerCatalog);main.innerHTML=kisnerDetailPage(kisnerCatalog?.find(item=>item.id===id));}
   else if (section === 'camera') { main.innerHTML = cameraPage(state.patients,routeQuery().get('patient')); queueMicrotask(() => mountCamera({onCapture:detail => { addRecord(state,'goniometryRecords',detail); saveState(state); toast('Medida estimada registrada.'); }})); }
   else if (section === 'assistente') main.innerHTML=assessmentAssistantPage(state,{...assistantDraft,patientId:routeQuery().get('patient')||assistantDraft.patientId||''});
   else if (section === 'medidas' && id) main.innerHTML=measureDetailPage(id);
@@ -144,7 +147,7 @@ function render() {
   queueMicrotask(()=>enhanceVoiceInputs(main));
   document.title = `${$('#breadcrumb').textContent} · Fisio Clínico`;
   const version=$('#app-version');if(version)version.textContent=`VERSÃO ${APP_VERSION} · OFFLINE`;
-  mountMentorChat({userId:sessionUser(authState.session).sub,token:authState.session.access_token});
+  mountMentorChat({userId:sessionUser(authState.session).sub,token:authState.session.access_token,articles:articleDraft.results||[],articleQuery:articleDraft.query||'',articleSource:articleDraft.source||''});
 }
     function homeIcon(name){
   const paths={
@@ -236,7 +239,7 @@ const lookupItem = key => {
   const item=source.find(x=>x.id===id);
   return item?{kind,item}:null;
 };
-const librarySections=[['exercicios','Exercícios','↗'],['ortopedia','Ortopedia','✚'],['videos','Vídeos','▶'],['anatomia3d','Anatomia 3D','◎'],['musculos','Músculos','◉'],['testes','Testes','✓'],['goniometria','Goniometria','∠'],['reflexos','Reflexos','⌁'],['escalas','Escalas','≋'],['neuro','Neuro','✦'],['problemas','Problemas','◇'],['geral','Fisio Geral','＋'],['condutas','Condutas','→']];
+const librarySections=[['exercicios','Exercícios','↗'],['kisner','Kisner ilustrado','▧'],['ortopedia','Ortopedia','✚'],['videos','Vídeos','▶'],['anatomia3d','Anatomia 3D','◎'],['musculos','Músculos','◉'],['testes','Testes','✓'],['goniometria','Goniometria','∠'],['reflexos','Reflexos','⌁'],['escalas','Escalas','≋'],['neuro','Neuro','✦'],['problemas','Problemas','◇'],['geral','Fisio Geral','＋'],['condutas','Condutas','→']];
 const tabs = active => `<div class="library-tabs">${librarySections.map(([id,label,icon])=>`<a class="${active===id?'active':''}" href="#biblioteca/${id}"><i aria-hidden="true">${icon}</i><span>${label}</span></a>`).join('')}</div>`;
 const exerciseCard = e => {const visual=exerciseVisual(e);return `<article class="exercise-card rich-card"><a class="exercise-card-visual" href="#exercicio/${encodeURIComponent(e.id)}"><img src="${visual.url}" alt="${esc(visual.alt)}" loading="lazy"><span>${esc(e.category)}</span></a><div class="exercise-card-content"><div class="card-actions"><span class="source-label">${esc(e.region||e.category)}</span><button class="star-button ${isFavorite('exercise',e.id)?'active':''}" data-action="toggle-favorite" data-kind="exercise" data-id="${esc(e.id)}" aria-label="Favoritar">${isFavorite('exercise',e.id)?'★':'☆'}</button></div><h3><a href="#exercicio/${encodeURIComponent(e.id)}">${esc(e.name)}</a></h3><p class="card-objective">${esc(e.objective)}</p><div class="tag-row">${(e.tags||[]).slice(0,3).map(t=>`<span>${esc(t)}</span>`).join('')}</div><a class="text-link" href="#exercicio/${encodeURIComponent(e.id)}">Ver execução e objetivo <b>›</b></a></div></article>`;};
 
@@ -261,6 +264,10 @@ function quickResults(query) {
   const total=groups.reduce((n,g)=>n+g[1].length,0);
   return total?`<div class="quick-results-head"><div><small>RESULTADOS PARA</small><h2>“${esc(query)}”</h2></div><span>${total} encontrados</span></div><div class="result-groups quick-result-groups">${groups.filter(g=>g[1].length).map(([title,items,href])=>`<section class="result-group"><h2>${title} <span>${items.length}</span></h2>${items.map(item=>`<a class="quick-result-item" href="${href(item)}"><span class="quick-result-type">${esc(title)}</span><strong>${esc(item.name||item.title)}</strong><small>${esc(item.objective||item.function||item.purpose||item.summary||item.region||'Ficha de consulta')}</small><em>Ver ficha</em><b>→</b></a>`).join('')}</section>`).join('')}</div>`:empty('Nenhum resultado','Tente descrever de outra forma ou use uma das categorias abaixo.');
 }
+function ensureKisnerCatalog(){
+  if(kisnerCatalog||kisnerPromise)return;kisnerError='';
+  kisnerPromise=loadKisnerCatalog().then(rows=>{kisnerCatalog=rows;}).catch(error=>{kisnerError=error.message;}).finally(()=>{kisnerPromise=null;const [section,id]=route();if((section==='biblioteca'&&id==='kisner')||section==='kisner')render();});
+}
 function rememberQuickQuery(value){const clean=String(value||'').trim();if(clean.length<2)return;quickHistory=[clean,...quickHistory.filter(item=>normalized(item)!==normalized(clean))].slice(0,6);localStorage.setItem(QUICK_HISTORY_KEY,JSON.stringify(quickHistory));}
 function quickPage() {
   const intents=[['search','Quero avaliar','testes funcionais'],['clipboard','Escolher um teste','equilíbrio'],['learn','Entender um achado','marcha'],['strength','Encontrar exercício','fortalecimento'],['book','Documentar','evolução clínica'],['pain','Sinais de atenção','alertas']];
@@ -271,6 +278,7 @@ function quickPage() {
 function libraryPage(active='exercicios') {
   const header=`<section class="library-native-hero"><span class="eyebrow">CONHECIMENTO CLÍNICO</span><h1>Biblioteca prática</h1><p>Encontre exercícios, vídeos, testes e referências durante o atendimento.</p><div class="library-hero-stats"><span><strong>${allExercises().length}</strong><small>exercícios</small></span><span><strong>50</strong><small>vídeos</small></span><span><strong>${clinicalTests.length}</strong><small>testes</small></span><button type="button" data-action="go-quick">⌕ <span>Consulta rápida</span></button></div></section>${tabs(active)}`;
   if(active==='videos'){if(!videoCatalog&&!videoCatalogError)queueMicrotask(ensureVideoCatalog);return header+videoLibraryPage(videoCatalog||[],videoQuery,videoCategory,{loading:!videoCatalog&&!videoCatalogError,error:videoCatalogError});}
+  if(active==='kisner'){if(!kisnerCatalog&&!kisnerError)queueMicrotask(ensureKisnerCatalog);return header+kisnerLibraryPage({rows:kisnerCatalog||[],loading:!kisnerCatalog&&!kisnerError,error:kisnerError,query:kisnerQuery,category:kisnerCategory,type:kisnerType,limit:kisnerLimit});}
   if(active==='ortopedia') return header+orthopedicLibrary();
   if(active==='anatomia3d') return header+anatomy3dLibrary();
   if(active==='geral') return header+generalLibraryPage(state);
@@ -589,6 +597,8 @@ document.addEventListener('click',async event=>{
   const action=target.dataset.action,id=target.dataset.id;
   if(action==='download-category'){downloadsCategory=target.dataset.category||'Todos';render();return;}
   if(action==='article-example'){articleDraft={...articleDraft,query:target.dataset.query||''};render();queueMicrotask(()=>$('#article-search-form input[name="query"]')?.focus());return;}
+  if(action==='kisner-more'){kisnerLimit+=60;render();return;}
+  if(action==='kisner-evolution'){const dose=$('#kisner-dose-value')?.value.trim(),output=$('#kisner-evolution-output');if(!dose){toast('Registre a dose realmente executada antes de gerar o rascunho.',true);$('#kisner-dose-value')?.focus();return;}if(output){output.value=String(target.dataset.template||'Realizado exercício (dose executada: ___).').replace(/___/g,dose);output.focus();}return;}
   if(action==='reset-learning-tool'){learningDraft={tool:route()[1]||'',history:[]};render();return;}
   if(action==='learning-example'){const field=$('#learning-tool-form [name="input"]');if(field){field.value=target.dataset.example||'';field.focus();field.dispatchEvent(new Event('input',{bubbles:true}));}return;}
   if(action==='finish-simulation'){const form=$('#learning-tool-form'),input=form?.elements.input;if(input)input.value='Encerrar entrevista e receber feedback.';if(form?.elements.mode)form.elements.mode.value='simulation-feedback';form?.requestSubmit();return;}
@@ -685,6 +695,7 @@ document.addEventListener('input',event=>{
   if(event.target.id==='library-search'){libraryQuery=event.target.value;rerenderField('#library-search',pos);}
   if(event.target.id==='downloads-search'){downloadsQuery=event.target.value;rerenderField('#downloads-search',pos);}
   if(event.target.id==='video-search'){videoQuery=event.target.value;rerenderField('#video-search',pos);}
+  if(event.target.id==='kisner-search'){kisnerQuery=event.target.value;kisnerLimit=60;rerenderField('#kisner-search',pos);}
   if(event.target.id==='session-search'){const [,patientId]=route();const draft=sessionDrafts.get(patientId);if(draft){draft.query=event.target.value;rerenderField('#session-search',pos);}}
   if(event.target.id==='global-search'){quickQuery=event.target.value;if(location.hash!=='#consulta')location.hash='consulta';else render();}
   if(event.target.name?.startsWith('minutes-'))updateSessionTotal();
@@ -694,6 +705,8 @@ document.addEventListener('change',async event=>{
   if(event.target.id==='library-category'){libraryCategory=event.target.value;render();return;}
   if(event.target.id==='downloads-category'){downloadsCategory=event.target.value;render();return;}
   if(event.target.id==='video-category'){videoCategory=event.target.value;render();return;}
+  if(event.target.id==='kisner-category'){kisnerCategory=event.target.value;kisnerLimit=60;render();return;}
+  if(event.target.id==='kisner-type'){kisnerType=event.target.value;kisnerLimit=60;render();return;}
   if(event.target.name==='neuroObjective'||event.target.name==='neuroPosition'||event.target.name==='neuroAssistance'){const key=event.target.name.replace('neuro','');neuroFilters[key.charAt(0).toLowerCase()+key.slice(1)]=event.target.value;render();return;}
   if(event.target.id!=='import-file'||!event.target.files?.[0])return;
   try{const {validateState}=await import('./store.js');const next=validateState(JSON.parse(await event.target.files[0].text()));if(!confirm('Substituir todos os dados locais pelos dados do arquivo selecionado?'))return;state=next;saveState(state);toast('Backup importado.');render();}catch(error){toast(`Arquivo inválido: ${error.message}`,true);}

@@ -1,0 +1,5 @@
+PDF pages scanned: 1945
+Exported practical figures: 479
+Missing/empty images: 0
+Unique IDs: 479/479
+Categories: {"aquatico": 3, "assoalho_pelvico": 4, "coluna_cervical": 16, "coluna_lombar_core": 42, "coluna_toracica": 14, "cotovelo_antebraco": 27, "equilibrio": 11, "fortalecimento_geral": 13, "funcional": 32, "geral": 23, "idoso": 1, "joelho": 46, "linfatico": 7, "ombro": 95, "punho_mao": 67, "quadril": 29, "terapia_manual": 16, "tornozelo_pe": 33}
