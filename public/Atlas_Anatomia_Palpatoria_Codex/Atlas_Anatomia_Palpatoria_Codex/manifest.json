@@ -1,0 +1,30 @@
+{
+  "package": "Atlas_Anatomia_Palpatoria_Codex",
+  "source": "Atlas de Anatomia Palpatória do pescoço, do tronco e do membro superior, Serge Tixa, vol. 1, 2ª ed.",
+  "pdf_pages": 242,
+  "tutorials_curated": 106,
+  "images_extracted": 442,
+  "tutorial_counts": {
+    "pescoco": 15,
+    "tronco_sacro": 18,
+    "ombro": 20,
+    "braco": 7,
+    "cotovelo": 8,
+    "antebraco": 12,
+    "punho_mao": 26
+  },
+  "image_counts": {
+    "pescoco": 57,
+    "tronco_sacro": 97,
+    "ombro": 74,
+    "braco": 28,
+    "cotovelo": 26,
+    "antebraco": 68,
+    "punho_mao": 92
+  },
+  "notes": [
+    "Use data/site_content.json na interface.",
+    "source_note é apenas rastreabilidade e pode conter ruído de OCR.",
+    "Preservar estética atual do site."
+  ]
+}

@@ -1,0 +1,9 @@
+INTEGRE O PACOTE DE ANATOMIA PALPATÓRIA AO SITE EXISTENTE.
+
+REGRA PRINCIPAL: NÃO REDESENHE O SITE. Preserve componentes, paleta, tipografia, espaçamento, bordas, sombras, navegação e responsividade. Antes de alterar, inspecione a arquitetura atual e leia README.md e CODEX_IMPORT.md.
+
+Use data/site_content.json como fonte principal. Use as imagens de images/ somente quando relacionadas ao tutorial. Não renderize source_note de data/tutoriais.json.
+
+Crie ou integre uma biblioteca de Anatomia Palpatória por regiões (Pescoço; Tronco e sacro; Ombro; Braço; Cotovelo; Antebraço; Punho e mão) e categorias (Osteologia; Miologia/estruturas musculotendinosas; Nervos e vasos), sempre seguindo os padrões visuais e técnicos já existentes.
+
+Não mostre campos vazios. Não crie informações novas. Não instale biblioteca visual nova se não for indispensável. Depois valide assets, mobile, lint/test/build e informe os arquivos modificados.

@@ -1,0 +1,10 @@
+PDF pages: 242
+Tutorials: 106
+Images: 442
+pescoco: tutorials=15, images=57
+tronco_sacro: tutorials=18, images=97
+ombro: tutorials=20, images=74
+braco: tutorials=7, images=28
+cotovelo: tutorials=8, images=26
+antebraco: tutorials=12, images=68
+punho_mao: tutorials=26, images=92

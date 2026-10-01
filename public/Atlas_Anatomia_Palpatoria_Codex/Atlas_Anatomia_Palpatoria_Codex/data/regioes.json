@@ -1,0 +1,72 @@
+{
+  "pescoco": {
+    "titulo": "Pescoço",
+    "ordem": 1,
+    "descricao": "Palpação topográfica do pescoço com referências osteocartilaginosas, musculares e neurovasculares. O atlas inclui uma investigação manual em sequência para a região lateral.",
+    "pontos_chave": [
+      "Usar hióide, cartilagens laríngeas e vértebras cervicais como marcos de orientação.",
+      "Diferenciar esternocleidomastóideo, trapézio, levantador da escápula e escalenos por posicionamento e contração.",
+      "Apresentar estruturas neurovasculares como referências anatômicas, com aviso de palpação delicada."
+    ]
+  },
+  "tronco_sacro": {
+    "titulo": "Tronco e sacro",
+    "ordem": 2,
+    "descricao": "Caixa torácica, coluna toracolombar, sacro e musculatura posterior e anterolateral do tronco.",
+    "pontos_chave": [
+      "Localizar esterno, costelas, processos espinhosos e referências sacrais antes da musculatura.",
+      "Organizar a musculatura posterior por planos.",
+      "Relacionar oblíquos, reto abdominal, quadrado lombar e psoas com marcos ósseos."
+    ]
+  },
+  "ombro": {
+    "titulo": "Ombro",
+    "ordem": 3,
+    "descricao": "Cintura escapular e complexo do ombro: clavícula, escápula, úmero e principais grupos musculares.",
+    "pontos_chave": [
+      "Começar por clavícula, acrômio, espinha da escápula, processo coracoide e úmero proximal.",
+      "Usar movimentos resistidos para confirmar músculos.",
+      "Dar destaque ao manguito rotador e às relações escapulares."
+    ]
+  },
+  "braco": {
+    "titulo": "Braço",
+    "ordem": 4,
+    "descricao": "Bíceps, braquial, coracobraquial e tríceps com relações topográficas do braço.",
+    "pontos_chave": [
+      "Diferenciar as cabeças do bíceps por contração.",
+      "Acompanhar o bíceps até o tendão distal.",
+      "Na face posterior, identificar cabeças e tendão do tríceps."
+    ]
+  },
+  "cotovelo": {
+    "titulo": "Cotovelo",
+    "ordem": 5,
+    "descricao": "Marcos ósseos e referências superficiais dos principais nervos e vasos.",
+    "pontos_chave": [
+      "Localizar epicôndilos, cabeça do rádio e olécrano antes das estruturas moles.",
+      "Usar prono-supinação quando indicada para confirmar a cabeça do rádio.",
+      "Tratar nervos e vasos como conteúdo de exame anatômico delicado."
+    ]
+  },
+  "antebraco": {
+    "titulo": "Antebraço",
+    "ordem": 6,
+    "descricao": "Grupos lateral, posterior e anterior do antebraço, acompanhando ventres musculares e tendões até o punho.",
+    "pontos_chave": [
+      "Diferenciar braquiorradial e extensores radiais.",
+      "Usar extensão dos dedos/punho para realçar extensores.",
+      "Usar pronação e flexão seletiva para individualizar o grupo anterior."
+    ]
+  },
+  "punho_mao": {
+    "titulo": "Punho e mão",
+    "ordem": 7,
+    "descricao": "Osteologia do carpo, metacarpos e falanges; tendões do punho; musculatura intrínseca e referências neurovasculares.",
+    "pontos_chave": [
+      "Organizar os ossos do carpo por fileiras e usar a tabaqueira anatômica como referência.",
+      "Diferenciar tendões com movimentos seletivos dos dedos e punho.",
+      "Integrar tenar/hipotenar, lumbricais e interósseos à função da mão."
+    ]
+  }
+}

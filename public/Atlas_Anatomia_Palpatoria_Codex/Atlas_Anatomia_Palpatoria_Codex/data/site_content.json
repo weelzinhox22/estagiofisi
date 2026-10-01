@@ -1,0 +1,2718 @@
+{
+  "titulo": "Anatomia Palpatória",
+  "subtitulo": "Pescoço, tronco e membro superior",
+  "metodo": "Investigação manual de superfície (IMS): conteúdo organizado por região, categoria, técnica e imagem.",
+  "regioes": {
+    "pescoco": {
+      "titulo": "Pescoço",
+      "ordem": 1,
+      "descricao": "Palpação topográfica do pescoço com referências osteocartilaginosas, musculares e neurovasculares. O atlas inclui uma investigação manual em sequência para a região lateral.",
+      "pontos_chave": [
+        "Usar hióide, cartilagens laríngeas e vértebras cervicais como marcos de orientação.",
+        "Diferenciar esternocleidomastóideo, trapézio, levantador da escápula e escalenos por posicionamento e contração.",
+        "Apresentar estruturas neurovasculares como referências anatômicas, com aviso de palpação delicada."
+      ]
+    },
+    "tronco_sacro": {
+      "titulo": "Tronco e sacro",
+      "ordem": 2,
+      "descricao": "Caixa torácica, coluna toracolombar, sacro e musculatura posterior e anterolateral do tronco.",
+      "pontos_chave": [
+        "Localizar esterno, costelas, processos espinhosos e referências sacrais antes da musculatura.",
+        "Organizar a musculatura posterior por planos.",
+        "Relacionar oblíquos, reto abdominal, quadrado lombar e psoas com marcos ósseos."
+      ]
+    },
+    "ombro": {
+      "titulo": "Ombro",
+      "ordem": 3,
+      "descricao": "Cintura escapular e complexo do ombro: clavícula, escápula, úmero e principais grupos musculares.",
+      "pontos_chave": [
+        "Começar por clavícula, acrômio, espinha da escápula, processo coracoide e úmero proximal.",
+        "Usar movimentos resistidos para confirmar músculos.",
+        "Dar destaque ao manguito rotador e às relações escapulares."
+      ]
+    },
+    "braco": {
+      "titulo": "Braço",
+      "ordem": 4,
+      "descricao": "Bíceps, braquial, coracobraquial e tríceps com relações topográficas do braço.",
+      "pontos_chave": [
+        "Diferenciar as cabeças do bíceps por contração.",
+        "Acompanhar o bíceps até o tendão distal.",
+        "Na face posterior, identificar cabeças e tendão do tríceps."
+      ]
+    },
+    "cotovelo": {
+      "titulo": "Cotovelo",
+      "ordem": 5,
+      "descricao": "Marcos ósseos e referências superficiais dos principais nervos e vasos.",
+      "pontos_chave": [
+        "Localizar epicôndilos, cabeça do rádio e olécrano antes das estruturas moles.",
+        "Usar prono-supinação quando indicada para confirmar a cabeça do rádio.",
+        "Tratar nervos e vasos como conteúdo de exame anatômico delicado."
+      ]
+    },
+    "antebraco": {
+      "titulo": "Antebraço",
+      "ordem": 6,
+      "descricao": "Grupos lateral, posterior e anterior do antebraço, acompanhando ventres musculares e tendões até o punho.",
+      "pontos_chave": [
+        "Diferenciar braquiorradial e extensores radiais.",
+        "Usar extensão dos dedos/punho para realçar extensores.",
+        "Usar pronação e flexão seletiva para individualizar o grupo anterior."
+      ]
+    },
+    "punho_mao": {
+      "titulo": "Punho e mão",
+      "ordem": 7,
+      "descricao": "Osteologia do carpo, metacarpos e falanges; tendões do punho; musculatura intrínseca e referências neurovasculares.",
+      "pontos_chave": [
+        "Organizar os ossos do carpo por fileiras e usar a tabaqueira anatômica como referência.",
+        "Diferenciar tendões com movimentos seletivos dos dedos e punho.",
+        "Integrar tenar/hipotenar, lumbricais e interósseos à função da mão."
+      ]
+    }
+  },
+  "tutoriais": [
+    {
+      "id": "pescoco-cartilagem-tireoidea",
+      "titulo": "Cartilagem tireóidea",
+      "regiao": "pescoco",
+      "categoria": "osteologia",
+      "pagina_pdf": 15,
+      "pagina_livro": 5,
+      "figura": 4,
+      "resumo_site": "Tutorial prático de anatomia palpatória para cartilagem tireóidea, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Localizar cartilagem tireóidea como referência anatômica de superfície e relacioná-la aos marcos vizinhos.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Identifique visualmente a região de cartilagem tireóidea e os marcos anatômicos próximos mostrados na imagem.",
+        "Faça contato progressivo com a polpa do indicador ou do polegar, procurando o relevo ósseo sem pressão excessiva.",
+        "Acompanhe a continuidade do marco anatômico para diferenciá-lo das estruturas adjacentes."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/pescoco/p015_fig004_02.jpg"
+      ]
+    },
+    {
+      "id": "pescoco-corpo-do-osso-hioide",
+      "titulo": "Corpo do osso hióide",
+      "regiao": "pescoco",
+      "categoria": "osteologia",
+      "pagina_pdf": 16,
+      "pagina_livro": 6,
+      "figura": 6,
+      "resumo_site": "Tutorial prático de anatomia palpatória para corpo do osso hióide, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Localizar corpo do osso hióide como referência anatômica de superfície e relacioná-la aos marcos vizinhos.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Identifique visualmente a região de corpo do osso hióide e os marcos anatômicos próximos mostrados na imagem.",
+        "Faça contato progressivo com a polpa do indicador ou do polegar, procurando o relevo ósseo sem pressão excessiva.",
+        "Acompanhe a continuidade do marco anatômico para diferenciá-lo das estruturas adjacentes.",
+        "Use extensão do segmento, quando tolerado, para ajudar a confirmar a referência descrita no atlas."
+      ],
+      "movimentos_de_confirmacao": [
+        "extensão"
+      ],
+      "cuidados": null,
+      "imagens": [
+        "images/pescoco/p016_fig006_01.jpg"
+      ]
+    },
+    {
+      "id": "pescoco-corno-maior-do-hioide",
+      "titulo": "Corno maior do hióide",
+      "regiao": "pescoco",
+      "categoria": "osteologia",
+      "pagina_pdf": 17,
+      "pagina_livro": 7,
+      "figura": 9,
+      "resumo_site": "Tutorial prático de anatomia palpatória para corno maior do hióide, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Localizar corno maior do hióide como referência anatômica de superfície e relacioná-la aos marcos vizinhos.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Identifique visualmente a região de corno maior do hióide e os marcos anatômicos próximos mostrados na imagem.",
+        "Faça contato progressivo com a polpa do indicador ou do polegar, procurando o relevo ósseo sem pressão excessiva.",
+        "Acompanhe a continuidade do marco anatômico para diferenciá-lo das estruturas adjacentes.",
+        "Use extensão do segmento, quando tolerado, para ajudar a confirmar a referência descrita no atlas."
+      ],
+      "movimentos_de_confirmacao": [
+        "extensão"
+      ],
+      "cuidados": null,
+      "imagens": [
+        "images/pescoco/p017_fig009_01.jpg"
+      ]
+    },
+    {
+      "id": "pescoco-cartilagem-cricoidea",
+      "titulo": "Cartilagem cricóidea",
+      "regiao": "pescoco",
+      "categoria": "osteologia",
+      "pagina_pdf": 17,
+      "pagina_livro": 7,
+      "figura": 10,
+      "resumo_site": "Tutorial prático de anatomia palpatória para cartilagem cricóidea, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Localizar cartilagem cricóidea como referência anatômica de superfície e relacioná-la aos marcos vizinhos.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Identifique visualmente a região de cartilagem cricóidea e os marcos anatômicos próximos mostrados na imagem.",
+        "Faça contato progressivo com a polpa do indicador ou do polegar, procurando o relevo ósseo sem pressão excessiva.",
+        "Acompanhe a continuidade do marco anatômico para diferenciá-lo das estruturas adjacentes."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/pescoco/p017_fig010_02.jpg"
+      ]
+    },
+    {
+      "id": "pescoco-traqueia-cervical",
+      "titulo": "Traqueia cervical",
+      "regiao": "pescoco",
+      "categoria": "osteologia",
+      "pagina_pdf": 17,
+      "pagina_livro": 7,
+      "figura": 11,
+      "resumo_site": "Tutorial prático de anatomia palpatória para traqueia cervical, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Localizar traqueia cervical como referência anatômica de superfície e relacioná-la aos marcos vizinhos.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Identifique visualmente a região de traqueia cervical e os marcos anatômicos próximos mostrados na imagem.",
+        "Faça contato progressivo com a polpa do indicador ou do polegar, procurando o relevo ósseo sem pressão excessiva.",
+        "Acompanhe a continuidade do marco anatômico para diferenciá-lo das estruturas adjacentes."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/pescoco/p017_fig011_03.jpg"
+      ]
+    },
+    {
+      "id": "pescoco-processo-espinhoso-de-c7",
+      "titulo": "Processo espinhoso de C7",
+      "regiao": "pescoco",
+      "categoria": "osteologia",
+      "pagina_pdf": 19,
+      "pagina_livro": 9,
+      "figura": 14,
+      "resumo_site": "Tutorial prático de anatomia palpatória para processo espinhoso de c7, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Localizar processo espinhoso de c7 como referência anatômica de superfície e relacioná-la aos marcos vizinhos.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Identifique visualmente a região de processo espinhoso de c7 e os marcos anatômicos próximos mostrados na imagem.",
+        "Faça contato progressivo com a polpa do indicador ou do polegar, procurando o relevo ósseo sem pressão excessiva.",
+        "Acompanhe a continuidade do marco anatômico para diferenciá-lo das estruturas adjacentes."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/pescoco/p019_fig014_02.jpg"
+      ]
+    },
+    {
+      "id": "pescoco-processo-transverso-do-atlas",
+      "titulo": "Processo transverso do atlas",
+      "regiao": "pescoco",
+      "categoria": "osteologia",
+      "pagina_pdf": 21,
+      "pagina_livro": 11,
+      "figura": 18,
+      "resumo_site": "Tutorial prático de anatomia palpatória para processo transverso do atlas, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Localizar processo transverso do atlas como referência anatômica de superfície e relacioná-la aos marcos vizinhos.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Identifique visualmente a região de processo transverso do atlas e os marcos anatômicos próximos mostrados na imagem.",
+        "Faça contato progressivo com a polpa do indicador ou do polegar, procurando o relevo ósseo sem pressão excessiva.",
+        "Acompanhe a continuidade do marco anatômico para diferenciá-lo das estruturas adjacentes."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/pescoco/p021_fig018_01.jpg"
+      ]
+    },
+    {
+      "id": "pescoco-esternocleidomastoideo",
+      "titulo": "Esternocleidomastóideo",
+      "regiao": "pescoco",
+      "categoria": "miologia",
+      "pagina_pdf": 29,
+      "pagina_livro": 19,
+      "figura": 31,
+      "resumo_site": "Tutorial prático de anatomia palpatória para esternocleidomastóideo, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar esternocleidomastóideo por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": "Decúbito dorsal.",
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de esternocleidomastóideo usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite a ação demonstrada na imagem/atlas e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/pescoco/p029_fig031_01.jpg"
+      ]
+    },
+    {
+      "id": "pescoco-trapezio-fibras-superiores",
+      "titulo": "Trapézio – fibras superiores",
+      "regiao": "pescoco",
+      "categoria": "miologia",
+      "pagina_pdf": 30,
+      "pagina_livro": 20,
+      "figura": 32,
+      "resumo_site": "Tutorial prático de anatomia palpatória para trapézio – fibras superiores, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar trapézio – fibras superiores por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": "Decúbito lateral direito.",
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de trapézio – fibras superiores usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite a ação demonstrada na imagem/atlas e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/pescoco/p030_fig032_01.jpg"
+      ]
+    },
+    {
+      "id": "pescoco-levantador-da-escapula",
+      "titulo": "Levantador da escápula",
+      "regiao": "pescoco",
+      "categoria": "miologia",
+      "pagina_pdf": 30,
+      "pagina_livro": 20,
+      "figura": 33,
+      "resumo_site": "Tutorial prático de anatomia palpatória para levantador da escápula, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar levantador da escápula por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": "Sentado.",
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de levantador da escápula usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite a ação demonstrada na imagem/atlas e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/pescoco/p030_fig033_02.jpg"
+      ]
+    },
+    {
+      "id": "pescoco-escaleno-anterior",
+      "titulo": "Escaleno anterior",
+      "regiao": "pescoco",
+      "categoria": "miologia",
+      "pagina_pdf": 31,
+      "pagina_livro": 21,
+      "figura": 36,
+      "resumo_site": "Tutorial prático de anatomia palpatória para escaleno anterior, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar escaleno anterior por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": "Decúbito lateral contralateral.",
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de escaleno anterior usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite flexão, lateroflexão, inspirações breves e repetidas e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [
+        "flexão",
+        "lateroflexão",
+        "inspirações breves e repetidas"
+      ],
+      "cuidados": null,
+      "imagens": [
+        "images/pescoco/p031_fig036_02.jpg"
+      ]
+    },
+    {
+      "id": "pescoco-escaleno-medio",
+      "titulo": "Escaleno médio",
+      "regiao": "pescoco",
+      "categoria": "miologia",
+      "pagina_pdf": 32,
+      "pagina_livro": 22,
+      "figura": 37,
+      "resumo_site": "Tutorial prático de anatomia palpatória para escaleno médio, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar escaleno médio por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": "Decúbito lateral contralateral.",
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de escaleno médio usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite inspirações breves e repetidas contra resistência leve e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [
+        "inspirações breves e repetidas"
+      ],
+      "cuidados": null,
+      "imagens": [
+        "images/pescoco/p032_fig037_01.jpg"
+      ]
+    },
+    {
+      "id": "pescoco-escaleno-posterior",
+      "titulo": "Escaleno posterior",
+      "regiao": "pescoco",
+      "categoria": "miologia",
+      "pagina_pdf": 32,
+      "pagina_livro": 22,
+      "figura": 38,
+      "resumo_site": "Tutorial prático de anatomia palpatória para escaleno posterior, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar escaleno posterior por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de escaleno posterior usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite a ação demonstrada na imagem/atlas e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/pescoco/p032_fig038_02.jpg"
+      ]
+    },
+    {
+      "id": "pescoco-plexo-braquial-referencia-superficial",
+      "titulo": "Plexo braquial – referência superficial",
+      "regiao": "pescoco",
+      "categoria": "nervos_vasos",
+      "pagina_pdf": 39,
+      "pagina_livro": 29,
+      "figura": 52,
+      "resumo_site": "Tutorial prático de anatomia palpatória para plexo braquial – referência superficial, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Reconhecer a referência superficial de plexo braquial – referência superficial no exame anatômico, guiando-se pelos marcos vizinhos.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize primeiro os marcos anatômicos ao redor de plexo braquial – referência superficial.",
+        "Faça palpação delicada e breve, sem compressão vigorosa ou sustentada.",
+        "Use a imagem para conferir a posição relativa da estrutura antes de avançar na palpação."
+      ],
+      "movimentos_de_confirmacao": [
+        "extensão",
+        "rotação lateral"
+      ],
+      "cuidados": "Palpação neurovascular: utilizar contato suave e evitar compressão prolongada.",
+      "imagens": [
+        "images/pescoco/p039_fig052_02.jpg"
+      ]
+    },
+    {
+      "id": "pescoco-arteria-carotida-comum-referencia-superficial",
+      "titulo": "Artéria carótida comum – referência superficial",
+      "regiao": "pescoco",
+      "categoria": "nervos_vasos",
+      "pagina_pdf": 39,
+      "pagina_livro": 29,
+      "figura": 53,
+      "resumo_site": "Tutorial prático de anatomia palpatória para artéria carótida comum – referência superficial, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Reconhecer a referência superficial de artéria carótida comum – referência superficial no exame anatômico, guiando-se pelos marcos vizinhos.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize primeiro os marcos anatômicos ao redor de artéria carótida comum – referência superficial.",
+        "Faça palpação delicada e breve, sem compressão vigorosa ou sustentada.",
+        "Use a imagem para conferir a posição relativa da estrutura antes de avançar na palpação.",
+        "Quando o objetivo for identificar um pulso, use apenas a pressão necessária para percebê-lo."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": "Palpação neurovascular: utilizar contato suave e evitar compressão prolongada.",
+      "imagens": [
+        "images/pescoco/p039_fig053_03.jpg"
+      ]
+    },
+    {
+      "id": "tronco_sacro-esterno",
+      "titulo": "Esterno",
+      "regiao": "tronco_sacro",
+      "categoria": "osteologia",
+      "pagina_pdf": 47,
+      "pagina_livro": 37,
+      "figura": 3,
+      "resumo_site": "Tutorial prático de anatomia palpatória para esterno, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Localizar esterno como referência anatômica de superfície e relacioná-la aos marcos vizinhos.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Identifique visualmente a região de esterno e os marcos anatômicos próximos mostrados na imagem.",
+        "Faça contato progressivo com a polpa do indicador ou do polegar, procurando o relevo ósseo sem pressão excessiva.",
+        "Acompanhe a continuidade do marco anatômico para diferenciá-lo das estruturas adjacentes."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/tronco_sacro/p047_fig003_01.jpg"
+      ]
+    },
+    {
+      "id": "tronco_sacro-angulo-do-esterno",
+      "titulo": "Ângulo do esterno",
+      "regiao": "tronco_sacro",
+      "categoria": "osteologia",
+      "pagina_pdf": 48,
+      "pagina_livro": 38,
+      "figura": 6,
+      "resumo_site": "Tutorial prático de anatomia palpatória para ângulo do esterno, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Localizar ângulo do esterno como referência anatômica de superfície e relacioná-la aos marcos vizinhos.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Identifique visualmente a região de ângulo do esterno e os marcos anatômicos próximos mostrados na imagem.",
+        "Faça contato progressivo com a polpa do indicador ou do polegar, procurando o relevo ósseo sem pressão excessiva.",
+        "Acompanhe a continuidade do marco anatômico para diferenciá-lo das estruturas adjacentes."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/tronco_sacro/p048_fig006_01.jpg"
+      ]
+    },
+    {
+      "id": "tronco_sacro-primeira-costela",
+      "titulo": "Primeira costela",
+      "regiao": "tronco_sacro",
+      "categoria": "osteologia",
+      "pagina_pdf": 49,
+      "pagina_livro": 39,
+      "figura": 11,
+      "resumo_site": "Tutorial prático de anatomia palpatória para primeira costela, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Localizar primeira costela como referência anatômica de superfície e relacioná-la aos marcos vizinhos.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Identifique visualmente a região de primeira costela e os marcos anatômicos próximos mostrados na imagem.",
+        "Faça contato progressivo com a polpa do indicador ou do polegar, procurando o relevo ósseo sem pressão excessiva.",
+        "Acompanhe a continuidade do marco anatômico para diferenciá-lo das estruturas adjacentes.",
+        "Use extensão do segmento, quando tolerado, para ajudar a confirmar a referência descrita no atlas."
+      ],
+      "movimentos_de_confirmacao": [
+        "extensão"
+      ],
+      "cuidados": null,
+      "imagens": [
+        "images/tronco_sacro/p049_fig011_03.jpg"
+      ]
+    },
+    {
+      "id": "tronco_sacro-processos-espinhosos-toracicos",
+      "titulo": "Processos espinhosos torácicos",
+      "regiao": "tronco_sacro",
+      "categoria": "osteologia",
+      "pagina_pdf": 58,
+      "pagina_livro": 48,
+      "figura": 36,
+      "resumo_site": "Tutorial prático de anatomia palpatória para processos espinhosos torácicos, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Localizar processos espinhosos torácicos como referência anatômica de superfície e relacioná-la aos marcos vizinhos.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Identifique visualmente a região de processos espinhosos torácicos e os marcos anatômicos próximos mostrados na imagem.",
+        "Faça contato progressivo com a polpa do indicador ou do polegar, procurando o relevo ósseo sem pressão excessiva.",
+        "Acompanhe a continuidade do marco anatômico para diferenciá-lo das estruturas adjacentes."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/tronco_sacro/p058_fig036_03.jpg"
+      ]
+    },
+    {
+      "id": "tronco_sacro-processo-espinhoso-de-t7",
+      "titulo": "Processo espinhoso de T7",
+      "regiao": "tronco_sacro",
+      "categoria": "osteologia",
+      "pagina_pdf": 59,
+      "pagina_livro": 49,
+      "figura": 38,
+      "resumo_site": "Tutorial prático de anatomia palpatória para processo espinhoso de t7, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Localizar processo espinhoso de t7 como referência anatômica de superfície e relacioná-la aos marcos vizinhos.",
+      "posicionamento_paciente": "Em pé.",
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Identifique visualmente a região de processo espinhoso de t7 e os marcos anatômicos próximos mostrados na imagem.",
+        "Faça contato progressivo com a polpa do indicador ou do polegar, procurando o relevo ósseo sem pressão excessiva.",
+        "Acompanhe a continuidade do marco anatômico para diferenciá-lo das estruturas adjacentes.",
+        "Use rotação do segmento, quando tolerado, para ajudar a confirmar a referência descrita no atlas."
+      ],
+      "movimentos_de_confirmacao": [
+        "rotação"
+      ],
+      "cuidados": null,
+      "imagens": [
+        "images/tronco_sacro/p059_fig038_02.jpg"
+      ]
+    },
+    {
+      "id": "tronco_sacro-l4-e-l5-referencias-lombares",
+      "titulo": "L4 e L5 – referências lombares",
+      "regiao": "tronco_sacro",
+      "categoria": "osteologia",
+      "pagina_pdf": 60,
+      "pagina_livro": 50,
+      "figura": 41,
+      "resumo_site": "Tutorial prático de anatomia palpatória para l4 e l5 – referências lombares, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Localizar l4 e l5 – referências lombares como referência anatômica de superfície e relacioná-la aos marcos vizinhos.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Identifique visualmente a região de l4 e l5 – referências lombares e os marcos anatômicos próximos mostrados na imagem.",
+        "Faça contato progressivo com a polpa do indicador ou do polegar, procurando o relevo ósseo sem pressão excessiva.",
+        "Acompanhe a continuidade do marco anatômico para diferenciá-lo das estruturas adjacentes."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/tronco_sacro/p060_fig041_02.jpg",
+        "images/tronco_sacro/p060_fig041_03.jpg"
+      ]
+    },
+    {
+      "id": "tronco_sacro-crista-sacral-mediana",
+      "titulo": "Crista sacral mediana",
+      "regiao": "tronco_sacro",
+      "categoria": "osteologia",
+      "pagina_pdf": 66,
+      "pagina_livro": 56,
+      "figura": 51,
+      "resumo_site": "Tutorial prático de anatomia palpatória para crista sacral mediana, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Localizar crista sacral mediana como referência anatômica de superfície e relacioná-la aos marcos vizinhos.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Identifique visualmente a região de crista sacral mediana e os marcos anatômicos próximos mostrados na imagem.",
+        "Faça contato progressivo com a polpa do indicador ou do polegar, procurando o relevo ósseo sem pressão excessiva.",
+        "Acompanhe a continuidade do marco anatômico para diferenciá-lo das estruturas adjacentes."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/tronco_sacro/p066_fig051_01.jpg"
+      ]
+    },
+    {
+      "id": "tronco_sacro-hiato-sacral",
+      "titulo": "Hiato sacral",
+      "regiao": "tronco_sacro",
+      "categoria": "osteologia",
+      "pagina_pdf": 66,
+      "pagina_livro": 56,
+      "figura": 53,
+      "resumo_site": "Tutorial prático de anatomia palpatória para hiato sacral, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Localizar hiato sacral como referência anatômica de superfície e relacioná-la aos marcos vizinhos.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Identifique visualmente a região de hiato sacral e os marcos anatômicos próximos mostrados na imagem.",
+        "Faça contato progressivo com a polpa do indicador ou do polegar, procurando o relevo ósseo sem pressão excessiva.",
+        "Acompanhe a continuidade do marco anatômico para diferenciá-lo das estruturas adjacentes."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/tronco_sacro/p066_fig053_03.jpg"
+      ]
+    },
+    {
+      "id": "tronco_sacro-trapezio-fibras-superiores",
+      "titulo": "Trapézio – fibras superiores",
+      "regiao": "tronco_sacro",
+      "categoria": "miologia",
+      "pagina_pdf": 72,
+      "pagina_livro": 62,
+      "figura": 58,
+      "resumo_site": "Tutorial prático de anatomia palpatória para trapézio – fibras superiores, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar trapézio – fibras superiores por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": "Decúbito lateral.",
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de trapézio – fibras superiores usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite flexão, abdução contra resistência leve e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [
+        "flexão",
+        "abdução"
+      ],
+      "cuidados": null,
+      "imagens": [
+        "images/tronco_sacro/p072_fig058_02.jpg"
+      ]
+    },
+    {
+      "id": "tronco_sacro-trapezio-fibras-inferiores",
+      "titulo": "Trapézio – fibras inferiores",
+      "regiao": "tronco_sacro",
+      "categoria": "miologia",
+      "pagina_pdf": 73,
+      "pagina_livro": 63,
+      "figura": 60,
+      "resumo_site": "Tutorial prático de anatomia palpatória para trapézio – fibras inferiores, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar trapézio – fibras inferiores por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": "Decúbito lateral.",
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de trapézio – fibras inferiores usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite a ação demonstrada na imagem/atlas e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/tronco_sacro/p073_fig060_01.jpg"
+      ]
+    },
+    {
+      "id": "tronco_sacro-latissimo-do-dorso",
+      "titulo": "Latíssimo do dorso",
+      "regiao": "tronco_sacro",
+      "categoria": "miologia",
+      "pagina_pdf": 73,
+      "pagina_livro": 63,
+      "figura": 62,
+      "resumo_site": "Tutorial prático de anatomia palpatória para latíssimo do dorso, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar latíssimo do dorso por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": "Decúbito lateral.",
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de latíssimo do dorso usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite abdução contra resistência leve e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [
+        "abdução"
+      ],
+      "cuidados": null,
+      "imagens": [
+        "images/tronco_sacro/p073_fig062_03.jpg"
+      ]
+    },
+    {
+      "id": "tronco_sacro-romboide-maior",
+      "titulo": "Romboide maior",
+      "regiao": "tronco_sacro",
+      "categoria": "miologia",
+      "pagina_pdf": 74,
+      "pagina_livro": 64,
+      "figura": 64,
+      "resumo_site": "Tutorial prático de anatomia palpatória para romboide maior, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar romboide maior por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de romboide maior usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite a ação demonstrada na imagem/atlas e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/tronco_sacro/p074_fig064_02.jpg"
+      ]
+    },
+    {
+      "id": "tronco_sacro-eretores-da-espinha",
+      "titulo": "Eretores da espinha",
+      "regiao": "tronco_sacro",
+      "categoria": "miologia",
+      "pagina_pdf": 75,
+      "pagina_livro": 65,
+      "figura": 68,
+      "resumo_site": "Tutorial prático de anatomia palpatória para eretores da espinha, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar eretores da espinha por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": "Decúbito ventral.",
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de eretores da espinha usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite extensão e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [
+        "extensão"
+      ],
+      "cuidados": null,
+      "imagens": [
+        "images/tronco_sacro/p075_fig068_03.jpg"
+      ]
+    },
+    {
+      "id": "tronco_sacro-iliocostal-do-lombo-longuissimo",
+      "titulo": "Iliocostal do lombo / longuíssimo",
+      "regiao": "tronco_sacro",
+      "categoria": "miologia",
+      "pagina_pdf": 76,
+      "pagina_livro": 66,
+      "figura": 69,
+      "resumo_site": "Tutorial prático de anatomia palpatória para iliocostal do lombo / longuíssimo, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar iliocostal do lombo / longuíssimo por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de iliocostal do lombo / longuíssimo usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite extensão e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [
+        "extensão"
+      ],
+      "cuidados": null,
+      "imagens": [
+        "images/tronco_sacro/p076_fig069_01.jpg"
+      ]
+    },
+    {
+      "id": "tronco_sacro-quadrado-lombar",
+      "titulo": "Quadrado lombar",
+      "regiao": "tronco_sacro",
+      "categoria": "miologia",
+      "pagina_pdf": 77,
+      "pagina_livro": 67,
+      "figura": 72,
+      "resumo_site": "Tutorial prático de anatomia palpatória para quadrado lombar, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar quadrado lombar por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de quadrado lombar usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite a ação demonstrada na imagem/atlas e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/tronco_sacro/p077_fig072_01.jpg"
+      ]
+    },
+    {
+      "id": "tronco_sacro-obliquo-externo-do-abdome",
+      "titulo": "Oblíquo externo do abdome",
+      "regiao": "tronco_sacro",
+      "categoria": "miologia",
+      "pagina_pdf": 80,
+      "pagina_livro": 70,
+      "figura": 75,
+      "resumo_site": "Tutorial prático de anatomia palpatória para oblíquo externo do abdome, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar oblíquo externo do abdome por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de oblíquo externo do abdome usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite a ação demonstrada na imagem/atlas e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/tronco_sacro/p080_fig075_02.jpg"
+      ]
+    },
+    {
+      "id": "tronco_sacro-reto-do-abdome-e-transverso",
+      "titulo": "Reto do abdome e transverso",
+      "regiao": "tronco_sacro",
+      "categoria": "miologia",
+      "pagina_pdf": 83,
+      "pagina_livro": 73,
+      "figura": 82,
+      "resumo_site": "Tutorial prático de anatomia palpatória para reto do abdome e transverso, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar reto do abdome e transverso por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de reto do abdome e transverso usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite a ação demonstrada na imagem/atlas e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/tronco_sacro/p083_fig082_02.jpg"
+      ]
+    },
+    {
+      "id": "tronco_sacro-psoas-maior-sequencia-de-abordagem",
+      "titulo": "Psoas maior – sequência de abordagem",
+      "regiao": "tronco_sacro",
+      "categoria": "miologia",
+      "pagina_pdf": 84,
+      "pagina_livro": 74,
+      "figura": 83,
+      "resumo_site": "Tutorial prático de anatomia palpatória para psoas maior – sequência de abordagem, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar psoas maior – sequência de abordagem por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": "Decúbito dorsal.",
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de psoas maior – sequência de abordagem usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite a ação demonstrada na imagem/atlas e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/tronco_sacro/p084_fig083_01.jpg"
+      ]
+    },
+    {
+      "id": "ombro-clavicula-abordagem-geral",
+      "titulo": "Clavícula – abordagem geral",
+      "regiao": "ombro",
+      "categoria": "osteologia",
+      "pagina_pdf": 93,
+      "pagina_livro": 83,
+      "figura": 2,
+      "resumo_site": "Tutorial prático de anatomia palpatória para clavícula – abordagem geral, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Localizar clavícula – abordagem geral como referência anatômica de superfície e relacioná-la aos marcos vizinhos.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Identifique visualmente a região de clavícula – abordagem geral e os marcos anatômicos próximos mostrados na imagem.",
+        "Faça contato progressivo com a polpa do indicador ou do polegar, procurando o relevo ósseo sem pressão excessiva.",
+        "Acompanhe a continuidade do marco anatômico para diferenciá-lo das estruturas adjacentes."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/ombro/p093_fig002_01.jpg"
+      ]
+    },
+    {
+      "id": "ombro-extremidade-acromial-referencia-da-articulacao-ac",
+      "titulo": "Extremidade acromial / referência da articulação AC",
+      "regiao": "ombro",
+      "categoria": "osteologia",
+      "pagina_pdf": 95,
+      "pagina_livro": 85,
+      "figura": 8,
+      "resumo_site": "Tutorial prático de anatomia palpatória para extremidade acromial / referência da articulação ac, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Localizar extremidade acromial / referência da articulação ac como referência anatômica de superfície e relacioná-la aos marcos vizinhos.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Identifique visualmente a região de extremidade acromial / referência da articulação ac e os marcos anatômicos próximos mostrados na imagem.",
+        "Faça contato progressivo com a polpa do indicador ou do polegar, procurando o relevo ósseo sem pressão excessiva.",
+        "Acompanhe a continuidade do marco anatômico para diferenciá-lo das estruturas adjacentes."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/ombro/p095_fig008_03.jpg"
+      ]
+    },
+    {
+      "id": "ombro-espinha-da-escapula-e-acromio",
+      "titulo": "Espinha da escápula e acrômio",
+      "regiao": "ombro",
+      "categoria": "osteologia",
+      "pagina_pdf": 98,
+      "pagina_livro": 88,
+      "figura": 14,
+      "resumo_site": "Tutorial prático de anatomia palpatória para espinha da escápula e acrômio, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Localizar espinha da escápula e acrômio como referência anatômica de superfície e relacioná-la aos marcos vizinhos.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Identifique visualmente a região de espinha da escápula e acrômio e os marcos anatômicos próximos mostrados na imagem.",
+        "Faça contato progressivo com a polpa do indicador ou do polegar, procurando o relevo ósseo sem pressão excessiva.",
+        "Acompanhe a continuidade do marco anatômico para diferenciá-lo das estruturas adjacentes."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/ombro/p098_fig014_02.jpg"
+      ]
+    },
+    {
+      "id": "ombro-margem-medial-do-acromio",
+      "titulo": "Margem medial do acrômio",
+      "regiao": "ombro",
+      "categoria": "osteologia",
+      "pagina_pdf": 100,
+      "pagina_livro": 90,
+      "figura": 19,
+      "resumo_site": "Tutorial prático de anatomia palpatória para margem medial do acrômio, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Localizar margem medial do acrômio como referência anatômica de superfície e relacioná-la aos marcos vizinhos.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Identifique visualmente a região de margem medial do acrômio e os marcos anatômicos próximos mostrados na imagem.",
+        "Faça contato progressivo com a polpa do indicador ou do polegar, procurando o relevo ósseo sem pressão excessiva.",
+        "Acompanhe a continuidade do marco anatômico para diferenciá-lo das estruturas adjacentes.",
+        "Use extensão do segmento, quando tolerado, para ajudar a confirmar a referência descrita no atlas."
+      ],
+      "movimentos_de_confirmacao": [
+        "extensão"
+      ],
+      "cuidados": null,
+      "imagens": [
+        "images/ombro/p100_fig019_01.jpg"
+      ]
+    },
+    {
+      "id": "ombro-processo-coracoide",
+      "titulo": "Processo coracoide",
+      "regiao": "ombro",
+      "categoria": "osteologia",
+      "pagina_pdf": 103,
+      "pagina_livro": 93,
+      "figura": 28,
+      "resumo_site": "Tutorial prático de anatomia palpatória para processo coracoide, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Localizar processo coracoide como referência anatômica de superfície e relacioná-la aos marcos vizinhos.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Identifique visualmente a região de processo coracoide e os marcos anatômicos próximos mostrados na imagem.",
+        "Faça contato progressivo com a polpa do indicador ou do polegar, procurando o relevo ósseo sem pressão excessiva.",
+        "Acompanhe a continuidade do marco anatômico para diferenciá-lo das estruturas adjacentes."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/ombro/p103_fig028_01.jpg"
+      ]
+    },
+    {
+      "id": "ombro-angulo-inferior-da-escapula",
+      "titulo": "Ângulo inferior da escápula",
+      "regiao": "ombro",
+      "categoria": "osteologia",
+      "pagina_pdf": 103,
+      "pagina_livro": 93,
+      "figura": 30,
+      "resumo_site": "Tutorial prático de anatomia palpatória para ângulo inferior da escápula, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Localizar ângulo inferior da escápula como referência anatômica de superfície e relacioná-la aos marcos vizinhos.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Identifique visualmente a região de ângulo inferior da escápula e os marcos anatômicos próximos mostrados na imagem.",
+        "Faça contato progressivo com a polpa do indicador ou do polegar, procurando o relevo ósseo sem pressão excessiva.",
+        "Acompanhe a continuidade do marco anatômico para diferenciá-lo das estruturas adjacentes."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/ombro/p103_fig030_03.jpg"
+      ]
+    },
+    {
+      "id": "ombro-cabeca-do-umero",
+      "titulo": "Cabeça do úmero",
+      "regiao": "ombro",
+      "categoria": "osteologia",
+      "pagina_pdf": 106,
+      "pagina_livro": 96,
+      "figura": 34,
+      "resumo_site": "Tutorial prático de anatomia palpatória para cabeça do úmero, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Localizar cabeça do úmero como referência anatômica de superfície e relacioná-la aos marcos vizinhos.",
+      "posicionamento_paciente": "Sentado.",
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Identifique visualmente a região de cabeça do úmero e os marcos anatômicos próximos mostrados na imagem.",
+        "Faça contato progressivo com a polpa do indicador ou do polegar, procurando o relevo ósseo sem pressão excessiva.",
+        "Acompanhe a continuidade do marco anatômico para diferenciá-lo das estruturas adjacentes.",
+        "Use rotação do segmento, quando tolerado, para ajudar a confirmar a referência descrita no atlas."
+      ],
+      "movimentos_de_confirmacao": [
+        "rotação"
+      ],
+      "cuidados": null,
+      "imagens": [
+        "images/ombro/p106_fig034_01.jpg"
+      ]
+    },
+    {
+      "id": "ombro-tuberculos-e-sulco-intertubercular",
+      "titulo": "Tubérculos e sulco intertubercular",
+      "regiao": "ombro",
+      "categoria": "osteologia",
+      "pagina_pdf": 106,
+      "pagina_livro": 96,
+      "figura": 35,
+      "resumo_site": "Tutorial prático de anatomia palpatória para tubérculos e sulco intertubercular, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Localizar tubérculos e sulco intertubercular como referência anatômica de superfície e relacioná-la aos marcos vizinhos.",
+      "posicionamento_paciente": "Sentado.",
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Identifique visualmente a região de tubérculos e sulco intertubercular e os marcos anatômicos próximos mostrados na imagem.",
+        "Faça contato progressivo com a polpa do indicador ou do polegar, procurando o relevo ósseo sem pressão excessiva.",
+        "Acompanhe a continuidade do marco anatômico para diferenciá-lo das estruturas adjacentes."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/ombro/p106_fig035_02.jpg",
+        "images/ombro/p106_fig035_03.jpg"
+      ]
+    },
+    {
+      "id": "ombro-peitoral-maior-porcao-clavicular",
+      "titulo": "Peitoral maior – porção clavicular",
+      "regiao": "ombro",
+      "categoria": "miologia",
+      "pagina_pdf": 110,
+      "pagina_livro": 100,
+      "figura": 38,
+      "resumo_site": "Tutorial prático de anatomia palpatória para peitoral maior – porção clavicular, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar peitoral maior – porção clavicular por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de peitoral maior – porção clavicular usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite abdução contra resistência leve e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [
+        "abdução"
+      ],
+      "cuidados": null,
+      "imagens": [
+        "images/ombro/p110_fig038_01.jpg"
+      ]
+    },
+    {
+      "id": "ombro-peitoral-menor",
+      "titulo": "Peitoral menor",
+      "regiao": "ombro",
+      "categoria": "miologia",
+      "pagina_pdf": 111,
+      "pagina_livro": 101,
+      "figura": 42,
+      "resumo_site": "Tutorial prático de anatomia palpatória para peitoral menor, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar peitoral menor por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": "Sentado.",
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de peitoral menor usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite inspirações breves e repetidas e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [
+        "inspirações breves e repetidas"
+      ],
+      "cuidados": null,
+      "imagens": [
+        "images/ombro/p111_fig042_02.jpg"
+      ]
+    },
+    {
+      "id": "ombro-serratil-anterior",
+      "titulo": "Serrátil anterior",
+      "regiao": "ombro",
+      "categoria": "miologia",
+      "pagina_pdf": 113,
+      "pagina_livro": 103,
+      "figura": 44,
+      "resumo_site": "Tutorial prático de anatomia palpatória para serrátil anterior, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar serrátil anterior por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": "Sentado.",
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de serrátil anterior usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite inspirações breves e repetidas e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [
+        "inspirações breves e repetidas"
+      ],
+      "cuidados": null,
+      "imagens": [
+        "images/ombro/p113_fig044_02.jpg"
+      ]
+    },
+    {
+      "id": "ombro-subescapular",
+      "titulo": "Subescapular",
+      "regiao": "ombro",
+      "categoria": "miologia",
+      "pagina_pdf": 117,
+      "pagina_livro": 107,
+      "figura": 46,
+      "resumo_site": "Tutorial prático de anatomia palpatória para subescapular, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar subescapular por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de subescapular usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite abdução e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [
+        "abdução"
+      ],
+      "cuidados": null,
+      "imagens": [
+        "images/ombro/p117_fig046_01.jpg"
+      ]
+    },
+    {
+      "id": "ombro-supraespinal",
+      "titulo": "Supraespinal",
+      "regiao": "ombro",
+      "categoria": "miologia",
+      "pagina_pdf": 120,
+      "pagina_livro": 110,
+      "figura": 54,
+      "resumo_site": "Tutorial prático de anatomia palpatória para supraespinal, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar supraespinal por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": "Decúbito lateral esquerdo.",
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de supraespinal usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite abdução de forma isométrica e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [
+        "abdução"
+      ],
+      "cuidados": null,
+      "imagens": [
+        "images/ombro/p120_fig054_01.jpg"
+      ]
+    },
+    {
+      "id": "ombro-infraespinal",
+      "titulo": "Infraespinal",
+      "regiao": "ombro",
+      "categoria": "miologia",
+      "pagina_pdf": 121,
+      "pagina_livro": 111,
+      "figura": 56,
+      "resumo_site": "Tutorial prático de anatomia palpatória para infraespinal, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar infraespinal por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": "Decúbito lateral esquerdo.",
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de infraespinal usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite adução, rotação lateral de forma isométrica e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [
+        "adução",
+        "rotação lateral"
+      ],
+      "cuidados": null,
+      "imagens": [
+        "images/ombro/p121_fig056_01.jpg"
+      ]
+    },
+    {
+      "id": "ombro-redondo-maior",
+      "titulo": "Redondo maior",
+      "regiao": "ombro",
+      "categoria": "miologia",
+      "pagina_pdf": 121,
+      "pagina_livro": 111,
+      "figura": 57,
+      "resumo_site": "Tutorial prático de anatomia palpatória para redondo maior, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar redondo maior por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": "Decúbito lateral esquerdo.",
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de redondo maior usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite adução, rotação medial de forma isométrica e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [
+        "adução",
+        "rotação medial"
+      ],
+      "cuidados": null,
+      "imagens": [
+        "images/ombro/p121_fig057_02.jpg"
+      ]
+    },
+    {
+      "id": "ombro-redondo-menor",
+      "titulo": "Redondo menor",
+      "regiao": "ombro",
+      "categoria": "miologia",
+      "pagina_pdf": 122,
+      "pagina_livro": 112,
+      "figura": 59,
+      "resumo_site": "Tutorial prático de anatomia palpatória para redondo menor, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar redondo menor por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": "Decúbito dorsal.",
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de redondo menor usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite a ação demonstrada na imagem/atlas e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/ombro/p122_fig059_01.jpg"
+      ]
+    },
+    {
+      "id": "ombro-latissimo-do-dorso-abordagem-no-ombro",
+      "titulo": "Latíssimo do dorso – abordagem no ombro",
+      "regiao": "ombro",
+      "categoria": "miologia",
+      "pagina_pdf": 122,
+      "pagina_livro": 112,
+      "figura": 60,
+      "resumo_site": "Tutorial prático de anatomia palpatória para latíssimo do dorso – abordagem no ombro, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar latíssimo do dorso – abordagem no ombro por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": "Decúbito dorsal.",
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de latíssimo do dorso – abordagem no ombro usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite a ação demonstrada na imagem/atlas e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/ombro/p122_fig060_02.jpg"
+      ]
+    },
+    {
+      "id": "ombro-deltoide-porcao-espinal",
+      "titulo": "Deltoide – porção espinal",
+      "regiao": "ombro",
+      "categoria": "miologia",
+      "pagina_pdf": 124,
+      "pagina_livro": 114,
+      "figura": 62,
+      "resumo_site": "Tutorial prático de anatomia palpatória para deltoide – porção espinal, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar deltoide – porção espinal por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de deltoide – porção espinal usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite abdução contra resistência leve e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [
+        "abdução"
+      ],
+      "cuidados": null,
+      "imagens": [
+        "images/ombro/p124_fig062_01.jpg"
+      ]
+    },
+    {
+      "id": "ombro-deltoide-porcao-acromial",
+      "titulo": "Deltoide – porção acromial",
+      "regiao": "ombro",
+      "categoria": "miologia",
+      "pagina_pdf": 124,
+      "pagina_livro": 114,
+      "figura": 63,
+      "resumo_site": "Tutorial prático de anatomia palpatória para deltoide – porção acromial, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar deltoide – porção acromial por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de deltoide – porção acromial usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite abdução contra resistência leve e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [
+        "abdução"
+      ],
+      "cuidados": null,
+      "imagens": [
+        "images/ombro/p124_fig063_02.jpg"
+      ]
+    },
+    {
+      "id": "ombro-deltoide-porcao-clavicular",
+      "titulo": "Deltoide – porção clavicular",
+      "regiao": "ombro",
+      "categoria": "miologia",
+      "pagina_pdf": 124,
+      "pagina_livro": 114,
+      "figura": 64,
+      "resumo_site": "Tutorial prático de anatomia palpatória para deltoide – porção clavicular, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar deltoide – porção clavicular por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de deltoide – porção clavicular usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite abdução contra resistência leve e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [
+        "abdução"
+      ],
+      "cuidados": null,
+      "imagens": [
+        "images/ombro/p124_fig064_03.jpg"
+      ]
+    },
+    {
+      "id": "braco-biceps-braquial-cabeca-longa",
+      "titulo": "Bíceps braquial – cabeça longa",
+      "regiao": "braco",
+      "categoria": "miologia",
+      "pagina_pdf": 130,
+      "pagina_livro": 120,
+      "figura": 3,
+      "resumo_site": "Tutorial prático de anatomia palpatória para bíceps braquial – cabeça longa, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar bíceps braquial – cabeça longa por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de bíceps braquial – cabeça longa usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite flexão, supinação e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [
+        "flexão",
+        "supinação"
+      ],
+      "cuidados": null,
+      "imagens": [
+        "images/braco/p130_fig003_01.jpg"
+      ]
+    },
+    {
+      "id": "braco-biceps-braquial-cabeca-curta",
+      "titulo": "Bíceps braquial – cabeça curta",
+      "regiao": "braco",
+      "categoria": "miologia",
+      "pagina_pdf": 130,
+      "pagina_livro": 120,
+      "figura": 4,
+      "resumo_site": "Tutorial prático de anatomia palpatória para bíceps braquial – cabeça curta, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar bíceps braquial – cabeça curta por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de bíceps braquial – cabeça curta usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite flexão contra resistência leve e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [
+        "flexão"
+      ],
+      "cuidados": null,
+      "imagens": [
+        "images/braco/p130_fig004_02.jpg"
+      ]
+    },
+    {
+      "id": "braco-tendao-distal-do-biceps",
+      "titulo": "Tendão distal do bíceps",
+      "regiao": "braco",
+      "categoria": "miologia",
+      "pagina_pdf": 131,
+      "pagina_livro": 121,
+      "figura": 6,
+      "resumo_site": "Tutorial prático de anatomia palpatória para tendão distal do bíceps, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar tendão distal do bíceps por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de tendão distal do bíceps usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite flexão, adução contra resistência leve e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [
+        "flexão",
+        "adução"
+      ],
+      "cuidados": null,
+      "imagens": [
+        "images/braco/p131_fig006_01.jpg"
+      ]
+    },
+    {
+      "id": "braco-coracobraquial",
+      "titulo": "Coracobraquial",
+      "regiao": "braco",
+      "categoria": "miologia",
+      "pagina_pdf": 131,
+      "pagina_livro": 121,
+      "figura": 8,
+      "resumo_site": "Tutorial prático de anatomia palpatória para coracobraquial, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar coracobraquial por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de coracobraquial usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite flexão, adução contra resistência leve e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [
+        "flexão",
+        "adução"
+      ],
+      "cuidados": null,
+      "imagens": [
+        "images/braco/p131_fig008_03.jpg"
+      ]
+    },
+    {
+      "id": "braco-braquial",
+      "titulo": "Braquial",
+      "regiao": "braco",
+      "categoria": "miologia",
+      "pagina_pdf": 132,
+      "pagina_livro": 122,
+      "figura": 9,
+      "resumo_site": "Tutorial prático de anatomia palpatória para braquial, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar braquial por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de braquial usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite a ação demonstrada na imagem/atlas e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/braco/p132_fig009_01.jpg"
+      ]
+    },
+    {
+      "id": "braco-triceps-cabeca-longa",
+      "titulo": "Tríceps – cabeça longa",
+      "regiao": "braco",
+      "categoria": "miologia",
+      "pagina_pdf": 137,
+      "pagina_livro": 127,
+      "figura": 16,
+      "resumo_site": "Tutorial prático de anatomia palpatória para tríceps – cabeça longa, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar tríceps – cabeça longa por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de tríceps – cabeça longa usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite extensão contra resistência leve e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [
+        "extensão"
+      ],
+      "cuidados": null,
+      "imagens": [
+        "images/braco/p137_fig016_01.jpg"
+      ]
+    },
+    {
+      "id": "braco-tendao-distal-do-triceps",
+      "titulo": "Tendão distal do tríceps",
+      "regiao": "braco",
+      "categoria": "miologia",
+      "pagina_pdf": 138,
+      "pagina_livro": 128,
+      "figura": 20,
+      "resumo_site": "Tutorial prático de anatomia palpatória para tendão distal do tríceps, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar tendão distal do tríceps por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de tendão distal do tríceps usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite extensão contra resistência leve e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [
+        "extensão"
+      ],
+      "cuidados": null,
+      "imagens": [
+        "images/braco/p138_fig020_02.jpg"
+      ]
+    },
+    {
+      "id": "cotovelo-epicondilo-lateral",
+      "titulo": "Epicôndilo lateral",
+      "regiao": "cotovelo",
+      "categoria": "osteologia",
+      "pagina_pdf": 147,
+      "pagina_livro": 137,
+      "figura": 4,
+      "resumo_site": "Tutorial prático de anatomia palpatória para epicôndilo lateral, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Localizar epicôndilo lateral como referência anatômica de superfície e relacioná-la aos marcos vizinhos.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Identifique visualmente a região de epicôndilo lateral e os marcos anatômicos próximos mostrados na imagem.",
+        "Faça contato progressivo com a polpa do indicador ou do polegar, procurando o relevo ósseo sem pressão excessiva.",
+        "Acompanhe a continuidade do marco anatômico para diferenciá-lo das estruturas adjacentes."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/cotovelo/p147_fig004_02.jpg"
+      ]
+    },
+    {
+      "id": "cotovelo-epicondilo-medial",
+      "titulo": "Epicôndilo medial",
+      "regiao": "cotovelo",
+      "categoria": "osteologia",
+      "pagina_pdf": 148,
+      "pagina_livro": 138,
+      "figura": 7,
+      "resumo_site": "Tutorial prático de anatomia palpatória para epicôndilo medial, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Localizar epicôndilo medial como referência anatômica de superfície e relacioná-la aos marcos vizinhos.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Identifique visualmente a região de epicôndilo medial e os marcos anatômicos próximos mostrados na imagem.",
+        "Faça contato progressivo com a polpa do indicador ou do polegar, procurando o relevo ósseo sem pressão excessiva.",
+        "Acompanhe a continuidade do marco anatômico para diferenciá-lo das estruturas adjacentes."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/cotovelo/p148_fig007_02.jpg"
+      ]
+    },
+    {
+      "id": "cotovelo-cabeca-do-radio",
+      "titulo": "Cabeça do rádio",
+      "regiao": "cotovelo",
+      "categoria": "osteologia",
+      "pagina_pdf": 149,
+      "pagina_livro": 139,
+      "figura": 11,
+      "resumo_site": "Tutorial prático de anatomia palpatória para cabeça do rádio, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Localizar cabeça do rádio como referência anatômica de superfície e relacioná-la aos marcos vizinhos.",
+      "posicionamento_paciente": "Em pé.",
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Identifique visualmente a região de cabeça do rádio e os marcos anatômicos próximos mostrados na imagem.",
+        "Faça contato progressivo com a polpa do indicador ou do polegar, procurando o relevo ósseo sem pressão excessiva.",
+        "Acompanhe a continuidade do marco anatômico para diferenciá-lo das estruturas adjacentes."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/cotovelo/p149_fig011_02.jpg"
+      ]
+    },
+    {
+      "id": "cotovelo-olecrano-face-superior",
+      "titulo": "Olécrano – face superior",
+      "regiao": "cotovelo",
+      "categoria": "osteologia",
+      "pagina_pdf": 151,
+      "pagina_livro": 141,
+      "figura": 15,
+      "resumo_site": "Tutorial prático de anatomia palpatória para olécrano – face superior, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Localizar olécrano – face superior como referência anatômica de superfície e relacioná-la aos marcos vizinhos.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Identifique visualmente a região de olécrano – face superior e os marcos anatômicos próximos mostrados na imagem.",
+        "Faça contato progressivo com a polpa do indicador ou do polegar, procurando o relevo ósseo sem pressão excessiva.",
+        "Acompanhe a continuidade do marco anatômico para diferenciá-lo das estruturas adjacentes.",
+        "Use extensão do segmento, quando tolerado, para ajudar a confirmar a referência descrita no atlas."
+      ],
+      "movimentos_de_confirmacao": [
+        "extensão"
+      ],
+      "cuidados": null,
+      "imagens": [
+        "images/cotovelo/p151_fig015_01.jpg"
+      ]
+    },
+    {
+      "id": "cotovelo-nervo-ulnar-no-sulco-cubital",
+      "titulo": "Nervo ulnar no sulco cubital",
+      "regiao": "cotovelo",
+      "categoria": "nervos_vasos",
+      "pagina_pdf": 154,
+      "pagina_livro": 144,
+      "figura": 21,
+      "resumo_site": "Tutorial prático de anatomia palpatória para nervo ulnar no sulco cubital, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Reconhecer a referência superficial de nervo ulnar no sulco cubital no exame anatômico, guiando-se pelos marcos vizinhos.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize primeiro os marcos anatômicos ao redor de nervo ulnar no sulco cubital.",
+        "Faça palpação delicada e breve, sem compressão vigorosa ou sustentada.",
+        "Use a imagem para conferir a posição relativa da estrutura antes de avançar na palpação."
+      ],
+      "movimentos_de_confirmacao": [
+        "flexão",
+        "extensão"
+      ],
+      "cuidados": "Palpação neurovascular: utilizar contato suave e evitar compressão prolongada.",
+      "imagens": [
+        "images/cotovelo/p154_fig021_01.jpg"
+      ]
+    },
+    {
+      "id": "cotovelo-nervo-mediano-no-sulco-bicipital-medial",
+      "titulo": "Nervo mediano no sulco bicipital medial",
+      "regiao": "cotovelo",
+      "categoria": "nervos_vasos",
+      "pagina_pdf": 154,
+      "pagina_livro": 144,
+      "figura": 23,
+      "resumo_site": "Tutorial prático de anatomia palpatória para nervo mediano no sulco bicipital medial, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Reconhecer a referência superficial de nervo mediano no sulco bicipital medial no exame anatômico, guiando-se pelos marcos vizinhos.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize primeiro os marcos anatômicos ao redor de nervo mediano no sulco bicipital medial.",
+        "Faça palpação delicada e breve, sem compressão vigorosa ou sustentada.",
+        "Use a imagem para conferir a posição relativa da estrutura antes de avançar na palpação."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": "Palpação neurovascular: utilizar contato suave e evitar compressão prolongada.",
+      "imagens": [
+        "images/cotovelo/p154_fig023_03.jpg"
+      ]
+    },
+    {
+      "id": "cotovelo-nervo-radial-musculocutaneo",
+      "titulo": "Nervo radial / musculocutâneo",
+      "regiao": "cotovelo",
+      "categoria": "nervos_vasos",
+      "pagina_pdf": 155,
+      "pagina_livro": 145,
+      "figura": 24,
+      "resumo_site": "Tutorial prático de anatomia palpatória para nervo radial / musculocutâneo, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Reconhecer a referência superficial de nervo radial / musculocutâneo no exame anatômico, guiando-se pelos marcos vizinhos.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize primeiro os marcos anatômicos ao redor de nervo radial / musculocutâneo.",
+        "Faça palpação delicada e breve, sem compressão vigorosa ou sustentada.",
+        "Use a imagem para conferir a posição relativa da estrutura antes de avançar na palpação."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": "Palpação neurovascular: utilizar contato suave e evitar compressão prolongada.",
+      "imagens": [
+        "images/cotovelo/p155_fig024_01.jpg"
+      ]
+    },
+    {
+      "id": "cotovelo-arteria-braquial",
+      "titulo": "Artéria braquial",
+      "regiao": "cotovelo",
+      "categoria": "nervos_vasos",
+      "pagina_pdf": 155,
+      "pagina_livro": 145,
+      "figura": 26,
+      "resumo_site": "Tutorial prático de anatomia palpatória para artéria braquial, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Reconhecer a referência superficial de artéria braquial no exame anatômico, guiando-se pelos marcos vizinhos.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize primeiro os marcos anatômicos ao redor de artéria braquial.",
+        "Faça palpação delicada e breve, sem compressão vigorosa ou sustentada.",
+        "Use a imagem para conferir a posição relativa da estrutura antes de avançar na palpação.",
+        "Quando o objetivo for identificar um pulso, use apenas a pressão necessária para percebê-lo."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": "Palpação neurovascular: utilizar contato suave e evitar compressão prolongada.",
+      "imagens": [
+        "images/cotovelo/p155_fig026_03.jpg"
+      ]
+    },
+    {
+      "id": "antebraco-braquiorradial",
+      "titulo": "Braquiorradial",
+      "regiao": "antebraco",
+      "categoria": "miologia",
+      "pagina_pdf": 161,
+      "pagina_livro": 151,
+      "figura": 3,
+      "resumo_site": "Tutorial prático de anatomia palpatória para braquiorradial, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar braquiorradial por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de braquiorradial usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite flexão contra resistência leve e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [
+        "flexão"
+      ],
+      "cuidados": null,
+      "imagens": [
+        "images/antebraco/p161_fig003_01.jpg"
+      ]
+    },
+    {
+      "id": "antebraco-extensor-radial-longo-do-carpo",
+      "titulo": "Extensor radial longo do carpo",
+      "regiao": "antebraco",
+      "categoria": "miologia",
+      "pagina_pdf": 162,
+      "pagina_livro": 152,
+      "figura": 7,
+      "resumo_site": "Tutorial prático de anatomia palpatória para extensor radial longo do carpo, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar extensor radial longo do carpo por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de extensor radial longo do carpo usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite extensão e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [
+        "extensão"
+      ],
+      "cuidados": null,
+      "imagens": [
+        "images/antebraco/p162_fig007_02.jpg"
+      ]
+    },
+    {
+      "id": "antebraco-extensor-radial-curto-do-carpo",
+      "titulo": "Extensor radial curto do carpo",
+      "regiao": "antebraco",
+      "categoria": "miologia",
+      "pagina_pdf": 164,
+      "pagina_livro": 154,
+      "figura": 13,
+      "resumo_site": "Tutorial prático de anatomia palpatória para extensor radial curto do carpo, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar extensor radial curto do carpo por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de extensor radial curto do carpo usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite a ação demonstrada na imagem/atlas e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/antebraco/p164_fig013_03.jpg"
+      ]
+    },
+    {
+      "id": "antebraco-supinador",
+      "titulo": "Supinador",
+      "regiao": "antebraco",
+      "categoria": "miologia",
+      "pagina_pdf": 165,
+      "pagina_livro": 155,
+      "figura": 17,
+      "resumo_site": "Tutorial prático de anatomia palpatória para supinador, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar supinador por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de supinador usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite flexão, supinação e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [
+        "flexão",
+        "supinação"
+      ],
+      "cuidados": null,
+      "imagens": [
+        "images/antebraco/p165_fig017_03.jpg"
+      ]
+    },
+    {
+      "id": "antebraco-extensor-dos-dedos",
+      "titulo": "Extensor dos dedos",
+      "regiao": "antebraco",
+      "categoria": "miologia",
+      "pagina_pdf": 168,
+      "pagina_livro": 158,
+      "figura": 20,
+      "resumo_site": "Tutorial prático de anatomia palpatória para extensor dos dedos, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar extensor dos dedos por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de extensor dos dedos usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite a ação demonstrada na imagem/atlas e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/antebraco/p168_fig020_02.jpg"
+      ]
+    },
+    {
+      "id": "antebraco-extensor-ulnar-do-carpo",
+      "titulo": "Extensor ulnar do carpo",
+      "regiao": "antebraco",
+      "categoria": "miologia",
+      "pagina_pdf": 173,
+      "pagina_livro": 163,
+      "figura": 34,
+      "resumo_site": "Tutorial prático de anatomia palpatória para extensor ulnar do carpo, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar extensor ulnar do carpo por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": "Em pé.",
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de extensor ulnar do carpo usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite a ação demonstrada na imagem/atlas e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/antebraco/p173_fig034_01.jpg"
+      ]
+    },
+    {
+      "id": "antebraco-pronador-redondo",
+      "titulo": "Pronador redondo",
+      "regiao": "antebraco",
+      "categoria": "miologia",
+      "pagina_pdf": 179,
+      "pagina_livro": 169,
+      "figura": 48,
+      "resumo_site": "Tutorial prático de anatomia palpatória para pronador redondo, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar pronador redondo por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de pronador redondo usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite a ação demonstrada na imagem/atlas e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/antebraco/p179_fig046_01.jpg"
+      ]
+    },
+    {
+      "id": "antebraco-flexor-radial-do-carpo",
+      "titulo": "Flexor radial do carpo",
+      "regiao": "antebraco",
+      "categoria": "miologia",
+      "pagina_pdf": 180,
+      "pagina_livro": 170,
+      "figura": 50,
+      "resumo_site": "Tutorial prático de anatomia palpatória para flexor radial do carpo, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar flexor radial do carpo por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de flexor radial do carpo usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite flexão, inclinação radial e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [
+        "flexão",
+        "inclinação radial"
+      ],
+      "cuidados": null,
+      "imagens": [
+        "images/antebraco/p180_fig050_02.jpg"
+      ]
+    },
+    {
+      "id": "antebraco-palmar-longo",
+      "titulo": "Palmar longo",
+      "regiao": "antebraco",
+      "categoria": "miologia",
+      "pagina_pdf": 181,
+      "pagina_livro": 171,
+      "figura": 53,
+      "resumo_site": "Tutorial prático de anatomia palpatória para palmar longo, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar palmar longo por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de palmar longo usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite flexão, oposição do polegar e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [
+        "flexão",
+        "oposição do polegar"
+      ],
+      "cuidados": null,
+      "imagens": [
+        "images/antebraco/p181_fig053_02.jpg"
+      ]
+    },
+    {
+      "id": "antebraco-flexor-ulnar-do-carpo",
+      "titulo": "Flexor ulnar do carpo",
+      "regiao": "antebraco",
+      "categoria": "miologia",
+      "pagina_pdf": 182,
+      "pagina_livro": 172,
+      "figura": 55,
+      "resumo_site": "Tutorial prático de anatomia palpatória para flexor ulnar do carpo, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar flexor ulnar do carpo por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de flexor ulnar do carpo usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite flexão, inclinação ulnar e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [
+        "flexão",
+        "inclinação ulnar"
+      ],
+      "cuidados": null,
+      "imagens": [
+        "images/antebraco/p182_fig055_01.jpg"
+      ]
+    },
+    {
+      "id": "antebraco-flexor-superficial-dos-dedos",
+      "titulo": "Flexor superficial dos dedos",
+      "regiao": "antebraco",
+      "categoria": "miologia",
+      "pagina_pdf": 183,
+      "pagina_livro": 173,
+      "figura": 58,
+      "resumo_site": "Tutorial prático de anatomia palpatória para flexor superficial dos dedos, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar flexor superficial dos dedos por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de flexor superficial dos dedos usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite a ação demonstrada na imagem/atlas e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/antebraco/p183_fig058_01.jpg"
+      ]
+    },
+    {
+      "id": "antebraco-flexor-longo-do-polegar",
+      "titulo": "Flexor longo do polegar",
+      "regiao": "antebraco",
+      "categoria": "miologia",
+      "pagina_pdf": 185,
+      "pagina_livro": 175,
+      "figura": 63,
+      "resumo_site": "Tutorial prático de anatomia palpatória para flexor longo do polegar, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar flexor longo do polegar por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de flexor longo do polegar usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite a ação demonstrada na imagem/atlas e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/antebraco/p185_fig063_02.jpg"
+      ]
+    },
+    {
+      "id": "punho_mao-processo-estiloide-do-radio",
+      "titulo": "Processo estiloide do rádio",
+      "regiao": "punho_mao",
+      "categoria": "osteologia",
+      "pagina_pdf": 192,
+      "pagina_livro": 182,
+      "figura": 6,
+      "resumo_site": "Tutorial prático de anatomia palpatória para processo estiloide do rádio, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Localizar processo estiloide do rádio como referência anatômica de superfície e relacioná-la aos marcos vizinhos.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Identifique visualmente a região de processo estiloide do rádio e os marcos anatômicos próximos mostrados na imagem.",
+        "Faça contato progressivo com a polpa do indicador ou do polegar, procurando o relevo ósseo sem pressão excessiva.",
+        "Acompanhe a continuidade do marco anatômico para diferenciá-lo das estruturas adjacentes."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/punho_mao/p192_fig006_01.jpg"
+      ]
+    },
+    {
+      "id": "punho_mao-tabaqueira-anatomica",
+      "titulo": "Tabaqueira anatômica",
+      "regiao": "punho_mao",
+      "categoria": "osteologia",
+      "pagina_pdf": 194,
+      "pagina_livro": 184,
+      "figura": 9,
+      "resumo_site": "Tutorial prático de anatomia palpatória para tabaqueira anatômica, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Localizar tabaqueira anatômica como referência anatômica de superfície e relacioná-la aos marcos vizinhos.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Identifique visualmente a região de tabaqueira anatômica e os marcos anatômicos próximos mostrados na imagem.",
+        "Faça contato progressivo com a polpa do indicador ou do polegar, procurando o relevo ósseo sem pressão excessiva.",
+        "Acompanhe a continuidade do marco anatômico para diferenciá-lo das estruturas adjacentes."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/punho_mao/p194_fig009_01.jpg"
+      ]
+    },
+    {
+      "id": "punho_mao-escafoide-abordagem-lateral",
+      "titulo": "Escafoide – abordagem lateral",
+      "regiao": "punho_mao",
+      "categoria": "osteologia",
+      "pagina_pdf": 194,
+      "pagina_livro": 184,
+      "figura": 10,
+      "resumo_site": "Tutorial prático de anatomia palpatória para escafoide – abordagem lateral, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Localizar escafoide – abordagem lateral como referência anatômica de superfície e relacioná-la aos marcos vizinhos.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Identifique visualmente a região de escafoide – abordagem lateral e os marcos anatômicos próximos mostrados na imagem.",
+        "Faça contato progressivo com a polpa do indicador ou do polegar, procurando o relevo ósseo sem pressão excessiva.",
+        "Acompanhe a continuidade do marco anatômico para diferenciá-lo das estruturas adjacentes.",
+        "Use inclinação ulnar do segmento, quando tolerado, para ajudar a confirmar a referência descrita no atlas."
+      ],
+      "movimentos_de_confirmacao": [
+        "inclinação ulnar"
+      ],
+      "cuidados": null,
+      "imagens": [
+        "images/punho_mao/p194_fig010_02.jpg"
+      ]
+    },
+    {
+      "id": "punho_mao-escafoide-abordagem-posterior",
+      "titulo": "Escafoide – abordagem posterior",
+      "regiao": "punho_mao",
+      "categoria": "osteologia",
+      "pagina_pdf": 196,
+      "pagina_livro": 186,
+      "figura": 16,
+      "resumo_site": "Tutorial prático de anatomia palpatória para escafoide – abordagem posterior, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Localizar escafoide – abordagem posterior como referência anatômica de superfície e relacioná-la aos marcos vizinhos.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Identifique visualmente a região de escafoide – abordagem posterior e os marcos anatômicos próximos mostrados na imagem.",
+        "Faça contato progressivo com a polpa do indicador ou do polegar, procurando o relevo ósseo sem pressão excessiva.",
+        "Acompanhe a continuidade do marco anatômico para diferenciá-lo das estruturas adjacentes.",
+        "Use flexão do segmento, quando tolerado, para ajudar a confirmar a referência descrita no atlas."
+      ],
+      "movimentos_de_confirmacao": [
+        "flexão"
+      ],
+      "cuidados": null,
+      "imagens": [
+        "images/punho_mao/p196_fig016_02.jpg"
+      ]
+    },
+    {
+      "id": "punho_mao-semilunar",
+      "titulo": "Semilunar",
+      "regiao": "punho_mao",
+      "categoria": "osteologia",
+      "pagina_pdf": 197,
+      "pagina_livro": 187,
+      "figura": 19,
+      "resumo_site": "Tutorial prático de anatomia palpatória para semilunar, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Localizar semilunar como referência anatômica de superfície e relacioná-la aos marcos vizinhos.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Identifique visualmente a região de semilunar e os marcos anatômicos próximos mostrados na imagem.",
+        "Faça contato progressivo com a polpa do indicador ou do polegar, procurando o relevo ósseo sem pressão excessiva.",
+        "Acompanhe a continuidade do marco anatômico para diferenciá-lo das estruturas adjacentes.",
+        "Use flexão do segmento, quando tolerado, para ajudar a confirmar a referência descrita no atlas."
+      ],
+      "movimentos_de_confirmacao": [
+        "flexão"
+      ],
+      "cuidados": null,
+      "imagens": [
+        "images/punho_mao/p197_fig019_02.jpg"
+      ]
+    },
+    {
+      "id": "punho_mao-piramidal",
+      "titulo": "Piramidal",
+      "regiao": "punho_mao",
+      "categoria": "osteologia",
+      "pagina_pdf": 198,
+      "pagina_livro": 188,
+      "figura": 21,
+      "resumo_site": "Tutorial prático de anatomia palpatória para piramidal, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Localizar piramidal como referência anatômica de superfície e relacioná-la aos marcos vizinhos.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Identifique visualmente a região de piramidal e os marcos anatômicos próximos mostrados na imagem.",
+        "Faça contato progressivo com a polpa do indicador ou do polegar, procurando o relevo ósseo sem pressão excessiva.",
+        "Acompanhe a continuidade do marco anatômico para diferenciá-lo das estruturas adjacentes.",
+        "Use flexão, supinação do segmento, quando tolerado, para ajudar a confirmar a referência descrita no atlas."
+      ],
+      "movimentos_de_confirmacao": [
+        "flexão",
+        "supinação"
+      ],
+      "cuidados": null,
+      "imagens": [
+        "images/punho_mao/p198_fig021_01.jpg"
+      ]
+    },
+    {
+      "id": "punho_mao-pisiforme",
+      "titulo": "Pisiforme",
+      "regiao": "punho_mao",
+      "categoria": "osteologia",
+      "pagina_pdf": 199,
+      "pagina_livro": 189,
+      "figura": 24,
+      "resumo_site": "Tutorial prático de anatomia palpatória para pisiforme, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Localizar pisiforme como referência anatômica de superfície e relacioná-la aos marcos vizinhos.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Identifique visualmente a região de pisiforme e os marcos anatômicos próximos mostrados na imagem.",
+        "Faça contato progressivo com a polpa do indicador ou do polegar, procurando o relevo ósseo sem pressão excessiva.",
+        "Acompanhe a continuidade do marco anatômico para diferenciá-lo das estruturas adjacentes.",
+        "Use flexão do segmento, quando tolerado, para ajudar a confirmar a referência descrita no atlas."
+      ],
+      "movimentos_de_confirmacao": [
+        "flexão"
+      ],
+      "cuidados": null,
+      "imagens": [
+        "images/punho_mao/p199_fig024_01.jpg"
+      ]
+    },
+    {
+      "id": "punho_mao-trapezio",
+      "titulo": "Trapézio",
+      "regiao": "punho_mao",
+      "categoria": "osteologia",
+      "pagina_pdf": 201,
+      "pagina_livro": 191,
+      "figura": 27,
+      "resumo_site": "Tutorial prático de anatomia palpatória para trapézio, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Localizar trapézio como referência anatômica de superfície e relacioná-la aos marcos vizinhos.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Identifique visualmente a região de trapézio e os marcos anatômicos próximos mostrados na imagem.",
+        "Faça contato progressivo com a polpa do indicador ou do polegar, procurando o relevo ósseo sem pressão excessiva.",
+        "Acompanhe a continuidade do marco anatômico para diferenciá-lo das estruturas adjacentes."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/punho_mao/p201_fig027_01.jpg"
+      ]
+    },
+    {
+      "id": "punho_mao-capitato",
+      "titulo": "Capitato",
+      "regiao": "punho_mao",
+      "categoria": "osteologia",
+      "pagina_pdf": 204,
+      "pagina_livro": 194,
+      "figura": 37,
+      "resumo_site": "Tutorial prático de anatomia palpatória para capitato, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Localizar capitato como referência anatômica de superfície e relacioná-la aos marcos vizinhos.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Identifique visualmente a região de capitato e os marcos anatômicos próximos mostrados na imagem.",
+        "Faça contato progressivo com a polpa do indicador ou do polegar, procurando o relevo ósseo sem pressão excessiva.",
+        "Acompanhe a continuidade do marco anatômico para diferenciá-lo das estruturas adjacentes."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/punho_mao/p204_fig037_03.jpg"
+      ]
+    },
+    {
+      "id": "punho_mao-hamato",
+      "titulo": "Hamato",
+      "regiao": "punho_mao",
+      "categoria": "osteologia",
+      "pagina_pdf": 206,
+      "pagina_livro": 196,
+      "figura": 44,
+      "resumo_site": "Tutorial prático de anatomia palpatória para hamato, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Localizar hamato como referência anatômica de superfície e relacioná-la aos marcos vizinhos.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Identifique visualmente a região de hamato e os marcos anatômicos próximos mostrados na imagem.",
+        "Faça contato progressivo com a polpa do indicador ou do polegar, procurando o relevo ósseo sem pressão excessiva.",
+        "Acompanhe a continuidade do marco anatômico para diferenciá-lo das estruturas adjacentes."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/punho_mao/p206_fig044_03.jpg"
+      ]
+    },
+    {
+      "id": "punho_mao-hamulo-do-hamato",
+      "titulo": "Hâmulo do hamato",
+      "regiao": "punho_mao",
+      "categoria": "osteologia",
+      "pagina_pdf": 207,
+      "pagina_livro": 197,
+      "figura": 46,
+      "resumo_site": "Tutorial prático de anatomia palpatória para hâmulo do hamato, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Localizar hâmulo do hamato como referência anatômica de superfície e relacioná-la aos marcos vizinhos.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Identifique visualmente a região de hâmulo do hamato e os marcos anatômicos próximos mostrados na imagem.",
+        "Faça contato progressivo com a polpa do indicador ou do polegar, procurando o relevo ósseo sem pressão excessiva.",
+        "Acompanhe a continuidade do marco anatômico para diferenciá-lo das estruturas adjacentes."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/punho_mao/p207_fig046_02.jpg"
+      ]
+    },
+    {
+      "id": "punho_mao-flexor-longo-do-polegar-tendao",
+      "titulo": "Flexor longo do polegar – tendão",
+      "regiao": "punho_mao",
+      "categoria": "miologia",
+      "pagina_pdf": 215,
+      "pagina_livro": 205,
+      "figura": 63,
+      "resumo_site": "Tutorial prático de anatomia palpatória para flexor longo do polegar – tendão, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar flexor longo do polegar – tendão por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de flexor longo do polegar – tendão usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite flexão, abdução, pronação, inclinação radial e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [
+        "flexão",
+        "abdução",
+        "pronação",
+        "inclinação radial"
+      ],
+      "cuidados": null,
+      "imagens": [
+        "images/punho_mao/p215_fig063_01.jpg"
+      ]
+    },
+    {
+      "id": "punho_mao-flexor-radial-do-carpo-tendao",
+      "titulo": "Flexor radial do carpo – tendão",
+      "regiao": "punho_mao",
+      "categoria": "miologia",
+      "pagina_pdf": 215,
+      "pagina_livro": 205,
+      "figura": 64,
+      "resumo_site": "Tutorial prático de anatomia palpatória para flexor radial do carpo – tendão, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar flexor radial do carpo – tendão por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de flexor radial do carpo – tendão usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite flexão, abdução, pronação, inclinação radial e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [
+        "flexão",
+        "abdução",
+        "pronação",
+        "inclinação radial"
+      ],
+      "cuidados": null,
+      "imagens": [
+        "images/punho_mao/p215_fig064_02.jpg"
+      ]
+    },
+    {
+      "id": "punho_mao-palmar-longo-tendao",
+      "titulo": "Palmar longo – tendão",
+      "regiao": "punho_mao",
+      "categoria": "miologia",
+      "pagina_pdf": 215,
+      "pagina_livro": 205,
+      "figura": 65,
+      "resumo_site": "Tutorial prático de anatomia palpatória para palmar longo – tendão, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar palmar longo – tendão por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de palmar longo – tendão usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite pronação, oposição do polegar e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [
+        "pronação",
+        "oposição do polegar"
+      ],
+      "cuidados": null,
+      "imagens": [
+        "images/punho_mao/p215_fig065_03.jpg"
+      ]
+    },
+    {
+      "id": "punho_mao-flexor-superficial-dos-dedos-tendoes",
+      "titulo": "Flexor superficial dos dedos – tendões",
+      "regiao": "punho_mao",
+      "categoria": "miologia",
+      "pagina_pdf": 216,
+      "pagina_livro": 206,
+      "figura": 66,
+      "resumo_site": "Tutorial prático de anatomia palpatória para flexor superficial dos dedos – tendões, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar flexor superficial dos dedos – tendões por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de flexor superficial dos dedos – tendões usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite flexão, oposição do polegar e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [
+        "flexão",
+        "oposição do polegar"
+      ],
+      "cuidados": null,
+      "imagens": [
+        "images/punho_mao/p216_fig066_01.jpg"
+      ]
+    },
+    {
+      "id": "punho_mao-flexor-ulnar-do-carpo-tendao",
+      "titulo": "Flexor ulnar do carpo – tendão",
+      "regiao": "punho_mao",
+      "categoria": "miologia",
+      "pagina_pdf": 217,
+      "pagina_livro": 207,
+      "figura": 70,
+      "resumo_site": "Tutorial prático de anatomia palpatória para flexor ulnar do carpo – tendão, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar flexor ulnar do carpo – tendão por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de flexor ulnar do carpo – tendão usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite flexão e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [
+        "flexão"
+      ],
+      "cuidados": null,
+      "imagens": [
+        "images/punho_mao/p217_fig070_02.jpg"
+      ]
+    },
+    {
+      "id": "punho_mao-abdutor-longo-do-polegar-tendao",
+      "titulo": "Abdutor longo do polegar – tendão",
+      "regiao": "punho_mao",
+      "categoria": "miologia",
+      "pagina_pdf": 219,
+      "pagina_livro": 209,
+      "figura": 72,
+      "resumo_site": "Tutorial prático de anatomia palpatória para abdutor longo do polegar – tendão, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar abdutor longo do polegar – tendão por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de abdutor longo do polegar – tendão usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite a ação demonstrada na imagem/atlas e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/punho_mao/p219_fig072_01.jpg"
+      ]
+    },
+    {
+      "id": "punho_mao-extensor-curto-do-polegar-tendao",
+      "titulo": "Extensor curto do polegar – tendão",
+      "regiao": "punho_mao",
+      "categoria": "miologia",
+      "pagina_pdf": 219,
+      "pagina_livro": 209,
+      "figura": 73,
+      "resumo_site": "Tutorial prático de anatomia palpatória para extensor curto do polegar – tendão, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar extensor curto do polegar – tendão por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de extensor curto do polegar – tendão usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite a ação demonstrada na imagem/atlas e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/punho_mao/p219_fig073_02.jpg"
+      ]
+    },
+    {
+      "id": "punho_mao-extensor-longo-do-polegar-tendao",
+      "titulo": "Extensor longo do polegar – tendão",
+      "regiao": "punho_mao",
+      "categoria": "miologia",
+      "pagina_pdf": 219,
+      "pagina_livro": 209,
+      "figura": 74,
+      "resumo_site": "Tutorial prático de anatomia palpatória para extensor longo do polegar – tendão, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar extensor longo do polegar – tendão por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de extensor longo do polegar – tendão usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite a ação demonstrada na imagem/atlas e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/punho_mao/p219_fig074_03.jpg"
+      ]
+    },
+    {
+      "id": "punho_mao-eminencia-tenar",
+      "titulo": "Eminência tenar",
+      "regiao": "punho_mao",
+      "categoria": "miologia",
+      "pagina_pdf": 224,
+      "pagina_livro": 214,
+      "figura": 82,
+      "resumo_site": "Tutorial prático de anatomia palpatória para eminência tenar, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar eminência tenar por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de eminência tenar usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite a ação demonstrada na imagem/atlas e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/punho_mao/p224_fig082_01.jpg"
+      ]
+    },
+    {
+      "id": "punho_mao-eminencia-hipotenar",
+      "titulo": "Eminência hipotenar",
+      "regiao": "punho_mao",
+      "categoria": "miologia",
+      "pagina_pdf": 225,
+      "pagina_livro": 215,
+      "figura": 83,
+      "resumo_site": "Tutorial prático de anatomia palpatória para eminência hipotenar, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar eminência hipotenar por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de eminência hipotenar usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite a ação demonstrada na imagem/atlas e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/punho_mao/p225_fig083_01.jpg"
+      ]
+    },
+    {
+      "id": "punho_mao-lumbricais",
+      "titulo": "Lumbricais",
+      "regiao": "punho_mao",
+      "categoria": "miologia",
+      "pagina_pdf": 227,
+      "pagina_livro": 217,
+      "figura": 86,
+      "resumo_site": "Tutorial prático de anatomia palpatória para lumbricais, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar lumbricais por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de lumbricais usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite flexão, extensão e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [
+        "flexão",
+        "extensão"
+      ],
+      "cuidados": null,
+      "imagens": [
+        "images/punho_mao/p227_fig086_01.jpg"
+      ]
+    },
+    {
+      "id": "punho_mao-interosseos-palmares-e-dorsais",
+      "titulo": "Interósseos palmares e dorsais",
+      "regiao": "punho_mao",
+      "categoria": "miologia",
+      "pagina_pdf": 227,
+      "pagina_livro": 217,
+      "figura": 87,
+      "resumo_site": "Tutorial prático de anatomia palpatória para interósseos palmares e dorsais, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Identificar interósseos palmares e dorsais por palpação e confirmar a estrutura pela mudança de tensão do músculo ou tendão.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize a região de interósseos palmares e dorsais usando os marcos ósseos e musculares mostrados na imagem.",
+        "Posicione a polpa dos dedos sobre o ventre muscular ou tendão indicado e mantenha contato leve durante o movimento.",
+        "Solicite a ação demonstrada na imagem/atlas e perceba a contração ou o aumento de tensão sob os dedos.",
+        "Repita em contrair–relaxar quando isso ajudar a distinguir a estrutura das vizinhas."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": null,
+      "imagens": [
+        "images/punho_mao/p227_fig087_02.jpg"
+      ]
+    },
+    {
+      "id": "punho_mao-pulso-radial",
+      "titulo": "Pulso radial",
+      "regiao": "punho_mao",
+      "categoria": "nervos_vasos",
+      "pagina_pdf": 229,
+      "pagina_livro": 219,
+      "figura": 89,
+      "resumo_site": "Tutorial prático de anatomia palpatória para pulso radial, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Reconhecer a referência superficial de pulso radial no exame anatômico, guiando-se pelos marcos vizinhos.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize primeiro os marcos anatômicos ao redor de pulso radial.",
+        "Faça palpação delicada e breve, sem compressão vigorosa ou sustentada.",
+        "Use a imagem para conferir a posição relativa da estrutura antes de avançar na palpação.",
+        "Quando o objetivo for identificar um pulso, use apenas a pressão necessária para percebê-lo."
+      ],
+      "movimentos_de_confirmacao": [
+        "extensão"
+      ],
+      "cuidados": "Palpação neurovascular: utilizar contato suave e evitar compressão prolongada.",
+      "imagens": [
+        "images/punho_mao/p229_fig089_01.jpg"
+      ]
+    },
+    {
+      "id": "punho_mao-pulso-ulnar",
+      "titulo": "Pulso ulnar",
+      "regiao": "punho_mao",
+      "categoria": "nervos_vasos",
+      "pagina_pdf": 229,
+      "pagina_livro": 219,
+      "figura": 91,
+      "resumo_site": "Tutorial prático de anatomia palpatória para pulso ulnar, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Reconhecer a referência superficial de pulso ulnar no exame anatômico, guiando-se pelos marcos vizinhos.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize primeiro os marcos anatômicos ao redor de pulso ulnar.",
+        "Faça palpação delicada e breve, sem compressão vigorosa ou sustentada.",
+        "Use a imagem para conferir a posição relativa da estrutura antes de avançar na palpação.",
+        "Quando o objetivo for identificar um pulso, use apenas a pressão necessária para percebê-lo."
+      ],
+      "movimentos_de_confirmacao": [
+        "extensão"
+      ],
+      "cuidados": "Palpação neurovascular: utilizar contato suave e evitar compressão prolongada.",
+      "imagens": [
+        "images/punho_mao/p229_fig091_03.jpg"
+      ]
+    },
+    {
+      "id": "punho_mao-nervo-ulnar-no-punho",
+      "titulo": "Nervo ulnar no punho",
+      "regiao": "punho_mao",
+      "categoria": "nervos_vasos",
+      "pagina_pdf": 230,
+      "pagina_livro": 220,
+      "figura": 92,
+      "resumo_site": "Tutorial prático de anatomia palpatória para nervo ulnar no punho, organizado a partir da técnica e da imagem correspondentes no atlas.",
+      "para_que_serve": "Reconhecer a referência superficial de nervo ulnar no punho no exame anatômico, guiando-se pelos marcos vizinhos.",
+      "posicionamento_paciente": null,
+      "posicionamento_fisioterapeuta": "Posicione-se de modo a estabilizar o segmento e manter a mão de palpação livre, seguindo a orientação mostrada na imagem.",
+      "como_realizar": [
+        "Localize primeiro os marcos anatômicos ao redor de nervo ulnar no punho.",
+        "Faça palpação delicada e breve, sem compressão vigorosa ou sustentada.",
+        "Use a imagem para conferir a posição relativa da estrutura antes de avançar na palpação."
+      ],
+      "movimentos_de_confirmacao": [],
+      "cuidados": "Palpação neurovascular: utilizar contato suave e evitar compressão prolongada.",
+      "imagens": [
+        "images/punho_mao/p230_fig092_01.jpg"
+      ]
+    }
+  ]
+}
