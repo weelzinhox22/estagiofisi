@@ -4,7 +4,7 @@ export const STORAGE_KEY = 'fisio-clinico:v2';
 export const LEGACY_KEY = 'fisio-clinico:v1';
 export const SOURCE = 'Conteúdo educacional original do Fisio Clínico (2026).';
 export const catalog = clinicalExercises;
-export const V06_COLLECTIONS=['functionalTestResults','assessmentAssistantCases','goals','discharges','functionalModels','neuroAssessments','pediatricAssessments','homePrograms','voiceStructuredRecords','quickCareSessions','supervisorQuestions','painMaps','clinicalMentorCases','learningToolRecords'];
+export const V06_COLLECTIONS=['functionalTestResults','assessmentAssistantCases','goals','discharges','functionalModels','neuroAssessments','pediatricAssessments','homePrograms','voiceStructuredRecords','quickCareSessions','supervisorQuestions','painMaps','clinicalMentorCases','learningToolRecords','homePreferences'];
 export const emptyState = () => ({ version:5, patients:[], assessments:[], plans:[], sessions:[], exercises:[], favorites:[], repertoires:[], goniometryRecords:[], caseDiscussions:[], syncConflicts:[], ...Object.fromEntries(V06_COLLECTIONS.map(key=>[key,[]])) });
 export const uid = () => globalThis.crypto?.randomUUID?.() || `${Date.now()}-${Math.random().toString(36).slice(2)}`;
 export const today = () => new Date().toLocaleDateString('sv-SE');

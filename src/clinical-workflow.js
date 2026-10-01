@@ -94,18 +94,25 @@ export function isPerformed(item) { return PERFORMED_STATUSES.includes(item.stat
 
 export function buildEvolution(values, items, exerciseLookup) {
   const parts=[];
-  if(clean(values.generalState))parts.push(`Paciente apresenta-se ${clean(values.generalState)}.`);
-  if(clean(values.orientation))parts.push(`Orientação: ${clean(values.orientation)}.`);
+  if(clean(values.date)){const [year,month,day]=clean(values.date).split('-');parts.push(`Data: ${day&&month&&year?`${day}/${month}/${year}`:clean(values.date)}.`);}
+  const presentation=[clean(values.generalState),clean(values.orientation)].filter(Boolean);
+  if(presentation.length)parts.push(`Paciente compareceu ${presentation.join(', ')}.`);
   const initial=[values.painBefore!==''&&values.painBefore!=null&&`EVA inicial ${values.painBefore}/10`,clean(values.bpInitial)&&`PA inicial ${clean(values.bpInitial)}`,clean(values.hrInitial)&&`FC inicial ${clean(values.hrInitial)} bpm`].filter(Boolean);
   if(initial.length)parts.push(`${initial.join('; ')}.`);
   const done=items.filter(isPerformed);
-  if(done.length)parts.push(`Realizados ${done.map(item=>{const exercise=exerciseLookup(item.exerciseId);const dose=[item.actualSets&&`${item.actualSets} séries`,item.actualReps&&`${item.actualReps} repetições`,item.actualTime,item.actualLoad&&`carga ${item.actualLoad}`,item.actualSide&&`lado ${item.actualSide}`].filter(Boolean).join(', ');return `${exercise?.name||'atividade registrada'}${dose?` (${dose})`:''}`;}).join('; ')}${clean(values.objective)?`, visando ${clean(values.objective)}`:''}.`);
+  if(done.length){
+    parts.push(`Iniciada a sessão realizando ${done.map(item=>{const exercise=exerciseLookup(item.exerciseId);const dose=[item.actualSets&&`${item.actualSets} séries`,item.actualReps&&`${item.actualReps} repetições`,item.actualTime,item.actualLoad&&`carga ${item.actualLoad}`,item.actualSide&&`lado ${item.actualSide}`].filter(Boolean).join(', ');return `${exercise?.name||'atividade registrada'}${dose?` — ${dose}`:''}`;}).join('; ')}.`);
+    const benefits=[...new Set(done.flatMap(item=>{const exercise=exerciseLookup(item.exerciseId)||{};return [exercise.objective,...(exercise.why||[]),exercise.functionalApplication].map(clean).filter(Boolean);} ))].slice(0,4);
+    if(benefits.length)parts.push(`Exercícios realizados visando ${benefits.join('; ')}.`);
+    else if(clean(values.objective))parts.push(`Objetivo registrado para a sessão: ${clean(values.objective)}.`);
+  }
   const interrupted=items.filter(item=>item.status==='interrompido');
   if(interrupted.length)parts.push(`Atividades interrompidas: ${interrupted.map(item=>`${exerciseLookup(item.exerciseId)?.name||'atividade'}${item.stopReason?` — motivo: ${item.stopReason}`:''}`).join('; ')}.`);
   const final=[values.painAfter!==''&&values.painAfter!=null&&`EVA final ${values.painAfter}/10`,clean(values.bpFinal)&&`PA final ${clean(values.bpFinal)}`,clean(values.hrFinal)&&`FC final ${clean(values.hrFinal)} bpm`].filter(Boolean);
   if(final.length)parts.push(`${final.join('; ')}.`);
   if(clean(values.response))parts.push(`Resposta durante/após a sessão: ${clean(values.response)}.`);
   if(clean(values.incidents))parts.push(`Intercorrências confirmadas: ${clean(values.incidents)}.`);
+  else parts.push('Sessão finalizada sem intercorrências registradas.');
   return parts.join(' ');
 }
 
