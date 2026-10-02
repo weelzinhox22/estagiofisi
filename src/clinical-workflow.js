@@ -112,7 +112,7 @@ export function buildEvolution(values, items, exerciseLookup) {
   if(final.length)parts.push(`${final.join('; ')}.`);
   if(clean(values.response))parts.push(`Resposta durante/após a sessão: ${clean(values.response)}.`);
   if(clean(values.incidents))parts.push(`Intercorrências confirmadas: ${clean(values.incidents)}.`);
-  else parts.push('Sessão finalizada sem intercorrências registradas.');
+  else if(!interrupted.length)parts.push('Sessão finalizada sem intercorrências registradas.');
   return parts.join(' ');
 }
 
