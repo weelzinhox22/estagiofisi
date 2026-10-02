@@ -1,6 +1,6 @@
 const esc=value=>String(value??'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 const normalized=value=>String(value||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
-const videoUrl=item=>`/${String(item.arquivo||'').replace(/^\/+/, '')}`;
+const videoUrl=item=>/^https?:\/\//i.test(item.arquivo||'')?item.arquivo:`/${String(item.arquivo||'').replace(/^\/+/, '')}`;
 
 function videoCard(item,complementary=false){
   return `<article class="video-library-card ${complementary?'complementary':''}"><figure><video controls playsinline preload="none" aria-label="Demonstração em vídeo: ${esc(item.nome)}"><source src="${esc(videoUrl(item))}" type="video/mp4">Seu navegador não oferece suporte à reprodução deste vídeo.</video><figcaption>${esc(item.nome)}</figcaption></figure><div class="video-library-copy"><span>${complementary?'MATERIAL COMPLEMENTAR':esc(item.regiao_ou_categoria)}</span><h3>${esc(item.nome)}</h3><p>${esc(item.descricao)}</p><dl><dt>Objetivo</dt><dd>${esc(item.objetivos)}</dd><dt>Orientações</dt><dd>${esc(item.orientacoes)}</dd></dl>${item.dosagem_mencionada_no_video?`<div class="video-dose"><small>DOSAGEM MOSTRADA NO VÍDEO</small><strong>${esc(item.dosagem_mencionada_no_video)}</strong></div>`:''}</div></article>`;

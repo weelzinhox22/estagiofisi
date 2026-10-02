@@ -8,6 +8,7 @@ import { handleLearningTool } from './scripts/learning-tools.mjs';
 import { handleArticleSearch } from './scripts/article-search.mjs';
 import { handleMentorChat } from './scripts/mentor-chat.mjs';
 import { handleDailyTip } from './scripts/daily-tip.mjs';
+import { handleExerciseVideoAnalysis } from './scripts/exercise-video-analysis.mjs';
 
 const root = resolve(import.meta.dirname);
 try { loadEnvFile(resolve(root,'.env.local')); } catch {}
@@ -23,6 +24,7 @@ createServer(async (req, res) => {
     if (pathname === '/api/articles') { await handleArticleSearch(req,res); return; }
     if (pathname === '/api/mentor-chat') { await handleMentorChat(req,res); return; }
     if (pathname === '/api/daily-tip') { await handleDailyTip(req,res); return; }
+    if (pathname === '/api/analyze-exercise-video') { await handleExerciseVideoAnalysis(req,res); return; }
     let target = resolve(root, '.' + pathname);
     if (target !== root && !target.startsWith(root + sep)) { res.writeHead(403).end(); return; }
     let targetStat;

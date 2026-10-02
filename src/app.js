@@ -31,6 +31,7 @@ import { scientificSearchPage } from './scientific-search-ui.js';
 import { mountMentorChat, openMentorChatWithPrompt, unmountMentorChat } from './mentor-chat-ui-v2.js';
 import { loadKisnerCatalog, kisnerLibraryPage, kisnerDetailPage } from './kisner-library-ui.js';
 import { loadPalpatoryAtlas, palpatoryAtlasPage, palpatoryAtlasDetail } from './palpatory-atlas-ui.js';
+import { exerciseVideoUploadPanel, analyzeExerciseVideo, publishExerciseVideo, loadExerciseVideos } from './exercise-video-upload.js';
 
 let state=emptyState(),currentStorage=localStorage;
 let authState={ready:false,session:null,profile:null,message:''},adminRows=null,voiceStructureDraft=null,mentorDraft={},learningDraft={tool:'',history:[]};
@@ -44,6 +45,7 @@ let libraryCategory = 'Todas';
 let downloadsQuery='',downloadsCategory='Todos';
 let videoCatalog=null,videoCatalogError='',videoCatalogPromise=null;
 let videoQuery='',videoCategory='Todas';
+let videoUploadDraft={file:null,previewUrl:'',analysis:null,loading:false,publishing:false,error:''};
 let articleDraft={query:'',year:new Date().getFullYear()-5,openAccess:true,results:[],searched:false};
 const articleMemoryKey=()=>authState.session?`fisio-clinico:article-memory:${sessionUser(authState.session).sub}`:'fisio-clinico:article-memory:guest';
 function loadArticleMemory(){try{const rows=JSON.parse(localStorage.getItem(articleMemoryKey())||'[]');return Array.isArray(rows)?rows:[];}catch{return[];}}
@@ -296,7 +298,7 @@ const exerciseCard = e => {const visual=exerciseVisual(e);return `<article class
 function ensureVideoCatalog(){
   if(videoCatalog||videoCatalogPromise)return;
   videoCatalogError='';
-  videoCatalogPromise=fetch('/videos/catalogo.json').then(response=>{if(!response.ok)throw new Error('O catálogo de vídeos não foi encontrado.');return response.json();}).then(rows=>{if(!Array.isArray(rows)||rows.length!==50)throw new Error('O catálogo de vídeos está incompleto.');videoCatalog=rows;}).catch(error=>{videoCatalogError=error.message;}).finally(()=>{videoCatalogPromise=null;const [section,id]=route();if(section==='biblioteca'&&id==='videos')render();});
+  videoCatalogPromise=Promise.all([fetch('/videos/catalogo.json').then(response=>{if(!response.ok)throw new Error('O catálogo de vídeos não foi encontrado.');return response.json();}),loadExerciseVideos(authState.session)]).then(([rows,uploaded])=>{if(!Array.isArray(rows)||rows.length!==50)throw new Error('O catálogo de vídeos está incompleto.');videoCatalog=[...uploaded,...rows];}).catch(error=>{videoCatalogError=error.message;}).finally(()=>{videoCatalogPromise=null;const [section,id]=route();if(section==='biblioteca'&&id==='videos')render();});
 }
 
 function quickResults(query) {
@@ -331,7 +333,7 @@ function quickPage() {
 }
 function libraryPage(active='exercicios') {
   const header=`<section class="library-native-hero"><span class="eyebrow">CONHECIMENTO CLÍNICO</span><h1>Biblioteca prática</h1><p>Encontre exercícios, vídeos, testes e referências durante o atendimento.</p><div class="library-hero-stats"><span><strong>${allExercises().length}</strong><small>exercícios</small></span><span><strong>50</strong><small>vídeos</small></span><span><strong>${clinicalTests.length}</strong><small>testes</small></span><button type="button" data-action="go-quick">⌕ <span>Consulta rápida</span></button></div></section>${tabs(active)}`;
-  if(active==='videos'){if(!videoCatalog&&!videoCatalogError)queueMicrotask(ensureVideoCatalog);return header+videoLibraryPage(videoCatalog||[],videoQuery,videoCategory,{loading:!videoCatalog&&!videoCatalogError,error:videoCatalogError});}
+  if(active==='videos'){if(!videoCatalog&&!videoCatalogError)queueMicrotask(ensureVideoCatalog);return header+exerciseVideoUploadPanel(videoUploadDraft)+videoLibraryPage(videoCatalog||[],videoQuery,videoCategory,{loading:!videoCatalog&&!videoCatalogError,error:videoCatalogError});}
   if(active==='kisner'){if(!kisnerCatalog&&!kisnerError)queueMicrotask(ensureKisnerCatalog);return header+kisnerLibraryPage({rows:kisnerCatalog||[],loading:!kisnerCatalog&&!kisnerError,error:kisnerError,query:kisnerQuery,category:kisnerCategory,type:kisnerType,limit:kisnerLimit});}
   if(active==='atlas'){if(!palpatoryAtlas&&!palpatoryAtlasError)queueMicrotask(ensurePalpatoryAtlas);return header+palpatoryAtlasPage({data:palpatoryAtlas,loading:!palpatoryAtlas&&!palpatoryAtlasError,error:palpatoryAtlasError,query:atlasQuery,region:atlasRegion,category:atlasCategory,limit:atlasLimit});}
   if(active==='ortopedia') return header+orthopedicLibrary();
@@ -563,6 +565,8 @@ document.addEventListener('submit', async event => {
   const form=event.target;if(!form.id?.endsWith('-form')&&!form.id?.startsWith('rapid-care-form-'))return;event.preventDefault();
   if(form.id==='mentor-chat-form')return;
   const authValues=formValues(form);
+  if(form.id==='exercise-video-analyze-form'){const file=form.elements.video.files?.[0];if(!file){toast('Selecione um vídeo.',true);return;}videoUploadDraft={file,previewUrl:URL.createObjectURL(file),analysis:null,loading:true,publishing:false,error:''};render();try{const analysis=await analyzeExerciseVideo(file,authState.session.access_token,authValues.context);videoUploadDraft={...videoUploadDraft,analysis,loading:false};render();}catch(error){videoUploadDraft={...videoUploadDraft,loading:false,error:error.message};render();}return;}
+  if(form.id==='exercise-video-publish-form'){if(!videoUploadDraft.file){toast('Selecione o vídeo novamente.',true);return;}videoUploadDraft={...videoUploadDraft,publishing:true,error:''};render();try{const analysis={nome:authValues.nome,regiao_ou_categoria:authValues.regiao_ou_categoria,descricao:authValues.descricao,objetivos:authValues.objetivos,orientacoes:authValues.orientacoes,musculos:authValues.musculos,equipamentos:authValues.equipamentos,dosagem_mencionada_no_video:authValues.dosagem_mencionada_no_video,cuidados:authValues.cuidados};await publishExerciseVideo({file:videoUploadDraft.file,analysis,session:authState.session});if(videoUploadDraft.previewUrl)URL.revokeObjectURL(videoUploadDraft.previewUrl);videoUploadDraft={file:null,previewUrl:'',analysis:null,loading:false,publishing:false,error:''};videoCatalog=null;toast('Vídeo publicado na sua biblioteca.');ensureVideoCatalog();render();}catch(error){videoUploadDraft={...videoUploadDraft,publishing:false,error:error.message};render();}return;}
   if(form.id==='express-evolution-form'){
     const entries=String(authValues.exercises||'').split(/\n|;/).map(item=>item.trim().replace(/[.;]+$/,'')).filter(Boolean);
     if(!entries.length){toast('Informe ao menos um exercício e a dose realizada.',true);return;}
@@ -678,6 +682,7 @@ document.addEventListener('click',async event=>{
   const action=target.dataset.action,id=target.dataset.id;
   if(action==='download-category'){downloadsCategory=target.dataset.category||'Todos';render();return;}
   if(action==='article-example'){articleDraft={...articleDraft,query:target.dataset.query||''};render();queueMicrotask(()=>$('#article-search-form input[name="query"]')?.focus());return;}
+  if(action==='cancel-video-analysis'){if(videoUploadDraft.previewUrl)URL.revokeObjectURL(videoUploadDraft.previewUrl);videoUploadDraft={file:null,previewUrl:'',analysis:null,loading:false,publishing:false,error:''};render();return;}
   if(action==='remember-article'){const row=articleDraft.results?.[Number(target.dataset.index)];if(!row)return;const added=saveArticlesToMemory([row]);render();toast(added?'Artigo incorporado à memória do Chat.':'Este artigo já estava na memória.');return;}
   if(action==='remember-article-results'){const added=saveArticlesToMemory(articleDraft.results||[]);render();toast(added?`${added} artigo(s) incorporado(s) à memória do Chat.`:'Todos estes artigos já estavam na memória.');return;}
   if(action==='enable-daily-tips'){if(!('Notification'in window)){toast('Este navegador não oferece notificações.',true);return;}const permission=await Notification.requestPermission();if(permission!=='granted'){toast('Permissão de notificações não concedida.',true);return;}localStorage.setItem('fisio-daily-tips','1');await showDailyTip(true);render();toast('Dicas diárias ativadas neste dispositivo.');return;}
