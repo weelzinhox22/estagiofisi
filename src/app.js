@@ -32,6 +32,7 @@ import { mountMentorChat, openMentorChatWithPrompt, unmountMentorChat } from './
 import { loadKisnerCatalog, kisnerLibraryPage, kisnerDetailPage } from './kisner-library-ui.js';
 import { loadPalpatoryAtlas, palpatoryAtlasPage, palpatoryAtlasDetail } from './palpatory-atlas-ui.js';
 import { exerciseVideoUploadPanel, analyzeExerciseVideo, publishExerciseVideo, loadExerciseVideos, deleteExerciseVideo } from './exercise-video-upload.js';
+import { evolutionGoalsFromEntries, goalsSentence } from './evolution-goals.js';
 
 let state=emptyState(),currentStorage=localStorage;
 let authState={ready:false,session:null,profile:null,message:''},adminRows=null,voiceStructureDraft=null,mentorDraft={},learningDraft={tool:'',history:[]};
@@ -570,12 +571,9 @@ document.addEventListener('submit', async event => {
   if(form.id==='express-evolution-form'){
     const entries=String(authValues.exercises||'').split(/\n|;/).map(item=>item.trim().replace(/[.;]+$/,'')).filter(Boolean);
     if(!entries.length){toast('Informe ao menos um exercício e a dose realizada.',true);return;}
-    const normalize=value=>String(value||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
-    const benefits=[];
-    for(const entry of entries){const clean=normalize(entry).replace(/\b\d+\s*(?:x|s|min|rep(?:eti[cç][oõ]es)?|seg(?:undos)?)?\s*\d*\b/g,' ').trim();const match=allExercises().find(item=>{const name=normalize(item.name);return name.length>3&&(clean.includes(name)||name.includes(clean));});const benefit=match?.objective||match?.purpose||match?.function||match?.para_que_serve||'';if(benefit&&!benefits.includes(benefit))benefits.push(benefit);}
     const date=new Date().toLocaleDateString('pt-BR'),presentation=String(authValues.presentation||'lúcida, orientada e colaborativa').trim(),ending=String(authValues.ending||'Sessão finalizada sem intercorrências.').trim();
-    const initial=String(authValues.bpInitial||'').trim(),final=String(authValues.bpFinal||'').trim(),goals=benefits.slice(0,4).map(text=>String(text).replace(/[.;]+$/,'').toLowerCase());
-    const text=`${date}. Paciente compareceu ${presentation}. ${initial?`PA inicial: ${initial} mmHg. `:''}Iniciada a sessão realizando ${entries.join('; ')}. ${goals.length?`Exercícios realizados visando ${goals.join(', ')}. `:''}${final?`PA final: ${final} mmHg. `:''}${ending}`.replace(/\s+/g,' ').trim();
+    const initial=String(authValues.bpInitial||'').trim(),final=String(authValues.bpFinal||'').trim(),goals=evolutionGoalsFromEntries(entries,allExercises());
+    const text=`${date}. Paciente compareceu ${presentation}. ${initial?`PA inicial: ${initial} mmHg. `:''}Iniciada a sessão realizando ${entries.join('; ')}. Exercícios realizados visando ${goalsSentence(goals)}. ${final?`PA final: ${final} mmHg. `:''}${ending}`.replace(/\s+/g,' ').trim();
     const output=form.querySelector('#express-evolution-output');if(output){output.value=text;output.focus();output.scrollIntoView({behavior:'smooth',block:'center'});}return;
   }
   if(form.id==='login-form'){try{authState.message='';await activateSession(await signIn({email:authValues.email,password:authValues.password,remember:form.elements.remember.checked}));location.hash='inicio';}catch(error){authState.message=error.message;render();}return;}

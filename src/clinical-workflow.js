@@ -1,3 +1,5 @@
+import { evolutionGoalsFromPerformed, goalsSentence } from './evolution-goals.js';
+
 /**
  * @typedef {Object} ClinicalAssessment
  * @property {Object} vitals
@@ -102,9 +104,8 @@ export function buildEvolution(values, items, exerciseLookup) {
   const done=items.filter(isPerformed);
   if(done.length){
     parts.push(`Iniciada a sessão realizando ${done.map(item=>{const exercise=exerciseLookup(item.exerciseId);const dose=[item.actualSets&&`${item.actualSets} séries`,item.actualReps&&`${item.actualReps} repetições`,item.actualTime,item.actualLoad&&`carga ${item.actualLoad}`,item.actualSide&&`lado ${item.actualSide}`].filter(Boolean).join(', ');return `${exercise?.name||'atividade registrada'}${dose?` — ${dose}`:''}`;}).join('; ')}.`);
-    const benefits=[...new Set(done.flatMap(item=>{const exercise=exerciseLookup(item.exerciseId)||{};return [exercise.objective,...(exercise.why||[]),exercise.functionalApplication].map(clean).filter(Boolean);} ))].slice(0,4);
-    if(benefits.length)parts.push(`Exercícios realizados visando ${benefits.join('; ')}.`);
-    else if(clean(values.objective))parts.push(`Objetivo registrado para a sessão: ${clean(values.objective)}.`);
+    const goals=evolutionGoalsFromPerformed(done,exerciseLookup);
+    parts.push(`Exercícios realizados visando ${goalsSentence(goals,clean(values.objective)||undefined)}.`);
   }
   const interrupted=items.filter(item=>item.status==='interrompido');
   if(interrupted.length)parts.push(`Atividades interrompidas: ${interrupted.map(item=>`${exerciseLookup(item.exerciseId)?.name||'atividade'}${item.stopReason?` — motivo: ${item.stopReason}`:''}`).join('; ')}.`);
