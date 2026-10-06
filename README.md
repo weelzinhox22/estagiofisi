@@ -1,4 +1,4 @@
-# Fisio Clínico 0.6
+# Fisio Clínico 1.0
 
 Aplicação web responsiva e PWA instalável para apoiar consulta, documentação e estudo durante a prática de fisioterapia supervisionada.
 
@@ -58,7 +58,7 @@ Consulte [docs/SOURCE_AUDIT.md](docs/SOURCE_AUDIT.md) para decisões de licença
 
 Importe o repositório no Vercel. O arquivo vercel.json define npm ci, npm run build e saída dist. A implantação HTTPS permite solicitar a câmera no Android. O PWA pode ser instalado pelo menu do navegador após carregar a página. Os registros permanecem apenas no armazenamento local de cada dispositivo e não sincronizam entre celular e desktop; use exportação/importação de backup para transferi-los.
 
-## Assistente de Avaliação — 0.6
+## Assistente de Avaliação — incorporado na 1.0
 
 A versão 0.6 acrescenta um fluxo local e offline de **caso → achados confirmados → pergunta clínica → medida → execução → registro → comparação**. O texto livre identifica apenas possibilidades, que precisam ser confirmadas pelo usuário. O motor determinístico explica cada sugestão e não produz diagnóstico ou prescrição.
 

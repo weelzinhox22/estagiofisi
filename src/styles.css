@@ -2333,7 +2333,7 @@ fieldset.next-session legend { font-size: 11px; font-weight: 700; color: var(--t
 }
 
 /* ═══════════════════════════════════════════════════════════
-   SEÇÃO: Versão 0.6 — Módulos avançados
+   SEÇÃO: Módulos avançados — mantidos na versão 1.0
    ═══════════════════════════════════════════════════════════ */
 .functional-test-grid, .more-grid {
   display: grid;
