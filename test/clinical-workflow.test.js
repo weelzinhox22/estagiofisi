@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { buildEvolution, comparisonData, timelineRecords, suggestPhysioDiagnosis } from '../src/clinical-workflow.js';
+import { buildEvolution, comparisonData, evolutionEvidence, isPerformed, timelineRecords, suggestPhysioDiagnosis } from '../src/clinical-workflow.js';
 
 test('evolução usa somente exercícios efetivamente executados',()=>{
   const exercises=new Map([['feito',{name:'Exercício realizado'}],['plano',{name:'Somente planejado'}],['parado',{name:'Interrompido'}]]);
@@ -17,6 +17,22 @@ test('evolução usa somente exercícios efetivamente executados',()=>{
   assert.doesNotMatch(text,/Somente planejado/);
   assert.match(text,/Interrompido/);
   assert.doesNotMatch(text,/sem intercorrências/i);
+});
+
+test('checklist separa execução de adaptação e expõe lacunas do rascunho',()=>{
+  assert.equal(isPerformed({status:'realizado'}),true);
+  assert.equal(isPerformed({status:'parcial'}),true);
+  assert.equal(isPerformed({status:'contraindicado_na_sessao'}),false);
+  assert.equal(isPerformed({status:'progressao'}),false);
+  const lookup=id=>({name:id==='a'?'Ponte':'Exercício'});
+  const values={objective:'melhorar transferência',goalStatements:['levantar da cadeira com apoio'],response:''};
+  const items=[{exerciseId:'a',status:'parcial',adaptation:'regressao'}];
+  const text=buildEvolution(values,items,lookup),evidence=evolutionEvidence(values,items,lookup);
+  assert.match(text,/execução parcial/);
+  assert.match(text,/regressao/);
+  assert.match(text,/levantar da cadeira com apoio/);
+  assert.ok(evidence.missing.some(item=>/dose/i.test(item)));
+  assert.ok(evidence.missing.some(item=>/Resposta/i.test(item)));
 });
 
 test('sugestão fisioterapêutica é aberta e exige revisão',()=>{

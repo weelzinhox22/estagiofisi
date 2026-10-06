@@ -73,7 +73,7 @@ export const scales = [
 {id:'scale-reflex',name:'Graduação de reflexos (0–4+)',purpose:'Padronizar o registro da resposta reflexa.',record:'0 ausente; 1+ reduzida; 2+ média; 3+ aumentada; 4+ muito aumentada/clônus. Interpretar com restante do exame.',license:'Convenção clínica; síntese original.',kind:'scale'},
 {id:'scale-assist',name:'Nível de assistência funcional',purpose:'Registrar quanta ajuda foi necessária para concluir a tarefa.',record:'Independente; supervisão; assistência parcial; assistência maior; dependente. Descrever contato, dispositivo e motivo.',license:'Categorias descritivas próprias do aplicativo.',kind:'scale'},
 {id:'scale-rpe',name:'Percepção de esforço de 0–10',purpose:'Registrar esforço percebido sem converter automaticamente em intensidade prescrita.',record:'A pessoa escolhe um número entre 0 (nenhum esforço) e 10 (máximo). Registrar tarefa e momento.',license:'Escala numérica genérica do aplicativo; não reproduz descritores proprietários.',kind:'scale'},
-{id:'scale-status',name:'Status do exercício na sessão',purpose:'Documentar o que ocorreu em cada atividade.',record:'Planejado; realizado; não realizado; interrompido; modificado. Acrescentar motivo e resposta.',license:'Categorias originais do aplicativo.',kind:'scale'}
+{id:'scale-status',name:'Status do exercício na sessão',purpose:'Documentar o que ocorreu em cada atividade.',record:'Não avaliado; realizado; parcial; não realizado; contraindicado na sessão. Registre adaptação, motivo, dose, assistência e resposta em campos separados.',license:'Categorias originais do aplicativo.',kind:'scale'}
 ];
 
 clinicalTests.push(...[

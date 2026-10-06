@@ -1,5 +1,3 @@
-import { evolutionGoalsFromPerformed, goalsSentence } from './evolution-goals.js';
-
 /**
  * @typedef {Object} ClinicalAssessment
  * @property {Object} vitals
@@ -14,7 +12,7 @@ import { evolutionGoalsFromPerformed, goalsSentence } from './evolution-goals.js
  */
 
 export const SESSION_BLOCKS = ['Avaliação inicial','Mobilidade','Ativação','Fortalecimento','Equilíbrio','Treino funcional','Marcha','Reavaliação'];
-export const PERFORMED_STATUSES = ['realizado','reduzido','progredido','modificado'];
+export const PERFORMED_STATUSES = ['realizado','parcial'];
 export const SAFETY_OPTIONS = [
   ['bp','PA requer atenção conforme contexto/protocolo'],
   ['dizziness','Tontura'],
@@ -103,18 +101,29 @@ export function buildEvolution(values, items, exerciseLookup) {
   if(initial.length)parts.push(`${initial.join('; ')}.`);
   const done=items.filter(isPerformed);
   if(done.length){
-    parts.push(`Iniciada a sessão realizando ${done.map(item=>{const exercise=exerciseLookup(item.exerciseId);const dose=[item.actualSets&&`${item.actualSets} séries`,item.actualReps&&`${item.actualReps} repetições`,item.actualTime,item.actualLoad&&`carga ${item.actualLoad}`,item.actualSide&&`lado ${item.actualSide}`].filter(Boolean).join(', ');return `${exercise?.name||'atividade registrada'}${dose?` — ${dose}`:''}`;}).join('; ')}.`);
-    const goals=evolutionGoalsFromPerformed(done,exerciseLookup);
-    parts.push(`Exercícios realizados visando ${goalsSentence(goals,clean(values.objective)||undefined)}.`);
+    parts.push(`Atividades registradas como realizadas: ${done.map(item=>{const exercise=exerciseLookup(item.exerciseId);const dose=[item.actualSets&&`${item.actualSets} séries`,item.actualReps&&`${item.actualReps} repetições`,item.actualTime,item.actualLoad&&`carga ${item.actualLoad}`,item.actualSide&&`lado ${item.actualSide}`,item.assistance&&`assistência ${item.assistance}`].filter(Boolean).join(', ');const qualifiers=[item.status==='parcial'&&'execução parcial',item.adaptation&&`adaptação: ${item.adaptation}`,item.tolerance&&`tolerância: ${item.tolerance}`].filter(Boolean).join('; ');return `${exercise?.name||'atividade registrada'}${dose?` — ${dose}`:''}${qualifiers?` (${qualifiers})`:''}`;}).join('; ')}.`);
+    const registeredGoals=[...(values.goalStatements||[]),clean(values.objective)].map(clean).filter(Boolean);
+    if(registeredGoals.length)parts.push(`Objetivo(s) registrado(s) para a sessão: ${[...new Set(registeredGoals)].join('; ')}.`);
   }
-  const interrupted=items.filter(item=>item.status==='interrompido');
-  if(interrupted.length)parts.push(`Atividades interrompidas: ${interrupted.map(item=>`${exerciseLookup(item.exerciseId)?.name||'atividade'}${item.stopReason?` — motivo: ${item.stopReason}`:''}`).join('; ')}.`);
+  const notCompleted=items.filter(item=>['nao_realizado','contraindicado_na_sessao','interrompido'].includes(item.status));
+  if(notCompleted.length)parts.push(`Atividades não executadas integralmente nesta sessão: ${notCompleted.map(item=>`${exerciseLookup(item.exerciseId)?.name||'atividade'} (${item.status==='contraindicado_na_sessao'?'contraindicada na sessão':item.status==='interrompido'?'interrompido — registro anterior':'não realizada'})${item.reason||item.stopReason?` — motivo registrado: ${item.reason||item.stopReason}`:''}`).join('; ')}.`);
   const final=[values.painAfter!==''&&values.painAfter!=null&&`EVA final ${values.painAfter}/10`,clean(values.bpFinal)&&`PA final ${clean(values.bpFinal)}`,clean(values.hrFinal)&&`FC final ${clean(values.hrFinal)} bpm`].filter(Boolean);
   if(final.length)parts.push(`${final.join('; ')}.`);
   if(clean(values.response))parts.push(`Resposta durante/após a sessão: ${clean(values.response)}.`);
   if(clean(values.incidents))parts.push(`Intercorrências confirmadas: ${clean(values.incidents)}.`);
-  else if(!interrupted.length)parts.push('Sessão finalizada sem intercorrências registradas.');
+  else parts.push('Não há intercorrências preenchidas neste registro.');
   return parts.join(' ');
+}
+
+export function evolutionEvidence(values,items,exerciseLookup){
+  const done=items.filter(isPerformed);
+  const facts=[...done.map(item=>`${exerciseLookup(item.exerciseId)?.name||'Atividade'} · ${item.status}`),...(values.goalStatements||[]).map(goal=>`Objetivo vinculado · ${goal}`),clean(values.objective)&&`Objetivo da sessão · ${clean(values.objective)}`].filter(Boolean);
+  const missing=[];
+  if(!done.length)missing.push('Nenhuma atividade está marcada como realizada ou parcial.');
+  if(!clean(values.objective)&&!(values.goalStatements||[]).length)missing.push('Nenhum objetivo foi vinculado ou descrito.');
+  if(done.some(item=>![item.actualSets,item.actualReps,item.actualTime,item.actualLoad].some(clean)))missing.push('Há atividade realizada sem dose executada registrada.');
+  if(!clean(values.response))missing.push('Resposta durante/após a sessão não registrada.');
+  return {facts,missing};
 }
 
 export function patientLabel(patient) { return clean(patient.name)||clean(patient.code)||'Paciente sem identificação'; }
