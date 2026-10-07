@@ -1,5 +1,7 @@
 # Fisio Clínico 1.0
 
+O fluxo principal agora parte do **Painel Clínico**, que conecta avaliação, objetivos, plano, checklist da sessão, evolução revisada, reavaliação e orientação domiciliar. Consulte [a documentação da jornada clínica](docs/CLINICAL_WORKFLOW_V1.md).
+
 Aplicação web responsiva e PWA instalável para apoiar consulta, documentação e estudo durante a prática de fisioterapia supervisionada.
 
 ## Funcionalidades

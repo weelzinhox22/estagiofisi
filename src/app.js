@@ -38,6 +38,7 @@ import { conditionLibraryPage } from './condition-exercises-ui.js';
 import { saveFormDraft, restoreDrafts, clearFormDraft, saveSessionPlan, loadSessionPlan, clearSessionPlan } from './draft-persistence.js';
 import { externalExerciseCatalog, externalCatalogErrors } from './external-exercise-catalog-data.js';
 import { externalExerciseCatalogPage } from './external-exercise-catalog-ui.js';
+import { clinicalDashboardPage, patientPortalPage } from './clinical-dashboard-ui.js';
 
 let state=emptyState(),currentStorage=localStorage;
 let authState={ready:false,session:null,profile:null,message:''},adminRows=null,voiceStructureDraft=null,mentorDraft={},learningDraft={tool:'',history:[]};
@@ -93,20 +94,20 @@ const patientAvatar=patient=>`<span class="avatar patient-chibi chibi-${patientA
 const pageHeader = (eyebrow,title,desc,action='') => `<div class="page-head"><div><span class="eyebrow">${eyebrow}</span><h1>${title}</h1><p>${desc}</p></div>${action}</div>`;
 const advisory = `<div class="advisory"><span class="advisory-icon">ⓘ</span><div><strong>Uso educacional e apoio clínico supervisionado</strong><p>Registros e exercícios exigem avaliação e decisão individual do profissional responsável. Não substitui diagnóstico ou julgamento clínico.</p></div></div>`;
 
-const navItems = [['inicio','Visão geral','◫'],['atendimento-rapido','Atendimento rápido','⚡'],['evolucao','Criar evolução','✎'],['consulta','Consulta rápida','⌕'],['pacientes','Pacientes','♧'],['aprender','Aprender','✺'],['assistente','Assistente','✦'],['biblioteca','Biblioteca','◇'],['artigos','Buscar artigos','⌕'],['repertorio','Meu repertório','★'],['mais','Mais','☰'],['downloads','Downloads','⇩'],['conta','Conta','●']];
-function route() { return decodeURIComponent((location.hash.slice(1) || 'inicio').split('?')[0]).split('/'); }
+const navItems = [['painel','Painel clínico','◫'],['pacientes','Pacientes','♧'],['atendimento-rapido','Atendimento rápido','⚡'],['evolucao','Criar evolução','✎'],['biblioteca','Biblioteca','◇'],['consulta','Consulta rápida','⌕'],['aprender','Aprender','✺'],['assistente','Assistente','✦'],['artigos','Buscar artigos','⌕'],['repertorio','Meu repertório','★'],['mais','Mais','☰'],['downloads','Downloads','⇩'],['conta','Conta','●']];
+function route() { return decodeURIComponent((location.hash.slice(1) || 'painel').split('?')[0]).split('/'); }
 function routeQuery() { return new URLSearchParams((location.hash.split('?')[1]||'')); }
 function renderNav(section) {
-  const activeSection = section==='mentor'?'aprender':['camera','encontro','queixa','casos','conduta','testes-funcionais','medidas'].includes(section) ? 'biblioteca' : ['reavaliacao','alta','modelo-funcional','neuro','pediatria','domiciliar','ferramentas'].includes(section)?'mais':section;
+  const activeSection = section==='mentor'?'aprender':section==='portal'?'pacientes':['camera','encontro','queixa','casos','conduta','testes-funcionais','medidas'].includes(section) ? 'biblioteca' : ['reavaliacao','alta','modelo-funcional','neuro','pediatria','domiciliar','ferramentas','inicio'].includes(section)?'mais':section;
   const items=authState.profile?.role==='admin'?[...navItems,['admin','Admin','◆']]:navItems;
-  const iconNames={inicio:'home','atendimento-rapido':'plusCircle',evolucao:'edit',consulta:'search',pacientes:'users',aprender:'learn',assistente:'bolt',biblioteca:'book',repertorio:'clipboard',mais:'dots',downloads:'download',conta:'user',admin:'shield'};
+  const iconNames={painel:'home',inicio:'home','atendimento-rapido':'plusCircle',evolucao:'edit',consulta:'search',pacientes:'users',aprender:'learn',assistente:'bolt',biblioteca:'book',repertorio:'clipboard',mais:'dots',downloads:'download',conta:'user',admin:'shield'};
   const itemHtml=([id,label,icon],selected=activeSection)=>`<a href="#${id}" class="nav-item nav-${id} ${selected===id?'active':''}" ${selected===id?'aria-current="page"':''}><span aria-hidden="true">${iconNames[id]?homeIcon(iconNames[id]):icon}</span><span>${label}</span></a>`;
   $('#desktop-nav').innerHTML = items.map(itemHtml).join('');
-  const mobileOrder=['inicio','atendimento-rapido','pacientes','biblioteca','mais'];
+  const mobileOrder=['painel','pacientes','atendimento-rapido','biblioteca','mais'];
   const moreSections=new Set(['evolucao','aprender','assistente','artigos','repertorio','downloads','mais','dados','conta','admin']);
   const mobileActive=moreSections.has(activeSection)?'mais':activeSection;
-  $('#mobile-nav').innerHTML = mobileOrder.map(id=>items.find(([itemId])=>itemId===id)).filter(Boolean).map(([id,label,icon])=>itemHtml([id,({inicio:'Início','atendimento-rapido':'Atender',pacientes:'Pacientes',biblioteca:'Biblioteca',mais:'Mais'})[id]||label,icon],mobileActive)).join('');
-  $('#breadcrumb').textContent = section==='inicio'?'Fisio Clínico':items.find(([id]) => id === activeSection)?.[1] || 'Visão geral';
+  $('#mobile-nav').innerHTML = mobileOrder.map(id=>items.find(([itemId])=>itemId===id)).filter(Boolean).map(([id,label,icon])=>itemHtml([id,({painel:'Painel','atendimento-rapido':'Atender',pacientes:'Pacientes',biblioteca:'Biblioteca',mais:'Mais'})[id]||label,icon],mobileActive)).join('');
+  $('#breadcrumb').textContent = section==='painel'?'Painel clínico':items.find(([id]) => id === activeSection)?.[1] || 'Fisio Clínico';
 }
 function render() {
   stopVoiceDictation();
@@ -117,9 +118,11 @@ function render() {
   if(!authState.ready){unmountMentorChat();document.body.classList.add('app-booting');$('#desktop-nav').innerHTML=$('#mobile-nav').innerHTML='';main.innerHTML='<div class="app-start-skeleton" aria-label="Preparando aplicativo"><div class="boot-brand"><img src="/icons/brand-mark.svg" alt=""><span><strong>Fisio Clínico</strong><small>PRÁTICA SUPERVISIONADA</small></span></div><div class="skeleton-hero"></div><div class="skeleton-grid"><i></i><i></i><i></i><i></i></div><div class="skeleton-line"></div><div class="skeleton-card"></div></div>';return;}
   document.body.classList.remove('app-booting');
   if(!authState.session){unmountMentorChat();$('#desktop-nav').innerHTML=$('#mobile-nav').innerHTML='';$('#breadcrumb').textContent='Conta';main.innerHTML=authPage(['cadastro','recuperar'].includes(section)?section:'login',authState.message);queueMicrotask(()=>enhanceVoiceInputs(main));return;}
-  if(['login','cadastro','recuperar'].includes(section)){location.hash='inicio';return;}
+  if(['login','cadastro','recuperar'].includes(section)){location.hash='painel';return;}
   renderNav(section);
-  if(section==='conta') main.innerHTML=accountPage(authState.profile,state.syncConflicts||[]);
+  if(section==='painel') main.innerHTML=clinicalDashboardPage(state,conditionPrograms);
+  else if(section==='portal'&&id) main.innerHTML=patientPortalPage(state,id,exerciseId=>allExercises().find(item=>item.id===exerciseId));
+  else if(section==='conta') main.innerHTML=accountPage(authState.profile,state.syncConflicts||[]);
   else if(section==='admin'){if(authState.profile?.role!=='admin')main.innerHTML=empty('Acesso restrito','Esta área está disponível apenas para administradores autorizados.');else{main.innerHTML=adminPage(adminRows||[],adminRows===null);if(adminRows===null)loadAdminCases();}}
   else if(section==='atendimento-rapido'){const query=routeQuery(),a=query.get('a')||'',b=query.get('b')||'';main.innerHTML=rapidCarePage(state,a,b,query.get('mode')||(b?'duplo':'individual'));}
   else if(section==='mentor') main.innerHTML=clinicalMentorPage(state,{...mentorDraft,patientId:routeQuery().get('patient')||mentorDraft.patientId||''});
@@ -163,7 +166,8 @@ function render() {
   else if (section === 'pacientes' && id) main.innerHTML = patientWorkflowPage(state,id,tab,allExercises());
   else if (section === 'pacientes') main.innerHTML = patientsPage();
   else if (section === 'dados') main.innerHTML = dataPage();
-  else main.innerHTML = homePage();
+  else if(section==='inicio') main.innerHTML = homePage();
+  else main.innerHTML = clinicalDashboardPage(state,conditionPrograms);
   enterPage(main,routeKey);
   queueMicrotask(()=>{restoreDrafts(main,activeUserId(),location.hash);enhanceVoiceInputs(main);updateSessionTotal();});
   document.title = `${$('#breadcrumb').textContent} · Fisio Clínico`;
@@ -605,8 +609,8 @@ document.addEventListener('submit', async event => {
     const text=`${date}. Paciente compareceu ${presentation}. ${initial?`PA inicial: ${initial} mmHg. `:''}Iniciada a sessão realizando ${entries.join('; ')}. Exercícios realizados visando ${goalsSentence(goals)}. ${final?`PA final: ${final} mmHg. `:''}${ending}`.replace(/\s+/g,' ').trim();
     const output=form.querySelector('#express-evolution-output');if(output){output.value=text;output.focus();output.scrollIntoView({behavior:'smooth',block:'center'});}return;
   }
-  if(form.id==='login-form'){try{authState.message='';await activateSession(await signIn({email:authValues.email,password:authValues.password,remember:form.elements.remember.checked}));location.hash='inicio';}catch(error){authState.message=error.message;render();}return;}
-  if(form.id==='signup-form'){if(authValues.password!==authValues.passwordConfirm){authState.message='As senhas não coincidem.';render();return;}try{const result=await signUp({email:authValues.email,password:authValues.password,displayName:authValues.displayName});if(result.access_token){await activateSession(persistSession(result,true));location.hash='inicio';}else{authState.message='Conta criada. Confirme o e-mail antes de entrar.';location.hash='login';render();}}catch(error){authState.message=error.message;render();}return;}
+  if(form.id==='login-form'){try{authState.message='';await activateSession(await signIn({email:authValues.email,password:authValues.password,remember:form.elements.remember.checked}));location.hash='painel';}catch(error){authState.message=error.message;render();}return;}
+  if(form.id==='signup-form'){if(authValues.password!==authValues.passwordConfirm){authState.message='As senhas não coincidem.';render();return;}try{const result=await signUp({email:authValues.email,password:authValues.password,displayName:authValues.displayName});if(result.access_token){await activateSession(persistSession(result,true));location.hash='painel';}else{authState.message='Conta criada. Confirme o e-mail antes de entrar.';location.hash='login';render();}}catch(error){authState.message=error.message;render();}return;}
   if(form.id==='password-reset-form'){try{await requestPasswordReset(authValues.email);authState.message='Confira seu e-mail para redefinir a senha.';location.hash='login';render();}catch(error){authState.message=error.message;render();}return;}
   if(form.id==='change-password-form'){if(authValues.password!==authValues.passwordConfirm){toast('As senhas não coincidem.',true);return;}try{await changePassword(authState.session,authValues.password);form.reset();toast('Senha alterada com segurança.');}catch(error){toast(error.message,true);}return;}
   if(form.id==='home-link-form'){const label=String(authValues.label||'').trim(),url=String(authValues.url||'').trim();if(!label){toast('Informe um nome para o link.',true);return;}if(!/^https?:\/\//i.test(url)){toast('O endereço deve começar com http:// ou https://.',true);return;}const prefs=homePrefs();prefs.links.push({id:crypto.randomUUID?.()||`link-${Date.now()}`,label,url,description:String(authValues.description||'').trim()});saveHomePrefs(prefs);closeModal();render();toast('Link adicionado à Home.');return;}
@@ -617,7 +621,16 @@ document.addEventListener('submit', async event => {
   if(form.id==='clinical-mentor-form'){const intent=event.submitter?.value||'analyze';if(intent==='save'){if(!authValues.patientId){toast('Selecione um paciente para salvar a análise.',true);return;}if(!mentorDraft.result){toast('Gere a análise antes de salvar.',true);return;}addRecord(state,'clinicalMentorCases',{patientId:authValues.patientId,caseText:mentorDraft.caseText,goal:mentorDraft.goal,result:mentorDraft.result});saveState(state);toast('Análise educacional salva no paciente.');return;}try{mentorDraft={patientId:authValues.patientId,caseText:authValues.caseText,goal:authValues.goal,loading:true};render();const response=await fetch('/api/clinical-mentor',{method:'POST',headers:{'Content-Type':'application/json',Authorization:`Bearer ${authState.session.access_token}`},body:JSON.stringify({caseText:authValues.caseText,goal:authValues.goal})}),payload=await response.json().catch(()=>({}));if(!response.ok)throw new Error(payload.error||'Não foi possível analisar o caso.');mentorDraft={...mentorDraft,loading:false,result:payload.result};render();}catch(error){mentorDraft.loading=false;toast(error.message,true);render();}return;}
   if(form.id.startsWith('rapid-care-form-')){if(!rapidCareHasContent(form)){toast('Registre ao menos uma informação clínica antes de salvar.',true);return;}persistRapidCareForm(form);clearFormDraft(form,activeUserId(),location.hash);saveState(state);toast('Atendimento salvo e evolução gerada sem acrescentar dados.');render();return;}
   if(form.id==='session-builder-form'){
-    try{const payload=sessionFromForm(form);addRecord(state,'sessions',payload);sessionDrafts.delete(payload.patientId);clearFormDraft(form,activeUserId(),location.hash);clearSessionPlan(activeUserId(),payload.patientId);saveState(state);toast('Sessão concluída e evolução gerada.');location.hash=`pacientes/${payload.patientId}`;}catch(error){toast(error.message,true);}return;
+    if(!form.elements.evolutionReviewed?.checked){toast('Revise a evolução e confirme a revisão profissional antes de salvar.',true);form.elements.evolutionReviewed?.focus();return;}
+    try{const payload=sessionFromForm(form),session=addRecord(state,'sessions',payload);addRecord(state,'auditEvents',{patientId:payload.patientId,recordId:session.id,action:'sessao_revisada_e_salva',actor:payload.reviewerName,location:'sessao',timestamp:payload.reviewedAt,summary:`${payload.items.filter(item=>['realizado','parcial'].includes(item.status)).length} item(ns) executado(s) registrado(s)`});sessionDrafts.delete(payload.patientId);clearFormDraft(form,activeUserId(),location.hash);clearSessionPlan(activeUserId(),payload.patientId);saveState(state);toast('Sessão e evolução revisadas foram salvas.');location.hash=`pacientes/${payload.patientId}/evolucoes`;}catch(error){toast(error.message,true);}return;
+  }
+  if(form.id==='patient-checkin-form'){
+    const data=new FormData(form),program=state.homePrograms.find(row=>row.id===authValues.programId&&row.patientId===authValues.patientId),statusLabels={realizado:'Realizado conforme relato',parcial:'Realizado parcialmente conforme relato',nao_realizado:'Não realizado conforme relato'};
+    if(!program){toast('A orientação vinculada não foi encontrada.',true);return;}
+    const reports=(program.items||[]).map(item=>{const status=data.get(`status-${item.exerciseId}`);if(!status)return null;const exercise=allExercises().find(row=>row.id===item.exerciseId);return {patientId:authValues.patientId,programId:program.id,exerciseId:item.exerciseId,exerciseName:exercise?.name||item.name||'Exercício',date:authValues.date,status,statusLabel:statusLabels[status],difficulty:data.get(`difficulty-${item.exerciseId}`)||'',pain:data.get(`pain-${item.exerciseId}`)||'',note:data.get(`note-${item.exerciseId}`)||'',source:'relato_do_paciente',reviewStatus:'aguardando_revisao_profissional'};}).filter(Boolean);
+    if(!reports.length){toast('Marque ao menos um exercício antes de enviar o relato.',true);return;}
+    if(reports.some(row=>row.pain!==''&&!inRange(row.pain))){toast('Informe dor entre 0 e 10.',true);return;}
+    reports.forEach(report=>addRecord(state,'patientCheckins',report));addRecord(state,'auditEvents',{patientId:authValues.patientId,recordId:program.id,action:'relato_domiciliar_registrado',actor:'paciente',location:'portal',timestamp:new Date().toISOString(),summary:`${reports.length} item(ns) relatado(s); revisão profissional pendente`});commitDraft(form);saveState(state);toast('Relato salvo. O fisioterapeuta deverá revisá-lo.');render();return;
   }
   const values=formValues(form);
   if(form.id==='assessment-assistant-form'){
@@ -639,7 +652,7 @@ document.addEventListener('submit', async event => {
   if(form.id==='home-program-form'){
     const fd=new FormData(form),ids=fd.getAll('exerciseIds');if(!ids.length){toast('Selecione ao menos um exercício.',true);return;}
     values.items=ids.map(exerciseId=>{const exercise=allExercises().find(item=>item.id===exerciseId);return {exerciseId,name:exercise?.name||'Exercício'};});
-    addRecord(state,'homePrograms',values);commitDraft(form);saved();return;
+    const program=addRecord(state,'homePrograms',values);addRecord(state,'auditEvents',{patientId:values.patientId,recordId:program.id,action:'programa_domiciliar_criado',actor:authState.profile?.display_name||authState.profile?.name||'profissional autenticado',location:'domiciliar',timestamp:new Date().toISOString(),summary:`${values.items.length} exercício(s) selecionado(s)`});commitDraft(form);saved();return;
   }
   if(form.id==='clinical-assessment-form'){
     const clinical=clinicalAssessmentFromForm(new FormData(form));
