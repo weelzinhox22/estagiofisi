@@ -1,0 +1,361 @@
+/* ============================================================
+   FISIO CLÍNICO — MODERN LUXURY & CLINICAL TECH DESIGN SYSTEM
+   Linear-grade · Crisp Glassmorphism · Tailored Emerald & Zinc
+   ============================================================ */
+
+:root {
+  /* ── 1. Paleta de Cores de Alta Precisão (Emerald, Slate & Zinc) ── */
+  --primary: #0f766e;              /* Deep medical teal */
+  --primary-hover: #115e59;
+  --primary-light: #f0fdfa;
+  --primary-border: #ccfbf1;
+  --primary-glow: rgba(20, 184, 166, 0.18);
+
+  --accent: #10b981;               /* Emerald accent for actions/success */
+  --accent-light: #ecfdf5;
+  --accent-border: #a7f3d0;
+
+  --amber-soft: #fffbeb;
+  --amber-border: #fef3c7;
+  --amber-ink: #92400e;
+
+  /* Neutros refinados (Off-white / Slate) */
+  --bg-app: #f8fafc;               /* Crisp ultra-clean canvas */
+  --surface-clean: #ffffff;
+  --surface-subtle: #f1f5f9;
+  --border-subtle: #e2e8f0;
+  --border-focus: #14b8a6;
+  
+  --ink-primary: #0f172a;          /* Slate 900 for razor-sharp headings */
+  --ink-secondary: #334155;        /* Slate 700 for high readability text */
+  --ink-muted: #64748b;            /* Slate 500 for secondary cues */
+  --ink-faint: #94a3b8;            /* Slate 400 */
+
+  /* ── 2. Sombras Ultra Suaves & Elevação ── */
+  --card-shadow-sm: 0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 1px 2px -1px rgba(15, 23, 42, 0.04);
+  --card-shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.06), 0 2px 4px -2px rgba(15, 23, 42, 0.04);
+  --card-shadow-hover: 0 12px 28px -4px rgba(15, 23, 42, 0.08), 0 6px 12px -3px rgba(15, 23, 42, 0.04);
+  --glass-shadow: 0 8px 32px 0 rgba(15, 23, 42, 0.05);
+
+  /* ── 3. Bordas e Transições ── */
+  --radius-card: 20px;
+  --radius-pill: 9999px;
+  --radius-input: 14px;
+  --transition-smooth: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── Sobrescrever Canvas Base ── */
+body {
+  background-color: var(--bg-app) !important;
+  color: var(--ink-secondary) !important;
+  letter-spacing: -0.011em;
+}
+
+/* ── Topbar Glassmorphism ── */
+.topbar {
+  background: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8) !important;
+  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.02) !important;
+}
+
+.topbar-title {
+  color: var(--ink-primary) !important;
+  font-family: var(--font-sans) !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em !important;
+}
+
+/* ── Global Search Input Redesign ── */
+.global-search {
+  background: #ffffff !important;
+  border: 1px solid var(--border-subtle) !important;
+  box-shadow: var(--card-shadow-sm) !important;
+  border-radius: var(--radius-pill) !important;
+  transition: var(--transition-smooth) !important;
+}
+
+.global-search:focus-within {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 4px var(--primary-glow) !important;
+}
+
+.global-search input {
+  color: var(--ink-primary) !important;
+  font-weight: 500 !important;
+}
+
+/* ── Barra de Navegação Lateral Desktop ── */
+.sidebar {
+  background: linear-gradient(180deg, #092c28 0%, #0d3833 100%) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+.brand {
+  font-family: var(--font-sans) !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.03em !important;
+}
+
+.brand-mark {
+  background: linear-gradient(135deg, #2dd4bf, #14b8a6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 10px rgba(45, 212, 191, 0.4));
+}
+
+.nav-item {
+  border-radius: 12px !important;
+  font-weight: 500 !important;
+  transition: var(--transition-smooth) !important;
+}
+
+.nav-item:hover {
+  background: rgba(255, 255, 255, 0.09) !important;
+  transform: translateX(2px);
+}
+
+.nav-item.active {
+  background: rgba(255, 255, 255, 0.15) !important;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1) !important;
+}
+
+.nav-item.active::before {
+  background: #2dd4bf !important;
+  width: 3.5px !important;
+}
+
+/* ── Modernização de Botões ── */
+.button {
+  font-family: var(--font-sans) !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.01em !important;
+  border-radius: 12px !important;
+  transition: var(--transition-smooth) !important;
+  box-shadow: var(--card-shadow-sm);
+}
+
+.button:active {
+  transform: scale(0.98) !important;
+}
+
+.button.primary {
+  background: linear-gradient(145deg, #0f766e, #115e59) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 4px 14px rgba(15, 118, 110, 0.28) !important;
+}
+
+.button.primary:hover {
+  background: linear-gradient(145deg, #115e59, #0d4a46) !important;
+  box-shadow: 0 6px 18px rgba(15, 118, 110, 0.35) !important;
+  transform: translateY(-1.5px) !important;
+}
+
+.button.secondary {
+  background: #f0fdfa !important;
+  color: #0f766e !important;
+  border: 1px solid #ccfbf1 !important;
+}
+
+.button.secondary:hover {
+  background: #e0f2fe !important;
+  color: #0369a1 !important;
+  border-color: #bae6fd !important;
+  transform: translateY(-1px) !important;
+}
+
+.button.ghost {
+  background: #ffffff !important;
+  border: 1px solid var(--border-subtle) !important;
+  color: var(--ink-secondary) !important;
+}
+
+.button.ghost:hover {
+  background: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+  color: var(--ink-primary) !important;
+}
+
+/* ── Hero Sections (Visual de Produto SaaS Premium) ── */
+.hero, .condition-hero, .condition-detail-hero {
+  border-radius: var(--radius-card) !important;
+  background: linear-gradient(135deg, #093b36 0%, #0f564d 50%, #157367 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 16px 36px -8px rgba(9, 59, 54, 0.25) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::after, .condition-hero::after, .condition-detail-hero::after {
+  content: '';
+  position: absolute;
+  top: -40%;
+  right: -10%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(45, 212, 191, 0.25) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero h1, .condition-detail-hero h1 {
+  font-family: var(--font-sans) !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.035em !important;
+}
+
+/* ── Cards de Conteúdo e Patologias ── */
+.panel, .condition-card, .exercise-card, .reference-card {
+  background: #ffffff !important;
+  border: 1px solid var(--border-subtle) !important;
+  border-radius: var(--radius-card) !important;
+  box-shadow: var(--card-shadow-sm) !important;
+  transition: var(--transition-smooth) !important;
+}
+
+.panel:hover, .condition-card:hover, .exercise-card:hover {
+  border-color: #cbd5e1 !important;
+  box-shadow: var(--card-shadow-hover) !important;
+  transform: translateY(-2px);
+}
+
+.condition-card > header {
+  background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%) !important;
+  border-bottom: 1px solid var(--border-subtle) !important;
+}
+
+.condition-card h3 {
+  font-family: var(--font-sans) !important;
+  font-weight: 700 !important;
+  color: var(--ink-primary) !important;
+  letter-spacing: -0.02em !important;
+}
+
+/* ── Modernização Extrema dos Cards Clínicos de Exercícios ── */
+.clinical-exercise-card {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 22px !important;
+  box-shadow: var(--card-shadow-md) !important;
+  padding: 24px !important;
+  transition: var(--transition-smooth) !important;
+}
+
+.clinical-exercise-card:hover {
+  border-color: #94a3b8 !important;
+  box-shadow: var(--card-shadow-hover) !important;
+  transform: translateY(-2px);
+}
+
+.clinical-card-head {
+  border-bottom: 1px solid #f1f5f9 !important;
+  padding-bottom: 18px !important;
+}
+
+.exercise-num {
+  background: linear-gradient(135deg, #f0fdfa, #ccfbf1) !important;
+  color: #0f766e !important;
+  font-family: var(--font-sans) !important;
+  font-weight: 800 !important;
+  border: 1px solid #99f6e4 !important;
+  box-shadow: 0 2px 6px rgba(20, 184, 166, 0.12);
+}
+
+.exercise-title-group h3 {
+  font-family: var(--font-sans) !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.025em !important;
+  color: var(--ink-primary) !important;
+}
+
+.meta-pill {
+  font-weight: 600 !important;
+  font-size: 11px !important;
+  border-radius: 6px !important;
+  letter-spacing: 0.01em !important;
+}
+
+.clinical-card-objective {
+  background: linear-gradient(145deg, #f8fafc, #f1f5f9) !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 14px !important;
+  padding: 12px 16px !important;
+  color: var(--ink-secondary) !important;
+}
+
+.clinical-card-objective strong {
+  color: #0f766e !important;
+  font-weight: 700 !important;
+}
+
+/* Blocos clínicos 3D Flat */
+.clinical-block {
+  border-radius: 16px !important;
+  border: 1px solid #e2e8f0 !important;
+  padding: 16px 18px !important;
+  box-shadow: 0 1px 2px 0 rgba(15, 23, 42, 0.02) !important;
+}
+
+.clinical-block.patient-pos {
+  background: #f0fdf4 !important;
+  border-color: #bbf7d0 !important;
+}
+.clinical-block.patient-pos h4 { color: #15803d !important; }
+
+.clinical-block.therapist-cue {
+  background: #f0f9ff !important;
+  border-color: #bae6fd !important;
+}
+.clinical-block.therapist-cue h4 { color: #0284c7 !important; }
+
+.clinical-block.steps-flow {
+  background: #fafaf9 !important;
+  border-color: #e7e5e4 !important;
+}
+
+.clinical-block.adaptations {
+  background: #faf5ff !important;
+  border-color: #e9d5ff !important;
+}
+.clinical-block.adaptations h4 { color: #7e22ce !important; }
+
+.reg-box {
+  background: #fef2f2 !important;
+  border-color: #fecaca !important;
+  border-radius: 14px !important;
+}
+.prog-box {
+  background: #f0fdf4 !important;
+  border-color: #bbf7d0 !important;
+  border-radius: 14px !important;
+}
+
+/* ── Quick Consult Hero & Category Pills ── */
+.quick-consult-hero {
+  border-radius: var(--radius-card) !important;
+  background: linear-gradient(135deg, #093b36 0%, #0d4a43 100%) !important;
+  box-shadow: 0 16px 36px -6px rgba(9, 59, 54, 0.2) !important;
+  color: #ffffff !important;
+}
+
+.quick-search {
+  background: #ffffff !important;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
+}
+
+.quick-search input {
+  font-size: 15px !important;
+  font-weight: 500 !important;
+}
+
+/* ── Mobile Navigation Bar Premium Touch ── */
+@media (max-width: 900px) {
+  .bottom-nav {
+    background: rgba(13, 43, 39, 0.95) !important;
+    backdrop-filter: blur(20px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.2) !important;
+  }
+}
