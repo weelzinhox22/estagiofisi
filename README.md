@@ -83,9 +83,13 @@ Copy-Item .env.example .env.local
 npm start
 ```
 
-No Vercel, cadastre `GROQ_API_KEY` nas variáveis de ambiente do projeto. Não use prefixos públicos e não coloque a chave em `src/`, `index.html` ou commits. O arquivo `.env.local` é ignorado pelo Git.
+No Vercel, cadastre `GROQ_API_KEY`, `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY`, `GROQ_CLINICAL_MODEL` e `GROQ_VISION_MODEL` nas variáveis de ambiente do projeto. O modelo visual padrão é `qwen/qwen3.6-27b`. Não use prefixos públicos na chave Groq e não coloque segredos em `src/`, `index.html` ou commits. O arquivo `.env.local` é ignorado pelo Git.
 
 A aplicação mostra um aviso antes do primeiro envio. O áudio é transmitido à Groq e exige internet; as demais funcionalidades continuam locais/offline. Não dite nome, documento, contato ou outro identificador. Consulte a política institucional e, quando aplicável, configure Zero Data Retention na conta Groq.
+
+### Análise de exercícios em vídeo
+
+O endpoint autenticado `/api/analyze-exercise-video` envia à Groq, após consentimento expresso na interface, cinco quadros JPEG reduzidos e sem áudio distribuídos entre o início e o fim do vídeo, além do contexto opcional digitado. O modelo não analisa todos os frames e não pode confirmar velocidade contínua, fadiga, tremor intermitente ou eventos ocorridos entre as amostras. A ficha gerada é sempre um rascunho editável e só é publicada após revisão do usuário. O vídeo completo é enviado ao bucket privado `exercise-videos` do Supabase apenas depois dessa confirmação. Não envie rosto, nome, prontuário ou qualquer identificador de paciente.
 ## Supabase e contas
 
 1. No SQL Editor do projeto Supabase, execute `supabase/migrations/20260920_auth_cloud.sql`.

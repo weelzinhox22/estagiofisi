@@ -13,9 +13,9 @@ test('catálogo referencia 50 vídeos existentes',async()=>{
   for(const item of catalog){const info=await stat(resolve(root,'public',item.arquivo));assert.ok(info.size>1000,`${item.arquivo} está vazio`);}
 });
 
-test('material complementar fica separado dos exercícios',()=>{
+test('material complementar fixado não aparece na biblioteca',()=>{
   const html=videoLibraryPage(catalog);
-  assert.match(html,/Material complementar/);
+  assert.doesNotMatch(html,/Material complementar/);
   assert.equal(catalog.filter(item=>item.tipo_conteudo==='material_complementar_educativo').length,1);
 });
 
@@ -26,10 +26,9 @@ test('players são acessíveis, responsivos e não usam autoplay',()=>{
   assert.doesNotMatch(html,/autoplay|video_de_origem|trecho_de_origem_segundos/);
 });
 
-test('busca e categoria restringem os vídeos exibidos',()=>{
-  const html=videoLibraryPage(catalog,'rotação','Ombro');
+test('busca restringe os vídeos exibidos sem depender do filtro antigo',()=>{
+  const html=videoLibraryPage(catalog,'rotação','Todas','Todos');
   assert.match(html,/Rotação externa do ombro com faixa/);
   assert.match(html,/Rotação interna e externa do ombro/);
   assert.doesNotMatch(html,/Marcha com transposição de cones/);
-  assert.doesNotMatch(html,/Rotação interna do quadril/);
 });

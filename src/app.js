@@ -58,7 +58,8 @@ let externalCatalogFilters={query:'',region:'',objective:'',position:'',equipmen
 let downloadsQuery='',downloadsCategory='Todos';
 let videoCatalog=null,videoCatalogError='',videoCatalogPromise=null;
 let videoQuery='',videoCategory='Todas',videoContext='Todos';
-let videoUploadDraft={file:null,previewUrl:'',analysis:null,loading:false,publishing:false,error:''};
+const emptyVideoUploadDraft=()=>({file:null,previewUrl:'',analysis:null,loading:false,publishing:false,error:'',context:'',aiConsent:false,progress:0,stage:'',progressDetail:''});
+let videoUploadDraft=emptyVideoUploadDraft();
 let articleDraft={query:'',year:new Date().getFullYear()-5,openAccess:true,results:[],searched:false};
 const articleMemoryKey=()=>authState.session?`fisio-clinico:article-memory:${sessionUser(authState.session).sub}`:'fisio-clinico:article-memory:guest';
 function loadArticleMemory(){let legacy=[];try{const rows=JSON.parse(localStorage.getItem(articleMemoryKey())||'[]');legacy=Array.isArray(rows)?rows:[];}catch{}const synced=Array.isArray(state.articleMemory)?state.articleMemory:[];return [...synced,...legacy].filter((item,index,all)=>all.findIndex(other=>(other.doi||other.id||other.title)===(item.doi||item.id||item.title))===index);}
@@ -597,6 +598,14 @@ function updateSessionTotal(){
 }
 
 function formValues(form) { return Object.fromEntries(new FormData(form).entries()); }
+function updateVideoUploadProgress(update){
+  videoUploadDraft={...videoUploadDraft,...update};
+  const progress=$('#exercise-video-progress'),value=$('#exercise-video-progress-value'),stage=$('#exercise-video-progress-stage'),detail=$('#exercise-video-progress-detail');
+  if(progress){progress.value=Number(update.progress)||0;progress.setAttribute('aria-label',update.stage||videoUploadDraft.stage||'Progresso do vídeo');}
+  if(value)value.textContent=`${Math.round(Number(update.progress)||0)}%`;
+  if(stage&&update.stage)stage.textContent=update.stage;
+  if(detail&&update.progressDetail)detail.textContent=update.progressDetail;
+}
 function commitDraft(form){clearFormDraft(form,activeUserId(),location.hash);}
 function rapidCareHasContent(form){const data=new FormData(form);return ['focus','painScore','exercise','responseKind','response','observation','pain','vitals','rom','strength','balance','gait','test'].some(name=>String(data.get(name)||'').trim());}
 function persistRapidCareForm(form){const payload=formValues(form),rapidData=new FormData(form);payload.painRegions=rapidData.getAll('painRegion');payload.painCharacteristics=rapidData.getAll('painCharacteristic');payload.evolutionDetailed=buildRapidEvolution(payload);if(payload.painRegions.length||payload.pain?.trim())addRecord(state,'painMaps',{patientId:payload.patientId,date:payload.date,regions:payload.painRegions,characteristics:payload.painCharacteristics,irradiationChange:payload.irradiationChange||'',notes:payload.pain||''});addRecord(state,'quickCareSessions',payload);addRecord(state,'sessions',{patientId:payload.patientId,date:payload.date,summary:payload.focus||'Atendimento',interventions:payload.exercise||'',response:[payload.responseKind,payload.response].filter(Boolean).join(' — '),evolutionDetailed:payload.evolutionDetailed});if(payload.supervisorQuestion?.trim())addRecord(state,'supervisorQuestions',{patientId:payload.patientId,date:payload.date,question:payload.supervisorQuestion,status:'Pendente'});return payload;}
@@ -605,8 +614,24 @@ document.addEventListener('submit', async event => {
   const form=event.target;if(!form.id?.endsWith('-form')&&!form.id?.startsWith('rapid-care-form-'))return;event.preventDefault();
   if(form.id==='mentor-chat-form')return;
   const authValues=formValues(form);
-  if(form.id==='exercise-video-analyze-form'){const file=form.elements.video.files?.[0];if(!file){toast('Selecione um vídeo.',true);return;}videoUploadDraft={file,previewUrl:URL.createObjectURL(file),analysis:null,loading:true,publishing:false,error:''};render();try{const analysis=await analyzeExerciseVideo(file,authState.session.access_token,authValues.context);videoUploadDraft={...videoUploadDraft,analysis,loading:false};render();}catch(error){videoUploadDraft={...videoUploadDraft,loading:false,error:error.message};render();}return;}
-  if(form.id==='exercise-video-publish-form'){if(!videoUploadDraft.file){toast('Selecione o vídeo novamente.',true);return;}videoUploadDraft={...videoUploadDraft,publishing:true,error:''};render();try{const analysis={nome:authValues.nome,regiao_ou_categoria:authValues.regiao_ou_categoria,descricao:authValues.descricao,objetivos:authValues.objetivos,orientacoes:authValues.orientacoes,musculos:authValues.musculos,equipamentos:authValues.equipamentos,dosagem_mencionada_no_video:authValues.dosagem_mencionada_no_video,cuidados:authValues.cuidados};await publishExerciseVideo({file:videoUploadDraft.file,analysis,session:authState.session});if(videoUploadDraft.previewUrl)URL.revokeObjectURL(videoUploadDraft.previewUrl);videoUploadDraft={file:null,previewUrl:'',analysis:null,loading:false,publishing:false,error:''};videoCatalog=null;toast('Vídeo publicado na sua biblioteca.');ensureVideoCatalog();render();}catch(error){videoUploadDraft={...videoUploadDraft,publishing:false,error:error.message};render();}return;}
+  if(form.id==='exercise-video-analyze-form'){
+    const file=form.elements.video?.files?.[0]||videoUploadDraft.file,context=String(authValues.context??videoUploadDraft.context??''),aiConsent=authValues.aiConsent==='on'||videoUploadDraft.aiConsent;
+    if(!file){toast('Selecione um vídeo.',true);return;}
+    if(!aiConsent){toast('Confirme o consentimento para enviar os cinco quadros reduzidos à análise.',true);return;}
+    if(videoUploadDraft.previewUrl&&videoUploadDraft.file!==file)URL.revokeObjectURL(videoUploadDraft.previewUrl);
+    const previewUrl=videoUploadDraft.file===file&&videoUploadDraft.previewUrl?videoUploadDraft.previewUrl:URL.createObjectURL(file);
+    videoUploadDraft={file,previewUrl,analysis:null,loading:true,publishing:false,error:'',context,aiConsent,progress:1,stage:'Preparando vídeo…',progressDetail:'O arquivo ainda está apenas neste dispositivo.'};render();
+    try{const analysis=await analyzeExerciseVideo(file,authState.session.access_token,context,updateVideoUploadProgress);videoUploadDraft={...videoUploadDraft,analysis,loading:false,progress:100,stage:'Análise concluída',progressDetail:'Revise cada campo antes de publicar.'};render();}
+    catch(error){videoUploadDraft={...videoUploadDraft,loading:false,error:error.message,stage:'Não foi possível concluir',progressDetail:'O vídeo permanece selecionado para uma nova tentativa.'};render();}
+    return;
+  }
+  if(form.id==='exercise-video-publish-form'){
+    if(!videoUploadDraft.file){toast('Selecione o vídeo novamente.',true);return;}
+    videoUploadDraft={...videoUploadDraft,publishing:true,error:'',progress:1,stage:'Preparando envio…',progressDetail:'O vídeo será armazenado no seu espaço privado do Supabase.'};render();
+    try{const analysis={nome:authValues.nome,regiao_ou_categoria:authValues.regiao_ou_categoria,descricao:authValues.descricao,objetivos:authValues.objetivos,orientacoes:authValues.orientacoes,musculos:authValues.musculos,equipamentos:authValues.equipamentos,dosagem_mencionada_no_video:authValues.dosagem_mencionada_no_video,cuidados:authValues.cuidados};await publishExerciseVideo({file:videoUploadDraft.file,analysis,session:authState.session,onProgress:updateVideoUploadProgress});if(videoUploadDraft.previewUrl)URL.revokeObjectURL(videoUploadDraft.previewUrl);videoUploadDraft=emptyVideoUploadDraft();videoCatalog=null;toast('Vídeo publicado na sua biblioteca.');ensureVideoCatalog();render();}
+    catch(error){videoUploadDraft={...videoUploadDraft,publishing:false,error:error.message,stage:'Falha no envio',progressDetail:'Confira a conexão e tente novamente.'};render();}
+    return;
+  }
   if(form.id==='express-evolution-form'){
     const entries=String(authValues.exercises||'').split(/\n|;/).map(item=>item.trim().replace(/[.;]+$/,'')).filter(Boolean);
     if(!entries.length){toast('Informe ao menos um exercício e a dose realizada.',true);return;}
@@ -731,7 +756,7 @@ document.addEventListener('click',async event=>{
   if(action==='video-context-filter'){videoContext=target.dataset.value||'Todos';render();return;}
   if(action==='download-category'){downloadsCategory=target.dataset.category||'Todos';render();return;}
   if(action==='article-example'){articleDraft={...articleDraft,query:target.dataset.query||''};render();queueMicrotask(()=>$('#article-search-form input[name="query"]')?.focus());return;}
-  if(action==='cancel-video-analysis'){if(videoUploadDraft.previewUrl)URL.revokeObjectURL(videoUploadDraft.previewUrl);videoUploadDraft={file:null,previewUrl:'',analysis:null,loading:false,publishing:false,error:''};render();return;}
+  if(action==='cancel-video-analysis'){if(videoUploadDraft.previewUrl)URL.revokeObjectURL(videoUploadDraft.previewUrl);videoUploadDraft=emptyVideoUploadDraft();render();return;}
   if(action==='video-to-chat'){openMentorChatWithPrompt(`Quero discutir este exercício do catálogo:\n\nNome: ${target.dataset.name||''}\nObjetivo catalogado: ${target.dataset.objective||''}\nOrientações catalogadas: ${target.dataset.guidance||''}\n\nExplique quando ele pode ser considerado, o que avaliar antes, principais cuidados, regressões e progressões, sem prescrever automaticamente.`);return;}
   if(action==='delete-uploaded-video'){const row=videoCatalog?.find(item=>item.id===id);if(!row||!confirm(`Excluir o vídeo “${row.nome}”?`))return;try{await deleteExerciseVideo(row,authState.session);videoCatalog=videoCatalog.filter(item=>item.id!==id);render();toast('Vídeo excluído da sua biblioteca.');}catch(error){toast(error.message,true);}return;}
   if(action==='remember-article'){const row=articleDraft.results?.[Number(target.dataset.index)];if(!row)return;const added=saveArticlesToMemory([row]);render();toast(added?'Artigo incorporado à memória do Chat.':'Este artigo já estava na memória.');return;}

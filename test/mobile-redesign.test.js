@@ -11,7 +11,7 @@ const [app,css,index]=await Promise.all([
 ]);
 
 test('navegação mobile prioriza Biblioteca e mantém cinco destinos',()=>{
-  assert.match(app,/mobileOrder=\['inicio','atendimento-rapido','pacientes','biblioteca','mais'\]/);
+  assert.match(app,/mobileOrder=\['painel','pacientes','atendimento-rapido','biblioteca','mais'\]/);
   assert.match(app,/moreSections=new Set\([^\n]*'downloads'/);
 });
 
