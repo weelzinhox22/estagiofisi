@@ -1,0 +1,698 @@
+{
+  "nome": "Biblioteca de exercícios fisioterapêuticos — lote 2",
+  "criado_em": "2026-10-14",
+  "total_videos_origem": 5,
+  "total_exercicios": 18,
+  "idioma": "pt-BR",
+  "nota": "Identificação a partir de inspeção de quadros dos vídeos e cortes de cena. Os limites são estimados a partir das transições observadas; não representam validação clínica do protocolo. É preciso avaliar o paciente antes de prescrever. Direitos dos vídeos permanecem com seus respectivos titulares.",
+  "exercicios": [
+    {
+      "fonte": "1000812461.mp4",
+      "inicio_s": 0,
+      "fim_s": 18.977,
+      "nome": "Alcance anterior bilateral com faixa elástica",
+      "categoria": "Membros superiores / fortalecimento e controle motor",
+      "objetivos": [
+        "Treinar elevação anterior dos braços",
+        "Aprimorar coordenação bilateral e controle escapular",
+        "Promover alcance funcional com resistência leve"
+      ],
+      "para_que_serve": "Estimula o controle ativo do ombro e a coordenação de ambos os membros superiores durante alcances realizados na posição sentada.",
+      "como_fazer": [
+        "Sente o paciente próximo a uma mesa, com o tronco alinhado e os pés apoiados.",
+        "Ajuste a faixa elástica aos membros superiores, sem compressão desconfortável.",
+        "Oriente a projetar os braços à frente contra a resistência leve e retornar de forma controlada.",
+        "Repita sem compensar com elevação exagerada dos ombros ou flexão do tronco."
+      ],
+      "posicionamento_paciente": "Sentado com a pelve estabilizada na cadeira, pés apoiados e braços acima da mesa.",
+      "posicionamento_fisioterapeuta": "Ao lado e um pouco à frente do paciente, perto o bastante para supervisionar a faixa e oferecer assistência manual.",
+      "dicas_fisioterapeuta": [
+        "Verificar conforto e integridade da pele onde a faixa encosta.",
+        "Reduzir tensão se houver tremor intenso ou perda de amplitude funcional.",
+        "Usar os cones como alvos visuais sem exigir velocidade."
+      ],
+      "adaptacoes_progressao": "Iniciar sem resistência; progredir alterando suavemente a tensão, o alcance ou a precisão do alvo.",
+      "cuidados": "Evitar dor no ombro, compensação cervical e faixa pressionando excessivamente punhos e pele frágil.",
+      "materiais": [
+        "Mesa",
+        "Cadeira estável",
+        "Faixa elástica",
+        "Cones de marcação"
+      ],
+      "observacao_video": "A faixa vermelha é utilizada durante alcances à frente. Não é possível estabelecer resistência ou dosagem exata apenas pela imagem.",
+      "id": "NEURO2_001",
+      "duracao_s": 18.977,
+      "arquivo_video": "videos/01_alcance_anterior_bilateral_com_faixa_elastica.mp4",
+      "miniatura": "miniaturas/01_alcance_anterior_bilateral_com_faixa_elastica.jpg",
+      "dosagem": "Individualizar conforme avaliação, fadiga, dor, equilíbrio e qualidade do movimento; a gravação não determina séries ou repetições."
+    },
+    {
+      "fonte": "1000812461.mp4",
+      "inicio_s": 18.977,
+      "fim_s": 46.171,
+      "nome": "Alcance unilateral a cones com peso no punho",
+      "categoria": "Membros superiores / alcance e coordenação",
+      "objetivos": [
+        "Melhorar flexão de ombro e precisão do alcance",
+        "Treinar controle de descida do braço",
+        "Estimular orientação espacial com alvos visuais"
+      ],
+      "para_que_serve": "Exercício funcional de alcance à frente com possível facilitação da força e da coordenação do membro superior.",
+      "como_fazer": [
+        "Sente o paciente diante de uma mesa e distribua cones em posições confortáveis.",
+        "Utilize, se indicado, uma carga leve e bem fixada ao punho.",
+        "Solicite que ele eleve o braço na direção do alvo e aproxime a mão do cone.",
+        "Oriente retorno lento, alternando alvos ou alturas conforme a capacidade."
+      ],
+      "posicionamento_paciente": "Sentado com apoio dos pés, tronco estável e membro superior livre para se mover.",
+      "posicionamento_fisioterapeuta": "Ao lado do ombro trabalhado ou ligeiramente à frente, pronto para apoiar antebraço/cotovelo.",
+      "dicas_fisioterapeuta": [
+        "Ajustar a distância dos cones ao alcance ativo real.",
+        "Preferir qualidade do movimento à amplitude máxima.",
+        "Não usar carga para corrigir à força um padrão motor alterado."
+      ],
+      "adaptacoes_progressao": "Começar sem peso e com um cone central; depois variar direção ou acrescentar carga pequena, se apropriado.",
+      "cuidados": "Em dor, subluxação glenoumeral, perda sensitiva ou fadiga neurológica, reavaliar antes de usar peso distal.",
+      "materiais": [
+        "Mesa",
+        "Cadeira",
+        "Cones",
+        "Peso de punho opcional"
+      ],
+      "observacao_video": "O clipe mostra elevações e aproximações da mão a alvos na mesa com carga no punho.",
+      "id": "NEURO2_002",
+      "duracao_s": 27.194,
+      "arquivo_video": "videos/02_alcance_unilateral_a_cones_com_peso_no_punho.mp4",
+      "miniatura": "miniaturas/02_alcance_unilateral_a_cones_com_peso_no_punho.jpg",
+      "dosagem": "Individualizar conforme avaliação, fadiga, dor, equilíbrio e qualidade do movimento; a gravação não determina séries ou repetições."
+    },
+    {
+      "fonte": "1000812462.mp4",
+      "inicio_s": 0,
+      "fim_s": 17.533,
+      "nome": "Marcha entre cones com dupla tarefa",
+      "categoria": "Marcha / equilíbrio e dupla tarefa",
+      "objetivos": [
+        "Melhorar padrão de marcha e desvio de obstáculos",
+        "Treinar atenção dividida em tarefa motora",
+        "Desenvolver equilíbrio dinâmico e planejamento motor"
+      ],
+      "para_que_serve": "Combina deslocamento entre obstáculos com uma tarefa secundária manual ou cognitiva, favorecendo treino funcional sob demandas simultâneas.",
+      "como_fazer": [
+        "Monte um percurso curto com cones espaçados e superfície sem risco de tropeço.",
+        "Oriente a caminhar desviando dos cones em velocidade segura.",
+        "Peça uma tarefa adicional simples, como segurar/manipular objeto ou responder comandos, apenas quando a marcha simples estiver segura.",
+        "Interrompa ou reduza a dupla tarefa se o paciente perder estabilidade."
+      ],
+      "posicionamento_paciente": "Em ortostatismo, com calçado seguro; usar apoio ou dispositivo de marcha quando indicado.",
+      "posicionamento_fisioterapeuta": "Ao lado e um pouco atrás do paciente, preferencialmente pelo lado de maior instabilidade, sem bloquear sua passada.",
+      "dicas_fisioterapeuta": [
+        "Estabelecer primeiro marcha simples, depois introduzir a tarefa secundária.",
+        "Registrar tropeços, desvios e queda de velocidade, além do desempenho da tarefa adicional.",
+        "Reduzir estímulos e largura do percurso conforme o déficit."
+      ],
+      "adaptacoes_progressao": "Aumentar de maneira gradual o número de cones e a complexidade da dupla tarefa, sem comprometer a segurança.",
+      "cuidados": "Necessária prevenção de quedas; avaliar risco individual e garantir supervisão próxima.",
+      "materiais": [
+        "Cones coloridos",
+        "Objetos para tarefa secundária (quando utilizados)"
+      ],
+      "observacao_video": "O texto do vídeo descreve treino de marcha pós-TCE com dupla tarefa; o diagnóstico do paciente não pode ser confirmado pela imagem.",
+      "id": "NEURO2_003",
+      "duracao_s": 17.533,
+      "arquivo_video": "videos/03_marcha_entre_cones_com_dupla_tarefa.mp4",
+      "miniatura": "miniaturas/03_marcha_entre_cones_com_dupla_tarefa.jpg",
+      "dosagem": "Individualizar conforme avaliação, fadiga, dor, equilíbrio e qualidade do movimento; a gravação não determina séries ou repetições."
+    },
+    {
+      "fonte": "1000812463.mp4",
+      "inicio_s": 4.067,
+      "fim_s": 11.1,
+      "nome": "Sentar e levantar com entrega de bola",
+      "categoria": "Transferências / força e função de membros inferiores",
+      "objetivos": [
+        "Facilitar transição entre sentado e em pé",
+        "Fortalecer extensores de quadril e joelho",
+        "Integrar tarefa de membros superiores e controle postural"
+      ],
+      "para_que_serve": "Treina uma transferência fundamental para independência funcional enquanto a bola funciona como objetivo motor e atencional.",
+      "como_fazer": [
+        "Coloque uma cadeira estável atrás do paciente e posicione os pés afastados à largura do quadril.",
+        "Ofereça a bola na linha média em altura confortável.",
+        "Solicite que incline discretamente o tronco à frente, se levante e realize a entrega/recebimento da bola.",
+        "Peça retorno lento ao assento, sem se deixar cair."
+      ],
+      "posicionamento_paciente": "Sentado na parte anterior de cadeira firme, com pés inteiramente apoiados; auxiliar de marcha perto se necessário.",
+      "posicionamento_fisioterapeuta": "À frente ou diagonalmente, próximo ao tronco e à pelve, pronto para dar assistência sem puxar os braços.",
+      "dicas_fisioterapeuta": [
+        "Usar cadeira mais alta para facilitar.",
+        "Controlar a simetria de descarga de peso nos pés.",
+        "Priorizar segurança antes de adicionar a passagem da bola."
+      ],
+      "adaptacoes_progressao": "Progredir de sentar-levantar sem bola para troca de bola ou tarefas combinadas.",
+      "cuidados": "Em instabilidade postural, não retirar o apoio de uma vez; atenção a tontura ortostática.",
+      "materiais": [
+        "Cadeira estável",
+        "Bola leve"
+      ],
+      "observacao_video": "No vídeo, a paciente repete a passagem de sentado a em pé durante interação com a bola.",
+      "id": "NEURO2_004",
+      "duracao_s": 7.033,
+      "arquivo_video": "videos/04_sentar_e_levantar_com_entrega_de_bola.mp4",
+      "miniatura": "miniaturas/04_sentar_e_levantar_com_entrega_de_bola.jpg",
+      "dosagem": "Individualizar conforme avaliação, fadiga, dor, equilíbrio e qualidade do movimento; a gravação não determina séries ou repetições."
+    },
+    {
+      "fonte": "1000812463.mp4",
+      "inicio_s": 11.1,
+      "fim_s": 16.533,
+      "nome": "Flexão de ombros com bola acima da cabeça",
+      "categoria": "Membros superiores / mobilidade de ombro",
+      "objetivos": [
+        "Promover mobilidade ativa de ombro",
+        "Treinar alcance acima da linha dos olhos",
+        "Integrar coordenação visual e controle de tronco"
+      ],
+      "para_que_serve": "Atividade de alcance superior que pode trabalhar a amplitude funcional do ombro, desde que respeitada a mobilidade disponível.",
+      "como_fazer": [
+        "Posicione o paciente em pé ou sentado em base estável, conforme o equilíbrio.",
+        "Segure uma bola leve em posição anterior, dentro do campo de alcance.",
+        "Convide o paciente a elevar as mãos na direção da bola, em flexão confortável do ombro.",
+        "Retorne lentamente e repita sem compensação excessiva de tronco."
+      ],
+      "posicionamento_paciente": "Em pé com base alargada ou sentado, mantendo tronco alinhado.",
+      "posicionamento_fisioterapeuta": "Próximo, na frente ou lateralmente, com a bola em altura adaptada e possibilidade de apoiar o braço.",
+      "dicas_fisioterapeuta": [
+        "A meta de altura é individual; não forçar elevação completa.",
+        "Diminuir a altura para pacientes com dor ou limitação glenoumeral.",
+        "Observar se há compensação cervical ou inclinação do tronco."
+      ],
+      "adaptacoes_progressao": "Elevar gradualmente o alvo ou variar a posição da bola após ganho de controle.",
+      "cuidados": "Cautela com instabilidade e dor no ombro; evitar flexão forçada.",
+      "materiais": [
+        "Bola leve"
+      ],
+      "observacao_video": "A legenda original identifica o segundo exercício como mobilidade do ombro com flexão.",
+      "id": "NEURO2_005",
+      "duracao_s": 5.433,
+      "arquivo_video": "videos/05_flexao_de_ombros_com_bola_acima_da_cabeca.mp4",
+      "miniatura": "miniaturas/05_flexao_de_ombros_com_bola_acima_da_cabeca.jpg",
+      "dosagem": "Individualizar conforme avaliação, fadiga, dor, equilíbrio e qualidade do movimento; a gravação não determina séries ou repetições."
+    },
+    {
+      "fonte": "1000812463.mp4",
+      "inicio_s": 16.533,
+      "fim_s": 27.633,
+      "nome": "Rotação de tronco com passagem de bola",
+      "categoria": "Tronco / mobilidade e controle rotacional",
+      "objetivos": [
+        "Treinar rotação funcional do tronco",
+        "Estimular dissociação entre cinturas",
+        "Melhorar coordenação e alcance cruzado"
+      ],
+      "para_que_serve": "Atividade de passagem lateral de bola para integrar rotação do tronco e controle postural.",
+      "como_fazer": [
+        "Com o paciente sentado ou em pé de forma estável, posicione-se ao lado ou ligeiramente atrás.",
+        "Apresente uma bola ao lado do corpo para provocar rotação confortável do tronco.",
+        "Peça para receber ou devolver a bola, retornando ao centro antes de alternar lado.",
+        "Respeite amplitude e velocidade toleradas."
+      ],
+      "posicionamento_paciente": "Preferencialmente em pé com pés bem apoiados apenas se o equilíbrio permitir; alternativa sentada.",
+      "posicionamento_fisioterapeuta": "Lateralmente ao paciente, pronto para proteger o equilíbrio e receber a bola.",
+      "dicas_fisioterapeuta": [
+        "Permitir rotação em bloco inicialmente e estimular dissociação progressiva.",
+        "Posicionar a bola perto do tronco quando o alcance for limitado.",
+        "Evitar forçar cervical ou coluna ao final de amplitude."
+      ],
+      "adaptacoes_progressao": "Variar direção, altura e distância do passe; progredir de sentado para em pé apenas com segurança.",
+      "cuidados": "Não utilizar rotação brusca em pacientes com dor vertebral ou equilíbrio insuficiente.",
+      "materiais": [
+        "Bola leve"
+      ],
+      "observacao_video": "A legenda original destaca mobilidade e fortalecimento de rotadores de tronco.",
+      "id": "NEURO2_006",
+      "duracao_s": 11.1,
+      "arquivo_video": "videos/06_rotacao_de_tronco_com_passagem_de_bola.mp4",
+      "miniatura": "miniaturas/06_rotacao_de_tronco_com_passagem_de_bola.jpg",
+      "dosagem": "Individualizar conforme avaliação, fadiga, dor, equilíbrio e qualidade do movimento; a gravação não determina séries ou repetições."
+    },
+    {
+      "fonte": "1000812464.mp4",
+      "inicio_s": 0,
+      "fim_s": 11.3,
+      "nome": "Rolamento plantar sentado com bolas",
+      "categoria": "Tornozelo e pés / mobilidade e sensibilidade",
+      "objetivos": [
+        "Estimular movimentos ativos de tornozelo",
+        "Treinar contato plantar e coordenação distal",
+        "Favorecer percepção do posicionamento dos pés"
+      ],
+      "para_que_serve": "O rolamento de bola/cilindro sob os pés pode ser usado como atividade motora e sensorial em sedestação.",
+      "como_fazer": [
+        "Sente o paciente em cadeira firme com pés alcançando o chão.",
+        "Coloque uma bola ou cilindro macio sob a planta de um pé, em superfície antiderrapante.",
+        "Peça deslocamento curto para a frente e para trás, controlando o contato com o objeto.",
+        "Repita no outro pé ou bilateralmente, conforme controle."
+      ],
+      "posicionamento_paciente": "Sentado com tronco apoiado, joelhos em aproximadamente 90° e pés próximos ao chão.",
+      "posicionamento_fisioterapeuta": "Na diagonal anterior, garantindo que o objeto não escape e observando ambos os tornozelos.",
+      "dicas_fisioterapeuta": [
+        "Começar com objeto maior e estável.",
+        "Adaptar a pressão plantar diante de hipersensibilidade ou alterações sensitivas.",
+        "Não solicitar pressão excessiva."
+      ],
+      "adaptacoes_progressao": "Variar tamanho, textura e direção do rolamento após controle adequado.",
+      "cuidados": "Evitar em lesões cutâneas plantares, dor importante ou incapacidade de manter o pé sobre o objeto sem assistência.",
+      "materiais": [
+        "Cadeira firme",
+        "Bola de exercício",
+        "Cilindro ou bola macia"
+      ],
+      "observacao_video": "O trecho mostra contato e rolamento dos pés sobre dois objetos diferentes.",
+      "id": "NEURO2_007",
+      "duracao_s": 11.3,
+      "arquivo_video": "videos/07_rolamento_plantar_sentado_com_bolas.mp4",
+      "miniatura": "miniaturas/07_rolamento_plantar_sentado_com_bolas.jpg",
+      "dosagem": "Individualizar conforme avaliação, fadiga, dor, equilíbrio e qualidade do movimento; a gravação não determina séries ou repetições."
+    },
+    {
+      "fonte": "1000812464.mp4",
+      "inicio_s": 11.3,
+      "fim_s": 22.567,
+      "nome": "Miniagachamento junto a uma cadeira",
+      "categoria": "Membros inferiores / fortalecimento e controle postural",
+      "objetivos": [
+        "Trabalhar quadríceps e glúteos",
+        "Treinar flexão coordenada de quadril e joelhos",
+        "Melhorar controle postural em pé"
+      ],
+      "para_que_serve": "Movimento de pequena amplitude que simula a preparação para sentar, com ênfase em alinhamento e carga nos membros inferiores.",
+      "como_fazer": [
+        "Coloque o paciente em pé diante de uma cadeira estável, com espaço para apoio se necessário.",
+        "Peça que flexione discretamente quadril e joelhos, mantendo os pés no chão.",
+        "Oriente a estender novamente as pernas para retornar à posição inicial.",
+        "Respeite uma amplitude pequena e confortável."
+      ],
+      "posicionamento_paciente": "Em pé com pés afastados confortavelmente e cadeira atrás; mãos em apoio quando preciso.",
+      "posicionamento_fisioterapeuta": "Ao lado, um pouco à frente, pronto para auxiliar a pelve/tronco sem tracionar os membros superiores.",
+      "dicas_fisioterapeuta": [
+        "Observar alinhamento do joelho sobre o pé.",
+        "Utilizar uma cadeira ou barra para apoio manual se houver risco de queda.",
+        "Evitar agachamento profundo em fraqueza significativa."
+      ],
+      "adaptacoes_progressao": "Progredir amplitude e repetições ou associar comandos posturais, se houver estabilidade.",
+      "cuidados": "Risco de queda; interromper se houver dor no joelho, tontura ou perda de controle.",
+      "materiais": [
+        "Cadeira estável"
+      ],
+      "observacao_video": "Pelo vídeo, observa-se flexão e extensão curta dos joelhos em ortostatismo; a classificação como miniagachamento é descritiva.",
+      "id": "NEURO2_008",
+      "duracao_s": 11.267,
+      "arquivo_video": "videos/08_miniagachamento_junto_a_uma_cadeira.mp4",
+      "miniatura": "miniaturas/08_miniagachamento_junto_a_uma_cadeira.jpg",
+      "dosagem": "Individualizar conforme avaliação, fadiga, dor, equilíbrio e qualidade do movimento; a gravação não determina séries ou repetições."
+    },
+    {
+      "fonte": "1000812464.mp4",
+      "inicio_s": 22.567,
+      "fim_s": 36.267,
+      "nome": "Avanço anterior com alcance e encaixe de discos",
+      "categoria": "Equilíbrio / avanço funcional e coordenação",
+      "objetivos": [
+        "Treinar transferência de peso anteroposterior",
+        "Estimular alcance manual com objetivo",
+        "Integrar equilíbrio dinâmico e planejamento motor"
+      ],
+      "para_que_serve": "O paciente avança uma perna enquanto alcança um alvo de encaixe com peça colorida, associando tarefa motora de membros superiores e inferiores.",
+      "como_fazer": [
+        "Posicione cones-alvo sobre uma superfície firme e visível.",
+        "Peça um passo à frente até uma base estável.",
+        "Oriente levar um disco ou peça ao alvo, encaixando-o sem flexão excessiva do tronco.",
+        "Retorne à postura inicial e alterne o membro que avança."
+      ],
+      "posicionamento_paciente": "Em pé, frente para a superfície-alvo, com espaço e suporte próximo.",
+      "posicionamento_fisioterapeuta": "Lateral ao paciente e no lado mais instável, protegendo o tronco durante a transferência de peso.",
+      "dicas_fisioterapeuta": [
+        "Colocar alvos próximos antes de aumentar a distância.",
+        "Verificar estabilidade da superfície de apoio.",
+        "Evitar realizar o exercício com paciente que não consiga sustentar a postura mesmo assistido."
+      ],
+      "adaptacoes_progressao": "Progredir a distância do passo, lado do alvo ou sequência de cores, mantendo a segurança.",
+      "cuidados": "Atenção ao desequilíbrio para a frente e à altura do alvo; usar apoio adicional em déficits neurológicos importantes.",
+      "materiais": [
+        "Cadeira ou mesa estável",
+        "Cones coloridos",
+        "Discos de encaixe"
+      ],
+      "observacao_video": "Peças de cores diferentes são levadas até um cone-alvo enquanto há avanço de membros inferiores.",
+      "id": "NEURO2_009",
+      "duracao_s": 13.7,
+      "arquivo_video": "videos/09_avanco_anterior_com_alcance_e_encaixe_de_discos.mp4",
+      "miniatura": "miniaturas/09_avanco_anterior_com_alcance_e_encaixe_de_discos.jpg",
+      "dosagem": "Individualizar conforme avaliação, fadiga, dor, equilíbrio e qualidade do movimento; a gravação não determina séries ou repetições."
+    },
+    {
+      "fonte": "1000812464.mp4",
+      "inicio_s": 36.267,
+      "fim_s": 49.833,
+      "nome": "Passada sobre obstáculos baixos e base texturizada",
+      "categoria": "Marcha / treino de obstáculos e propriocepção",
+      "objetivos": [
+        "Treinar elevação do pé e comprimento do passo",
+        "Estimular equilíbrio dinâmico e adaptação a superfícies",
+        "Melhorar controle de apoio e transposição de obstáculos"
+      ],
+      "para_que_serve": "Exercício de ultrapassagem de pequenos obstáculos com passagem por superfície diferenciada.",
+      "como_fazer": [
+        "Organize obstáculos baixos e uma base antiderrapante no piso.",
+        "Com apoio próximo, oriente passar um pé por vez sem tocar os obstáculos.",
+        "Peça que estabilize o apoio antes de avançar o pé seguinte.",
+        "Repita em percurso curto, com retorno seguro."
+      ],
+      "posicionamento_paciente": "Em pé com calçado fechado e auxílio de marcha, se necessário.",
+      "posicionamento_fisioterapeuta": "Ao lado e ligeiramente atrás, do lado de maior risco de queda, com acesso para apoio no tronco/pelve.",
+      "dicas_fisioterapeuta": [
+        "Começar com obstáculos bem baixos e distantes.",
+        "Evitar superfícies soltas ou que deslizem.",
+        "Corrigir arrasto do pé sem aumentar a velocidade."
+      ],
+      "adaptacoes_progressao": "Modificar altura, número de obstáculos e direção apenas depois de dominar percurso simples.",
+      "cuidados": "Alto cuidado com quedas; considerar barra paralela ou apoio fixo em pacientes instáveis.",
+      "materiais": [
+        "Obstáculos baixos",
+        "Base de espuma texturizada ou similar"
+      ],
+      "observacao_video": "A demonstração apresenta avanço dos pés sobre uma peça de solo e passagem próxima a cones baixos.",
+      "id": "NEURO2_010",
+      "duracao_s": 13.566,
+      "arquivo_video": "videos/10_passada_sobre_obstaculos_baixos_e_base_texturizada.mp4",
+      "miniatura": "miniaturas/10_passada_sobre_obstaculos_baixos_e_base_texturizada.jpg",
+      "dosagem": "Individualizar conforme avaliação, fadiga, dor, equilíbrio e qualidade do movimento; a gravação não determina séries ou repetições."
+    },
+    {
+      "fonte": "1000812464.mp4",
+      "inicio_s": 49.833,
+      "fim_s": 65.8,
+      "nome": "Encaixe e transferência de discos coloridos sentado",
+      "categoria": "Membros superiores / coordenação funcional e alcance",
+      "objetivos": [
+        "Trabalhar coordenação óculo-manual",
+        "Treinar preensão, transporte e soltura de objetos",
+        "Incentivar alcance anterior em sedestação"
+      ],
+      "para_que_serve": "Atividade de retirar e organizar discos coloridos sobre alvos, útil para tarefas manuais direcionadas.",
+      "como_fazer": [
+        "Sente o paciente frente a uma superfície firme com cones e discos.",
+        "Peça que escolha um disco, segure-o e o leve até o cone correspondente.",
+        "Solicite posicionar a peça com controle e retornar a mão à posição inicial.",
+        "Alternar braço, sequência de cores ou localização conforme capacidade."
+      ],
+      "posicionamento_paciente": "Sentado com pés apoiados, alvos ao alcance do braço e tronco com estabilidade adequada.",
+      "posicionamento_fisioterapeuta": "De frente ou diagonalmente, pronto para estabilizar o objeto e facilitar a mão se necessário.",
+      "dicas_fisioterapeuta": [
+        "Evitar inclinação que provoque perda do equilíbrio sentado.",
+        "Priorizar movimento ativo, reduzindo a ajuda aos poucos.",
+        "Usar cores e tamanhos como comandos atencionais opcionais."
+      ],
+      "adaptacoes_progressao": "Progressão por alcance, número de peças, ordem de cores e uso do lado mais afetado.",
+      "cuidados": "Cuidado com mãos espásticas, dor no ombro e objetos com bordas cortantes.",
+      "materiais": [
+        "Cadeira estável",
+        "Superfície de apoio",
+        "Cones",
+        "Discos coloridos"
+      ],
+      "observacao_video": "O vídeo mostra organização de discos de diferentes cores sobre os cones em posição sentada.",
+      "id": "NEURO2_011",
+      "duracao_s": 15.967,
+      "arquivo_video": "videos/11_encaixe_e_transferencia_de_discos_coloridos_sentado.mp4",
+      "miniatura": "miniaturas/11_encaixe_e_transferencia_de_discos_coloridos_sentado.jpg",
+      "dosagem": "Individualizar conforme avaliação, fadiga, dor, equilíbrio e qualidade do movimento; a gravação não determina séries ou repetições."
+    },
+    {
+      "fonte": "1000812464.mp4",
+      "inicio_s": 65.8,
+      "fim_s": 74.1,
+      "nome": "Alcance anterior sentado com mãos entrelaçadas",
+      "categoria": "Tronco e membros superiores / alcance bilateral",
+      "objetivos": [
+        "Treinar flexão anterior de tronco controlada",
+        "Estimular alcance bimanual",
+        "Desenvolver estabilidade de tronco em sedestação"
+      ],
+      "para_que_serve": "Movimento funcional com mãos entrelaçadas e alcance à frente sobre um alvo.",
+      "como_fazer": [
+        "Sente o paciente em cadeira firme diante de um cone ou marcador em outra cadeira.",
+        "Oriente unir as mãos de maneira confortável.",
+        "Peça que avance ambas as mãos e incline o tronco dentro da amplitude segura até o alvo.",
+        "Retorne à postura ereta de forma controlada."
+      ],
+      "posicionamento_paciente": "Sentado com pés firmes e distância de alcance que não exija sair do assento.",
+      "posicionamento_fisioterapeuta": "À frente e lateralmente, oferecendo proteção de tronco e apoio se necessário.",
+      "dicas_fisioterapeuta": [
+        "Evitar alcance distante em pacientes sem controle de tronco.",
+        "Variar altura do alvo, não a velocidade.",
+        "Não forçar amplitude da mão/dedos em espasticidade."
+      ],
+      "adaptacoes_progressao": "Começar com alvo próximo; variar distância e precisão de toque conforme controle.",
+      "cuidados": "Risco de queda anterior em sedestação e desconforto em ombro; supervisionar.",
+      "materiais": [
+        "Duas cadeiras firmes",
+        "Cone ou alvo"
+      ],
+      "observacao_video": "No trecho, a demonstradora mantém as mãos unidas e leva os braços ao alvo anterior.",
+      "id": "NEURO2_012",
+      "duracao_s": 8.3,
+      "arquivo_video": "videos/12_alcance_anterior_sentado_com_maos_entrelacadas.mp4",
+      "miniatura": "miniaturas/12_alcance_anterior_sentado_com_maos_entrelacadas.jpg",
+      "dosagem": "Individualizar conforme avaliação, fadiga, dor, equilíbrio e qualidade do movimento; a gravação não determina séries ou repetições."
+    },
+    {
+      "fonte": "1000812464.mp4",
+      "inicio_s": 74.1,
+      "fim_s": 83.633,
+      "nome": "Manipulação manual de peça pequena sentado",
+      "categoria": "Mãos / destreza e motricidade fina",
+      "objetivos": [
+        "Estimular destreza manual e preensão",
+        "Treinar manipulação de objeto com as duas mãos",
+        "Favorecer coordenação olho-mão"
+      ],
+      "para_que_serve": "Tarefa de manipular e girar um objeto pequeno com as mãos em posição sentada.",
+      "como_fazer": [
+        "Sente o paciente com tronco estável, em ambiente bem iluminado.",
+        "Entregue peça leve, firme e fácil de segurar.",
+        "Solicite girá-la, ajustá-la entre os dedos ou trocar sua posição entre as mãos.",
+        "Retome a posição inicial e repita lentamente."
+      ],
+      "posicionamento_paciente": "Sentado com antebraços próximos ao corpo e mãos visíveis; apoio da mesa se preciso.",
+      "posicionamento_fisioterapeuta": "Em frente, supervisionando a pega, sem substituir continuamente o movimento ativo.",
+      "dicas_fisioterapeuta": [
+        "Usar objetos maiores caso haja preensão difícil.",
+        "Adaptar pegada para mão mais afetada.",
+        "Observar esforço exagerado do punho ou ombro."
+      ],
+      "adaptacoes_progressao": "Progressão por precisão, manipulação unilateral e aumento de complexidade do objeto.",
+      "cuidados": "Evitar peças pequenas em paciente com risco de levá-las à boca, impulsividade ou déficit de atenção relevante.",
+      "materiais": [
+        "Peça plástica leve"
+      ],
+      "observacao_video": "O vídeo mostra manipulação de um objeto amarelo pequeno, sem instruções de repetições.",
+      "id": "NEURO2_013",
+      "duracao_s": 9.533,
+      "arquivo_video": "videos/13_manipulacao_manual_de_peca_pequena_sentado.mp4",
+      "miniatura": "miniaturas/13_manipulacao_manual_de_peca_pequena_sentado.jpg",
+      "dosagem": "Individualizar conforme avaliação, fadiga, dor, equilíbrio e qualidade do movimento; a gravação não determina séries ou repetições."
+    },
+    {
+      "fonte": "1000812465.mp4",
+      "inicio_s": 0,
+      "fim_s": 8.4,
+      "nome": "Mobilização bilateral dos ombros com bastão na mesa",
+      "categoria": "Membros superiores / mobilidade ativo-assistida",
+      "objetivos": [
+        "Facilitar alcance anterior de membro superior",
+        "Treinar coordenação bimanual",
+        "Promover amplitude funcional de ombro em apoio"
+      ],
+      "para_que_serve": "O bastão apoiado à frente serve de referência para movimento assistido dos braços, com supervisão do fisioterapeuta.",
+      "como_fazer": [
+        "Coloque paciente sentado diante de mesa e ofereça bastão leve para ambas as mãos.",
+        "Com auxílio mínimo necessário, oriente deslocar o bastão à frente e trazê-lo de volta.",
+        "Estimule que o braço mais capaz auxilie o mais comprometido.",
+        "Mantenha o movimento indolor e lento."
+      ],
+      "posicionamento_paciente": "Sentado com pelve e pés apoiados e antebraços à altura confortável.",
+      "posicionamento_fisioterapeuta": "À frente ou lateralmente, acompanhando o bastão e protegendo punhos/ombros.",
+      "dicas_fisioterapeuta": [
+        "Ajustar altura da mesa e distância da cadeira.",
+        "Não puxar o braço afetado por meio do bastão.",
+        "Evitar compensação excessiva do tronco."
+      ],
+      "adaptacoes_progressao": "Progressão de deslocamentos curtos assistidos para mais alcance ativo.",
+      "cuidados": "Atenção à dor e subluxação de ombro após AVC; não tracionar o membro parético.",
+      "materiais": [
+        "Mesa",
+        "Bastão leve",
+        "Cadeira ou cadeira de rodas"
+      ],
+      "observacao_video": "A cena mostra atividade de membros superiores com bastão em posição sentada diante de uma mesa.",
+      "id": "NEURO2_014",
+      "duracao_s": 8.4,
+      "arquivo_video": "videos/14_mobilizacao_bilateral_dos_ombros_com_bastao_na_mesa.mp4",
+      "miniatura": "miniaturas/14_mobilizacao_bilateral_dos_ombros_com_bastao_na_mesa.jpg",
+      "dosagem": "Individualizar conforme avaliação, fadiga, dor, equilíbrio e qualidade do movimento; a gravação não determina séries ou repetições."
+    },
+    {
+      "fonte": "1000812465.mp4",
+      "inicio_s": 8.4,
+      "fim_s": 12.5,
+      "nome": "Exercício de braços em ergômetro sentado",
+      "categoria": "Membros superiores / movimento cíclico",
+      "objetivos": [
+        "Treinar mobilidade repetitiva de ombro e cotovelo",
+        "Estimular coordenação bilateral",
+        "Promover atividade motora cíclica de baixa intensidade"
+      ],
+      "para_que_serve": "Treino com equipamento de manivelas para movimentos circulares dos membros superiores.",
+      "como_fazer": [
+        "Posicione o ergômetro à altura compatível com o paciente sentado.",
+        "Ajuste resistência baixa e, se necessário, a fixação das mãos.",
+        "Solicite rodar as manivelas continuamente em velocidade confortável.",
+        "Interrompa ao surgirem fadiga acentuada, compensações ou dor."
+      ],
+      "posicionamento_paciente": "Sentado estável, sem necessidade de elevar excessivamente os ombros, com alcance cômodo das manivelas.",
+      "posicionamento_fisioterapeuta": "Ao lado do equipamento, garantindo fixação e assistência ao braço com maior limitação.",
+      "dicas_fisioterapeuta": [
+        "Verificar adaptação dos punhos e mão.",
+        "Usar pequenos períodos conforme tolerância.",
+        "Não exigir movimento passivo extremo em membro com dor."
+      ],
+      "adaptacoes_progressao": "Aumentar tempo e resistência gradualmente após tolerância demonstrada.",
+      "cuidados": "Cautela com doença cardiovascular, dor de ombro e perda de preensão que dificulte segurar os manípulos.",
+      "materiais": [
+        "Ergômetro de membros superiores"
+      ],
+      "observacao_video": "O clipe mostra paciente em cadeira de rodas utilizando ergômetro de braços com supervisão.",
+      "id": "NEURO2_015",
+      "duracao_s": 4.1,
+      "arquivo_video": "videos/15_exercicio_de_bracos_em_ergometro_sentado.mp4",
+      "miniatura": "miniaturas/15_exercicio_de_bracos_em_ergometro_sentado.jpg",
+      "dosagem": "Individualizar conforme avaliação, fadiga, dor, equilíbrio e qualidade do movimento; a gravação não determina séries ou repetições."
+    },
+    {
+      "fonte": "1000812465.mp4",
+      "inicio_s": 12.5,
+      "fim_s": 22.033,
+      "nome": "Elevação ativo-assistida de ombro com bastão",
+      "categoria": "Membros superiores / flexão de ombro e amplitude",
+      "objetivos": [
+        "Facilitar flexão do ombro",
+        "Treinar movimento ativo-assistido do braço acometido",
+        "Promover controle motor durante elevação"
+      ],
+      "para_que_serve": "Exercício assistido no qual um bastão ajuda a conduzir a elevação de um ou ambos os membros superiores.",
+      "como_fazer": [
+        "Com paciente sentado e tronco bem apoiado, ofereça bastão para preensão confortável.",
+        "Guie movimento lento de elevação do bastão até altura tolerada.",
+        "Estimule participação ativa do paciente, assistindo apenas o necessário.",
+        "Retorne sem deixar o braço cair bruscamente."
+      ],
+      "posicionamento_paciente": "Sentado na cadeira de rodas com postura alinhada, pés apoiados e ombro preparado para mobilização.",
+      "posicionamento_fisioterapeuta": "Ao lado ou à frente, apoiando o bastão e, se indicado, o segmento proximal do braço.",
+      "dicas_fisioterapeuta": [
+        "Verificar alinhamento escapular.",
+        "A amplitude não deve ser imposta pela força do terapeuta.",
+        "Monitorar reações de dor e resistência muscular."
+      ],
+      "adaptacoes_progressao": "Reduzir assistência gradualmente, trabalhando o arco disponível sem compensação.",
+      "cuidados": "Atenção especial à subluxação glenoumeral, à dor e à espasticidade; evitar tração e elevação forçada.",
+      "materiais": [
+        "Bastão leve",
+        "Cadeira de rodas ou cadeira com apoio"
+      ],
+      "observacao_video": "Neste trecho, a terapeuta acompanha elevação do bastão com um braço mais envolvido que o outro.",
+      "id": "NEURO2_016",
+      "duracao_s": 9.533,
+      "arquivo_video": "videos/16_elevacao_ativo_assistida_de_ombro_com_bastao.mp4",
+      "miniatura": "miniaturas/16_elevacao_ativo_assistida_de_ombro_com_bastao.jpg",
+      "dosagem": "Individualizar conforme avaliação, fadiga, dor, equilíbrio e qualidade do movimento; a gravação não determina séries ou repetições."
+    },
+    {
+      "fonte": "1000812465.mp4",
+      "inicio_s": 22.033,
+      "fim_s": 29.533,
+      "nome": "Deslizamento de garrafa sobre mesa com assistência",
+      "categoria": "Membros superiores / alcance funcional assistido",
+      "objetivos": [
+        "Facilitar deslizamento anterior e lateral de membro superior",
+        "Treinar extensão de cotovelo e controle de ombro",
+        "Estimular tarefa orientada a objetivo com apoio"
+      ],
+      "para_que_serve": "O uso de uma garrafa como objeto deslizante permite orientar movimentos de alcance sobre superfície de apoio.",
+      "como_fazer": [
+        "Sente paciente junto à mesa e coloque uma garrafa leve, firme e fechada sob ou próximo da mão.",
+        "Estimule deslocar o objeto para frente ou para o lado, deslizando o membro superior sobre a mesa.",
+        "Ofereça apoio manual proximal se não houver controle suficiente.",
+        "Retorne devagar e repita em amplitude confortável."
+      ],
+      "posicionamento_paciente": "Sentado próximo à mesa com ombro em posição cômoda, cotovelo apoiado conforme necessidade.",
+      "posicionamento_fisioterapeuta": "Ao lado da mão e do ombro afetados, ajudando a manter o braço alinhado e impedindo quedas do objeto.",
+      "dicas_fisioterapeuta": [
+        "Preferir objeto que não escorregue de modo imprevisível.",
+        "Iniciar com trajetos curtos.",
+        "Evitar pressão contínua excessiva na mão ou nos dedos."
+      ],
+      "adaptacoes_progressao": "Aumentar gradualmente distância, direção do deslize e participação ativa.",
+      "cuidados": "Não forçar abdução ou flexão dolorosa; observar atrito e lesões de pele.",
+      "materiais": [
+        "Mesa",
+        "Garrafa plástica leve e fechada"
+      ],
+      "observacao_video": "A cena utiliza uma garrafa sobre a mesa, guiada pela terapeuta junto ao braço do paciente.",
+      "id": "NEURO2_017",
+      "duracao_s": 7.5,
+      "arquivo_video": "videos/17_deslizamento_de_garrafa_sobre_mesa_com_assistencia.mp4",
+      "miniatura": "miniaturas/17_deslizamento_de_garrafa_sobre_mesa_com_assistencia.jpg",
+      "dosagem": "Individualizar conforme avaliação, fadiga, dor, equilíbrio e qualidade do movimento; a gravação não determina séries ou repetições."
+    },
+    {
+      "fonte": "1000812465.mp4",
+      "inicio_s": 29.533,
+      "fim_s": 63.833,
+      "nome": "Pedalinho de membros inferiores com assistência manual",
+      "categoria": "Membros inferiores / mobilidade e movimento cíclico",
+      "objetivos": [
+        "Facilitar movimento alternado de pernas",
+        "Estimular flexão e extensão cíclicas de quadril e joelho",
+        "Treinar participação ativa durante mobilização assistida"
+      ],
+      "para_que_serve": "Exercício cíclico com pedalinho portátil para membros inferiores, com apoio manual da terapeuta na fase de dificuldade.",
+      "como_fazer": [
+        "Fixe um pedalinho antiderrapante à frente do paciente sentado e ajuste a distância.",
+        "Acomode os pés nos pedais e use cintas apenas quando necessárias e seguras.",
+        "Convide a produzir a pedalada, auxiliando o movimento conforme o controle motor.",
+        "Verifique conforto articular, alinhamento das pernas e estabilidade do equipamento."
+      ],
+      "posicionamento_paciente": "Sentado em cadeira de rodas com freios acionados e pelve estabilizada, membros inferiores alinhados aos pedais.",
+      "posicionamento_fisioterapeuta": "De frente e ao lado do equipamento, em postura ergonômica, auxiliando tornozelos/pedais sem movimentos bruscos.",
+      "dicas_fisioterapeuta": [
+        "Não prender pés antes de conferir sensibilidade, pele e circulação.",
+        "Reavaliar necessidade de assistência conforme fadiga.",
+        "Evitar que o pedalinho escorregue ou bata no suporte da cadeira."
+      ],
+      "adaptacoes_progressao": "Progredir de mobilização assistida para pedalada ativa por duração individualizada.",
+      "cuidados": "Verificar contraindicações ortopédicas, posicionamento de tornozelos/joelhos, espasticidade e integridade da pele; supervisão contínua.",
+      "materiais": [
+        "Pedalinho portátil",
+        "Cadeira de rodas com freio"
+      ],
+      "observacao_video": "Duas tomadas demonstram o mesmo equipamento; foram mantidas no mesmo clipe para evitar duplicação de exercício.",
+      "id": "NEURO2_018",
+      "duracao_s": 34.3,
+      "arquivo_video": "videos/18_pedalinho_de_membros_inferiores_com_assistencia_manual.mp4",
+      "miniatura": "miniaturas/18_pedalinho_de_membros_inferiores_com_assistencia_manual.jpg",
+      "dosagem": "Individualizar conforme avaliação, fadiga, dor, equilíbrio e qualidade do movimento; a gravação não determina séries ou repetições."
+    }
+  ]
+}

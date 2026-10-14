@@ -57,3 +57,11 @@ Modelo: https://www.z-anatomy.com/
 
 Licença: https://creativecommons.org/licenses/by-sa/4.0/
 
+## Lotes locais de vídeos fisioterapêuticos — direitos pendentes
+
+Os diretórios `public/videos/Exercicios_Fisioterapia_Organizados/` e `public/videos/Fisioterapia_Neurologica_Lote_2/` contêm 43 clipes e miniaturas fornecidos pelo usuário do projeto, acompanhados de catálogos descritivos.
+
+Os próprios pacotes informam que os vídeos derivam de materiais de terceiros e que a autorização de publicação, redistribuição, marcas d'água e direitos de imagem não foi verificada. A catalogação e a integração técnica não transferem esses direitos.
+
+O aplicativo identifica esses itens com o estado “Direitos de uso pendentes”. Antes de disponibilizar o repositório ou a aplicação publicamente, o responsável deve obter e documentar as permissões aplicáveis ou remover os arquivos sem autorização.
+

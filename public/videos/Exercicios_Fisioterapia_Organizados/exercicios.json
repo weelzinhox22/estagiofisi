@@ -1,0 +1,564 @@
+{
+  "titulo": "Catálogo de exercícios de fisioterapia — recortes de vídeos fornecidos",
+  "versao": "1.0",
+  "data_organizacao": "2026-10-14",
+  "idioma": "pt-BR",
+  "quantidade_videos_originais": 10,
+  "quantidade_clipes": 25,
+  "nota_identificacao": "Nomes são descrições da atividade visível. Em circuitos contínuos, algumas etapas foram divididas pela mudança da tarefa e não por corte de câmera.",
+  "aviso_profissional": "Material educacional de apoio à fisioterapia; as orientações não substituem avaliação, conduta individual, supervisão e medidas de prevenção de quedas.",
+  "direitos": "Vídeos de terceiros foram fornecidos pelo solicitante. Direitos de publicação, redistribuição e reutilização não foram verificados.",
+  "categorias": [
+    {
+      "id": "Marcha_e_Equilibrio",
+      "descricao": "Treinos de marcha, apoio, passos orientados e adaptação a obstáculos."
+    },
+    {
+      "id": "Coordenacao_e_Dupla_Tarefa",
+      "descricao": "Tarefas de coordenação entre segmentos, atenção e motricidade."
+    },
+    {
+      "id": "Transferencias_e_Funcionalidade",
+      "descricao": "Transições posturais, alcance funcional e tarefas cotidianas."
+    },
+    {
+      "id": "Controle_Motor_e_Fortalecimento_MMII",
+      "descricao": "Controle e fortalecimento progressivo de quadril, joelho e tornozelo."
+    },
+    {
+      "id": "Mobilidade_e_Funcao_MMSS",
+      "descricao": "Treinos de mobilidade e uso funcional de ombros e braços."
+    },
+    {
+      "id": "Manuseio_Neurologico",
+      "descricao": "Técnicas de mobilização e facilitação manual que exigem avaliação profissional."
+    }
+  ],
+  "exercicios": [
+    {
+      "id": "EX001",
+      "nome": "Marcha na escada de agilidade com pistas visuais",
+      "funcionalidade": "Marcha e Equilibrio",
+      "categoria": "Marcha_e_Equilibrio",
+      "regiao_corporal": "Membros inferiores",
+      "para_que_serve": "Treinar sequenciamento dos passos, amplitude de marcha, coordenação e mudanças de apoio.",
+      "como_fazer": "Percorrer os espaços da escada de agilidade colocando um pé em cada quadrante, com passos amplos e ritmo ajustado ao desempenho.",
+      "posicionamento_paciente": "Em pé, diante da escada fixada ao piso, olhando à frente sempre que possível.",
+      "orientacao_fisioterapeuta": "Permanecer ao lado, próximo à cintura ou com apoio de segurança, demonstrar a sequência e oferecer pistas verbais ou visuais simples.",
+      "cuidados_e_adaptacoes": "Retirar obstáculos soltos, evitar pressa e assegurar apoio quando houver risco de queda.",
+      "observacao_visual": "A cena mostra uma escada de agilidade posicionada ao solo.",
+      "arquivo_video": "videos/Marcha_e_Equilibrio/EX001_marcha_na_escada_de_agilidade_com_pistas_visuais.mp4",
+      "miniatura": "miniaturas/Marcha_e_Equilibrio/EX001_marcha_na_escada_de_agilidade_com_pistas_visuais.jpg",
+      "origem": {
+        "arquivo": "1000812451.mp4",
+        "inicio_seg": 0,
+        "fim_seg": 8.1,
+        "duracao_corte_seg": 8.1
+      }
+    },
+    {
+      "id": "EX002",
+      "nome": "Subida alternada do pé em plataforma com apoio",
+      "funcionalidade": "Transferencias e Funcionalidade",
+      "categoria": "Transferencias_e_Funcionalidade",
+      "regiao_corporal": "Quadril, joelho e tornozelo",
+      "para_que_serve": "Trabalhar elevação do membro, transferência de peso e preparação para degraus.",
+      "como_fazer": "Elevar alternadamente um dos pés a uma plataforma baixa e estável, retornar ao chão e repetir do outro lado, associando movimento de braços conforme tolerado.",
+      "posicionamento_paciente": "Em pé de frente para a plataforma, mantendo tronco alinhado e base suficiente.",
+      "orientacao_fisioterapeuta": "Posicionar-se ao lado, controlar equilíbrio e conferir se o objeto suporta carga e não desliza.",
+      "cuidados_e_adaptacoes": "O vídeo usa uma cadeira; para prática clínica, preferir step ou plataforma firme e antiderrapante, com apoio se necessário.",
+      "observacao_visual": "Não usar cadeira instável como degrau em paciente com déficit de equilíbrio.",
+      "arquivo_video": "videos/Transferencias_e_Funcionalidade/EX002_subida_alternada_do_pe_em_plataforma_com_apoio.mp4",
+      "miniatura": "miniaturas/Transferencias_e_Funcionalidade/EX002_subida_alternada_do_pe_em_plataforma_com_apoio.jpg",
+      "origem": {
+        "arquivo": "1000812451.mp4",
+        "inicio_seg": 8.1,
+        "fim_seg": 12.3667,
+        "duracao_corte_seg": 4.2667
+      }
+    },
+    {
+      "id": "EX003",
+      "nome": "Marcha estacionária associada a manuseio de bola",
+      "funcionalidade": "Coordenacao e Dupla Tarefa",
+      "categoria": "Coordenacao_e_Dupla_Tarefa",
+      "regiao_corporal": "Membros inferiores e superiores",
+      "para_que_serve": "Melhorar coordenação bilateral, atenção dividida e equilíbrio dinâmico.",
+      "como_fazer": "Em pé, alternar a elevação dos pés ou passos no lugar enquanto manipula ou lança suavemente uma bola entre as mãos.",
+      "posicionamento_paciente": "Em pé, com pés inicialmente afastados na largura do quadril.",
+      "orientacao_fisioterapeuta": "Oferecer bola leve, ajustar altura do lançamento, reduzir a exigência cognitiva ou permitir apoio conforme necessidade.",
+      "cuidados_e_adaptacoes": "Evitar lançar bola longe do alcance e não realizar sem supervisão em casos de instabilidade.",
+      "observacao_visual": "O clipe intercala coordenação de bola com apoio alternado dos pés.",
+      "arquivo_video": "videos/Coordenacao_e_Dupla_Tarefa/EX003_marcha_estacionaria_associada_a_manuseio_de_bola.mp4",
+      "miniatura": "miniaturas/Coordenacao_e_Dupla_Tarefa/EX003_marcha_estacionaria_associada_a_manuseio_de_bola.jpg",
+      "origem": {
+        "arquivo": "1000812451.mp4",
+        "inicio_seg": 12.3667,
+        "fim_seg": 19.1,
+        "duracao_corte_seg": 6.7333
+      }
+    },
+    {
+      "id": "EX004",
+      "nome": "Transposição de obstáculos baixos com cones e bastões",
+      "funcionalidade": "Marcha e Equilibrio",
+      "categoria": "Marcha_e_Equilibrio",
+      "regiao_corporal": "Membros inferiores",
+      "para_que_serve": "Treinar elevação do pé, planejamento motor e segurança na marcha em ambiente com obstáculos.",
+      "como_fazer": "Caminhar ultrapassando bastões baixos dispostos entre cones, elevando o pé o suficiente para não encostar no obstáculo.",
+      "posicionamento_paciente": "Em pé, diante da primeira barreira e com percurso livre ao redor.",
+      "orientacao_fisioterapeuta": "Acompanhar lateralmente, escolher altura baixa e orientar olhar/posicionamento do pé; oferecer suporte físico quando necessário.",
+      "cuidados_e_adaptacoes": "Evitar obstáculos rígidos altos e superfícies escorregadias; prever rota sem barreiras para recuperação do equilíbrio.",
+      "observacao_visual": "O vídeo finaliza a demonstração antes da tela de encerramento.",
+      "arquivo_video": "videos/Marcha_e_Equilibrio/EX004_transposicao_de_obstaculos_baixos_com_cones_e_bastoes.mp4",
+      "miniatura": "miniaturas/Marcha_e_Equilibrio/EX004_transposicao_de_obstaculos_baixos_com_cones_e_bastoes.jpg",
+      "origem": {
+        "arquivo": "1000812451.mp4",
+        "inicio_seg": 19.1,
+        "fim_seg": 25.2667,
+        "duracao_corte_seg": 6.1667
+      }
+    },
+    {
+      "id": "EX005",
+      "nome": "Primeira ultrapassagem de barreira no circuito motor",
+      "funcionalidade": "Marcha e Equilibrio",
+      "categoria": "Marcha_e_Equilibrio",
+      "regiao_corporal": "Membros inferiores e tronco",
+      "para_que_serve": "Treinar antecipação postural, controle do centro de massa e passagem sobre barreiras.",
+      "como_fazer": "Realizar a primeira etapa da passagem por uma barreira baixa, aproximando-se lentamente e transferindo o peso antes de elevar o pé.",
+      "posicionamento_paciente": "Em pé, em circuito com cones e barras baixas, com espaço suficiente ao redor.",
+      "orientacao_fisioterapeuta": "Permanecer ao lado durante a aproximação, orientar passagem de um membro por vez e observar ajustes de equilíbrio.",
+      "cuidados_e_adaptacoes": "Para alto risco de queda, usar barras paralelas ou apoio manual seguro e barreira muito baixa.",
+      "observacao_visual": "Parte 1 do circuito contínuo narrado no vídeo; separação por etapa, sem corte de câmera.",
+      "arquivo_video": "videos/Marcha_e_Equilibrio/EX005_primeira_ultrapassagem_de_barreira_no_circuito_motor.mp4",
+      "miniatura": "miniaturas/Marcha_e_Equilibrio/EX005_primeira_ultrapassagem_de_barreira_no_circuito_motor.jpg",
+      "origem": {
+        "arquivo": "1000812452.mp4",
+        "inicio_seg": 0,
+        "fim_seg": 16.8,
+        "duracao_corte_seg": 16.8
+      }
+    },
+    {
+      "id": "EX006",
+      "nome": "Segunda ultrapassagem de barreira com elevação de joelho",
+      "funcionalidade": "Marcha e Equilibrio",
+      "categoria": "Marcha_e_Equilibrio",
+      "regiao_corporal": "Quadril, joelho e tornozelo",
+      "para_que_serve": "Trabalhar clearance do pé, flexão de quadril/joelho e adaptação postural na marcha.",
+      "como_fazer": "Após a primeira transposição, prosseguir na segunda ultrapassagem elevando o joelho e posicionando o pé além do obstáculo.",
+      "posicionamento_paciente": "Em pé, alinhado à barra baixa, mantendo apoio bem estabelecido antes da passagem.",
+      "orientacao_fisioterapeuta": "Oferecer comando de elevação do joelho e facilitar ajuste de tronco quando necessário, sem puxar o membro.",
+      "cuidados_e_adaptacoes": "Não exigir altura ou velocidade que ultrapasse a capacidade funcional do paciente.",
+      "observacao_visual": "Parte 2 do mesmo circuito, delimitada pela narração da segunda ultrapassagem.",
+      "arquivo_video": "videos/Marcha_e_Equilibrio/EX006_segunda_ultrapassagem_de_barreira_com_elevacao_de_joelho.mp4",
+      "miniatura": "miniaturas/Marcha_e_Equilibrio/EX006_segunda_ultrapassagem_de_barreira_com_elevacao_de_joelho.jpg",
+      "origem": {
+        "arquivo": "1000812452.mp4",
+        "inicio_seg": 16.8,
+        "fim_seg": 30.5,
+        "duracao_corte_seg": 13.7
+      }
+    },
+    {
+      "id": "EX007",
+      "nome": "Pisadas direcionadas em marcadores coloridos",
+      "funcionalidade": "Marcha e Equilibrio",
+      "categoria": "Marcha_e_Equilibrio",
+      "regiao_corporal": "Membros inferiores",
+      "para_que_serve": "Melhorar coordenação visuomotora, percepção espacial, atenção e precisão do apoio plantar.",
+      "como_fazer": "Seguir uma sequência de marcadores coloridos no piso, pisando de modo controlado nos alvos determinados e mudando o apoio quando solicitado.",
+      "posicionamento_paciente": "Em pé, de frente para os marcadores, com suporte acessível.",
+      "orientacao_fisioterapeuta": "Indicar uma cor ou posição por vez, progredir para comandos alternados e proteger lateralmente durante as transferências de peso.",
+      "cuidados_e_adaptacoes": "Evitar alvos que deslizem no piso e comandos rápidos demais para pacientes com freezing ou equilíbrio comprometido.",
+      "observacao_visual": "Parte 3 do circuito após a passagem de barreiras.",
+      "arquivo_video": "videos/Marcha_e_Equilibrio/EX007_pisadas_direcionadas_em_marcadores_coloridos.mp4",
+      "miniatura": "miniaturas/Marcha_e_Equilibrio/EX007_pisadas_direcionadas_em_marcadores_coloridos.jpg",
+      "origem": {
+        "arquivo": "1000812452.mp4",
+        "inicio_seg": 30.5,
+        "fim_seg": 61.6667,
+        "duracao_corte_seg": 31.1667
+      }
+    },
+    {
+      "id": "EX008",
+      "nome": "Flexão alternada do quadril com toque da palma sob a coxa",
+      "funcionalidade": "Coordenacao e Dupla Tarefa",
+      "categoria": "Coordenacao_e_Dupla_Tarefa",
+      "regiao_corporal": "Quadril e membros superiores",
+      "para_que_serve": "Estimular coordenação de membros superiores e inferiores, atenção, tempo de resposta e controle motor sentado.",
+      "como_fazer": "Sentado, elevar alternadamente o joelho por flexão de quadril e levar a palma da mão sob a coxa elevada para realizar um toque sincronizado.",
+      "posicionamento_paciente": "Sentado em cadeira firme, pés apoiados inicialmente, tronco ereto e sem se apoiar na borda.",
+      "orientacao_fisioterapeuta": "Demonstrar devagar, oferecer contagem rítmica e modular amplitude da perna e altura do toque conforme controle de tronco.",
+      "cuidados_e_adaptacoes": "Priorizar segurança sentado; reduzir a altura quando houver dor no quadril ou perda de equilíbrio.",
+      "observacao_visual": "Único exercício demonstrado ao longo da gravação.",
+      "arquivo_video": "videos/Coordenacao_e_Dupla_Tarefa/EX008_flexao_alternada_do_quadril_com_toque_da_palma_sob_a_coxa.mp4",
+      "miniatura": "miniaturas/Coordenacao_e_Dupla_Tarefa/EX008_flexao_alternada_do_quadril_com_toque_da_palma_sob_a_coxa.jpg",
+      "origem": {
+        "arquivo": "1000812453.mp4",
+        "inicio_seg": 0,
+        "fim_seg": 21.2333,
+        "duracao_corte_seg": 21.2333
+      }
+    },
+    {
+      "id": "EX009",
+      "nome": "Marcha com elevação de joelho e ampliação dos movimentos dos braços",
+      "funcionalidade": "Controle Motor e Fortalecimento MMII",
+      "categoria": "Controle_Motor_e_Fortalecimento_MMII",
+      "regiao_corporal": "Membros inferiores e ombros",
+      "para_que_serve": "Treinar marcha ampla, coordenação entre braços e pernas e mobilidade funcional.",
+      "como_fazer": "Em pé, elevar alternadamente o joelho e realizar movimentos amplos de braços, associando passos em torno ou ao lado de um step baixo.",
+      "posicionamento_paciente": "Em pé, com espaço livre e tronco alinhado.",
+      "orientacao_fisioterapeuta": "Ficar ao lado, fornecer pistas verbais de amplitude e ritmo e adaptar a presença do step ao equilíbrio disponível.",
+      "cuidados_e_adaptacoes": "Não exigir extensão excessiva do tronco ou perda da estabilidade por priorizar amplitude.",
+      "observacao_visual": "Primeiro dos quatro exercícios sinalizados na gravação.",
+      "arquivo_video": "videos/Controle_Motor_e_Fortalecimento_MMII/EX009_marcha_com_elevacao_de_joelho_e_ampliacao_dos_movimentos_dos_bracos.mp4",
+      "miniatura": "miniaturas/Controle_Motor_e_Fortalecimento_MMII/EX009_marcha_com_elevacao_de_joelho_e_ampliacao_dos_movimentos_dos_bracos.jpg",
+      "origem": {
+        "arquivo": "1000812454.mp4",
+        "inicio_seg": 0,
+        "fim_seg": 8.9,
+        "duracao_corte_seg": 8.9
+      }
+    },
+    {
+      "id": "EX010",
+      "nome": "Sentar e levantar com elevação bilateral dos braços",
+      "funcionalidade": "Transferencias e Funcionalidade",
+      "categoria": "Transferencias_e_Funcionalidade",
+      "regiao_corporal": "Membros inferiores e ombros",
+      "para_que_serve": "Praticar transferência sentado-em-pé, força funcional de membros inferiores e amplitude dos braços.",
+      "como_fazer": "Inclinar suavemente o tronco à frente, levantar de uma cadeira estável e elevar os braços; retornar à posição sentada com controle.",
+      "posicionamento_paciente": "Sentado em cadeira de altura adequada, pés bem apoiados no chão.",
+      "orientacao_fisioterapeuta": "Posicionar-se próximo ao lado do paciente, estabilizar a cadeira e utilizar pistas de impulso e alinhamento do joelho.",
+      "cuidados_e_adaptacoes": "Em dificuldade elevada, permitir apoio das mãos e reduzir movimento simultâneo dos braços.",
+      "observacao_visual": "Segundo exercício do vídeo, identificável pela troca de cena.",
+      "arquivo_video": "videos/Transferencias_e_Funcionalidade/EX010_sentar_e_levantar_com_elevacao_bilateral_dos_bracos.mp4",
+      "miniatura": "miniaturas/Transferencias_e_Funcionalidade/EX010_sentar_e_levantar_com_elevacao_bilateral_dos_bracos.jpg",
+      "origem": {
+        "arquivo": "1000812454.mp4",
+        "inicio_seg": 8.9,
+        "fim_seg": 19.3333,
+        "duracao_corte_seg": 10.4333
+      }
+    },
+    {
+      "id": "EX011",
+      "nome": "Flexão anterior do tronco com rolagem da bola suíça",
+      "funcionalidade": "Transferencias e Funcionalidade",
+      "categoria": "Transferencias_e_Funcionalidade",
+      "regiao_corporal": "Tronco e ombros",
+      "para_que_serve": "Estimular mobilidade de tronco, alcance anterior e dissociação entre tronco e membros superiores.",
+      "como_fazer": "Sentado, colocar as mãos sobre bola suíça à frente e rolá-la lentamente para longe, inclinando o tronco de forma confortável, retornando ao início.",
+      "posicionamento_paciente": "Sentado com os pés firmes no solo e a bola à frente dos joelhos.",
+      "orientacao_fisioterapeuta": "Ficar lateralmente, impedir que a bola escape e modular a distância do alcance.",
+      "cuidados_e_adaptacoes": "Evitar flexão além do limite tolerado ou instabilidade, especialmente quando há risco de deslizar da cadeira.",
+      "observacao_visual": "Terceiro exercício do vídeo.",
+      "arquivo_video": "videos/Transferencias_e_Funcionalidade/EX011_flexao_anterior_do_tronco_com_rolagem_da_bola_suica.mp4",
+      "miniatura": "miniaturas/Transferencias_e_Funcionalidade/EX011_flexao_anterior_do_tronco_com_rolagem_da_bola_suica.jpg",
+      "origem": {
+        "arquivo": "1000812454.mp4",
+        "inicio_seg": 19.3333,
+        "fim_seg": 27.4333,
+        "duracao_corte_seg": 8.1
+      }
+    },
+    {
+      "id": "EX012",
+      "nome": "Elevação dos braços com bastão a partir da posição atrás da cabeça",
+      "funcionalidade": "Mobilidade e Funcao MMSS",
+      "categoria": "Mobilidade_e_Funcao_MMSS",
+      "regiao_corporal": "Ombros e cintura escapular",
+      "para_que_serve": "Estimular mobilidade ativa de ombros, controle escapular e amplitude de elevação.",
+      "como_fazer": "Sentado, segurar bastão com pegada larga, elevá-lo acima da cabeça e retornar de forma controlada à posição demonstrada.",
+      "posicionamento_paciente": "Sentado sobre maca firme ou cadeira com tronco estabilizado.",
+      "orientacao_fisioterapeuta": "Ficar ao lado, observar compensações da coluna e limitar a amplitude para evitar desconforto no ombro.",
+      "cuidados_e_adaptacoes": "A passagem do bastão atrás da nuca pode sobrecarregar ombros; preferir trajetos à frente do corpo quando houver limitação, dor ou instabilidade.",
+      "observacao_visual": "Quarto exercício, curto, encerrado antes do TikTok final.",
+      "arquivo_video": "videos/Mobilidade_e_Funcao_MMSS/EX012_elevacao_dos_bracos_com_bastao_a_partir_da_posicao_atras_da_cabeca.mp4",
+      "miniatura": "miniaturas/Mobilidade_e_Funcao_MMSS/EX012_elevacao_dos_bracos_com_bastao_a_partir_da_posicao_atras_da_cabeca.jpg",
+      "origem": {
+        "arquivo": "1000812454.mp4",
+        "inicio_seg": 27.4333,
+        "fim_seg": 30.9,
+        "duracao_corte_seg": 3.4667
+      }
+    },
+    {
+      "id": "EX013",
+      "nome": "Dupla tarefa sentada com alcance manual e manipulação de objeto",
+      "funcionalidade": "Coordenacao e Dupla Tarefa",
+      "categoria": "Coordenacao_e_Dupla_Tarefa",
+      "regiao_corporal": "Mãos, ombros e cognição",
+      "para_que_serve": "Treinar atenção dividida, alcance, coordenação visuomotora e motricidade fina.",
+      "como_fazer": "Sentado, alcançar com uma das mãos uma referência oferecida pela fisioterapeuta, enquanto a outra manipula ou segura objeto pequeno, seguindo comandos simultâneos.",
+      "posicionamento_paciente": "Sentado em cadeira firme, com pés apoiados e alvos em distância acessível.",
+      "orientacao_fisioterapeuta": "Permanecer à frente, oferecer alvo visual e uma tarefa manual simples, ajustar altura/distância e solicitar verbalização ou contagem se adequado.",
+      "cuidados_e_adaptacoes": "Evitar peças pequenas com risco de aspiração; simplificar para tarefa única se a dupla tarefa comprometer a segurança.",
+      "observacao_visual": "Uma única tarefa composta repetida ao longo do clipe.",
+      "arquivo_video": "videos/Coordenacao_e_Dupla_Tarefa/EX013_dupla_tarefa_sentada_com_alcance_manual_e_manipulacao_de_objeto.mp4",
+      "miniatura": "miniaturas/Coordenacao_e_Dupla_Tarefa/EX013_dupla_tarefa_sentada_com_alcance_manual_e_manipulacao_de_objeto.jpg",
+      "origem": {
+        "arquivo": "1000812455.mp4",
+        "inicio_seg": 0,
+        "fim_seg": 46.0,
+        "duracao_corte_seg": 46.0
+      }
+    },
+    {
+      "id": "EX014",
+      "nome": "Pisadas com pistas visuais coloridas para destravar a marcha",
+      "funcionalidade": "Marcha e Equilibrio",
+      "categoria": "Marcha_e_Equilibrio",
+      "regiao_corporal": "Pés e membros inferiores",
+      "para_que_serve": "Oferecer referências externas para iniciar o passo, vencer hesitação e organizar direção/alcance do movimento.",
+      "como_fazer": "Diante de círculos e pegadas coloridas no chão, direcionar o pé ao marcador combinado, realizar transferência de peso e retornar ou prosseguir para o próximo alvo.",
+      "posicionamento_paciente": "Em pé com pés próximos aos alvos, com apoio seguro por perto.",
+      "orientacao_fisioterapeuta": "Ficar ao lado, dar comando curto de cor/direção e, se preciso, contagem rítmica, observando sinais de congelamento da marcha.",
+      "cuidados_e_adaptacoes": "Não usar marcadores escorregadios; em freezing importante assegurar assistência próxima e não puxar o paciente.",
+      "observacao_visual": "O mesmo exercício é demonstrado em diversas tentativas, sem troca de atividade.",
+      "arquivo_video": "videos/Marcha_e_Equilibrio/EX014_pisadas_com_pistas_visuais_coloridas_para_destravar_a_marcha.mp4",
+      "miniatura": "miniaturas/Marcha_e_Equilibrio/EX014_pisadas_com_pistas_visuais_coloridas_para_destravar_a_marcha.jpg",
+      "origem": {
+        "arquivo": "1000812456.mp4",
+        "inicio_seg": 0,
+        "fim_seg": 56.5833,
+        "duracao_corte_seg": 56.5833
+      }
+    },
+    {
+      "id": "EX015",
+      "nome": "Adução de quadril com bola entre os joelhos e contagem",
+      "funcionalidade": "Controle Motor e Fortalecimento MMII",
+      "categoria": "Controle_Motor_e_Fortalecimento_MMII",
+      "regiao_corporal": "Quadris e joelhos",
+      "para_que_serve": "Favorecer ativação de adutores, percepção de posicionamento dos membros e participação em tarefa cognitiva simples.",
+      "como_fazer": "Deitado de costas, com quadris e joelhos flexionados, manter bola macia entre os joelhos e comprimir suavemente conforme comando, podendo contar em voz alta.",
+      "posicionamento_paciente": "Decúbito dorsal em maca segura, joelhos flexionados e pés apoiados.",
+      "orientacao_fisioterapeuta": "Ajoelhar ou posicionar-se ao lado da maca, estabilizar a bola e guiar joelhos sem provocar rotação ou compressão dolorosa.",
+      "cuidados_e_adaptacoes": "Em TCE, ajustar as instruções ao estado cognitivo e evitar resistência excessiva; observar fadiga e dor.",
+      "observacao_visual": "O vídeo inclui uma contagem em inglês durante o exercício.",
+      "arquivo_video": "videos/Controle_Motor_e_Fortalecimento_MMII/EX015_aducao_de_quadril_com_bola_entre_os_joelhos_e_contagem.mp4",
+      "miniatura": "miniaturas/Controle_Motor_e_Fortalecimento_MMII/EX015_aducao_de_quadril_com_bola_entre_os_joelhos_e_contagem.jpg",
+      "origem": {
+        "arquivo": "1000812457.mp4",
+        "inicio_seg": 0,
+        "fim_seg": 40.1667,
+        "duracao_corte_seg": 40.1667
+      }
+    },
+    {
+      "id": "EX016",
+      "nome": "Flexoextensão de pernas com bola sob os pés e entre os joelhos",
+      "funcionalidade": "Controle Motor e Fortalecimento MMII",
+      "categoria": "Controle_Motor_e_Fortalecimento_MMII",
+      "regiao_corporal": "Quadris e joelhos",
+      "para_que_serve": "Treinar movimento coordenado de membros inferiores com estabilização da bola.",
+      "como_fazer": "Deitado de costas, apoiar os pés sobre bola grande e estabilizar outra bola entre os joelhos, aproximando e afastando os pés do corpo por flexão e extensão dos joelhos, quando possível.",
+      "posicionamento_paciente": "Decúbito dorsal, joelhos levemente flexionados, com as bolas bem posicionadas.",
+      "orientacao_fisioterapeuta": "Permanecer ao lado dos membros inferiores para impedir escape da bola e regular amplitude de movimento.",
+      "cuidados_e_adaptacoes": "Não permitir que a bola escorregue; reduzir amplitude se houver dor ou perda de controle pélvico.",
+      "observacao_visual": "A cena é curta e permite ver a configuração, mas não uma série completa.",
+      "arquivo_video": "videos/Controle_Motor_e_Fortalecimento_MMII/EX016_flexoextensao_de_pernas_com_bola_sob_os_pes_e_entre_os_joelhos.mp4",
+      "miniatura": "miniaturas/Controle_Motor_e_Fortalecimento_MMII/EX016_flexoextensao_de_pernas_com_bola_sob_os_pes_e_entre_os_joelhos.jpg",
+      "origem": {
+        "arquivo": "1000812458.mp4",
+        "inicio_seg": 0,
+        "fim_seg": 3.3277,
+        "duracao_corte_seg": 3.3277
+      }
+    },
+    {
+      "id": "EX017",
+      "nome": "Abdução de quadril em decúbito dorsal com resistência elástica",
+      "funcionalidade": "Controle Motor e Fortalecimento MMII",
+      "categoria": "Controle_Motor_e_Fortalecimento_MMII",
+      "regiao_corporal": "Quadril",
+      "para_que_serve": "Estimular controle de abdução dos quadris e resistência leve de membros inferiores.",
+      "como_fazer": "Deitado de costas, com faixa presa aos tornozelos, afastar lentamente uma perna da outra contra a resistência e retornar de modo controlado.",
+      "posicionamento_paciente": "Decúbito dorsal em superfície firme com faixa elástica adequadamente ajustada.",
+      "orientacao_fisioterapeuta": "Observar o alinhamento do quadril, impedir compensações do tronco e selecionar resistência baixa inicialmente.",
+      "cuidados_e_adaptacoes": "Evitar faixa que aperte demais o tornozelo ou aumente a espasticidade/dor.",
+      "observacao_visual": "Várias tomadas consecutivas do mesmo treino com resistência entre tornozelos.",
+      "arquivo_video": "videos/Controle_Motor_e_Fortalecimento_MMII/EX017_abducao_de_quadril_em_decubito_dorsal_com_resistencia_elastica.mp4",
+      "miniatura": "miniaturas/Controle_Motor_e_Fortalecimento_MMII/EX017_abducao_de_quadril_em_decubito_dorsal_com_resistencia_elastica.jpg",
+      "origem": {
+        "arquivo": "1000812458.mp4",
+        "inicio_seg": 3.3277,
+        "fim_seg": 8.6943,
+        "duracao_corte_seg": 5.3666
+      }
+    },
+    {
+      "id": "EX018",
+      "nome": "Elevação de membro inferior com peso no tornozelo em decúbito dorsal",
+      "funcionalidade": "Controle Motor e Fortalecimento MMII",
+      "categoria": "Controle_Motor_e_Fortalecimento_MMII",
+      "regiao_corporal": "Quadril e joelho",
+      "para_que_serve": "Treinar recrutamento de flexores de quadril e controle do membro durante elevação.",
+      "como_fazer": "Deitado de costas, elevar suavemente uma perna com caneleira leve e retornar à cama sem deixar cair.",
+      "posicionamento_paciente": "Decúbito dorsal, membro contralateral apoiado e peso bem ajustado.",
+      "orientacao_fisioterapeuta": "Acompanhar o movimento e oferecer assistência leve se necessário; reduzir ou retirar a carga se perder a técnica.",
+      "cuidados_e_adaptacoes": "Não usar peso quando houver controle motor insuficiente, dor ou contraindicação à resistência.",
+      "observacao_visual": "Trecho breve com caneleira vermelha.",
+      "arquivo_video": "videos/Controle_Motor_e_Fortalecimento_MMII/EX018_elevacao_de_membro_inferior_com_peso_no_tornozelo_em_decubito_dorsal.mp4",
+      "miniatura": "miniaturas/Controle_Motor_e_Fortalecimento_MMII/EX018_elevacao_de_membro_inferior_com_peso_no_tornozelo_em_decubito_dorsal.jpg",
+      "origem": {
+        "arquivo": "1000812458.mp4",
+        "inicio_seg": 8.6943,
+        "fim_seg": 10.461,
+        "duracao_corte_seg": 1.7667
+      }
+    },
+    {
+      "id": "EX019",
+      "nome": "Adução de joelhos com bola em pé",
+      "funcionalidade": "Controle Motor e Fortalecimento MMII",
+      "categoria": "Controle_Motor_e_Fortalecimento_MMII",
+      "regiao_corporal": "Quadris",
+      "para_que_serve": "Estimular ativação de adutores e estabilidade do alinhamento dos membros inferiores em ortostatismo.",
+      "como_fazer": "Em pé, segurar bola grande entre as pernas ou joelhos com compressão leve, relaxando e repetindo sob comando.",
+      "posicionamento_paciente": "Em pé diante de superfície de apoio, pés firmes e separados de forma confortável.",
+      "orientacao_fisioterapeuta": "Ficar à frente ou ao lado com apoio disponível, corrigindo inclinações excessivas e posicionamento da bola.",
+      "cuidados_e_adaptacoes": "Necessita proteção para quedas em pacientes com déficit de equilíbrio.",
+      "observacao_visual": "Trecho curto de compressão da bola em ortostatismo.",
+      "arquivo_video": "videos/Controle_Motor_e_Fortalecimento_MMII/EX019_aducao_de_joelhos_com_bola_em_pe.mp4",
+      "miniatura": "miniaturas/Controle_Motor_e_Fortalecimento_MMII/EX019_aducao_de_joelhos_com_bola_em_pe.jpg",
+      "origem": {
+        "arquivo": "1000812458.mp4",
+        "inicio_seg": 10.461,
+        "fim_seg": 12.2277,
+        "duracao_corte_seg": 1.7667
+      }
+    },
+    {
+      "id": "EX020",
+      "nome": "Abertura lateral dos pés em pé com faixa nos tornozelos",
+      "funcionalidade": "Controle Motor e Fortalecimento MMII",
+      "categoria": "Controle_Motor_e_Fortalecimento_MMII",
+      "regiao_corporal": "Quadris e membros inferiores",
+      "para_que_serve": "Trabalhar estabilização pélvica e recrutamento de abdutores durante apoio em pé.",
+      "como_fazer": "Em pé, com faixa elástica presa aos tornozelos, afastar lateralmente um pé contra a resistência e retornar devagar.",
+      "posicionamento_paciente": "Em pé perto de apoio fixo, peso distribuído antes do movimento.",
+      "orientacao_fisioterapeuta": "Posicionar-se lateralmente para proteção, orientar não inclinar o tronco e oferecer estabilidade de pelve se indicado.",
+      "cuidados_e_adaptacoes": "Atenção a desequilíbrio e atrito da faixa contra pele/tornozelos.",
+      "observacao_visual": "Demonstração curta; o vídeo original vai logo para a tela de encerramento.",
+      "arquivo_video": "videos/Controle_Motor_e_Fortalecimento_MMII/EX020_abertura_lateral_dos_pes_em_pe_com_faixa_nos_tornozelos.mp4",
+      "miniatura": "miniaturas/Controle_Motor_e_Fortalecimento_MMII/EX020_abertura_lateral_dos_pes_em_pe_com_faixa_nos_tornozelos.jpg",
+      "origem": {
+        "arquivo": "1000812458.mp4",
+        "inicio_seg": 12.2277,
+        "fim_seg": 15.228,
+        "duracao_corte_seg": 3.0003
+      }
+    },
+    {
+      "id": "EX021",
+      "nome": "Acomodação e mobilização suave de mão com flexão aumentada",
+      "funcionalidade": "Manuseio Neurologico",
+      "categoria": "Manuseio_Neurologico",
+      "regiao_corporal": "Punho e mão",
+      "para_que_serve": "Observar padrão de posicionamento e preparar o membro para mobilização com manuseio controlado.",
+      "como_fazer": "Com o antebraço apoiado, sustentar a mão e realizar movimentos lentos de acomodação de punho e dedos, sem tração forçada.",
+      "posicionamento_paciente": "Decúbito dorsal ou posição confortável, ombro e antebraço apoiados.",
+      "orientacao_fisioterapeuta": "Apoiar antebraço proximalmente e mão distalmente; verificar tônus, dor, amplitude e resposta ao contato.",
+      "cuidados_e_adaptacoes": "Não forçar dedos hiperflexionados nem assumir que uma manobra reduz espasticidade. Requer avaliação individual.",
+      "observacao_visual": "Demonstração de manejo neurofuncional, não protocolo universal de mobilização.",
+      "arquivo_video": "videos/Manuseio_Neurologico/EX021_acomodacao_e_mobilizacao_suave_de_mao_com_flexao_aumentada.mp4",
+      "miniatura": "miniaturas/Manuseio_Neurologico/EX021_acomodacao_e_mobilizacao_suave_de_mao_com_flexao_aumentada.jpg",
+      "origem": {
+        "arquivo": "1000812459.mp4",
+        "inicio_seg": 0,
+        "fim_seg": 19.0,
+        "duracao_corte_seg": 19.0
+      }
+    },
+    {
+      "id": "EX022",
+      "nome": "Flexão assistida de cotovelo e punho no manuseio neurológico",
+      "funcionalidade": "Manuseio Neurologico",
+      "categoria": "Manuseio_Neurologico",
+      "regiao_corporal": "Cotovelo, punho e mão",
+      "para_que_serve": "Explorar movimentos assistidos e percepção articular durante atendimento neurológico.",
+      "como_fazer": "Com o braço apoiado e a mão sustentada, conduzir a flexão de cotovelo associada a ajuste de punho, dentro de amplitude confortável.",
+      "posicionamento_paciente": "Decúbito dorsal, ombro próximo ao corpo e antebraço sustentado.",
+      "orientacao_fisioterapeuta": "Estabilizar segmentos acima e abaixo das articulações, evitar puxar pelo punho e controlar o ritmo.",
+      "cuidados_e_adaptacoes": "A demonstração mostra um caso específico; avaliar dor, tônus e contraindicações antes de reproduzir.",
+      "observacao_visual": "Nesta fase, o narrador passa do posicionamento da mão para cotovelo e punho.",
+      "arquivo_video": "videos/Manuseio_Neurologico/EX022_flexao_assistida_de_cotovelo_e_punho_no_manuseio_neurologico.mp4",
+      "miniatura": "miniaturas/Manuseio_Neurologico/EX022_flexao_assistida_de_cotovelo_e_punho_no_manuseio_neurologico.jpg",
+      "origem": {
+        "arquivo": "1000812459.mp4",
+        "inicio_seg": 19.0,
+        "fim_seg": 31.2,
+        "duracao_corte_seg": 12.2
+      }
+    },
+    {
+      "id": "EX023",
+      "nome": "Abertura assistida de mão e extensão individualizada dos dedos",
+      "funcionalidade": "Manuseio Neurologico",
+      "categoria": "Manuseio_Neurologico",
+      "regiao_corporal": "Dedos e punho",
+      "para_que_serve": "Facilitar acesso à abertura da mão e avaliar tolerância à extensão de dedos.",
+      "como_fazer": "Com a palma e o punho apoiados, conduzir suavemente a abertura dos dedos de modo gradual, ajustando a posição do punho para reduzir desconforto.",
+      "posicionamento_paciente": "Paciente deitado, cotovelo em posição confortável, antebraço apoiado.",
+      "orientacao_fisioterapeuta": "Apoiar a região palmar e mobilizar dedos individualmente sem usar a ponta do dedo como alavanca; observar resistência e reação do paciente.",
+      "cuidados_e_adaptacoes": "Não vencer resistência de modo brusco; em espasticidade, dor ou contratura, individualizar estratégia e considerar outras causas de limitação.",
+      "observacao_visual": "Trecho integra demonstração contínua; corte feito no início da etapa específica dos dedos.",
+      "arquivo_video": "videos/Manuseio_Neurologico/EX023_abertura_assistida_de_mao_e_extensao_individualizada_dos_dedos.mp4",
+      "miniatura": "miniaturas/Manuseio_Neurologico/EX023_abertura_assistida_de_mao_e_extensao_individualizada_dos_dedos.jpg",
+      "origem": {
+        "arquivo": "1000812459.mp4",
+        "inicio_seg": 31.2,
+        "fim_seg": 60.0,
+        "duracao_corte_seg": 28.8
+      }
+    },
+    {
+      "id": "EX024",
+      "nome": "Estimulação tátil de extensores dos dedos com abertura da mão",
+      "funcionalidade": "Manuseio Neurologico",
+      "categoria": "Manuseio_Neurologico",
+      "regiao_corporal": "Mão e antebraço",
+      "para_que_serve": "Trabalhar percepção de abertura manual e resposta motora em um contexto neurológico.",
+      "como_fazer": "Com a mão relaxada e sustentada, estimular levemente o dorso da mão e orientar tentativa de estender os dedos, assistindo apenas quando necessário.",
+      "posicionamento_paciente": "Decúbito dorsal com antebraço e punho estabilizados.",
+      "orientacao_fisioterapeuta": "Oferecer comando simples, observar esforço ativo e não provocar tensão excessiva em músculos espásticos.",
+      "cuidados_e_adaptacoes": "Efeitos de estímulos táteis sobre tônus e função são variáveis; não tratar como técnica comprovada isoladamente.",
+      "observacao_visual": "Trecho final da explicação de mobilização/estimulação manual.",
+      "arquivo_video": "videos/Manuseio_Neurologico/EX024_estimulacao_tatil_de_extensores_dos_dedos_com_abertura_da_mao.mp4",
+      "miniatura": "miniaturas/Manuseio_Neurologico/EX024_estimulacao_tatil_de_extensores_dos_dedos_com_abertura_da_mao.jpg",
+      "origem": {
+        "arquivo": "1000812459.mp4",
+        "inicio_seg": 60.0,
+        "fim_seg": 84.1,
+        "duracao_corte_seg": 24.1
+      }
+    },
+    {
+      "id": "EX025",
+      "nome": "Treino das fases da marcha com cones e mudanças de apoio",
+      "funcionalidade": "Marcha e Equilibrio",
+      "categoria": "Marcha_e_Equilibrio",
+      "regiao_corporal": "Membros inferiores",
+      "para_que_serve": "Treinar apoio unipodal, balanço, posicionamento do pé e transições de apoio na marcha.",
+      "como_fazer": "Caminhar por uma sequência de cones baixos usando marcas no piso como referência; alternar fase de apoio e passagem do membro à frente, sob orientação.",
+      "posicionamento_paciente": "Em pé no início de um percurso curto, usando calçado ou piso antiderrapante.",
+      "orientacao_fisioterapeuta": "Acompanhar muito próximo ao lado, oferecer assistência no tronco conforme avaliação e usar comandos de uma etapa por vez.",
+      "cuidados_e_adaptacoes": "Prever risco de queda; o vídeo mostra assistência física próxima, que pode ser necessária dependendo do caso.",
+      "observacao_visual": "A gravação usa múltiplos ângulos do mesmo treino e não diferentes exercícios.",
+      "arquivo_video": "videos/Marcha_e_Equilibrio/EX025_treino_das_fases_da_marcha_com_cones_e_mudancas_de_apoio.mp4",
+      "miniatura": "miniaturas/Marcha_e_Equilibrio/EX025_treino_das_fases_da_marcha_com_cones_e_mudancas_de_apoio.jpg",
+      "origem": {
+        "arquivo": "1000812460.mp4",
+        "inicio_seg": 0,
+        "fim_seg": 29.0,
+        "duracao_corte_seg": 29.0
+      }
+    }
+  ]
+}
