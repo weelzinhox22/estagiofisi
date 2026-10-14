@@ -40,6 +40,7 @@ import { saveFormDraft, restoreDrafts, clearFormDraft, saveSessionPlan, loadSess
 import { externalExerciseCatalog, externalCatalogErrors } from './external-exercise-catalog-data.js';
 import { externalExerciseCatalogPage } from './external-exercise-catalog-ui.js';
 import { clinicalDashboardPage, patientPortalPage } from './clinical-dashboard-ui.js';
+import { discussionsPage, discussionDetailPage } from './neuro-discussions-ui.js';
 
 let state=emptyState(),currentStorage=localStorage;
 let authState={ready:false,session:null,profile:null,message:''},adminRows=null,voiceStructureDraft=null,mentorDraft={},learningDraft={tool:'',history:[]};
@@ -56,7 +57,7 @@ let conditionFilter = 'todas';
 let externalCatalogFilters={query:'',region:'',objective:'',position:'',equipment:'',context:'',source:''};
 let downloadsQuery='',downloadsCategory='Todos';
 let videoCatalog=null,videoCatalogError='',videoCatalogPromise=null;
-let videoQuery='',videoCategory='Todas';
+let videoQuery='',videoCategory='Todas',videoContext='Todos';
 let videoUploadDraft={file:null,previewUrl:'',analysis:null,loading:false,publishing:false,error:''};
 let articleDraft={query:'',year:new Date().getFullYear()-5,openAccess:true,results:[],searched:false};
 const articleMemoryKey=()=>authState.session?`fisio-clinico:article-memory:${sessionUser(authState.session).sub}`:'fisio-clinico:article-memory:guest';
@@ -99,7 +100,7 @@ const navItems = [['painel','Painel clínico','◫'],['pacientes','Pacientes','�
 function route() { return decodeURIComponent((location.hash.slice(1) || 'painel').split('?')[0]).split('/'); }
 function routeQuery() { return new URLSearchParams((location.hash.split('?')[1]||'')); }
 function renderNav(section) {
-  const activeSection = section==='mentor'?'aprender':section==='portal'?'pacientes':['camera','encontro','queixa','casos','conduta','testes-funcionais','medidas'].includes(section) ? 'biblioteca' : ['reavaliacao','alta','modelo-funcional','neuro','pediatria','domiciliar','ferramentas','inicio'].includes(section)?'mais':section;
+  const activeSection = ['mentor','discussoes'].includes(section)?'aprender':section==='portal'?'pacientes':['camera','encontro','queixa','casos','conduta','testes-funcionais','medidas'].includes(section) ? 'biblioteca' : ['reavaliacao','alta','modelo-funcional','neuro','pediatria','domiciliar','ferramentas','inicio'].includes(section)?'mais':section;
   const items=authState.profile?.role==='admin'?[...navItems,['admin','Admin','◆']]:navItems;
   const iconNames={painel:'home',inicio:'home','atendimento-rapido':'plusCircle',evolucao:'edit',consulta:'search',pacientes:'users',aprender:'learn',assistente:'bolt',biblioteca:'book',repertorio:'clipboard',mais:'dots',downloads:'download',conta:'user',admin:'shield'};
   const itemHtml=([id,label,icon],selected=activeSection)=>`<a href="#${id}" class="nav-item nav-${id} ${selected===id?'active':''}" ${selected===id?'aria-current="page"':''}><span aria-hidden="true">${iconNames[id]?homeIcon(iconNames[id]):icon}</span><span>${label}</span></a>`;
@@ -108,7 +109,7 @@ function renderNav(section) {
   const moreSections=new Set(['evolucao','aprender','assistente','artigos','repertorio','downloads','mais','dados','conta','admin']);
   const mobileActive=moreSections.has(activeSection)?'mais':activeSection;
   $('#mobile-nav').innerHTML = mobileOrder.map(id=>items.find(([itemId])=>itemId===id)).filter(Boolean).map(([id,label,icon])=>itemHtml([id,({painel:'Painel','atendimento-rapido':'Atender',pacientes:'Pacientes',biblioteca:'Biblioteca',mais:'Mais'})[id]||label,icon],mobileActive)).join('');
-  $('#breadcrumb').textContent = section==='painel'?'Painel clínico':items.find(([id]) => id === activeSection)?.[1] || 'Fisio Clínico';
+  $('#breadcrumb').textContent = section==='painel'?'Painel clínico':section==='discussoes'?'Discussões neurofuncionais':items.find(([id]) => id === activeSection)?.[1] || 'Fisio Clínico';
 }
 function render() {
   stopVoiceDictation();
@@ -128,6 +129,7 @@ function render() {
   else if(section==='atendimento-rapido'){const query=routeQuery(),a=query.get('a')||'',b=query.get('b')||'';main.innerHTML=rapidCarePage(state,a,b,query.get('mode')||(b?'duplo':'individual'));}
   else if(section==='mentor') main.innerHTML=clinicalMentorPage(state,{...mentorDraft,patientId:routeQuery().get('patient')||mentorDraft.patientId||''});
   else if(section==='aprender'){if(id&&learningDraft.tool!==id)learningDraft={tool:id,history:[]};main.innerHTML=id?learningToolPage(state,id,learningDraft):learningHub();}
+  else if(section==='discussoes') main.innerHTML=id?discussionDetailPage(id):discussionsPage();
   else if(section==='downloads') main.innerHTML=downloadsPage(downloadsQuery,downloadsCategory);
   else if(section==='artigos') main.innerHTML=scientificSearchPage(articleDraft);
   else if(section==='evolucao') main.innerHTML=expressEvolutionHub();
@@ -223,6 +225,8 @@ const HOME_ITEMS=[
   {id:'evolucao',label:'Criar evolução',description:'Exercícios, doses e texto clínico',icon:'edit',href:'#evolucao'},
   {id:'pacientes',label:'Pacientes',description:'Acompanhe seus atendimentos',icon:'users',href:'#pacientes'},
   {id:'biblioteca',label:'Biblioteca',description:'Exercícios, testes e recursos',icon:'book',href:'#biblioteca'},
+  {id:'videos',label:'Vídeos',description:'92 demonstrações por função e contexto',icon:'gait',href:'#biblioteca/videos'},
+  {id:'discussoes',label:'Discussões',description:'Neuro, casos clínicos e artigos',icon:'neuro',href:'#discussoes'},
   {id:'consulta',label:'Consulta rápida',description:'Guias e raciocínio clínico',icon:'bolt',href:'#consulta'},
   {id:'atlas',label:'Atlas palpatório',description:'Técnicas e referências anatômicas',icon:'function',href:'#biblioteca/atlas'},
   {id:'artigos',label:'Buscar artigos',description:'Literatura científica para estudar',icon:'search',href:'#artigos'},
@@ -235,6 +239,7 @@ const HOME_FEATURES=[
   {eyebrow:'ESTUDO PRÁTICO',title:'Atlas de anatomia palpatória',description:'Consulte imagens, posicionamento, sequência de palpação e confirmação.',href:'#biblioteca/atlas',icon:'function'},
   {eyebrow:'EVIDÊNCIAS',title:'Busque e discuta artigos',description:'Encontre estudos e leve os resultados diretamente para o Chat clínico.',href:'#artigos',icon:'search'},
   {eyebrow:'EXERCÍCIOS',title:'Kisner ilustrado',description:'Veja imagens, execução, objetivos e gere um rascunho para evolução.',href:'#biblioteca/kisner',icon:'book'},
+  {eyebrow:'NEUROLOGIA',title:'Discussões neurofuncionais',description:'Estude AVE, marcha, FES, TRM, Parkinson e membro superior com casos e artigos.',href:'#discussoes',icon:'neuro'},
   {eyebrow:'APRENDIZADO',title:'Professor de escrita clínica',description:'Treine SOAP, avaliação, evolução e apresentação de caso sem acrescentar fatos.',href:'#aprender/escrita',icon:'learn'}
 ];
 function homePrefs(){const saved=state.homePreferences?.find(item=>item.id==='home-layout');const ids=HOME_ITEMS.map(item=>item.id),order=[...(saved?.order||[]).filter(id=>ids.includes(id)),...ids.filter(id=>!saved?.order?.includes(id))];return {id:'home-layout',order,hidden:Array.isArray(saved?.hidden)?saved.hidden:[],links:Array.isArray(saved?.links)?saved.links:[],folders:Array.isArray(saved?.folders)?saved.folders:[]};}
@@ -312,7 +317,7 @@ const librarySections=[
 ];
 const libraryGroups=[['pratica','Exercícios e tratamento'],['avaliacao','Anatomia e avaliação'],['raciocinio','Raciocínio clínico']];
 const tabs = active => `<nav class="library-tabs library-directory" aria-label="Todas as áreas da biblioteca">${libraryGroups.map(([group,title])=>`<section><h2>${title}</h2><div>${librarySections.filter(item=>item[4]===group).map(([id,label,icon,description])=>`<a class="${active===id?'active':''}" href="#biblioteca/${id}" ${active===id?'aria-current="page"':''}><i aria-hidden="true">${icon}</i><span><strong>${label}</strong><small>${description}</small></span><b aria-hidden="true">›</b></a>`).join('')}</div></section>`).join('')}</nav>`;
-const libraryHero=()=>`<section class="library-native-hero"><span class="eyebrow">CONHECIMENTO CLÍNICO</span><h1>Biblioteca prática</h1><p>Escolha uma área para abrir diretamente o conteúdo.</p><div class="library-hero-stats"><span><strong>${allExercises().length}</strong><small>exercícios</small></span><span><strong>93+</strong><small>vídeos</small></span><span><strong>${clinicalTests.length}</strong><small>testes</small></span><button type="button" data-action="go-quick">⌕ <span>Consulta rápida</span></button></div></section>`;
+const libraryHero=()=>`<section class="library-native-hero"><span class="eyebrow">CONHECIMENTO CLÍNICO</span><h1>Biblioteca prática</h1><p>Escolha uma área para abrir diretamente o conteúdo.</p><div class="library-hero-stats"><span><strong>${allExercises().length}</strong><small>exercícios</small></span><span><strong>92+</strong><small>vídeos</small></span><span><strong>${clinicalTests.length}</strong><small>testes</small></span><button type="button" data-action="go-quick">⌕ <span>Consulta rápida</span></button></div></section>`;
 const librarySectionHeader=active=>{const section=librarySections.find(([id])=>id===active)||librarySections[0],label=section[1],icon=section[2],description=section[3];return `<header class="library-subpage-head"><a href="#biblioteca" class="library-back">← Todas as áreas</a><div><i aria-hidden="true">${icon}</i><span><small>BIBLIOTECA</small><h1>${esc(label)}</h1><p>${esc(description)}</p></span></div></header>`;};
 const exerciseCard = e => {const visual=exerciseVisual(e);return `<article class="exercise-card rich-card"><a class="exercise-card-visual" href="#exercicio/${encodeURIComponent(e.id)}"><img src="${visual.url}" alt="${esc(visual.alt)}" loading="lazy"><span>${esc(e.category)}</span></a><div class="exercise-card-content"><div class="card-actions"><span class="source-label">${esc(e.region||e.category)}</span><button class="star-button ${isFavorite('exercise',e.id)?'active':''}" data-action="toggle-favorite" data-kind="exercise" data-id="${esc(e.id)}" aria-label="Favoritar">${isFavorite('exercise',e.id)?'★':'☆'}</button></div><h3><a href="#exercicio/${encodeURIComponent(e.id)}">${esc(e.name)}</a></h3><p class="card-objective">${esc(e.objective)}</p><div class="tag-row">${(e.tags||[]).slice(0,3).map(t=>`<span>${esc(t)}</span>`).join('')}</div><a class="text-link" href="#exercicio/${encodeURIComponent(e.id)}">Ver execução e objetivo <b>›</b></a></div></article>`;};
 
@@ -357,7 +362,7 @@ function libraryPage(active='inicio') {
   if(active==='inicio')return `${libraryHero()}${tabs('')}`;
   const header=librarySectionHeader(active);
   if(active==='fontes')return header+externalExerciseCatalogPage(externalExerciseCatalog,externalCatalogFilters,externalCatalogErrors);
-  if(active==='videos'){if(!videoCatalog&&!videoCatalogError)queueMicrotask(ensureVideoCatalog);return header+exerciseVideoUploadPanel(videoUploadDraft)+videoLibraryPage(videoCatalog||[],videoQuery,videoCategory,{loading:!videoCatalog&&!videoCatalogError,error:videoCatalogError});}
+  if(active==='videos'){if(!videoCatalog&&!videoCatalogError)queueMicrotask(ensureVideoCatalog);return header+exerciseVideoUploadPanel(videoUploadDraft)+videoLibraryPage(videoCatalog||[],videoQuery,videoCategory,videoContext,{loading:!videoCatalog&&!videoCatalogError,error:videoCatalogError});}
   if(active==='condicoes') {
     const qCondition = routeQuery().get('c');
     const effectiveFilter = qCondition || conditionFilter;
@@ -722,6 +727,8 @@ document.addEventListener('pointerup',()=>{if(!homePointerDrag)return;const {sou
 document.addEventListener('click',async event=>{
   const target=event.target.closest('[data-action]');if(!target)return;
   const action=target.dataset.action,id=target.dataset.id;
+  if(action==='video-functional-filter'){videoCategory=target.dataset.value||'Todas';render();return;}
+  if(action==='video-context-filter'){videoContext=target.dataset.value||'Todos';render();return;}
   if(action==='download-category'){downloadsCategory=target.dataset.category||'Todos';render();return;}
   if(action==='article-example'){articleDraft={...articleDraft,query:target.dataset.query||''};render();queueMicrotask(()=>$('#article-search-form input[name="query"]')?.focus());return;}
   if(action==='cancel-video-analysis'){if(videoUploadDraft.previewUrl)URL.revokeObjectURL(videoUploadDraft.previewUrl);videoUploadDraft={file:null,previewUrl:'',analysis:null,loading:false,publishing:false,error:''};render();return;}
@@ -868,7 +875,6 @@ document.addEventListener('change',async event=>{
   if(event.target.matches('[data-session-done]')){const form=event.target.closest('form'),id=event.target.dataset.id,status=form?.elements[`status-${id}`],card=event.target.closest('.session-exercise');if(status)status.value=event.target.checked?'realizado':'nao_avaliado';card?.classList.toggle('is-done',event.target.checked);saveFormDraft(form,activeUserId(),location.hash);return;}
   if(event.target.name?.startsWith('status-')){const form=event.target.form,id=event.target.name.slice(7),check=event.target.closest('.session-exercise')?.querySelector('[data-session-done]'),done=['realizado','parcial'].includes(event.target.value);if(check)check.checked=event.target.value==='realizado';event.target.closest('.session-exercise')?.classList.toggle('is-done',done);saveFormDraft(form,activeUserId(),location.hash);return;}
   if(event.target.id==='downloads-category'){downloadsCategory=event.target.value;render();return;}
-  if(event.target.id==='video-category'){videoCategory=event.target.value;render();return;}
   if(event.target.id==='kisner-category'){kisnerCategory=event.target.value;kisnerLimit=60;render();return;}
   if(event.target.id==='kisner-type'){kisnerType=event.target.value;kisnerLimit=60;render();return;}
   if(event.target.id==='atlas-category'){atlasCategory=event.target.value;atlasLimit=48;render();return;}
@@ -876,7 +882,17 @@ document.addEventListener('change',async event=>{
   if(event.target.id!=='import-file'||!event.target.files?.[0])return;
   try{const {validateState}=await import('./store.js');const next=validateState(JSON.parse(await event.target.files[0].text()));if(!confirm('Substituir todos os dados locais pelos dados do arquivo selecionado?'))return;state=next;saveState(state);toast('Backup importado.');render();}catch(error){toast(`Arquivo inválido: ${error.message}`,true);}
 });
-document.addEventListener('toggle',event=>{const card=event.target;if(!card.matches?.('[data-video-card]')||card.open)return;card.querySelectorAll('video').forEach(video=>video.pause());},true);
+document.addEventListener('toggle',event=>{
+  const card=event.target;if(!card.matches?.('[data-video-card]'))return;
+  const video=card.querySelector('video');
+  if(!card.open){video?.pause();return;}
+  document.querySelectorAll('[data-video-card][open]').forEach(other=>{if(other!==card)other.open=false;});
+  if(video){video.preload='metadata';if(video.readyState===0)video.load();}
+  requestAnimationFrame(()=>setTimeout(()=>{
+    const target=card.querySelector('[data-video-expanded] video')||card;
+    target.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
+  },80));
+},true);
 document.addEventListener('error',event=>{const media=event.target;if(!media.matches?.('[data-video-card] video,[data-video-card] source'))return;const card=media.closest('[data-video-card]'),expanded=card?.querySelector('.video-card-expanded');card?.classList.add('has-media-error');if(expanded&&!expanded.querySelector('.video-media-error'))expanded.insertAdjacentHTML('afterbegin','<div class="video-media-error" role="alert"><strong>Vídeo indisponível</strong><p>O arquivo não pôde ser carregado. Consulte a fonte do catálogo e tente novamente.</p></div>');},true);
 document.addEventListener('voice-transcribed',event=>{if(event.detail?.fieldName==='quickQuery'){rememberQuickQuery(event.detail.text);return;}voiceStructureDraft=structureTranscript(event.detail?.text||'');$('#dialog-root').innerHTML=voiceStructurePreview(voiceStructureDraft);});
 window.addEventListener('hashchange',()=>{scrollPageTop();render();});
