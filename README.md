@@ -4,7 +4,7 @@ O fluxo principal agora parte do **Painel Clínico**, que conecta avaliação, o
 
 A Biblioteca Visual em `#biblioteca/videos` reúne o catálogo original e dois lotes locais normalizados por `src/video-catalog-adapter.js`: 25 exercícios gerais e 18 exercícios de fisioterapia neurológica. Os JSONs e a documentação originais permanecem em `public/videos/`. Em 14/10/2026, o responsável pelo projeto declarou possuir os direitos de publicação e redistribuição dos 43 vídeos e miniaturas; confira o registro em `THIRD_PARTY_NOTICES.md`.
 
-A área `#discussoes` organiza oito discussões de Neurologia Adulto: avaliação neurofuncional e transferências, Polígono de Willis/AVE, marcha, FES, paralisia facial, traumatismo raquimedular/ISNCSCI, membro superior parético e Parkinson. Cada tema inclui caso fictício, perguntas de raciocínio, limites da evidência e links para diretrizes ou revisões científicas. A síntese e as fontes estão documentadas em [docs/NEURO_DISCUSSIONS.md](docs/NEURO_DISCUSSIONS.md).
+A área `#discussoes` funciona como uma biblioteca especializada de Neurofisioterapia: avaliação neurofuncional e transferências, Polígono de Willis/AVE, marcha, FES, paralisia facial, traumatismo raquimedular/ISNCSCI, membro superior parético e Parkinson. Cada página reúne fundamentos, avaliação, medidas de desfecho, intervenções, segurança, aplicação clínica, limites e links para diretrizes ou revisões científicas. A síntese e as fontes estão documentadas em [docs/NEURO_DISCUSSIONS.md](docs/NEURO_DISCUSSIONS.md).
 
 Aplicação web responsiva e PWA instalável para apoiar consulta, documentação e estudo durante a prática de fisioterapia supervisionada.
 

@@ -110,7 +110,7 @@ function renderNav(section) {
   const moreSections=new Set(['evolucao','aprender','assistente','artigos','repertorio','downloads','mais','dados','conta','admin']);
   const mobileActive=moreSections.has(activeSection)?'mais':activeSection;
   $('#mobile-nav').innerHTML = mobileOrder.map(id=>items.find(([itemId])=>itemId===id)).filter(Boolean).map(([id,label,icon])=>itemHtml([id,({painel:'Painel','atendimento-rapido':'Atender',pacientes:'Pacientes',biblioteca:'Biblioteca',mais:'Mais'})[id]||label,icon],mobileActive)).join('');
-  $('#breadcrumb').textContent = section==='painel'?'Painel clínico':section==='discussoes'?'Discussões neurofuncionais':items.find(([id]) => id === activeSection)?.[1] || 'Fisio Clínico';
+  $('#breadcrumb').textContent = section==='painel'?'Painel clínico':section==='discussoes'?'Neurofisioterapia clínica':items.find(([id]) => id === activeSection)?.[1] || 'Fisio Clínico';
 }
 function render() {
   stopVoiceDictation();
@@ -173,7 +173,7 @@ function render() {
   else if(section==='inicio') main.innerHTML = homePage();
   else main.innerHTML = clinicalDashboardPage(state,conditionPrograms);
   enterPage(main,routeKey);
-  queueMicrotask(()=>{restoreDrafts(main,activeUserId(),location.hash);enhanceVoiceInputs(main);updateSessionTotal();});
+  queueMicrotask(()=>{restoreDrafts(main,activeUserId(),location.hash);enhanceVoiceInputs(main);updateSessionTotal();const sectionTarget=section==='discussoes'?routeQuery().get('sec'):'';if(sectionTarget)requestAnimationFrame(()=>document.getElementById(sectionTarget)?.scrollIntoView({block:'start'}));});
   document.title = `${$('#breadcrumb').textContent} · Fisio Clínico`;
   const version=$('#app-version');if(version)version.textContent=`VERSÃO ${APP_VERSION} · OFFLINE`;
   if(!palpatoryAtlas&&!palpatoryAtlasError)queueMicrotask(ensurePalpatoryAtlas);
@@ -227,7 +227,7 @@ const HOME_ITEMS=[
   {id:'pacientes',label:'Pacientes',description:'Acompanhe seus atendimentos',icon:'users',href:'#pacientes'},
   {id:'biblioteca',label:'Biblioteca',description:'Exercícios, testes e recursos',icon:'book',href:'#biblioteca'},
   {id:'videos',label:'Vídeos',description:'92 demonstrações por função e contexto',icon:'gait',href:'#biblioteca/videos'},
-  {id:'discussoes',label:'Discussões',description:'Neuro, casos clínicos e artigos',icon:'neuro',href:'#discussoes'},
+  {id:'discussoes',label:'Neurofisioterapia',description:'Avaliação, intervenções e evidências',icon:'neuro',href:'#discussoes'},
   {id:'consulta',label:'Consulta rápida',description:'Guias e raciocínio clínico',icon:'bolt',href:'#consulta'},
   {id:'atlas',label:'Atlas palpatório',description:'Técnicas e referências anatômicas',icon:'function',href:'#biblioteca/atlas'},
   {id:'artigos',label:'Buscar artigos',description:'Literatura científica para estudar',icon:'search',href:'#artigos'},
@@ -240,7 +240,7 @@ const HOME_FEATURES=[
   {eyebrow:'ESTUDO PRÁTICO',title:'Atlas de anatomia palpatória',description:'Consulte imagens, posicionamento, sequência de palpação e confirmação.',href:'#biblioteca/atlas',icon:'function'},
   {eyebrow:'EVIDÊNCIAS',title:'Busque e discuta artigos',description:'Encontre estudos e leve os resultados diretamente para o Chat clínico.',href:'#artigos',icon:'search'},
   {eyebrow:'EXERCÍCIOS',title:'Kisner ilustrado',description:'Veja imagens, execução, objetivos e gere um rascunho para evolução.',href:'#biblioteca/kisner',icon:'book'},
-  {eyebrow:'NEUROLOGIA',title:'Discussões neurofuncionais',description:'Estude AVE, marcha, FES, TRM, Parkinson e membro superior com casos e artigos.',href:'#discussoes',icon:'neuro'},
+  {eyebrow:'BIBLIOTECA ESPECIALIZADA',title:'Neurofisioterapia clínica',description:'Consulte AVE, marcha, FES, lesão medular, Parkinson, membro superior e avaliação funcional.',href:'#discussoes',icon:'neuro'},
   {eyebrow:'APRENDIZADO',title:'Professor de escrita clínica',description:'Treine SOAP, avaliação, evolução e apresentação de caso sem acrescentar fatos.',href:'#aprender/escrita',icon:'learn'}
 ];
 function homePrefs(){const saved=state.homePreferences?.find(item=>item.id==='home-layout');const ids=HOME_ITEMS.map(item=>item.id),order=[...(saved?.order||[]).filter(id=>ids.includes(id)),...ids.filter(id=>!saved?.order?.includes(id))];return {id:'home-layout',order,hidden:Array.isArray(saved?.hidden)?saved.hidden:[],links:Array.isArray(saved?.links)?saved.links:[],folders:Array.isArray(saved?.folders)?saved.folders:[]};}

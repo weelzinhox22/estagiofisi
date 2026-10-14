@@ -1,10 +1,20 @@
-# Discussões neurofuncionais
+# Biblioteca de Neurofisioterapia clínica
 
 Revisão editorial: 14/10/2026.
 
 ## Escopo
 
-A página `#discussoes` é uma síntese narrativa educacional para estudo supervisionado. Não constitui revisão sistemática, diagnóstico, prescrição ou protocolo individual. Os casos são fictícios e desidentificados. A aplicação deixa explícita a diferença entre fatos observados, hipóteses clínicas e decisões do fisioterapeuta.
+A página `#discussoes` é uma biblioteca clínica e uma síntese narrativa educacional. Não constitui revisão sistemática, diagnóstico, prescrição ou protocolo individual. Os exemplos são fictícios e desidentificados. Cada página separa fundamentos, avaliação, medidas de desfecho, possibilidades fisioterapêuticas, segurança, aplicação e limites da evidência.
+
+## Estrutura das páginas
+
+- resumo clínico e conceitos essenciais;
+- itens de avaliação e registro;
+- medidas de desfecho com finalidade e cautelas de aplicação;
+- possibilidades fisioterapêuticas, sem dose automática;
+- segurança e critérios para interromper a atividade;
+- exemplo aplicado com leitura clínica, prioridades e modelo de registro;
+- erros frequentes e acesso às fontes originais.
 
 ## Temas
 
@@ -30,6 +40,9 @@ A página `#discussoes` é uma síntese narrativa educacional para estudo superv
 - Stevenson T et al. *Constraint-Induced Movement Therapy Compared to Dose-Matched Interventions*. PMID 23997396. https://pubmed.ncbi.nlm.nih.gov/23997396/
 - Boening A et al. *Unilateral mirror therapy may improve upper limb motor recovery after stroke*. PMID 41423382. https://pubmed.ncbi.nlm.nih.gov/41423382/
 - Osborne JA et al. *Physical Therapist Management of Parkinson Disease*. PMID 34963139. https://pmc.ncbi.nlm.nih.gov/articles/PMC9046970/
+- International Head and Neck Scientific Group. *Pathogenesis, diagnosis and therapy of facial synkinesis*. PMID 36438936. https://pubmed.ncbi.nlm.nih.gov/36438936/
+- Consortium for Spinal Cord Medicine. *Evaluation and Management of Autonomic Dysreflexia and Other Autonomic Dysfunctions*. https://pmc.ncbi.nlm.nih.gov/articles/PMC8152175/
+- Australian and New Zealand Clinical Practice Guideline for the physiotherapy management of people with spinal cord injury. PMID 40797108. https://pubmed.ncbi.nlm.nih.gov/40797108/
 
 ## Manutenção
 
@@ -37,3 +50,4 @@ A página `#discussoes` é uma síntese narrativa educacional para estudo superv
 - A apresentação fica em `src/neuro-discussions-ui.js` e `src/neuro-discussions.css`.
 - Toda atualização deve registrar data, fonte estável, população, fase clínica, intervenção ou avaliação estudada, desfechos e limitações.
 - Não acrescentar dose, contraindicação ou indicação individual que não esteja sustentada pela fonte e validada pelo responsável clínico.
+- Preservar a rota `#discussoes` por compatibilidade, embora o nome apresentado ao usuário seja **Neurofisioterapia clínica**.
