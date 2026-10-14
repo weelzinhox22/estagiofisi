@@ -2,7 +2,7 @@
 
 O fluxo principal agora parte do **Painel Clínico**, que conecta avaliação, objetivos, plano, checklist da sessão, evolução revisada, reavaliação e orientação domiciliar. Consulte [a documentação da jornada clínica](docs/CLINICAL_WORKFLOW_V1.md).
 
-A Biblioteca Visual em `#biblioteca/videos` reúne o catálogo original e dois lotes locais normalizados por `src/video-catalog-adapter.js`: 25 exercícios gerais e 18 exercícios de fisioterapia neurológica. Os JSONs e a documentação originais permanecem em `public/videos/`. Os 43 itens novos estão marcados com direitos de uso pendentes; confira `THIRD_PARTY_NOTICES.md` antes de qualquer publicação.
+A Biblioteca Visual em `#biblioteca/videos` reúne o catálogo original e dois lotes locais normalizados por `src/video-catalog-adapter.js`: 25 exercícios gerais e 18 exercícios de fisioterapia neurológica. Os JSONs e a documentação originais permanecem em `public/videos/`. Em 14/10/2026, o responsável pelo projeto declarou possuir os direitos de publicação e redistribuição dos 43 vídeos e miniaturas; confira o registro em `THIRD_PARTY_NOTICES.md`.
 
 Aplicação web responsiva e PWA instalável para apoiar consulta, documentação e estudo durante a prática de fisioterapia supervisionada.
 
