@@ -1,0 +1,54 @@
+.neuro-games-page{max-width:1180px;margin:0 auto;padding:0 0 30px;color:#20332f}
+.neuro-games-hero{position:relative;display:flex;align-items:center;min-height:270px;overflow:hidden;padding:clamp(24px,4vw,46px);border:1px solid #29433a;border-radius:24px;background:#132823 url("/public/neurogames/neuroquest-2d-expedition-keyart.webp") 54% 51%/cover no-repeat;box-shadow:0 20px 50px #17312622}
+.neuro-games-hero:before{position:absolute;inset:0;background:linear-gradient(90deg,#10231fee 0%,#10231fdc 42%,#10231f3d 76%,#10231f17 100%),linear-gradient(0deg,#10231f66,transparent 42%);content:""}
+.neuro-games-hero-copy{position:relative;z-index:1;max-width:600px;color:#f7f4e9}
+.neuro-games-eyebrow{display:flex;align-items:center;gap:9px;color:#d9c28e;font-size:.66rem;font-weight:800;letter-spacing:.16em}
+.neuro-games-eyebrow i,.neuro-games-frame-top i{width:7px;height:7px;border-radius:50%;background:#a9cf9f;box-shadow:0 0 12px #a9cf9f88}
+.neuro-games-hero h1{max-width:560px;margin:18px 0 10px;color:#fff9e9;font:500 clamp(2rem,5vw,3.75rem)/1.02 Georgia,"Lora",serif;letter-spacing:-.045em}
+.neuro-games-hero-copy>p{max-width:510px;margin:0;color:#d6dfd4;font-size:clamp(.92rem,1.8vw,1.06rem);line-height:1.65}
+.neuro-games-meta{display:flex;flex-wrap:wrap;gap:9px 18px;margin-top:22px;color:#d7caa8;font-size:.58rem;font-weight:800;letter-spacing:.12em}
+.neuro-games-hero-art{position:absolute;right:clamp(22px,5vw,58px);bottom:24px;display:grid;place-items:center;width:96px;height:96px;border:1px solid #dcc58b9e;border-radius:50%;color:#e5ce97;font-size:.48rem;font-weight:800;letter-spacing:.15em;text-align:center;transform:rotate(-9deg)}
+.neuro-games-hero-art b{font:500 2rem/1 Georgia,serif}.neuro-games-hero-art i{position:absolute;inset:-7px;border:1px solid #dcc58b48;border-radius:50%}
+.neuro-games-entry{margin-top:22px;padding:clamp(15px,2.5vw,25px);border:1px solid #dfe6dc;border-radius:21px;background:linear-gradient(145deg,#fff,#f7f8f2);box-shadow:0 12px 36px #24382c0d}
+.neuro-games-entry-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:17px}
+.neuro-games-section-tag{color:#728478;font-size:.6rem;font-weight:850;letter-spacing:.16em}
+.neuro-games-entry h2{margin:5px 0;color:#243832;font:500 clamp(1.45rem,3vw,2rem)/1.15 Georgia,"Lora",serif;letter-spacing:-.025em}
+.neuro-games-entry-head p{margin:0;color:#68766e;font-size:.88rem;line-height:1.5}
+.neuro-games-open{display:inline-flex;align-items:center;justify-content:center;gap:14px;flex:none;min-height:43px;padding:0 14px;border:1px solid #bdcbb9;border-radius:9px;background:#f0f5ec;color:#355e46;font-size:.75rem;font-weight:800;text-decoration:none;transition:transform .18s,border-color .18s,background .18s}
+.neuro-games-open:hover{transform:translateY(-2px);border-color:#8ea78d;background:#e8f0e4}
+.neuro-games-open span{font-size:1.05rem}
+.neuro-games-frame-wrap{overflow:hidden;border:1px solid #263b36;border-radius:15px;background:#101a1a;box-shadow:0 14px 30px #172a2518}
+.neuro-games-frame-top{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:38px;padding:0 14px;border-bottom:1px solid #364943;background:#1b2d29;color:#cbd6ca;font-size:.55rem;font-weight:800;letter-spacing:.12em}
+.neuro-games-frame-top>span:first-child{display:flex;align-items:center;gap:8px}
+.neuro-games-frame{display:block;width:100%;height:min(82dvh,920px);min-height:680px;border:0;background:#f3f5ef}
+.neuro-games-notice{display:flex;align-items:flex-start;gap:11px;margin-top:14px;padding:13px 15px;border:1px solid #e2e5dc;border-radius:12px;background:#f6f7f2;color:#68756b}
+.neuro-games-notice-mark{display:grid;flex:none;place-items:center;width:22px;height:22px;border:1px solid #b8c5b5;border-radius:50%;color:#55715c;font:700 .75rem Georgia,serif}
+.neuro-games-notice p{margin:0;font-size:.76rem;line-height:1.55}.neuro-games-notice strong{color:#3f5749}
+@media(max-width:700px){
+  .neuro-games-page{padding-bottom:24px}
+  .neuro-games-hero{min-height:270px;padding:25px 20px;background-position:54% center;border-radius:18px}
+  .neuro-games-hero:before{background:linear-gradient(90deg,#10231ff2 0%,#10231fdb 62%,#10231f70 100%),linear-gradient(0deg,#10231f8a,transparent 55%)}
+  .neuro-games-hero h1{max-width:440px;font-size:clamp(2rem,8vw,2.8rem)}
+  .neuro-games-hero-copy>p{max-width:430px;font-size:.91rem}
+  .neuro-games-meta{gap:7px 12px;font-size:.53rem}
+  .neuro-games-hero-art{right:16px;bottom:16px;width:70px;height:70px;opacity:.88}
+  .neuro-games-hero-art b{font-size:1.4rem}
+  .neuro-games-entry{margin-top:14px;padding:13px;border-radius:16px}
+  .neuro-games-entry-head{align-items:flex-start;flex-direction:column;gap:12px;margin-bottom:12px}
+  .neuro-games-open{min-height:42px}
+  .neuro-games-frame-wrap{margin-inline:-1px;border-radius:12px}
+  .neuro-games-frame-top{min-height:34px;padding:0 10px;font-size:.48rem;letter-spacing:.08em}
+  .neuro-games-frame{height:78dvh;min-height:620px}
+}
+@media(max-width:370px){.neuro-games-frame-top>span:last-child{max-width:125px;text-align:right;line-height:1.4}.neuro-games-frame{min-height:590px}}
+@media(prefers-reduced-motion:reduce){.neuro-games-open{transition:none}}
+.more-games-banner{display:grid;grid-template-columns:54px minmax(0,1fr) 24px;align-items:center;gap:15px;margin:14px 0;padding:17px 20px;border:1px solid #d8e2d5;border-radius:16px;background:linear-gradient(110deg,#edf4e9,#f7f8f1 76%);color:#314b3c;text-decoration:none;box-shadow:0 8px 24px #22382d0b;transition:transform .18s,border-color .18s,box-shadow .18s}
+.more-games-banner:hover{transform:translateY(-2px);border-color:#b5c8b2;box-shadow:0 12px 28px #22382d13}
+.more-games-mark{display:grid;place-items:center;width:52px;height:52px;border:1px solid #cfddca;border-radius:14px;background:#fff;color:#54765c}
+.more-games-mark svg{width:28px;height:28px}
+.more-games-banner>span:nth-child(2){display:grid;gap:3px;min-width:0}
+.more-games-banner small{color:#7d8b7d;font-size:.57rem;font-weight:850;letter-spacing:.14em}
+.more-games-banner strong{color:#2f493a;font-family:Georgia,"Lora",serif;font-size:1.05rem}
+.more-games-banner p{margin:0;color:#6c7a70;font-size:.78rem}
+.more-games-banner>b{color:#6d866e;font-size:1.3rem}
+@media(max-width:520px){.more-games-banner{grid-template-columns:45px minmax(0,1fr) 18px;gap:11px;padding:13px}.more-games-mark{width:44px;height:44px;border-radius:12px}.more-games-banner strong{font-size:.96rem}.more-games-banner p{font-size:.72rem}}

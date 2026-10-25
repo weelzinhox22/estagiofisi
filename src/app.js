@@ -41,6 +41,7 @@ import { externalExerciseCatalog, externalCatalogErrors } from './external-exerc
 import { externalExerciseCatalogPage } from './external-exercise-catalog-ui.js';
 import { clinicalDashboardPage, patientPortalPage } from './clinical-dashboard-ui.js';
 import { discussionsPage, discussionDetailPage } from './neuro-discussions-ui.js';
+import { neuroGamesPage } from './neuro-games-ui.js';
 
 let state=emptyState(),currentStorage=localStorage;
 let authState={ready:false,session:null,profile:null,message:''},adminRows=null,voiceStructureDraft=null,mentorDraft={},learningDraft={tool:'',history:[]};
@@ -101,16 +102,16 @@ const navItems = [['painel','Painel clínico','◫'],['pacientes','Pacientes','�
 function route() { return decodeURIComponent((location.hash.slice(1) || 'painel').split('?')[0]).split('/'); }
 function routeQuery() { return new URLSearchParams((location.hash.split('?')[1]||'')); }
 function renderNav(section) {
-  const activeSection = ['mentor','discussoes'].includes(section)?'aprender':section==='portal'?'pacientes':['camera','encontro','queixa','casos','conduta','testes-funcionais','medidas'].includes(section) ? 'biblioteca' : ['reavaliacao','alta','modelo-funcional','neuro','pediatria','domiciliar','ferramentas','inicio'].includes(section)?'mais':section;
+  const activeSection = ['mentor','discussoes'].includes(section)?'aprender':section==='portal'?'pacientes':['camera','encontro','queixa','casos','conduta','testes-funcionais','medidas'].includes(section) ? 'biblioteca' : ['reavaliacao','alta','modelo-funcional','neuro','pediatria','domiciliar','ferramentas','inicio','neurojogos'].includes(section)?'mais':section;
   const items=authState.profile?.role==='admin'?[...navItems,['admin','Admin','◆']]:navItems;
   const iconNames={painel:'home',inicio:'home','atendimento-rapido':'plusCircle',evolucao:'edit',consulta:'search',pacientes:'users',aprender:'learn',assistente:'bolt',biblioteca:'book',repertorio:'clipboard',mais:'dots',downloads:'download',conta:'user',admin:'shield'};
   const itemHtml=([id,label,icon],selected=activeSection)=>`<a href="#${id}" class="nav-item nav-${id} ${selected===id?'active':''}" ${selected===id?'aria-current="page"':''}><span aria-hidden="true">${iconNames[id]?homeIcon(iconNames[id]):icon}</span><span>${label}</span></a>`;
   $('#desktop-nav').innerHTML = items.map(itemHtml).join('');
   const mobileOrder=['painel','pacientes','atendimento-rapido','biblioteca','mais'];
-  const moreSections=new Set(['evolucao','aprender','assistente','artigos','repertorio','downloads','mais','dados','conta','admin']);
+  const moreSections=new Set(['evolucao','aprender','assistente','artigos','repertorio','downloads','mais','dados','conta','admin','neurojogos']);
   const mobileActive=moreSections.has(activeSection)?'mais':activeSection;
   $('#mobile-nav').innerHTML = mobileOrder.map(id=>items.find(([itemId])=>itemId===id)).filter(Boolean).map(([id,label,icon])=>itemHtml([id,({painel:'Painel','atendimento-rapido':'Atender',pacientes:'Pacientes',biblioteca:'Biblioteca',mais:'Mais'})[id]||label,icon],mobileActive)).join('');
-  $('#breadcrumb').textContent = section==='painel'?'Painel clínico':section==='discussoes'?'Neurofisioterapia clínica':items.find(([id]) => id === activeSection)?.[1] || 'Fisio Clínico';
+  $('#breadcrumb').textContent = section==='painel'?'Painel clínico':section==='discussoes'?'Neurofisioterapia clínica':section==='neurojogos'?'Neurojogos':items.find(([id]) => id === activeSection)?.[1] || 'Fisio Clínico';
 }
 function render() {
   stopVoiceDictation();
@@ -131,6 +132,7 @@ function render() {
   else if(section==='mentor') main.innerHTML=clinicalMentorPage(state,{...mentorDraft,patientId:routeQuery().get('patient')||mentorDraft.patientId||''});
   else if(section==='aprender'){if(id&&learningDraft.tool!==id)learningDraft={tool:id,history:[]};main.innerHTML=id?learningToolPage(state,id,learningDraft):learningHub();}
   else if(section==='discussoes') main.innerHTML=id?discussionDetailPage(id):discussionsPage();
+  else if(section==='neurojogos') main.innerHTML=neuroGamesPage();
   else if(section==='downloads') main.innerHTML=downloadsPage(downloadsQuery,downloadsCategory);
   else if(section==='artigos') main.innerHTML=scientificSearchPage(articleDraft);
   else if(section==='evolucao') main.innerHTML=expressEvolutionHub();

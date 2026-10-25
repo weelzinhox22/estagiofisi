@@ -14,7 +14,7 @@ const root = resolve(import.meta.dirname);
 try { loadEnvFile(resolve(root,'.env.local')); } catch {}
 try { loadEnvFile(resolve(root,'.env')); } catch {}
 const port = Number(process.env.PORT || 4173);
-const types = { '.html':'text/html; charset=utf-8', '.js':'text/javascript; charset=utf-8', '.mjs':'text/javascript; charset=utf-8', '.css':'text/css; charset=utf-8', '.svg':'image/svg+xml', '.png':'image/png', '.mp4':'video/mp4', '.webmanifest':'application/manifest+json', '.json':'application/json; charset=utf-8', '.wasm':'application/wasm', '.task':'application/octet-stream' };
+const types = { '.html':'text/html; charset=utf-8', '.js':'text/javascript; charset=utf-8', '.mjs':'text/javascript; charset=utf-8', '.css':'text/css; charset=utf-8', '.svg':'image/svg+xml', '.png':'image/png', '.webp':'image/webp', '.mp4':'video/mp4', '.webmanifest':'application/manifest+json', '.json':'application/json; charset=utf-8', '.wasm':'application/wasm', '.task':'application/octet-stream' };
 createServer(async (req, res) => {
   try {
     const pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
