@@ -41,7 +41,7 @@ import { externalExerciseCatalog, externalCatalogErrors } from './external-exerc
 import { externalExerciseCatalogPage } from './external-exercise-catalog-ui.js';
 import { clinicalDashboardPage, patientPortalPage } from './clinical-dashboard-ui.js';
 import { discussionsPage, discussionDetailPage } from './neuro-discussions-ui.js';
-import { neuroGamesPage } from './neuro-games-ui.js';
+import { neuroGamesPage, mountNeuroGames, cleanupNeuroGames } from './neuro-games-ui.js';
 
 let state=emptyState(),currentStorage=localStorage;
 let authState={ready:false,session:null,profile:null,message:''},adminRows=null,voiceStructureDraft=null,mentorDraft={},learningDraft={tool:'',history:[]};
@@ -117,6 +117,7 @@ function render() {
   stopVoiceDictation();
   cleanupCamera();
   const [section,id,tab] = route(),routeKey=[section,id,tab].filter(Boolean).join('/');
+  if(routeKey!==lastRenderedRoute)cleanupNeuroGames();
   const main = $('#main');
   main.dataset.route=section;
   if(!authState.ready){unmountMentorChat();document.body.classList.add('app-booting');$('#desktop-nav').innerHTML=$('#mobile-nav').innerHTML='';main.innerHTML='<div class="app-start-skeleton" aria-label="Preparando aplicativo"><div class="boot-brand"><img src="/icons/brand-mark.svg" alt=""><span><strong>Fisio Clínico</strong><small>PRÁTICA SUPERVISIONADA</small></span></div><div class="skeleton-hero"></div><div class="skeleton-grid"><i></i><i></i><i></i><i></i></div><div class="skeleton-line"></div><div class="skeleton-card"></div></div>';return;}
@@ -132,7 +133,7 @@ function render() {
   else if(section==='mentor') main.innerHTML=clinicalMentorPage(state,{...mentorDraft,patientId:routeQuery().get('patient')||mentorDraft.patientId||''});
   else if(section==='aprender'){if(id&&learningDraft.tool!==id)learningDraft={tool:id,history:[]};main.innerHTML=id?learningToolPage(state,id,learningDraft):learningHub();}
   else if(section==='discussoes') main.innerHTML=id?discussionDetailPage(id):discussionsPage();
-  else if(section==='neurojogos') main.innerHTML=neuroGamesPage();
+  else if(section==='neurojogos'){main.innerHTML=neuroGamesPage();mountNeuroGames(main);}
   else if(section==='downloads') main.innerHTML=downloadsPage(downloadsQuery,downloadsCategory);
   else if(section==='artigos') main.innerHTML=scientificSearchPage(articleDraft);
   else if(section==='evolucao') main.innerHTML=expressEvolutionHub();
